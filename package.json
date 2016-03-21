@@ -40,5 +40,8 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
     "wiredep": "^3.0.0"
+  },
+  "dependencies": {
+    "lodash": "^4.6.1"
   }
 }
