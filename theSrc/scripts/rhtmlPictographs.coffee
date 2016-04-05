@@ -13,7 +13,7 @@ HTMLWidgets.widget
 
     $('.rhtml-pictograph-outer-svg').remove()
 
-    this.redraw el, instance
+    this._draw el, instance
 
   initialize: (el, width, height) ->
     return {
@@ -21,7 +21,7 @@ HTMLWidgets.widget
       height: height
     }
 
-  normalizeInput: (params) ->
+  _normalizeInput: (params) ->
     input = null
 
     try
@@ -55,10 +55,23 @@ HTMLWidgets.widget
 
 
   renderValue: (el, params, instance) ->
-    instance.input = this.normalizeInput params
-    this.redraw el, instance
+    instance.input = this._normalizeInput params
+    this._draw el, instance
 
-  redraw: (el, instance) ->
+  _makeTextBanner: (className, text, args) ->
+    bannerContainer = $("<text class=\"#{className}\">")
+      .css 'text-align', 'center'
+      .attr 'width', '100'
+      .attr 'height', '100'
+      .text text
+
+    bannerContainer.css('color', args['font-color']) if _.has args, 'font-color'
+    for cssAttribute in ['font-family', 'font-size', 'font-weight']
+      bannerContainer.css(cssAttribute, args[cssAttribute]) if _.has args, cssAttribute
+
+    bannerContainer
+
+  _draw: (el, instance) ->
 
     generateClip = (input) ->
       if input.direction == 'horizontal'
@@ -78,17 +91,6 @@ HTMLWidgets.widget
         d3Data.push { percentage: percentage }
       return d3Data
 
-    addTextBanner = (el, className, text, args) ->
-      bannerContainer = $("<div class=\"#{className}\">")
-        .css 'width', instance.width
-        .css 'text-align', 'center'
-        .html text
-
-      bannerContainer.css('color', args['font-color']) if _.has args, 'font-color'
-      for cssAttribute in ['font-family', 'font-size', 'font-weight']
-        bannerContainer.css(cssAttribute, args[cssAttribute]) if _.has args, cssAttribute
-
-      $(el).append bannerContainer
 
     input = instance.input
     d3Data = generateDataArray input.percentage, input.numImages
@@ -102,18 +104,20 @@ HTMLWidgets.widget
     gridLayout.rows(input['numRows']) if input['numRows']?
     gridLayout.cols(input['numCols']) if input['numCols']?
 
-    rootElement = if _.has(el, 'length') then el[0] else el
-
-    addTextBanner(rootElement, 'header-container', input['text-header'], input) if input['text-header']?
-
-    instance.svg = d3.select(rootElement).append("svg")
-      .attr 'class', 'rhtml-pictograph-outer-svg'
+    instance.rootElement = if _.has(el, 'length') then el[0] else el
+    instance.outerSvg = $("<svg class=\"rhtml-pictograph-outer-svg\">")
       .attr 'width': instance.width
       .attr 'height': instance.height
 
-    addTextBanner(rootElement, 'footer-container', input['text-footer'], input) if input['text-footer']?
+    $(instance.rootElement).append(instance.outerSvg)
+    $(instance.outerSvg).append(this._makeTextBanner 'header-container', input['text-header'], input)
+#    addTextBanner(rootElement, 'header-container', input['text-header'], input) if input['text-header']?
 
-    enteringLeafNodes = instance.svg.selectAll(".node")
+#    instance.svg = d3.select(rootElement).append("svg")
+
+#    addTextBanner(rootElement, 'footer-container', input['text-footer'], input) if input['text-footer']?
+
+    enteringLeafNodes = d3.select('.rhtml-pictograph-outer-svg').selectAll(".node")
       .data gridLayout(d3Data)
       .enter()
       .append "g"
@@ -174,7 +178,6 @@ HTMLWidgets.widget
         .style 'dominant-baseline', 'central'
         .attr 'class', 'text-overlay'
         .text displayText
-
 
       textOverlay.attr('fill', input['font-color']) if _.has input, 'font-color'
       for cssAttribute in ['font-family', 'font-size', 'font-weight']
