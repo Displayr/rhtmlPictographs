@@ -3,8 +3,17 @@
 HTMLWidgets.widget
   name: 'rhtmlPictographs'
   type: 'output'
+
   resize: (el, width, height, instance) ->
-    console.log 'resize not implemented'
+    console.log 'resizing rhtmlPictograph'
+    console.log instance.svg
+
+    instance.width = width
+    instance.height = height
+
+    $('.rhtml-pictograph-outer-svg').remove()
+
+    this.redraw el, instance
 
   initialize: (el, width, height) ->
     return {
@@ -12,39 +21,44 @@ HTMLWidgets.widget
       height: height
     }
 
+  normalizeInput: (params) ->
+    input = null
+
+    try
+      if _.isString params.settingsJsonString
+        input = JSON.parse params.settingsJsonString
+      else
+        input = params.settingsJsonString
+
+      input.percentage = params.percentage
+    catch err
+      msg =  "rhtmlPictographs error : Cannot parse 'settingsJsonString'"
+      console.error msg
+      throw new Error err
+
+    throw new Error "Must specify 'variableImageUrl'" unless input.variableImageUrl?
+
+    throw new Error "Must specify 'percent'" unless input.percentage?
+    input.percentage = parseFloat input.percentage
+    throw new Error "percentage must be a number" if _.isNaN input.percentage
+    throw new Error "percentage must be >= 0" unless input.percentage >= 0
+    throw new Error "percentage must be <= 1" unless input.percentage <= 1
+
+    input['numImages'] = 1 unless input['numImages']?
+    input['direction'] = 'horizontal' unless input['direction']?
+    input['font-family'] = 'Verdana,sans-serif' unless input['font-family']?
+    input['font-weight'] = '900' unless input['font-weight']?
+    input['font-size'] = '20px' unless input['font-size']?
+    input['font-color'] = 'white' unless input['font-color']?
+
+    return input
+
+
   renderValue: (el, params, instance) ->
+    instance.input = this.normalizeInput params
+    this.redraw el, instance
 
-    normalizeInput = (params) ->
-      input = null
-
-      try
-        if _.isString params.settingsJsonString
-          input = JSON.parse params.settingsJsonString
-        else
-          input = params.settingsJsonString
-
-        input.percentage = params.percentage
-      catch err
-        msg =  "rhtmlPictographs error : Cannot parse 'settingsJsonString'"
-        console.error msg
-        throw new Error err
-
-      throw new Error "Must specify 'variableImageUrl'" unless input.variableImageUrl?
-
-      throw new Error "Must specify 'percent'" unless input.percentage?
-      input.percentage = parseFloat input.percentage
-      throw new Error "percentage must be a number" if _.isNaN input.percentage
-      throw new Error "percentage must be >= 0" unless input.percentage >= 0
-      throw new Error "percentage must be <= 1" unless input.percentage <= 1
-
-      input['numImages'] = 1 unless input['numImages']?
-      input['direction'] = 'horizontal' unless input['direction']?
-      input['font-family'] = 'Verdana,sans-serif' unless input['font-family']?
-      input['font-weight'] = '900' unless input['font-weight']?
-      input['font-size'] = '20px' unless input['font-size']?
-      input['font-color'] = 'white' unless input['font-color']?
-
-      return input
+  redraw: (el, instance) ->
 
     generateClip = (input) ->
       if input.direction == 'horizontal'
@@ -76,7 +90,7 @@ HTMLWidgets.widget
 
       $(el).append bannerContainer
 
-    input = normalizeInput params
+    input = instance.input
     d3Data = generateDataArray input.percentage, input.numImages
 
     #d3.grid is provided by github.com/interactivethings/d3-grid
@@ -92,13 +106,14 @@ HTMLWidgets.widget
 
     addTextBanner(rootElement, 'header-container', input['text-header'], input) if input['text-header']?
 
-    svg = d3.select(rootElement).append("svg")
+    instance.svg = d3.select(rootElement).append("svg")
+      .attr 'class', 'rhtml-pictograph-outer-svg'
       .attr 'width': instance.width
       .attr 'height': instance.height
 
     addTextBanner(rootElement, 'footer-container', input['text-footer'], input) if input['text-footer']?
 
-    enteringLeafNodes = svg.selectAll(".node")
+    enteringLeafNodes = instance.svg.selectAll(".node")
       .data gridLayout(d3Data)
       .enter()
       .append "g"
