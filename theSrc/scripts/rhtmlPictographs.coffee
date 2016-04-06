@@ -82,7 +82,7 @@ HTMLWidgets.widget
     #d3.grid is provided by github.com/interactivethings/d3-grid
     gridLayout = d3.layout.grid()
       .bands()
-      .size [instance.width, instance.height]
+      .size [1000, 1000]
       .padding([0.1, 0.1]); #@TODO control padding ?
 
     gridLayout.rows(input['numRows']) if input['numRows']?
@@ -93,8 +93,9 @@ HTMLWidgets.widget
     addTextBanner(rootElement, 'header-container', input['text-header'], input) if input['text-header']?
 
     svg = d3.select(rootElement).append("svg")
-      .attr 'width': instance.width
-      .attr 'height': instance.height
+      .attr 'width': '100%'
+      .attr 'height': '100%'
+      .attr 'viewbox': '0 0 1000 1000'
 
     addTextBanner(rootElement, 'footer-container', input['text-footer'], input) if input['text-footer']?
 

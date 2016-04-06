@@ -106,7 +106,7 @@ HTMLWidgets.widget({
     };
     input = normalizeInput(params);
     d3Data = generateDataArray(input.percentage, input.numImages);
-    gridLayout = d3.layout.grid().bands().size([instance.width, instance.height]).padding([0.1, 0.1]);
+    gridLayout = d3.layout.grid().bands().size([1000, 1000]).padding([0.1, 0.1]);
     if (input['numRows'] != null) {
       gridLayout.rows(input['numRows']);
     }
@@ -118,9 +118,11 @@ HTMLWidgets.widget({
       addTextBanner(rootElement, 'header-container', input['text-header'], input);
     }
     svg = d3.select(rootElement).append("svg").attr({
-      'width': instance.width
+      'width': '100%'
     }).attr({
-      'height': instance.height
+      'height': '100%'
+    }).attr({
+      'viewbox': '0 0 1000 1000'
     });
     if (input['text-footer'] != null) {
       addTextBanner(rootElement, 'footer-container', input['text-footer'], input);
