@@ -12,100 +12,9 @@ HTMLWidgets.widget({
     };
   },
   renderValue: function(el, params, instance) {
-    var addTextBanner, cssAttribute, d3Data, displayText, enteringLeafNodes, generateClip, generateDataArray, gridLayout, input, normalizeInput, rootElement, svg, textOverlay, _i, _len, _ref, _results;
-    normalizeInput = function(params) {
-      var err, input, msg;
-      input = null;
-      try {
-        if (_.isString(params.settingsJsonString)) {
-          input = JSON.parse(params.settingsJsonString);
-        } else {
-          input = params.settingsJsonString;
-        }
-        input.percentage = params.percentage;
-      } catch (_error) {
-        err = _error;
-        msg = "rhtmlPictographs error : Cannot parse 'settingsJsonString'";
-        console.error(msg);
-        throw new Error(err);
-      }
-      if (input.variableImageUrl == null) {
-        throw new Error("Must specify 'variableImageUrl'");
-      }
-      if (input.percentage == null) {
-        throw new Error("Must specify 'percent'");
-      }
-      input.percentage = parseFloat(input.percentage);
-      if (_.isNaN(input.percentage)) {
-        throw new Error("percentage must be a number");
-      }
-      if (!(input.percentage >= 0)) {
-        throw new Error("percentage must be >= 0");
-      }
-      if (!(input.percentage <= 1)) {
-        throw new Error("percentage must be <= 1");
-      }
-      if (input['numImages'] == null) {
-        input['numImages'] = 1;
-      }
-      if (input['direction'] == null) {
-        input['direction'] = 'horizontal';
-      }
-      if (input['font-family'] == null) {
-        input['font-family'] = 'Verdana,sans-serif';
-      }
-      if (input['font-weight'] == null) {
-        input['font-weight'] = '900';
-      }
-      if (input['font-size'] == null) {
-        input['font-size'] = '20px';
-      }
-      if (input['font-color'] == null) {
-        input['font-color'] = 'white';
-      }
-      return input;
-    };
-    generateClip = function(input) {
-      var x;
-      if (input.direction === 'horizontal') {
-        x = input.percentage * instance.width;
-        return "rect(auto, " + x + "px, auto, auto)";
-      } else if (input.direction === 'vertical') {
-        x = instance.height - input.percentage * instance.height;
-        return "rect(" + x + "px, auto, auto, auto)";
-      } else {
-        throw new Error("Invalid direction: '" + input.direction + "'");
-      }
-    };
-    generateDataArray = function(percentage, numImages) {
-      var d3Data, num, totalArea, _i;
-      d3Data = [];
-      totalArea = percentage * numImages;
-      for (num = _i = 1; 1 <= numImages ? _i <= numImages : _i >= numImages; num = 1 <= numImages ? ++_i : --_i) {
-        percentage = Math.min(1, Math.max(0, 1 + totalArea - num));
-        d3Data.push({
-          percentage: percentage
-        });
-      }
-      return d3Data;
-    };
-    addTextBanner = function(el, className, text, args) {
-      var bannerContainer, cssAttribute, _i, _len, _ref;
-      bannerContainer = $("<div class=\"" + className + "\">").css('width', instance.width).css('text-align', 'center').html(text);
-      if (_.has(args, 'font-color')) {
-        bannerContainer.css('color', args['font-color']);
-      }
-      _ref = ['font-family', 'font-size', 'font-weight'];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        cssAttribute = _ref[_i];
-        if (_.has(args, cssAttribute)) {
-          bannerContainer.css(cssAttribute, args[cssAttribute]);
-        }
-      }
-      return $(el).append(bannerContainer);
-    };
-    input = normalizeInput(params);
-    d3Data = generateDataArray(input.percentage, input.numImages);
+    var cssAttribute, d3Data, displayText, enteringLeafNodes, gridLayout, input, rootElement, svg, textOverlay, _i, _len, _ref, _results;
+    input = this._normalizeInput(params);
+    d3Data = this._generateDataArray(input.percentage, input.numImages);
     gridLayout = d3.layout.grid().bands().size([1000, 1000]).padding([0.1, 0.1]);
     if (input['numRows'] != null) {
       gridLayout.rows(input['numRows']);
@@ -114,19 +23,13 @@ HTMLWidgets.widget({
       gridLayout.cols(input['numCols']);
     }
     rootElement = _.has(el, 'length') ? el[0] : el;
-    if (input['text-header'] != null) {
-      addTextBanner(rootElement, 'header-container', input['text-header'], input);
-    }
     svg = d3.select(rootElement).append("svg").attr({
       'width': '100%'
     }).attr({
       'height': '100%'
     }).attr({
-      'viewbox': '0 0 1000 1000'
+      'viewBox': '0 0 1000 1000'
     });
-    if (input['text-footer'] != null) {
-      addTextBanner(rootElement, 'footer-container', input['text-footer'], input);
-    }
     enteringLeafNodes = svg.selectAll(".node").data(gridLayout(d3Data)).enter().append("g").attr("class", "node").attr("transform", function(d) {
       return "translate(" + d.x + "," + d.y + ")";
     });
@@ -176,5 +79,84 @@ HTMLWidgets.widget({
       }
       return _results;
     }
+  },
+  _normalizeInput: function(params) {
+    var err, input, msg;
+    input = null;
+    try {
+      if (_.isString(params.settingsJsonString)) {
+        input = JSON.parse(params.settingsJsonString);
+      } else {
+        input = params.settingsJsonString;
+      }
+      input.percentage = params.percentage;
+    } catch (_error) {
+      err = _error;
+      msg = "rhtmlPictographs error : Cannot parse 'settingsJsonString'";
+      console.error(msg);
+      throw new Error(err);
+    }
+    if (input.variableImageUrl == null) {
+      throw new Error("Must specify 'variableImageUrl'");
+    }
+    if (input.percentage == null) {
+      throw new Error("Must specify 'percent'");
+    }
+    input.percentage = parseFloat(input.percentage);
+    if (_.isNaN(input.percentage)) {
+      throw new Error("percentage must be a number");
+    }
+    if (!(input.percentage >= 0)) {
+      throw new Error("percentage must be >= 0");
+    }
+    if (!(input.percentage <= 1)) {
+      throw new Error("percentage must be <= 1");
+    }
+    if (input['numImages'] == null) {
+      input['numImages'] = 1;
+    }
+    if (input['direction'] == null) {
+      input['direction'] = 'horizontal';
+    }
+    if (input['font-family'] == null) {
+      input['font-family'] = 'Verdana,sans-serif';
+    }
+    if (input['font-weight'] == null) {
+      input['font-weight'] = '900';
+    }
+    if (input['font-size'] == null) {
+      input['font-size'] = '20px';
+    }
+    if (input['font-color'] == null) {
+      input['font-color'] = 'white';
+    }
+    return input;
+  },
+  _generateDataArray: function(percentage, numImages) {
+    var d3Data, num, totalArea, _i;
+    d3Data = [];
+    totalArea = percentage * numImages;
+    for (num = _i = 1; 1 <= numImages ? _i <= numImages : _i >= numImages; num = 1 <= numImages ? ++_i : --_i) {
+      percentage = Math.min(1, Math.max(0, 1 + totalArea - num));
+      d3Data.push({
+        percentage: percentage
+      });
+    }
+    return d3Data;
+  },
+  _addTextBanner: function(el, className, text, args) {
+    var bannerContainer, cssAttribute, _i, _len, _ref;
+    bannerContainer = $("<div class=\"" + className + "\">").css('width', instance.width).css('text-align', 'center').html(text);
+    if (_.has(args, 'font-color')) {
+      bannerContainer.css('color', args['font-color']);
+    }
+    _ref = ['font-family', 'font-size', 'font-weight'];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      cssAttribute = _ref[_i];
+      if (_.has(args, cssAttribute)) {
+        bannerContainer.css(cssAttribute, args[cssAttribute]);
+      }
+    }
+    return $(el).append(bannerContainer);
   }
 });

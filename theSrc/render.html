@@ -26,7 +26,13 @@
 
     <div class="content-window" style="padding-top:50px"></div>
 
-    <div class="resize-button" style="padding-top:50px">Resize</div>
+    <form id="resize-form" style="padding-top:50px" >
+      <label for="width-input">Width</label>
+      <input type="text" id="width-input" class="width-input" value="200"></input>
+      <label for="height-input">Height</label>
+      <input type="text" id="height-input" class="height-input" value="200"></input>
+      <button class="resize-button">Resize</button>
+    </form>
 
     <!-- NB This script should be defined before rhtmlPictographs.js is loaded-->
     <script>
@@ -57,15 +63,21 @@
       $(document).ready( function() {
         console.log("Document ready. Fetching scenarios");
 
-        $('.resize-button').bind('click', function(event) {
-          console.log("resize click");
+        $('#resize-form').bind('submit', function(event) {
+          event.preventDefault();
+          console.log("resize submit");
+
+          width = $('#width-input').val();
+          height = $('#height-input').val();
 
           container = $('.content-window')
-            .css('width', 100)
-            .css('height', 100)
+            .css('width', width)
+            .css('height', height)
 
-          myWidgetDefinition.resize(container, 100, 100, myWidgetInstance);
-        })
+          myWidgetDefinition.resize(container, width, height, myWidgetInstance);
+
+          return false;
+        });
 
         $.ajax('./resources/data/scenarios.json').done(function (response) {
           console.log("Scenario retrieved. Instantiating captured widget");

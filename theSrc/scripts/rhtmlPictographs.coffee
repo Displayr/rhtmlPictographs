@@ -14,90 +14,28 @@ HTMLWidgets.widget
 
   renderValue: (el, params, instance) ->
 
-    normalizeInput = (params) ->
-      input = null
-
-      try
-        if _.isString params.settingsJsonString
-          input = JSON.parse params.settingsJsonString
-        else
-          input = params.settingsJsonString
-
-        input.percentage = params.percentage
-      catch err
-        msg =  "rhtmlPictographs error : Cannot parse 'settingsJsonString'"
-        console.error msg
-        throw new Error err
-
-      throw new Error "Must specify 'variableImageUrl'" unless input.variableImageUrl?
-
-      throw new Error "Must specify 'percent'" unless input.percentage?
-      input.percentage = parseFloat input.percentage
-      throw new Error "percentage must be a number" if _.isNaN input.percentage
-      throw new Error "percentage must be >= 0" unless input.percentage >= 0
-      throw new Error "percentage must be <= 1" unless input.percentage <= 1
-
-      input['numImages'] = 1 unless input['numImages']?
-      input['direction'] = 'horizontal' unless input['direction']?
-      input['font-family'] = 'Verdana,sans-serif' unless input['font-family']?
-      input['font-weight'] = '900' unless input['font-weight']?
-      input['font-size'] = '20px' unless input['font-size']?
-      input['font-color'] = 'white' unless input['font-color']?
-
-      return input
-
-    generateClip = (input) ->
-      if input.direction == 'horizontal'
-        x = input.percentage * instance.width
-        return "rect(auto, #{x}px, auto, auto)"
-      else if input.direction == 'vertical'
-        x = instance.height - input.percentage * instance.height
-        return "rect(#{x}px, auto, auto, auto)"
-      else
-        throw new Error "Invalid direction: '#{input.direction}'"
-
-    generateDataArray = (percentage, numImages) ->
-      d3Data = []
-      totalArea = percentage * numImages
-      for num in [1..numImages]
-        percentage = Math.min(1, Math.max(0, 1 + totalArea - num))
-        d3Data.push { percentage: percentage }
-      return d3Data
-
-    addTextBanner = (el, className, text, args) ->
-      bannerContainer = $("<div class=\"#{className}\">")
-        .css 'width', instance.width
-        .css 'text-align', 'center'
-        .html text
-
-      bannerContainer.css('color', args['font-color']) if _.has args, 'font-color'
-      for cssAttribute in ['font-family', 'font-size', 'font-weight']
-        bannerContainer.css(cssAttribute, args[cssAttribute]) if _.has args, cssAttribute
-
-      $(el).append bannerContainer
-
-    input = normalizeInput params
-    d3Data = generateDataArray input.percentage, input.numImages
+    input = this._normalizeInput params
+    d3Data = this._generateDataArray input.percentage, input.numImages
 
     #d3.grid is provided by github.com/interactivethings/d3-grid
     gridLayout = d3.layout.grid()
       .bands()
       .size [1000, 1000]
-      .padding([0.1, 0.1]); #@TODO control padding ?
+      .padding([0.1, 0.1]); #@TODO control padding
 
     gridLayout.rows(input['numRows']) if input['numRows']?
     gridLayout.cols(input['numCols']) if input['numCols']?
 
     rootElement = if _.has(el, 'length') then el[0] else el
 
-    addTextBanner(rootElement, 'header-container', input['text-header'], input) if input['text-header']?
+    # this._addTextBanner(rootElement, 'header-container', input['text-header'], input) if input['text-header']?
 
     svg = d3.select(rootElement).append("svg")
       .attr 'width': '100%'
       .attr 'height': '100%'
-      .attr 'viewbox': '0 0 1000 1000'
+      .attr 'viewBox': '0 0 1000 1000'
 
-    addTextBanner(rootElement, 'footer-container', input['text-footer'], input) if input['text-footer']?
+    # this._addTextBanner(rootElement, 'footer-container', input['text-footer'], input) if input['text-footer']?
 
     enteringLeafNodes = svg.selectAll(".node")
       .data gridLayout(d3Data)
@@ -165,3 +103,55 @@ HTMLWidgets.widget
       textOverlay.attr('fill', input['font-color']) if _.has input, 'font-color'
       for cssAttribute in ['font-family', 'font-size', 'font-weight']
         textOverlay.attr(cssAttribute, input[cssAttribute]) if _.has input, cssAttribute
+
+  _normalizeInput: (params) ->
+    input = null
+
+    try
+      if _.isString params.settingsJsonString
+        input = JSON.parse params.settingsJsonString
+      else
+        input = params.settingsJsonString
+
+      input.percentage = params.percentage
+    catch err
+      msg =  "rhtmlPictographs error : Cannot parse 'settingsJsonString'"
+      console.error msg
+      throw new Error err
+
+    throw new Error "Must specify 'variableImageUrl'" unless input.variableImageUrl?
+
+    throw new Error "Must specify 'percent'" unless input.percentage?
+    input.percentage = parseFloat input.percentage
+    throw new Error "percentage must be a number" if _.isNaN input.percentage
+    throw new Error "percentage must be >= 0" unless input.percentage >= 0
+    throw new Error "percentage must be <= 1" unless input.percentage <= 1
+
+    input['numImages'] = 1 unless input['numImages']?
+    input['direction'] = 'horizontal' unless input['direction']?
+    input['font-family'] = 'Verdana,sans-serif' unless input['font-family']?
+    input['font-weight'] = '900' unless input['font-weight']?
+    input['font-size'] = '20px' unless input['font-size']?
+    input['font-color'] = 'white' unless input['font-color']?
+
+    return input
+
+  _generateDataArray: (percentage, numImages) ->
+    d3Data = []
+    totalArea = percentage * numImages
+    for num in [1..numImages]
+      percentage = Math.min(1, Math.max(0, 1 + totalArea - num))
+      d3Data.push { percentage: percentage }
+    return d3Data
+
+  _addTextBanner: (el, className, text, args) ->
+    bannerContainer = $("<div class=\"#{className}\">")
+      .css 'width', instance.width
+      .css 'text-align', 'center'
+      .html text
+
+    bannerContainer.css('color', args['font-color']) if _.has args, 'font-color'
+    for cssAttribute in ['font-family', 'font-size', 'font-weight']
+      bannerContainer.css(cssAttribute, args[cssAttribute]) if _.has args, cssAttribute
+
+    $(el).append bannerContainer
