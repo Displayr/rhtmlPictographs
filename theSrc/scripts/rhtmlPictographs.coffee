@@ -7,7 +7,10 @@ HTMLWidgets.widget
     console.log 'resize not implemented'
 
   initialize: (el, width, height) ->
+    #@TODO strip all em, px, etc from the width height - i am just using them for the ratio, as the SVG is 100% of its container anyway
     return {
+      initialWidth: width
+      initialHeight: height
       width: width
       height: height
     }
@@ -15,6 +18,9 @@ HTMLWidgets.widget
   renderValue: (el, params, instance) ->
 
     input = this._normalizeInput params
+
+    #@TODO parameterize
+    input.bannerRatio = 0.1
 
     instance.rootElement = if _.has(el, 'length') then el[0] else el
 
@@ -32,54 +38,103 @@ HTMLWidgets.widget
     #NB JQuery insists on lowercasing attributes, so we must use JS directly
     # when setting viewBox ?!
     document.getElementsByClassName("rhtml-pictograph-outer-svg")[0]
-      .setAttribute 'viewBox', '0 0 1000 1000'
+      .setAttribute 'viewBox', "0 0 #{instance.initialWidth} #{instance.initialHeight}"
 
-    bannerData = []
-    bannerData.push({ class: 'text-header', y: 50 }) if input['text-header']?
-    bannerData.push({ class: 'text-footer', y: 950 }) if input['text-footer']?
+    graphicRatio = 1
+    graphicRatio -= input.bannerRatio if input['text-header']?
+    graphicRatio -= input.bannerRatio if input['text-footer']?
 
-    banners = instance.outerSvg.selectAll('.text-header')
-      .data bannerData
-      .enter()
-      .append 'svg:text'
-        .attr 'x', '500'
-        .attr 'y', (d) -> d.y
+    if input['text-header']?
+      instance.textHeader = instance.outerSvg.append('svg:text')
+        .attr 'x', instance.initialWidth / 2
+        .attr 'y', (d) ->
+          alreadyDrawn = 0
+          alreadyDrawn + instance.initialHeight * input.bannerRatio / 2
         .style 'text-anchor', 'middle'
         #alignment-baseline and dominant-baseline should do same thing but are both may be necessary for browser compatabilitu
         .style 'alignment-baseline', 'central'
         .style 'dominant-baseline', 'central'
-        .attr 'class', (d) -> d.class
-        .text (d) -> input[d.class]
+        .attr 'class', 'text-header'
+        .text (d) -> input['text-header']
 
-    banners.attr('fill', input['font-color']) if _.has input, 'font-color'
-    for cssAttribute in ['font-family', 'font-size', 'font-weight']
-      banners.attr(cssAttribute, input[cssAttribute]) if _.has input, cssAttribute
+      instance.textHeader.attr('fill', input['font-color']) if _.has input, 'font-color'
+      for cssAttribute in ['font-family', 'font-size', 'font-weight']
+        instance.textHeader.attr(cssAttribute, input[cssAttribute]) if _.has input, cssAttribute
+
+    graphicContainerVerticalOffset = 0
+    graphicContainerVerticalOffset += input.bannerRatio * instance.initialHeight if input['text-header']?
+    console.log "graphicContainerVerticalOffset"
+    console.log graphicContainerVerticalOffset
+    instance.graphicContainer = instance.outerSvg.append('g')
+      .attr('class', 'graphic-container')
+      .attr 'transform', "translate(0,#{graphicContainerVerticalOffset})"
+
+    if input['text-footer']?
+      instance.textFooter = instance.outerSvg.append('svg:text')
+        .attr 'x', instance.initialWidth / 2
+        .attr 'y', (d) ->
+          alreadyDrawn = 0
+          alreadyDrawn += input.bannerRatio * instance.initialHeight if input['text-header']?
+          alreadyDrawn += graphicRatio * instance.initialHeight
+          alreadyDrawn + instance.initialHeight * input.bannerRatio / 2
+        .style 'text-anchor', 'middle'
+        #alignment-baseline and dominant-baseline should do same thing but are both may be necessary for browser compatabilitu
+        .style 'alignment-baseline', 'central'
+        .style 'dominant-baseline', 'central'
+        .attr 'class', 'text-footer'
+        .text (d) -> input['text-footer']
+
+      instance.textFooter.attr('fill', input['font-color']) if _.has input, 'font-color'
+      for cssAttribute in ['font-family', 'font-size', 'font-weight']
+        instance.textFooter.attr(cssAttribute, input[cssAttribute]) if _.has input, cssAttribute
+
+
+    # bannerData = []
+    # bannerData.push({ class: 'text-header', y: 50 }) if input['text-header']?
+    # bannerData.push({ class: 'text-footer', y: 950 }) if input['text-footer']?
+
+    # banners = instance.outerSvg.selectAll('.text-header')
+    #   .data bannerData
+    #   .enter()
+    #   .append 'svg:text'
+    #     .attr 'x', '500'
+    #     .attr 'y', (d) -> d.y
+    #     .style 'text-anchor', 'middle'
+    #     #alignment-baseline and dominant-baseline should do same thing but are both may be necessary for browser compatabilitu
+    #     .style 'alignment-baseline', 'central'
+    #     .style 'dominant-baseline', 'central'
+    #     .attr 'class', (d) -> d.class
+    #     .text (d) -> input[d.class]
+
+    # banners.attr('fill', input['font-color']) if _.has input, 'font-color'
+    # for cssAttribute in ['font-family', 'font-size', 'font-weight']
+    #   banners.attr(cssAttribute, input[cssAttribute]) if _.has input, cssAttribute
 
 
     d3Data = this._generateDataArray input.percentage, input.numImages
 
     #d3.grid is provided by github.com/interactivethings/d3-grid
-    gridHeight = 1000
-    gridHeight -= 100 if input['text-header']?
-    gridHeight -= 100 if input['text-footer']?
+    gridHeight = instance.initialHeight
+    gridHeight -= input.bannerRatio * instance.initialHeight if input['text-header']?
+    gridHeight -= input.bannerRatio * instance.initialHeight if input['text-footer']?
+    console.log("initialHeight")
+    console.log(instance.initialHeight)
+    console.log("gridHeight")
+    console.log(gridHeight)
     gridLayout = d3.layout.grid()
       .bands()
-      .size [1000, gridHeight]
+      .size [instance.initialWidth, gridHeight]
       .padding([0.1, 0.1]); #@TODO control padding
 
     gridLayout.rows(input['numRows']) if input['numRows']?
     gridLayout.cols(input['numCols']) if input['numCols']?
 
-
-    enteringLeafNodes = instance.outerSvg.selectAll(".node")
+    enteringLeafNodes = instance.graphicContainer.selectAll(".node")
       .data gridLayout(d3Data)
       .enter()
       .append "g"
         .attr "class", "node"
-        .attr "transform", (d) ->
-          y = d.y
-          y += 100 if input['text-header']
-          return "translate(" + d.x + "," + y + ")"
+        .attr "transform", (d) -> return "translate(#{d.x},#{d.y})"
 
     enteringLeafNodes.append("svg:rect")
       .attr 'width', gridLayout.nodeSize()[0]

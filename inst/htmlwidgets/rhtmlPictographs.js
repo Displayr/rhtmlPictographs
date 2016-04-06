@@ -7,70 +7,98 @@ HTMLWidgets.widget({
   },
   initialize: function(el, width, height) {
     return {
+      initialWidth: width,
+      initialHeight: height,
       width: width,
       height: height
     };
   },
   renderValue: function(el, params, instance) {
-    var anonSvg, bannerData, banners, cssAttribute, d3Data, displayText, enteringLeafNodes, gridHeight, gridLayout, input, textOverlay, _i, _j, _len, _len1, _ref, _ref1, _results;
+    var anonSvg, cssAttribute, d3Data, displayText, enteringLeafNodes, graphicContainerVerticalOffset, graphicRatio, gridHeight, gridLayout, input, textOverlay, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2, _results;
     input = this._normalizeInput(params);
+    input.bannerRatio = 0.1;
     instance.rootElement = _.has(el, 'length') ? el[0] : el;
     anonSvg = $("<svg class=\"rhtml-pictograph-outer-svg\">").attr('width', '100%').attr('height', '100%');
     $(instance.rootElement).append(anonSvg);
     instance.outerSvg = d3.select('.rhtml-pictograph-outer-svg');
-    document.getElementsByClassName("rhtml-pictograph-outer-svg")[0].setAttribute('viewBox', '0 0 1000 1000');
-    bannerData = [];
+    document.getElementsByClassName("rhtml-pictograph-outer-svg")[0].setAttribute('viewBox', "0 0 " + instance.initialWidth + " " + instance.initialHeight);
+    graphicRatio = 1;
     if (input['text-header'] != null) {
-      bannerData.push({
-        "class": 'text-header',
-        y: 50
-      });
+      graphicRatio -= input.bannerRatio;
     }
     if (input['text-footer'] != null) {
-      bannerData.push({
-        "class": 'text-footer',
-        y: 950
+      graphicRatio -= input.bannerRatio;
+    }
+    if (input['text-header'] != null) {
+      instance.textHeader = instance.outerSvg.append('svg:text').attr('x', instance.initialWidth / 2).attr('y', function(d) {
+        var alreadyDrawn;
+        alreadyDrawn = 0;
+        return alreadyDrawn + instance.initialHeight * input.bannerRatio / 2;
+      }).style('text-anchor', 'middle').style('alignment-baseline', 'central').style('dominant-baseline', 'central').attr('class', 'text-header').text(function(d) {
+        return input['text-header'];
       });
+      if (_.has(input, 'font-color')) {
+        instance.textHeader.attr('fill', input['font-color']);
+      }
+      _ref = ['font-family', 'font-size', 'font-weight'];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        cssAttribute = _ref[_i];
+        if (_.has(input, cssAttribute)) {
+          instance.textHeader.attr(cssAttribute, input[cssAttribute]);
+        }
+      }
     }
-    banners = instance.outerSvg.selectAll('.text-header').data(bannerData).enter().append('svg:text').attr('x', '500').attr('y', function(d) {
-      return d.y;
-    }).style('text-anchor', 'middle').style('alignment-baseline', 'central').style('dominant-baseline', 'central').attr('class', function(d) {
-      return d["class"];
-    }).text(function(d) {
-      return input[d["class"]];
-    });
-    if (_.has(input, 'font-color')) {
-      banners.attr('fill', input['font-color']);
+    graphicContainerVerticalOffset = 0;
+    if (input['text-header'] != null) {
+      graphicContainerVerticalOffset += input.bannerRatio * instance.initialHeight;
     }
-    _ref = ['font-family', 'font-size', 'font-weight'];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      cssAttribute = _ref[_i];
-      if (_.has(input, cssAttribute)) {
-        banners.attr(cssAttribute, input[cssAttribute]);
+    console.log("graphicContainerVerticalOffset");
+    console.log(graphicContainerVerticalOffset);
+    instance.graphicContainer = instance.outerSvg.append('g').attr('class', 'graphic-container').attr('transform', "translate(0," + graphicContainerVerticalOffset + ")");
+    if (input['text-footer'] != null) {
+      instance.textFooter = instance.outerSvg.append('svg:text').attr('x', instance.initialWidth / 2).attr('y', function(d) {
+        var alreadyDrawn;
+        alreadyDrawn = 0;
+        if (input['text-header'] != null) {
+          alreadyDrawn += input.bannerRatio * instance.initialHeight;
+        }
+        alreadyDrawn += graphicRatio * instance.initialHeight;
+        return alreadyDrawn + instance.initialHeight * input.bannerRatio / 2;
+      }).style('text-anchor', 'middle').style('alignment-baseline', 'central').style('dominant-baseline', 'central').attr('class', 'text-footer').text(function(d) {
+        return input['text-footer'];
+      });
+      if (_.has(input, 'font-color')) {
+        instance.textFooter.attr('fill', input['font-color']);
+      }
+      _ref1 = ['font-family', 'font-size', 'font-weight'];
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        cssAttribute = _ref1[_j];
+        if (_.has(input, cssAttribute)) {
+          instance.textFooter.attr(cssAttribute, input[cssAttribute]);
+        }
       }
     }
     d3Data = this._generateDataArray(input.percentage, input.numImages);
-    gridHeight = 1000;
+    gridHeight = instance.initialHeight;
     if (input['text-header'] != null) {
-      gridHeight -= 100;
+      gridHeight -= input.bannerRatio * instance.initialHeight;
     }
     if (input['text-footer'] != null) {
-      gridHeight -= 100;
+      gridHeight -= input.bannerRatio * instance.initialHeight;
     }
-    gridLayout = d3.layout.grid().bands().size([1000, gridHeight]).padding([0.1, 0.1]);
+    console.log("initialHeight");
+    console.log(instance.initialHeight);
+    console.log("gridHeight");
+    console.log(gridHeight);
+    gridLayout = d3.layout.grid().bands().size([instance.initialWidth, gridHeight]).padding([0.1, 0.1]);
     if (input['numRows'] != null) {
       gridLayout.rows(input['numRows']);
     }
     if (input['numCols'] != null) {
       gridLayout.cols(input['numCols']);
     }
-    enteringLeafNodes = instance.outerSvg.selectAll(".node").data(gridLayout(d3Data)).enter().append("g").attr("class", "node").attr("transform", function(d) {
-      var y;
-      y = d.y;
-      if (input['text-header']) {
-        y += 100;
-      }
-      return "translate(" + d.x + "," + y + ")";
+    enteringLeafNodes = instance.graphicContainer.selectAll(".node").data(gridLayout(d3Data)).enter().append("g").attr("class", "node").attr("transform", function(d) {
+      return "translate(" + d.x + "," + d.y + ")";
     });
     enteringLeafNodes.append("svg:rect").attr('width', gridLayout.nodeSize()[0]).attr('height', gridLayout.nodeSize()[1]).attr('class', 'background-rect').attr('fill', input['background-color'] || 'none');
     if (input.baseImageUrl != null) {
@@ -106,10 +134,10 @@ HTMLWidgets.widget({
       if (_.has(input, 'font-color')) {
         textOverlay.attr('fill', input['font-color']);
       }
-      _ref1 = ['font-family', 'font-size', 'font-weight'];
+      _ref2 = ['font-family', 'font-size', 'font-weight'];
       _results = [];
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        cssAttribute = _ref1[_j];
+      for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+        cssAttribute = _ref2[_k];
         if (_.has(input, cssAttribute)) {
           _results.push(textOverlay.attr(cssAttribute, input[cssAttribute]));
         } else {
