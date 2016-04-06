@@ -3,7 +3,12 @@ HTMLWidgets.widget({
   name: 'rhtmlPictographs',
   type: 'output',
   resize: function(el, width, height, instance) {
-    return console.log('resize not implemented');
+    console.log('resizing rhtmlPictograph');
+    console.log(instance.svg);
+    instance.width = width;
+    instance.height = height;
+    $('.rhtml-pictograph-outer-svg').remove();
+    return this._draw(el, instance);
   },
   initialize: function(el, width, height) {
     return {
@@ -11,60 +16,79 @@ HTMLWidgets.widget({
       height: height
     };
   },
+  _normalizeInput: function(params) {
+    var err, input, msg;
+    input = null;
+    try {
+      if (_.isString(params.settingsJsonString)) {
+        input = JSON.parse(params.settingsJsonString);
+      } else {
+        input = params.settingsJsonString;
+      }
+      input.percentage = params.percentage;
+    } catch (_error) {
+      err = _error;
+      msg = "rhtmlPictographs error : Cannot parse 'settingsJsonString'";
+      console.error(msg);
+      throw new Error(err);
+    }
+    if (input.variableImageUrl == null) {
+      throw new Error("Must specify 'variableImageUrl'");
+    }
+    if (input.percentage == null) {
+      throw new Error("Must specify 'percent'");
+    }
+    input.percentage = parseFloat(input.percentage);
+    if (_.isNaN(input.percentage)) {
+      throw new Error("percentage must be a number");
+    }
+    if (!(input.percentage >= 0)) {
+      throw new Error("percentage must be >= 0");
+    }
+    if (!(input.percentage <= 1)) {
+      throw new Error("percentage must be <= 1");
+    }
+    if (input['numImages'] == null) {
+      input['numImages'] = 1;
+    }
+    if (input['direction'] == null) {
+      input['direction'] = 'horizontal';
+    }
+    if (input['font-family'] == null) {
+      input['font-family'] = 'Verdana,sans-serif';
+    }
+    if (input['font-weight'] == null) {
+      input['font-weight'] = '900';
+    }
+    if (input['font-size'] == null) {
+      input['font-size'] = '20px';
+    }
+    if (input['font-color'] == null) {
+      input['font-color'] = 'white';
+    }
+    return input;
+  },
   renderValue: function(el, params, instance) {
-    var addTextBanner, cssAttribute, d3Data, displayText, enteringLeafNodes, generateClip, generateDataArray, gridLayout, input, normalizeInput, rootElement, svg, textOverlay, _i, _len, _ref, _results;
-    normalizeInput = function(params) {
-      var err, input, msg;
-      input = null;
-      try {
-        if (_.isString(params.settingsJsonString)) {
-          input = JSON.parse(params.settingsJsonString);
-        } else {
-          input = params.settingsJsonString;
-        }
-        input.percentage = params.percentage;
-      } catch (_error) {
-        err = _error;
-        msg = "rhtmlPictographs error : Cannot parse 'settingsJsonString'";
-        console.error(msg);
-        throw new Error(err);
+    instance.input = this._normalizeInput(params);
+    return this._draw(el, instance);
+  },
+  _makeTextBanner: function(className, text, args) {
+    var bannerContainer, cssAttribute, _i, _len, _ref;
+    bannerContainer = $("<text class=\"" + className + "\">").css('text-align', 'center').attr('width', '100').attr('height', '100').text(text);
+    if (_.has(args, 'font-color')) {
+      bannerContainer.css('color', args['font-color']);
+    }
+    _ref = ['font-family', 'font-size', 'font-weight'];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      cssAttribute = _ref[_i];
+      if (_.has(args, cssAttribute)) {
+        bannerContainer.css(cssAttribute, args[cssAttribute]);
       }
-      if (input.variableImageUrl == null) {
-        throw new Error("Must specify 'variableImageUrl'");
-      }
-      if (input.percentage == null) {
-        throw new Error("Must specify 'percent'");
-      }
-      input.percentage = parseFloat(input.percentage);
-      if (_.isNaN(input.percentage)) {
-        throw new Error("percentage must be a number");
-      }
-      if (!(input.percentage >= 0)) {
-        throw new Error("percentage must be >= 0");
-      }
-      if (!(input.percentage <= 1)) {
-        throw new Error("percentage must be <= 1");
-      }
-      if (input['numImages'] == null) {
-        input['numImages'] = 1;
-      }
-      if (input['direction'] == null) {
-        input['direction'] = 'horizontal';
-      }
-      if (input['font-family'] == null) {
-        input['font-family'] = 'Verdana,sans-serif';
-      }
-      if (input['font-weight'] == null) {
-        input['font-weight'] = '900';
-      }
-      if (input['font-size'] == null) {
-        input['font-size'] = '20px';
-      }
-      if (input['font-color'] == null) {
-        input['font-color'] = 'white';
-      }
-      return input;
-    };
+    }
+    return bannerContainer;
+  },
+  _draw: function(el, instance) {
+    var cssAttribute, d3Data, displayText, enteringLeafNodes, generateClip, generateDataArray, gridLayout, input, textOverlay, _i, _len, _ref, _results;
     generateClip = function(input) {
       var x;
       if (input.direction === 'horizontal') {
@@ -89,22 +113,7 @@ HTMLWidgets.widget({
       }
       return d3Data;
     };
-    addTextBanner = function(el, className, text, args) {
-      var bannerContainer, cssAttribute, _i, _len, _ref;
-      bannerContainer = $("<div class=\"" + className + "\">").css('width', instance.width).css('text-align', 'center').html(text);
-      if (_.has(args, 'font-color')) {
-        bannerContainer.css('color', args['font-color']);
-      }
-      _ref = ['font-family', 'font-size', 'font-weight'];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        cssAttribute = _ref[_i];
-        if (_.has(args, cssAttribute)) {
-          bannerContainer.css(cssAttribute, args[cssAttribute]);
-        }
-      }
-      return $(el).append(bannerContainer);
-    };
-    input = normalizeInput(params);
+    input = instance.input;
     d3Data = generateDataArray(input.percentage, input.numImages);
     gridLayout = d3.layout.grid().bands().size([instance.width, instance.height]).padding([0.1, 0.1]);
     if (input['numRows'] != null) {
@@ -113,19 +122,15 @@ HTMLWidgets.widget({
     if (input['numCols'] != null) {
       gridLayout.cols(input['numCols']);
     }
-    rootElement = _.has(el, 'length') ? el[0] : el;
-    if (input['text-header'] != null) {
-      addTextBanner(rootElement, 'header-container', input['text-header'], input);
-    }
-    svg = d3.select(rootElement).append("svg").attr({
+    instance.rootElement = _.has(el, 'length') ? el[0] : el;
+    instance.outerSvg = $("<svg class=\"rhtml-pictograph-outer-svg\">").attr({
       'width': instance.width
     }).attr({
       'height': instance.height
     });
-    if (input['text-footer'] != null) {
-      addTextBanner(rootElement, 'footer-container', input['text-footer'], input);
-    }
-    enteringLeafNodes = svg.selectAll(".node").data(gridLayout(d3Data)).enter().append("g").attr("class", "node").attr("transform", function(d) {
+    $(instance.rootElement).append(instance.outerSvg);
+    $(instance.outerSvg).append(this._makeTextBanner('header-container', input['text-header'], input));
+    enteringLeafNodes = d3.select('.rhtml-pictograph-outer-svg').selectAll(".node").data(gridLayout(d3Data)).enter().append("g").attr("class", "node").attr("transform", function(d) {
       return "translate(" + d.x + "," + d.y + ")";
     });
     enteringLeafNodes.append("svg:rect").attr('width', gridLayout.nodeSize()[0]).attr('height', gridLayout.nodeSize()[1]).attr('class', 'background-rect').attr('fill', input['background-color'] || 'none');

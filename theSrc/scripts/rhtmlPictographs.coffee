@@ -3,8 +3,17 @@
 HTMLWidgets.widget
   name: 'rhtmlPictographs'
   type: 'output'
+
   resize: (el, width, height, instance) ->
-    console.log 'resize not implemented'
+    console.log 'resizing rhtmlPictograph'
+    console.log instance.svg
+
+    instance.width = width
+    instance.height = height
+
+    $('.rhtml-pictograph-outer-svg').remove()
+
+    this._draw el, instance
 
   initialize: (el, width, height) ->
     return {
@@ -12,39 +21,57 @@ HTMLWidgets.widget
       height: height
     }
 
+  _normalizeInput: (params) ->
+    input = null
+
+    try
+      if _.isString params.settingsJsonString
+        input = JSON.parse params.settingsJsonString
+      else
+        input = params.settingsJsonString
+
+      input.percentage = params.percentage
+    catch err
+      msg =  "rhtmlPictographs error : Cannot parse 'settingsJsonString'"
+      console.error msg
+      throw new Error err
+
+    throw new Error "Must specify 'variableImageUrl'" unless input.variableImageUrl?
+
+    throw new Error "Must specify 'percent'" unless input.percentage?
+    input.percentage = parseFloat input.percentage
+    throw new Error "percentage must be a number" if _.isNaN input.percentage
+    throw new Error "percentage must be >= 0" unless input.percentage >= 0
+    throw new Error "percentage must be <= 1" unless input.percentage <= 1
+
+    input['numImages'] = 1 unless input['numImages']?
+    input['direction'] = 'horizontal' unless input['direction']?
+    input['font-family'] = 'Verdana,sans-serif' unless input['font-family']?
+    input['font-weight'] = '900' unless input['font-weight']?
+    input['font-size'] = '20px' unless input['font-size']?
+    input['font-color'] = 'white' unless input['font-color']?
+
+    return input
+
+
   renderValue: (el, params, instance) ->
+    instance.input = this._normalizeInput params
+    this._draw el, instance
 
-    normalizeInput = (params) ->
-      input = null
+  _makeTextBanner: (className, text, args) ->
+    bannerContainer = $("<text class=\"#{className}\">")
+      .css 'text-align', 'center'
+      .attr 'width', '100'
+      .attr 'height', '100'
+      .text text
 
-      try
-        if _.isString params.settingsJsonString
-          input = JSON.parse params.settingsJsonString
-        else
-          input = params.settingsJsonString
+    bannerContainer.css('color', args['font-color']) if _.has args, 'font-color'
+    for cssAttribute in ['font-family', 'font-size', 'font-weight']
+      bannerContainer.css(cssAttribute, args[cssAttribute]) if _.has args, cssAttribute
 
-        input.percentage = params.percentage
-      catch err
-        msg =  "rhtmlPictographs error : Cannot parse 'settingsJsonString'"
-        console.error msg
-        throw new Error err
+    bannerContainer
 
-      throw new Error "Must specify 'variableImageUrl'" unless input.variableImageUrl?
-
-      throw new Error "Must specify 'percent'" unless input.percentage?
-      input.percentage = parseFloat input.percentage
-      throw new Error "percentage must be a number" if _.isNaN input.percentage
-      throw new Error "percentage must be >= 0" unless input.percentage >= 0
-      throw new Error "percentage must be <= 1" unless input.percentage <= 1
-
-      input['numImages'] = 1 unless input['numImages']?
-      input['direction'] = 'horizontal' unless input['direction']?
-      input['font-family'] = 'Verdana,sans-serif' unless input['font-family']?
-      input['font-weight'] = '900' unless input['font-weight']?
-      input['font-size'] = '20px' unless input['font-size']?
-      input['font-color'] = 'white' unless input['font-color']?
-
-      return input
+  _draw: (el, instance) ->
 
     generateClip = (input) ->
       if input.direction == 'horizontal'
@@ -64,19 +91,8 @@ HTMLWidgets.widget
         d3Data.push { percentage: percentage }
       return d3Data
 
-    addTextBanner = (el, className, text, args) ->
-      bannerContainer = $("<div class=\"#{className}\">")
-        .css 'width', instance.width
-        .css 'text-align', 'center'
-        .html text
 
-      bannerContainer.css('color', args['font-color']) if _.has args, 'font-color'
-      for cssAttribute in ['font-family', 'font-size', 'font-weight']
-        bannerContainer.css(cssAttribute, args[cssAttribute]) if _.has args, cssAttribute
-
-      $(el).append bannerContainer
-
-    input = normalizeInput params
+    input = instance.input
     d3Data = generateDataArray input.percentage, input.numImages
 
     #d3.grid is provided by github.com/interactivethings/d3-grid
@@ -88,17 +104,20 @@ HTMLWidgets.widget
     gridLayout.rows(input['numRows']) if input['numRows']?
     gridLayout.cols(input['numCols']) if input['numCols']?
 
-    rootElement = if _.has(el, 'length') then el[0] else el
-
-    addTextBanner(rootElement, 'header-container', input['text-header'], input) if input['text-header']?
-
-    svg = d3.select(rootElement).append("svg")
+    instance.rootElement = if _.has(el, 'length') then el[0] else el
+    instance.outerSvg = $("<svg class=\"rhtml-pictograph-outer-svg\">")
       .attr 'width': instance.width
       .attr 'height': instance.height
 
-    addTextBanner(rootElement, 'footer-container', input['text-footer'], input) if input['text-footer']?
+    $(instance.rootElement).append(instance.outerSvg)
+    $(instance.outerSvg).append(this._makeTextBanner 'header-container', input['text-header'], input)
+#    addTextBanner(rootElement, 'header-container', input['text-header'], input) if input['text-header']?
 
-    enteringLeafNodes = svg.selectAll(".node")
+#    instance.svg = d3.select(rootElement).append("svg")
+
+#    addTextBanner(rootElement, 'footer-container', input['text-footer'], input) if input['text-footer']?
+
+    enteringLeafNodes = d3.select('.rhtml-pictograph-outer-svg').selectAll(".node")
       .data gridLayout(d3Data)
       .enter()
       .append "g"
@@ -159,7 +178,6 @@ HTMLWidgets.widget
         .style 'dominant-baseline', 'central'
         .attr 'class', 'text-overlay'
         .text displayText
-
 
       textOverlay.attr('fill', input['font-color']) if _.has input, 'font-color'
       for cssAttribute in ['font-family', 'font-size', 'font-weight']
