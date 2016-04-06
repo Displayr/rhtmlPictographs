@@ -154,9 +154,7 @@
           "settings": {
             "numImages": 12,
             "numRows": 1,
-            "baseImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/black_square_512.png",
-            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
-            "text-header": "Only one row",
+            "variableImageUrl": "/images/cc_512.png",
             "font-family": "verdana",
             "font-weight": "900",
             "font-size": "24px",

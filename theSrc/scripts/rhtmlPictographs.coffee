@@ -15,35 +15,71 @@ HTMLWidgets.widget
   renderValue: (el, params, instance) ->
 
     input = this._normalizeInput params
+
+    instance.rootElement = if _.has(el, 'length') then el[0] else el
+
+    #NB the following sequence is a little rought because I am switching between native JS, jQuery, and D3
+    #@TODO : clean this up
+
+    anonSvg = $("<svg class=\"rhtml-pictograph-outer-svg\">")
+      .attr 'width', '100%'
+      .attr 'height', '100%'
+
+    $(instance.rootElement).append(anonSvg)
+
+    instance.outerSvg = d3.select('.rhtml-pictograph-outer-svg')
+
+    #NB JQuery insists on lowercasing attributes, so we must use JS directly
+    # when setting viewBox ?!
+    document.getElementsByClassName("rhtml-pictograph-outer-svg")[0]
+      .setAttribute 'viewBox', '0 0 1000 1000'
+
+    bannerData = []
+    bannerData.push({ class: 'text-header', y: 50 }) if input['text-header']?
+    bannerData.push({ class: 'text-footer', y: 950 }) if input['text-footer']?
+
+    banners = instance.outerSvg.selectAll('.text-header')
+      .data bannerData
+      .enter()
+      .append 'svg:text'
+        .attr 'x', '500'
+        .attr 'y', (d) -> d.y
+        .style 'text-anchor', 'middle'
+        #alignment-baseline and dominant-baseline should do same thing but are both may be necessary for browser compatabilitu
+        .style 'alignment-baseline', 'central'
+        .style 'dominant-baseline', 'central'
+        .attr 'class', (d) -> d.class
+        .text (d) -> input[d.class]
+
+    banners.attr('fill', input['font-color']) if _.has input, 'font-color'
+    for cssAttribute in ['font-family', 'font-size', 'font-weight']
+      banners.attr(cssAttribute, input[cssAttribute]) if _.has input, cssAttribute
+
+
     d3Data = this._generateDataArray input.percentage, input.numImages
 
     #d3.grid is provided by github.com/interactivethings/d3-grid
+    gridHeight = 1000
+    gridHeight -= 100 if input['text-header']?
+    gridHeight -= 100 if input['text-footer']?
     gridLayout = d3.layout.grid()
       .bands()
-      .size [1000, 1000]
+      .size [1000, gridHeight]
       .padding([0.1, 0.1]); #@TODO control padding
 
     gridLayout.rows(input['numRows']) if input['numRows']?
     gridLayout.cols(input['numCols']) if input['numCols']?
 
-    rootElement = if _.has(el, 'length') then el[0] else el
 
-    # this._addTextBanner(rootElement, 'header-container', input['text-header'], input) if input['text-header']?
-
-    svg = d3.select(rootElement).append("svg")
-      .attr 'width': '100%'
-      .attr 'height': '100%'
-      .attr 'viewBox': '0 0 1000 1000'
-
-    # this._addTextBanner(rootElement, 'footer-container', input['text-footer'], input) if input['text-footer']?
-
-    enteringLeafNodes = svg.selectAll(".node")
+    enteringLeafNodes = instance.outerSvg.selectAll(".node")
       .data gridLayout(d3Data)
       .enter()
       .append "g"
         .attr "class", "node"
         .attr "transform", (d) ->
-          return "translate(" + d.x + "," + d.y + ")"
+          y = d.y
+          y += 100 if input['text-header']
+          return "translate(" + d.x + "," + y + ")"
 
     enteringLeafNodes.append("svg:rect")
       .attr 'width', gridLayout.nodeSize()[0]
@@ -58,20 +94,20 @@ HTMLWidgets.widget
         .attr 'xlink:href', input.baseImageUrl
         .attr 'class', 'base-image'
 
-    enteringLeafNodes.append("clipPath")
-      .attr "id", "my-clip"
-      .append "rect"
-        .attr "x", 0
+    enteringLeafNodes.append('clipPath')
+      .attr 'id', 'my-clip'
+      .append 'rect'
+        .attr 'x', 0
 
-        .attr "y", (d) ->
+        .attr 'y', (d) ->
           return 0 if input.direction == 'horizontal'
           return gridLayout.nodeSize()[1] * (1 -d.percentage)
 
-        .attr "width", (d) ->
+        .attr 'width', (d) ->
           return gridLayout.nodeSize()[0] * d.percentage if input.direction == 'horizontal'
           return gridLayout.nodeSize()[0]
 
-        .attr "height", (d) ->
+        .attr 'height', (d) ->
           return gridLayout.nodeSize()[1] * d.percentage if input.direction == 'vertical'
           return gridLayout.nodeSize()[1]
 
@@ -144,14 +180,3 @@ HTMLWidgets.widget
       d3Data.push { percentage: percentage }
     return d3Data
 
-  _addTextBanner: (el, className, text, args) ->
-    bannerContainer = $("<div class=\"#{className}\">")
-      .css 'width', instance.width
-      .css 'text-align', 'center'
-      .html text
-
-    bannerContainer.css('color', args['font-color']) if _.has args, 'font-color'
-    for cssAttribute in ['font-family', 'font-size', 'font-weight']
-      bannerContainer.css(cssAttribute, args[cssAttribute]) if _.has args, cssAttribute
-
-    $(el).append bannerContainer

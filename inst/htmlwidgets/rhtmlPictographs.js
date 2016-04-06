@@ -12,42 +12,81 @@ HTMLWidgets.widget({
     };
   },
   renderValue: function(el, params, instance) {
-    var cssAttribute, d3Data, displayText, enteringLeafNodes, gridLayout, input, rootElement, svg, textOverlay, _i, _len, _ref, _results;
+    var anonSvg, bannerData, banners, cssAttribute, d3Data, displayText, enteringLeafNodes, gridHeight, gridLayout, input, textOverlay, _i, _j, _len, _len1, _ref, _ref1, _results;
     input = this._normalizeInput(params);
+    instance.rootElement = _.has(el, 'length') ? el[0] : el;
+    anonSvg = $("<svg class=\"rhtml-pictograph-outer-svg\">").attr('width', '100%').attr('height', '100%');
+    $(instance.rootElement).append(anonSvg);
+    instance.outerSvg = d3.select('.rhtml-pictograph-outer-svg');
+    document.getElementsByClassName("rhtml-pictograph-outer-svg")[0].setAttribute('viewBox', '0 0 1000 1000');
+    bannerData = [];
+    if (input['text-header'] != null) {
+      bannerData.push({
+        "class": 'text-header',
+        y: 50
+      });
+    }
+    if (input['text-footer'] != null) {
+      bannerData.push({
+        "class": 'text-footer',
+        y: 950
+      });
+    }
+    banners = instance.outerSvg.selectAll('.text-header').data(bannerData).enter().append('svg:text').attr('x', '500').attr('y', function(d) {
+      return d.y;
+    }).style('text-anchor', 'middle').style('alignment-baseline', 'central').style('dominant-baseline', 'central').attr('class', function(d) {
+      return d["class"];
+    }).text(function(d) {
+      return input[d["class"]];
+    });
+    if (_.has(input, 'font-color')) {
+      banners.attr('fill', input['font-color']);
+    }
+    _ref = ['font-family', 'font-size', 'font-weight'];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      cssAttribute = _ref[_i];
+      if (_.has(input, cssAttribute)) {
+        banners.attr(cssAttribute, input[cssAttribute]);
+      }
+    }
     d3Data = this._generateDataArray(input.percentage, input.numImages);
-    gridLayout = d3.layout.grid().bands().size([1000, 1000]).padding([0.1, 0.1]);
+    gridHeight = 1000;
+    if (input['text-header'] != null) {
+      gridHeight -= 100;
+    }
+    if (input['text-footer'] != null) {
+      gridHeight -= 100;
+    }
+    gridLayout = d3.layout.grid().bands().size([1000, gridHeight]).padding([0.1, 0.1]);
     if (input['numRows'] != null) {
       gridLayout.rows(input['numRows']);
     }
     if (input['numCols'] != null) {
       gridLayout.cols(input['numCols']);
     }
-    rootElement = _.has(el, 'length') ? el[0] : el;
-    svg = d3.select(rootElement).append("svg").attr({
-      'width': '100%'
-    }).attr({
-      'height': '100%'
-    }).attr({
-      'viewBox': '0 0 1000 1000'
-    });
-    enteringLeafNodes = svg.selectAll(".node").data(gridLayout(d3Data)).enter().append("g").attr("class", "node").attr("transform", function(d) {
-      return "translate(" + d.x + "," + d.y + ")";
+    enteringLeafNodes = instance.outerSvg.selectAll(".node").data(gridLayout(d3Data)).enter().append("g").attr("class", "node").attr("transform", function(d) {
+      var y;
+      y = d.y;
+      if (input['text-header']) {
+        y += 100;
+      }
+      return "translate(" + d.x + "," + y + ")";
     });
     enteringLeafNodes.append("svg:rect").attr('width', gridLayout.nodeSize()[0]).attr('height', gridLayout.nodeSize()[1]).attr('class', 'background-rect').attr('fill', input['background-color'] || 'none');
     if (input.baseImageUrl != null) {
       enteringLeafNodes.append("svg:image").attr('width', gridLayout.nodeSize()[0]).attr('height', gridLayout.nodeSize()[1]).attr('xlink:href', input.baseImageUrl).attr('class', 'base-image');
     }
-    enteringLeafNodes.append("clipPath").attr("id", "my-clip").append("rect").attr("x", 0).attr("y", function(d) {
+    enteringLeafNodes.append('clipPath').attr('id', 'my-clip').append('rect').attr('x', 0).attr('y', function(d) {
       if (input.direction === 'horizontal') {
         return 0;
       }
       return gridLayout.nodeSize()[1] * (1 - d.percentage);
-    }).attr("width", function(d) {
+    }).attr('width', function(d) {
       if (input.direction === 'horizontal') {
         return gridLayout.nodeSize()[0] * d.percentage;
       }
       return gridLayout.nodeSize()[0];
-    }).attr("height", function(d) {
+    }).attr('height', function(d) {
       if (input.direction === 'vertical') {
         return gridLayout.nodeSize()[1] * d.percentage;
       }
@@ -67,10 +106,10 @@ HTMLWidgets.widget({
       if (_.has(input, 'font-color')) {
         textOverlay.attr('fill', input['font-color']);
       }
-      _ref = ['font-family', 'font-size', 'font-weight'];
+      _ref1 = ['font-family', 'font-size', 'font-weight'];
       _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        cssAttribute = _ref[_i];
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        cssAttribute = _ref1[_j];
         if (_.has(input, cssAttribute)) {
           _results.push(textOverlay.attr(cssAttribute, input[cssAttribute]));
         } else {
@@ -143,20 +182,5 @@ HTMLWidgets.widget({
       });
     }
     return d3Data;
-  },
-  _addTextBanner: function(el, className, text, args) {
-    var bannerContainer, cssAttribute, _i, _len, _ref;
-    bannerContainer = $("<div class=\"" + className + "\">").css('width', instance.width).css('text-align', 'center').html(text);
-    if (_.has(args, 'font-color')) {
-      bannerContainer.css('color', args['font-color']);
-    }
-    _ref = ['font-family', 'font-size', 'font-weight'];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      cssAttribute = _ref[_i];
-      if (_.has(args, cssAttribute)) {
-        bannerContainer.css(cssAttribute, args[cssAttribute]);
-      }
-    }
-    return $(el).append(bannerContainer);
   }
 });
