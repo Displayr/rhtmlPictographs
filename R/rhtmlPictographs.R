@@ -9,25 +9,27 @@
 #' If the base image is provided it will be fully rendered "underneath" the variable image.
 #' A text overlay contianing the "percentage fill" or any other supplied text can be displayed as well.
 #'
-#' @param percentage: numeric between 0 and 1
+#' The widget will fill attempt to fill 100% of the containing DOM element, and the widget will remember the initial aspect ratio that was defined (i.e., the ratio between the initial height and initial width parameters).
+#' If the containing DIV is resized the widget will resize, while maintaining the original aspect ratio.
+#'
+#' @param percentage: numeric between 0 and 1. Default 1.
 #' @param width: positive numeric representing desired width of graphic
-#' @param height: positive numeric representing desired height of graphic
+#' @param height: positive numeric representing desired height of graphic. Note that specified height will be total height including header and footer text banners.
 #' @param settingsJsonString: valid JSON string containing the following params
 #'   - direction: ("horizontal"|"vertical") - default horizontal. Indicates direction of cropping
 #'   - numImages: integer - default 1. The number of images to display
-#'   - numRows: integer - default unset. The number of rows in the grid. Must be <= numImages
-#'   - numCols: integer - default unset. The number of cols in the grid. Must be <= numImages
-#'   - baseImageUrl: URL - required. The URL (including http://) of baseImage
+#'   - numRows: integer - optional. default unset. The number of rows in the grid. Must be <= numImages
+#'   - numCols: integer - optional. default unset. The number of cols in the grid. Must be <= numImages
+#'   - baseImageUrl: URL - optional. default unset. The URL (including http://) of baseImage
 #'   - variableImageUrl: URL - required. The URL (including http://) of variableImageUrl
-#'   - background-color: string - default unset. Set a background color under both images
-#'   - text-overlay: - string - default unset. A string to display overlaid over the center of the graphic. If string set to 'percentage' then the numeric percentage will be displayed
-#'   - text-header: string - default unset. Text to display above graphic
-#'   - text-override: string - optional. Text to display below graphic
-#'   - font-family: css - optional. Controls font. See : https://developer.mozilla.org/en/docs/Web/CSS/font-family
-#'   - font-weight: css - optional. Controls font thickness. See : https://developer.mozilla.org/en/docs/Web/CSS/font-weight
-#'   - font-size: css - optional. Controls font size. See : https://developer.mozilla.org/en/docs/Web/CSS/font-size
-#'   - font-color: css - optional. Controls font color. Note this maps to the css 'color' property. See : https://developer.mozilla.org/en/docs/Web/CSS/color
-#'   - tooltip: string - optional. A string to display on mouse hover over the graphic
+#'   - background-color: string - optional. default unset. Set a background color under both images
+#'   - text-overlay: - string - optional. default unset. A string to display overlaid over the center of the graphic. If string set to 'percentage' then the numeric percentage will be displayed
+#'   - text-header: string - optional. default unset. Text to display above graphic
+#'   - font-family: css - optional. default 'Verdana,sans-serif'. Controls font. See : https://developer.mozilla.org/en/docs/Web/CSS/font-family
+#'   - font-weight: css - optional. default 900. Controls font thickness. See : https://developer.mozilla.org/en/docs/Web/CSS/font-weight
+#'   - font-size: css - optional. default 24px. Controls font size. See : https://developer.mozilla.org/en/docs/Web/CSS/font-size
+#'   - font-color: css - optional. default white. Controls font color. Note this maps to the css 'color' property. See : https://developer.mozilla.org/en/docs/Web/CSS/color
+#'   - tooltip: string - optional. default unset. A string to display on mouse hover over the graphic
 #'
 #' @examples
 #'

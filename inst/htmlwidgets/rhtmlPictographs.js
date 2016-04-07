@@ -14,27 +14,18 @@ HTMLWidgets.widget({
     };
   },
   renderValue: function(el, params, instance) {
-    var anonSvg, cssAttribute, d3Data, displayText, enteringLeafNodes, graphicContainerVerticalOffset, graphicRatio, gridHeight, gridLayout, input, textOverlay, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2, _results;
-    input = this._normalizeInput(params);
-    input.bannerRatio = 0.1;
+    var anonSvg, cssAttribute, d3Data, dimensions, displayText, enteringLeafNodes, gridLayout, input, textOverlay, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2, _results;
+    input = this._normalizeInput(params, instance);
+    dimensions = this._computeDimensions(input, instance);
+    console.log(input);
+    console.log(dimensions);
     instance.rootElement = _.has(el, 'length') ? el[0] : el;
     anonSvg = $("<svg class=\"rhtml-pictograph-outer-svg\">").attr('width', '100%').attr('height', '100%');
     $(instance.rootElement).append(anonSvg);
     instance.outerSvg = d3.select('.rhtml-pictograph-outer-svg');
     document.getElementsByClassName("rhtml-pictograph-outer-svg")[0].setAttribute('viewBox', "0 0 " + instance.initialWidth + " " + instance.initialHeight);
-    graphicRatio = 1;
     if (input['text-header'] != null) {
-      graphicRatio -= input.bannerRatio;
-    }
-    if (input['text-footer'] != null) {
-      graphicRatio -= input.bannerRatio;
-    }
-    if (input['text-header'] != null) {
-      instance.textHeader = instance.outerSvg.append('svg:text').attr('x', instance.initialWidth / 2).attr('y', function(d) {
-        var alreadyDrawn;
-        alreadyDrawn = 0;
-        return alreadyDrawn + instance.initialHeight * input.bannerRatio / 2;
-      }).style('text-anchor', 'middle').style('alignment-baseline', 'central').style('dominant-baseline', 'central').attr('class', 'text-header').text(function(d) {
+      instance.textHeader = instance.outerSvg.append('svg:text').attr('x', instance.initialWidth / 2).attr('y', dimensions.headerHeight / 2).style('text-anchor', 'middle').style('alignment-baseline', 'central').style('dominant-baseline', 'central').attr('class', 'text-header').text(function(d) {
         return input['text-header'];
       });
       if (_.has(input, 'font-color')) {
@@ -48,23 +39,9 @@ HTMLWidgets.widget({
         }
       }
     }
-    graphicContainerVerticalOffset = 0;
-    if (input['text-header'] != null) {
-      graphicContainerVerticalOffset += input.bannerRatio * instance.initialHeight;
-    }
-    console.log("graphicContainerVerticalOffset");
-    console.log(graphicContainerVerticalOffset);
-    instance.graphicContainer = instance.outerSvg.append('g').attr('class', 'graphic-container').attr('transform', "translate(0," + graphicContainerVerticalOffset + ")");
+    instance.graphicContainer = instance.outerSvg.append('g').attr('class', 'graphic-container').attr('transform', "translate(0," + dimensions.graphicOffSet + ")");
     if (input['text-footer'] != null) {
-      instance.textFooter = instance.outerSvg.append('svg:text').attr('x', instance.initialWidth / 2).attr('y', function(d) {
-        var alreadyDrawn;
-        alreadyDrawn = 0;
-        if (input['text-header'] != null) {
-          alreadyDrawn += input.bannerRatio * instance.initialHeight;
-        }
-        alreadyDrawn += graphicRatio * instance.initialHeight;
-        return alreadyDrawn + instance.initialHeight * input.bannerRatio / 2;
-      }).style('text-anchor', 'middle').style('alignment-baseline', 'central').style('dominant-baseline', 'central').attr('class', 'text-footer').text(function(d) {
+      instance.textFooter = instance.outerSvg.append('svg:text').attr('x', instance.initialWidth / 2).attr('y', dimensions.footerOffset + dimensions.footerHeight / 2).style('text-anchor', 'middle').style('alignment-baseline', 'central').style('dominant-baseline', 'central').attr('class', 'text-footer').text(function(d) {
         return input['text-footer'];
       });
       if (_.has(input, 'font-color')) {
@@ -79,18 +56,7 @@ HTMLWidgets.widget({
       }
     }
     d3Data = this._generateDataArray(input.percentage, input.numImages);
-    gridHeight = instance.initialHeight;
-    if (input['text-header'] != null) {
-      gridHeight -= input.bannerRatio * instance.initialHeight;
-    }
-    if (input['text-footer'] != null) {
-      gridHeight -= input.bannerRatio * instance.initialHeight;
-    }
-    console.log("initialHeight");
-    console.log(instance.initialHeight);
-    console.log("gridHeight");
-    console.log(gridHeight);
-    gridLayout = d3.layout.grid().bands().size([instance.initialWidth, gridHeight]).padding([0.1, 0.1]);
+    gridLayout = d3.layout.grid().bands().size([instance.initialWidth, dimensions.graphicHeight]).padding([0.1, 0.1]);
     if (input['numRows'] != null) {
       gridLayout.rows(input['numRows']);
     }
@@ -147,9 +113,39 @@ HTMLWidgets.widget({
       return _results;
     }
   },
-  _normalizeInput: function(params) {
-    var err, input, msg;
+  _normalizeInput: function(params, instance) {
+    var err, input, msg, verifyKeyIsFloat, verifyKeyIsInt, _ref;
     input = null;
+    verifyKeyIsFloat = function(input, key, defaultValue, message) {
+      if (message == null) {
+        message = 'Must be float';
+      }
+      if (!_.isUndefined(defaultValue)) {
+        if (!_.has(input, key)) {
+          input[key] = defaultValue;
+          return;
+        }
+      }
+      if (_.isNaN(parseFloat(input[key]))) {
+        throw new Error("invalid '" + key + "': " + input[key] + ". " + message + ".");
+      }
+      input[key] = parseFloat(input[key]);
+    };
+    verifyKeyIsInt = function(input, key, defaultValue, message) {
+      if (message == null) {
+        message = 'Must be integer';
+      }
+      if (!_.isUndefined(defaultValue)) {
+        if (!_.has(input, key)) {
+          input[key] = defaultValue;
+          return;
+        }
+      }
+      if (_.isNaN(parseInt(input[key]))) {
+        throw new Error("invalid '" + key + "': " + input[key] + ". " + message + ".");
+      }
+      input[key] = parseFloat(input[key]);
+    };
     try {
       if (_.isString(params.settingsJsonString)) {
         input = JSON.parse(params.settingsJsonString);
@@ -166,24 +162,19 @@ HTMLWidgets.widget({
     if (input.variableImageUrl == null) {
       throw new Error("Must specify 'variableImageUrl'");
     }
-    if (input.percentage == null) {
-      throw new Error("Must specify 'percent'");
-    }
-    input.percentage = parseFloat(input.percentage);
-    if (_.isNaN(input.percentage)) {
-      throw new Error("percentage must be a number");
-    }
+    verifyKeyIsFloat(input, 'percentage', 1, 'Must be float 0 - 1');
     if (!(input.percentage >= 0)) {
       throw new Error("percentage must be >= 0");
     }
     if (!(input.percentage <= 1)) {
       throw new Error("percentage must be <= 1");
     }
-    if (input['numImages'] == null) {
-      input['numImages'] = 1;
-    }
+    verifyKeyIsInt(input, 'numImages', 1);
     if (input['direction'] == null) {
       input['direction'] = 'horizontal';
+    }
+    if ((_ref = input['direction']) !== 'horizontal' && _ref !== 'vertical') {
+      throw new Error("direction must be either (horizontal|vertical)");
     }
     if (input['font-family'] == null) {
       input['font-family'] = 'Verdana,sans-serif';
@@ -192,12 +183,23 @@ HTMLWidgets.widget({
       input['font-weight'] = '900';
     }
     if (input['font-size'] == null) {
-      input['font-size'] = '20px';
+      input['font-size'] = '24';
     }
+    input['font-size'] = parseInt(input['font-size'].replace(/(px|em)/, ''));
     if (input['font-color'] == null) {
       input['font-color'] = 'white';
     }
     return input;
+  },
+  _computeDimensions: function(input, instance) {
+    var dimensions;
+    dimensions = {};
+    dimensions.headerHeight = 0 + (input['text-header'] != null ? input['font-size'] : 0);
+    dimensions.footerHeight = 0 + (input['text-footer'] != null ? input['font-size'] : 0);
+    dimensions.graphicHeight = instance.height - dimensions.headerHeight - dimensions.footerHeight;
+    dimensions.graphicOffSet = 0 + dimensions.headerHeight;
+    dimensions.footerOffset = 0 + dimensions.headerHeight + dimensions.graphicHeight;
+    return dimensions;
   },
   _generateDataArray: function(percentage, numImages) {
     var d3Data, num, totalArea, _i;

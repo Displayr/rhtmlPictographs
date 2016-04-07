@@ -154,10 +154,13 @@
           "settings": {
             "numImages": 12,
             "numRows": 1,
-            "variableImageUrl": "/images/cc_512.png",
+            "bannerRatio": 0.5,
+            "baseImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/black_square_512.png",
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "text-header": "Only one row",
             "font-family": "verdana",
             "font-weight": "900",
-            "font-size": "24px",
+            "font-size": "32px",
             "font-color": "blue"
           },
           "width": 400,
@@ -174,13 +177,77 @@
             "numCols": 1,
             "baseImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/black_square_512.png",
             "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
-            "text-header": "Only one column",
             "font-family": "verdana",
             "font-weight": "900",
             "font-size": "24px",
             "font-color": "blue"
           },
           "width": 100,
+          "height": 400
+        }
+      ]
+    },
+    {
+      "name": "Banner Ratios",
+      "scenarios": [
+        {
+          "name": "Default Banner Ratio of 0.1 font 24px",
+          "description" : [
+            "XXX"
+          ],
+          "percentage": 1,
+          "settings": {
+            "bannerRatio": "0.1",
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "text-header": "Banner Ratio 0.1 fontsize 24",
+            "text-footer": "Banner Ratio 0.1 fontsize 24",
+            "font-family": "verdana",
+            "font-weight": "900",
+            "font-size": "24px",
+            "font-color": "blue"
+          },
+          "width": 400,
+          "height": 400
+        },
+        {
+          "name": "Banner Ratio of 0.3 font 24px",
+          "description" : [
+            "XXX"
+          ],
+          "percentage": 1,
+          "settings": {
+            "bannerRatio": "0.3",
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "text-header": "Banner Ratio 0.3 fontsize 24",
+            "text-footer": "Banner Ratio 0.3 fontsize 24",
+            "font-family": "verdana",
+            "font-weight": "900",
+            "font-size": "24px",
+            "font-color": "blue"
+          },
+          "width": 400,
+          "height": 400
+        },
+        {
+          "name": "Banner Ratio of 0.3 font 48px",
+          "description" : [
+            "XXX"
+          ],
+          "percentage": 1,
+          "settings": {
+            "bannerRatio": "0.3",
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "text-header": "Banner Ratio 0.3 fontsize 48",
+            "text-footer": "Banner Ratio 0.3 fontsize 48",
+            "font-family": "verdana",
+            "font-weight": "900",
+            "font-size": "48px",
+            "font-color": "blue"
+          },
+          "width": 400,
           "height": 400
         }
       ]

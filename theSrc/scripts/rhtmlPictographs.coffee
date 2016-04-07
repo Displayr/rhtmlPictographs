@@ -17,14 +17,14 @@ HTMLWidgets.widget
 
   renderValue: (el, params, instance) ->
 
-    input = this._normalizeInput params
-
-    #@TODO parameterize
-    input.bannerRatio = 0.1
+    input = this._normalizeInput params, instance
+    dimensions = this._computeDimensions input, instance
+    console.log input
+    console.log dimensions
 
     instance.rootElement = if _.has(el, 'length') then el[0] else el
 
-    #NB the following sequence is a little rought because I am switching between native JS, jQuery, and D3
+    #NB the following sequence is a little rough because I am switching between native JS, jQuery, and D3
     #@TODO : clean this up
 
     anonSvg = $("<svg class=\"rhtml-pictograph-outer-svg\">")
@@ -40,18 +40,12 @@ HTMLWidgets.widget
     document.getElementsByClassName("rhtml-pictograph-outer-svg")[0]
       .setAttribute 'viewBox', "0 0 #{instance.initialWidth} #{instance.initialHeight}"
 
-    graphicRatio = 1
-    graphicRatio -= input.bannerRatio if input['text-header']?
-    graphicRatio -= input.bannerRatio if input['text-footer']?
-
     if input['text-header']?
       instance.textHeader = instance.outerSvg.append('svg:text')
-        .attr 'x', instance.initialWidth / 2
-        .attr 'y', (d) ->
-          alreadyDrawn = 0
-          alreadyDrawn + instance.initialHeight * input.bannerRatio / 2
+        .attr 'x', instance.initialWidth / 2 #NB /2 because its midpoint
+        .attr 'y', dimensions.headerHeight / 2 #NB /2 because its midpoint
         .style 'text-anchor', 'middle'
-        #alignment-baseline and dominant-baseline should do same thing but are both may be necessary for browser compatabilitu
+        #alignment-baseline and dominant-baseline should do same thing but are both may be necessary for browser compatability
         .style 'alignment-baseline', 'central'
         .style 'dominant-baseline', 'central'
         .attr 'class', 'text-header'
@@ -61,22 +55,14 @@ HTMLWidgets.widget
       for cssAttribute in ['font-family', 'font-size', 'font-weight']
         instance.textHeader.attr(cssAttribute, input[cssAttribute]) if _.has input, cssAttribute
 
-    graphicContainerVerticalOffset = 0
-    graphicContainerVerticalOffset += input.bannerRatio * instance.initialHeight if input['text-header']?
-    console.log "graphicContainerVerticalOffset"
-    console.log graphicContainerVerticalOffset
     instance.graphicContainer = instance.outerSvg.append('g')
       .attr('class', 'graphic-container')
-      .attr 'transform', "translate(0,#{graphicContainerVerticalOffset})"
+      .attr 'transform', "translate(0,#{dimensions.graphicOffSet})"
 
     if input['text-footer']?
       instance.textFooter = instance.outerSvg.append('svg:text')
-        .attr 'x', instance.initialWidth / 2
-        .attr 'y', (d) ->
-          alreadyDrawn = 0
-          alreadyDrawn += input.bannerRatio * instance.initialHeight if input['text-header']?
-          alreadyDrawn += graphicRatio * instance.initialHeight
-          alreadyDrawn + instance.initialHeight * input.bannerRatio / 2
+        .attr 'x', instance.initialWidth / 2 #NB /2 because its midpoint
+        .attr 'y', dimensions.footerOffset + dimensions.footerHeight / 2 #NB /2 because its midpoint
         .style 'text-anchor', 'middle'
         #alignment-baseline and dominant-baseline should do same thing but are both may be necessary for browser compatabilitu
         .style 'alignment-baseline', 'central'
@@ -88,42 +74,12 @@ HTMLWidgets.widget
       for cssAttribute in ['font-family', 'font-size', 'font-weight']
         instance.textFooter.attr(cssAttribute, input[cssAttribute]) if _.has input, cssAttribute
 
-
-    # bannerData = []
-    # bannerData.push({ class: 'text-header', y: 50 }) if input['text-header']?
-    # bannerData.push({ class: 'text-footer', y: 950 }) if input['text-footer']?
-
-    # banners = instance.outerSvg.selectAll('.text-header')
-    #   .data bannerData
-    #   .enter()
-    #   .append 'svg:text'
-    #     .attr 'x', '500'
-    #     .attr 'y', (d) -> d.y
-    #     .style 'text-anchor', 'middle'
-    #     #alignment-baseline and dominant-baseline should do same thing but are both may be necessary for browser compatabilitu
-    #     .style 'alignment-baseline', 'central'
-    #     .style 'dominant-baseline', 'central'
-    #     .attr 'class', (d) -> d.class
-    #     .text (d) -> input[d.class]
-
-    # banners.attr('fill', input['font-color']) if _.has input, 'font-color'
-    # for cssAttribute in ['font-family', 'font-size', 'font-weight']
-    #   banners.attr(cssAttribute, input[cssAttribute]) if _.has input, cssAttribute
-
-
     d3Data = this._generateDataArray input.percentage, input.numImages
 
-    #d3.grid is provided by github.com/interactivethings/d3-grid
-    gridHeight = instance.initialHeight
-    gridHeight -= input.bannerRatio * instance.initialHeight if input['text-header']?
-    gridHeight -= input.bannerRatio * instance.initialHeight if input['text-footer']?
-    console.log("initialHeight")
-    console.log(instance.initialHeight)
-    console.log("gridHeight")
-    console.log(gridHeight)
+    #d3.grid is added to d3 via github.com/NumbersInternational/d3-grid
     gridLayout = d3.layout.grid()
       .bands()
-      .size [instance.initialWidth, gridHeight]
+      .size [instance.initialWidth, dimensions.graphicHeight]
       .padding([0.1, 0.1]); #@TODO control padding
 
     gridLayout.rows(input['numRows']) if input['numRows']?
@@ -195,8 +151,32 @@ HTMLWidgets.widget
       for cssAttribute in ['font-family', 'font-size', 'font-weight']
         textOverlay.attr(cssAttribute, input[cssAttribute]) if _.has input, cssAttribute
 
-  _normalizeInput: (params) ->
+  _normalizeInput: (params, instance) ->
     input = null
+
+    verifyKeyIsFloat = (input, key, defaultValue, message='Must be float') ->
+      if !_.isUndefined defaultValue
+        unless _.has input, key
+          input[key] = defaultValue
+          return
+
+      if _.isNaN parseFloat input[key]
+        throw new Error "invalid '#{key}': #{input[key]}. #{message}."
+
+      input[key] = parseFloat input[key]
+      return
+
+    verifyKeyIsInt = (input, key, defaultValue, message='Must be integer') ->
+      if !_.isUndefined defaultValue
+        unless _.has input, key
+          input[key] = defaultValue
+          return
+
+      if _.isNaN parseInt input[key]
+        throw new Error "invalid '#{key}': #{input[key]}. #{message}."
+
+      input[key] = parseFloat input[key]
+      return
 
     try
       if _.isString params.settingsJsonString
@@ -212,20 +192,36 @@ HTMLWidgets.widget
 
     throw new Error "Must specify 'variableImageUrl'" unless input.variableImageUrl?
 
-    throw new Error "Must specify 'percent'" unless input.percentage?
-    input.percentage = parseFloat input.percentage
-    throw new Error "percentage must be a number" if _.isNaN input.percentage
+    verifyKeyIsFloat input, 'percentage', 1, 'Must be float 0 - 1'
     throw new Error "percentage must be >= 0" unless input.percentage >= 0
     throw new Error "percentage must be <= 1" unless input.percentage <= 1
 
-    input['numImages'] = 1 unless input['numImages']?
+    verifyKeyIsInt input, 'numImages', 1
+
     input['direction'] = 'horizontal' unless input['direction']?
+    unless input['direction'] in ['horizontal', 'vertical']
+      throw new Error "direction must be either (horizontal|vertical)"
+
     input['font-family'] = 'Verdana,sans-serif' unless input['font-family']?
     input['font-weight'] = '900' unless input['font-weight']?
-    input['font-size'] = '20px' unless input['font-size']?
+    input['font-size'] = '24' unless input['font-size']?
+    input['font-size'] = parseInt(input['font-size'].replace(/(px|em)/, '')) #all sizes are relative to viewBox and have no units
     input['font-color'] = 'white' unless input['font-color']?
 
     return input
+
+  _computeDimensions: (input, instance) ->
+    dimensions = {}
+
+    dimensions.headerHeight = 0 + (if input['text-header']? then input['font-size'] else 0)
+    dimensions.footerHeight = 0 + (if input['text-footer']? then input['font-size'] else 0)
+
+    dimensions.graphicHeight = instance.height - dimensions.headerHeight - dimensions.footerHeight
+    dimensions.graphicOffSet = 0 + dimensions.headerHeight
+
+    dimensions.footerOffset = 0 + dimensions.headerHeight + dimensions.graphicHeight
+
+    return dimensions
 
   _generateDataArray: (percentage, numImages) ->
     d3Data = []
