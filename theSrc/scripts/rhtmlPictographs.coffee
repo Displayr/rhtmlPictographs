@@ -34,9 +34,12 @@ HTMLWidgets.widget
     instance.outerSvg = d3.select('.rhtml-pictograph-outer-svg')
 
     #NB JQuery insists on lowercasing attributes, so we must use JS directly
-    # when setting viewBox ?!
+    # when setting viewBox and preserveAspectRatio ?!
     document.getElementsByClassName("rhtml-pictograph-outer-svg")[0]
       .setAttribute 'viewBox', "0 0 #{instance.initialWidth} #{instance.initialHeight}"
+    if input['preserveAspectRatio']?
+      document.getElementsByClassName("rhtml-pictograph-outer-svg")[0]
+        .setAttribute 'preserveAspectRatio', input['preserveAspectRatio']
 
     if input['text-header']?
       instance.textHeader = instance.outerSvg.append('svg:text')
@@ -78,7 +81,7 @@ HTMLWidgets.widget
     gridLayout = d3.layout.grid()
       .bands()
       .size [instance.initialWidth, dimensions.graphicHeight]
-      .padding([0.1, 0.1]); #@TODO control padding
+      .padding([input['interColumnPadding'], input['interRowPadding']])
 
     gridLayout.rows(input['numRows']) if input['numRows']?
     gridLayout.cols(input['numCols']) if input['numCols']?
@@ -181,6 +184,10 @@ HTMLWidgets.widget
       input[key] = parseFloat input[key]
       return
 
+    verifyKeyIsRatio = (input, key) ->
+      throw new Error "#{key} must be >= 0" unless input[key] >= 0
+      throw new Error "#{key} must be <= 1" unless input[key] <= 1
+
     try
       if _.isString params.settingsJsonString
         input = JSON.parse params.settingsJsonString
@@ -195,9 +202,8 @@ HTMLWidgets.widget
 
     throw new Error "Must specify 'variableImageUrl'" unless input.variableImageUrl?
 
-    verifyKeyIsFloat input, 'percentage', 1, 'Must be float 0 - 1'
-    throw new Error "percentage must be >= 0" unless input.percentage >= 0
-    throw new Error "percentage must be <= 1" unless input.percentage <= 1
+    verifyKeyIsFloat input, 'percentage', 1, 'Must be number between 0 and 1'
+    verifyKeyIsRatio input, 'percentage'
 
     verifyKeyIsInt input, 'numImages', 1
 
@@ -210,6 +216,11 @@ HTMLWidgets.widget
     input['font-size'] = '24' unless input['font-size']?
     input['font-size'] = parseInt(input['font-size'].replace(/(px|em)/, '')) #all sizes are relative to viewBox and have no units
     input['font-color'] = 'black' unless input['font-color']?
+
+    verifyKeyIsFloat input, 'interColumnPadding', 0.05, 'Must be number between 0 and 1'
+    verifyKeyIsRatio input, 'interColumnPadding'
+    verifyKeyIsFloat input, 'interRowPadding', 0.05, 'Must be number between 0 and 1'
+    verifyKeyIsRatio input, 'interRowPadding'
 
     return input
 

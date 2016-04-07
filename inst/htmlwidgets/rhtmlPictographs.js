@@ -22,6 +22,9 @@ HTMLWidgets.widget({
     $(instance.rootElement).append(anonSvg);
     instance.outerSvg = d3.select('.rhtml-pictograph-outer-svg');
     document.getElementsByClassName("rhtml-pictograph-outer-svg")[0].setAttribute('viewBox', "0 0 " + instance.initialWidth + " " + instance.initialHeight);
+    if (input['preserveAspectRatio'] != null) {
+      document.getElementsByClassName("rhtml-pictograph-outer-svg")[0].setAttribute('preserveAspectRatio', input['preserveAspectRatio']);
+    }
     if (input['text-header'] != null) {
       instance.textHeader = instance.outerSvg.append('svg:text').attr('x', instance.initialWidth / 2).attr('y', dimensions.headerHeight / 2).style('text-anchor', 'middle').style('alignment-baseline', 'central').style('dominant-baseline', 'central').attr('class', 'text-header').text(function(d) {
         return input['text-header'];
@@ -54,7 +57,7 @@ HTMLWidgets.widget({
       }
     }
     d3Data = this._generateDataArray(input.percentage, input.numImages);
-    gridLayout = d3.layout.grid().bands().size([instance.initialWidth, dimensions.graphicHeight]).padding([0.1, 0.1]);
+    gridLayout = d3.layout.grid().bands().size([instance.initialWidth, dimensions.graphicHeight]).padding([input['interColumnPadding'], input['interRowPadding']]);
     if (input['numRows'] != null) {
       gridLayout.rows(input['numRows']);
     }
@@ -115,7 +118,7 @@ HTMLWidgets.widget({
     }
   },
   _normalizeInput: function(params, instance) {
-    var err, input, msg, verifyKeyIsFloat, verifyKeyIsInt, _ref;
+    var err, input, msg, verifyKeyIsFloat, verifyKeyIsInt, verifyKeyIsRatio, _ref;
     input = null;
     verifyKeyIsFloat = function(input, key, defaultValue, message) {
       if (message == null) {
@@ -147,6 +150,14 @@ HTMLWidgets.widget({
       }
       input[key] = parseFloat(input[key]);
     };
+    verifyKeyIsRatio = function(input, key) {
+      if (!(input[key] >= 0)) {
+        throw new Error("" + key + " must be >= 0");
+      }
+      if (!(input[key] <= 1)) {
+        throw new Error("" + key + " must be <= 1");
+      }
+    };
     try {
       if (_.isString(params.settingsJsonString)) {
         input = JSON.parse(params.settingsJsonString);
@@ -163,13 +174,8 @@ HTMLWidgets.widget({
     if (input.variableImageUrl == null) {
       throw new Error("Must specify 'variableImageUrl'");
     }
-    verifyKeyIsFloat(input, 'percentage', 1, 'Must be float 0 - 1');
-    if (!(input.percentage >= 0)) {
-      throw new Error("percentage must be >= 0");
-    }
-    if (!(input.percentage <= 1)) {
-      throw new Error("percentage must be <= 1");
-    }
+    verifyKeyIsFloat(input, 'percentage', 1, 'Must be number between 0 and 1');
+    verifyKeyIsRatio(input, 'percentage');
     verifyKeyIsInt(input, 'numImages', 1);
     if (input['direction'] == null) {
       input['direction'] = 'horizontal';
@@ -190,6 +196,10 @@ HTMLWidgets.widget({
     if (input['font-color'] == null) {
       input['font-color'] = 'black';
     }
+    verifyKeyIsFloat(input, 'interColumnPadding', 0.05, 'Must be number between 0 and 1');
+    verifyKeyIsRatio(input, 'interColumnPadding');
+    verifyKeyIsFloat(input, 'interRowPadding', 0.05, 'Must be number between 0 and 1');
+    verifyKeyIsRatio(input, 'interRowPadding');
     return input;
   },
   _computeDimensions: function(input, instance) {

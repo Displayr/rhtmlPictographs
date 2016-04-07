@@ -30,6 +30,11 @@
 #'   - font-size: css - optional. default 24px. Controls font size. See : https://developer.mozilla.org/en/docs/Web/CSS/font-size
 #'   - font-color: css - optional. default black. Controls font color. Note this maps to the css 'color' property. See : https://developer.mozilla.org/en/docs/Web/CSS/color
 #'   - tooltip: string - optional. default unset. A string to display on mouse hover over the graphic
+#'
+#'   "Advanced" parameters:
+#'   - preserveAspectRatio: string - optional. default unset. If set, the exact value will be used for the preserveAspectRatio property of the outer SVG. See here for docs: https://developer.mozilla.org/en/docs/Web/SVG/Attribute/preserveAspectRatio
+#'   - interColumnPadding: number between 0 and 1. default 0.05. Set the ratio of the padding between columns to the image size. Note that at 0.5 the padding is equal to the width of the image. For more info, this parameter sets the padding value of the call to .rangebands : https://github.com/mbostock/d3/wiki/Ordinal-Scales#ordinal_rangeBands
+#'   - interRowPadding: number between 0 and 1. default 0.05. Set the ratio of the padding between rows to the image size. Note that at 0.5 the padding is equal to the width of the image. For more info, this parameter sets the padding value of the call to .rangebands : https://github.com/mbostock/d3/wiki/Ordinal-Scales#ordinal_rangeBands
 #'   - debugBorder: existence - optional. default unset. Set this key to anything, and then debug borders will be drawn
 #'
 #' @examples
