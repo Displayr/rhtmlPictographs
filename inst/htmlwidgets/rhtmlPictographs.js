@@ -14,11 +14,9 @@ HTMLWidgets.widget({
     };
   },
   renderValue: function(el, params, instance) {
-    var anonSvg, cssAttribute, d3Data, dimensions, displayText, enteringLeafNodes, gridLayout, input, textOverlay, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2, _results;
+    var anonSvg, backgroundRect, cssAttribute, d3Data, dimensions, displayText, enteringLeafNodes, gridLayout, input, textOverlay, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2, _results;
     input = this._normalizeInput(params, instance);
     dimensions = this._computeDimensions(input, instance);
-    console.log(input);
-    console.log(dimensions);
     instance.rootElement = _.has(el, 'length') ? el[0] : el;
     anonSvg = $("<svg class=\"rhtml-pictograph-outer-svg\">").attr('width', '100%').attr('height', '100%');
     $(instance.rootElement).append(anonSvg);
@@ -66,7 +64,10 @@ HTMLWidgets.widget({
     enteringLeafNodes = instance.graphicContainer.selectAll(".node").data(gridLayout(d3Data)).enter().append("g").attr("class", "node").attr("transform", function(d) {
       return "translate(" + d.x + "," + d.y + ")";
     });
-    enteringLeafNodes.append("svg:rect").attr('width', gridLayout.nodeSize()[0]).attr('height', gridLayout.nodeSize()[1]).attr('class', 'background-rect').attr('fill', input['background-color'] || 'none');
+    backgroundRect = enteringLeafNodes.append("svg:rect").attr('width', gridLayout.nodeSize()[0]).attr('height', gridLayout.nodeSize()[1]).attr('class', 'background-rect').attr('fill', input['background-color'] || 'none');
+    if (input['debugBorder'] != null) {
+      backgroundRect.attr('stroke', 'black').attr('stroke-width', '1');
+    }
     if (input.baseImageUrl != null) {
       enteringLeafNodes.append("svg:image").attr('width', gridLayout.nodeSize()[0]).attr('height', gridLayout.nodeSize()[1]).attr('xlink:href', input.baseImageUrl).attr('class', 'base-image');
     }
@@ -187,7 +188,7 @@ HTMLWidgets.widget({
     }
     input['font-size'] = parseInt(input['font-size'].replace(/(px|em)/, ''));
     if (input['font-color'] == null) {
-      input['font-color'] = 'white';
+      input['font-color'] = 'black';
     }
     return input;
   },

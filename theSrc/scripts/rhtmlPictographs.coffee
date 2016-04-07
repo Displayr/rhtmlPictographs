@@ -19,8 +19,6 @@ HTMLWidgets.widget
 
     input = this._normalizeInput params, instance
     dimensions = this._computeDimensions input, instance
-    console.log input
-    console.log dimensions
 
     instance.rootElement = if _.has(el, 'length') then el[0] else el
 
@@ -92,11 +90,16 @@ HTMLWidgets.widget
         .attr "class", "node"
         .attr "transform", (d) -> return "translate(#{d.x},#{d.y})"
 
-    enteringLeafNodes.append("svg:rect")
+    backgroundRect = enteringLeafNodes.append("svg:rect")
       .attr 'width', gridLayout.nodeSize()[0]
       .attr 'height', gridLayout.nodeSize()[1]
       .attr 'class', 'background-rect'
       .attr 'fill', input['background-color'] || 'none'
+
+    if input['debugBorder']?
+      backgroundRect
+        .attr 'stroke', 'black'
+        .attr 'stroke-width', '1'
 
     if input.baseImageUrl?
       enteringLeafNodes.append("svg:image")
@@ -206,7 +209,7 @@ HTMLWidgets.widget
     input['font-weight'] = '900' unless input['font-weight']?
     input['font-size'] = '24' unless input['font-size']?
     input['font-size'] = parseInt(input['font-size'].replace(/(px|em)/, '')) #all sizes are relative to viewBox and have no units
-    input['font-color'] = 'white' unless input['font-color']?
+    input['font-color'] = 'black' unless input['font-color']?
 
     return input
 

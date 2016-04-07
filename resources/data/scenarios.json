@@ -96,26 +96,12 @@
       ]
     },
     {
-      "name": "Multiple Image Graphic",
+      "name": "Multiple Image Graphic - Squares",
       "scenarios": [
         {
           "name": "Multiple Image Example - Minimal Config",
           "description" : [
             "This demonstrates a minimal invocation of the widget with multiple images"
-          ],
-          "percentage": 0.8,
-          "settings": {
-            "numImages": 3,
-            "baseImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/black_square_512.png",
-            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png"
-          },
-          "width": 400,
-          "height": 400
-        },
-        {
-          "name": "Multiple Image Example - No Base Image",
-          "description" : [
-            "This demonstrates the base image is not necessary"
           ],
           "percentage": 0.8,
           "settings": {
@@ -128,23 +114,93 @@
         {
           "name": "Multiple Image Example - Text Header and Footer",
           "description" : [
-            "This demonstrates the use of header and footer text"
+            "This demonstrates the use of header and footer text",
+            "Notice how the adition of the footer messes with the internal horizontal padding ?!"
           ],
           "percentage": 0.8,
           "settings": {
             "numImages": 3,
-            "baseImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/black_square_512.png",
             "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
             "text-header": "Big header",
-            "text-footer": "Big footer",
-            "font-family": "verdana",
-            "font-weight": "900",
-            "font-size": "24px",
-            "font-color": "blue"
+            "text-footer": "Big footer"
           },
           "width": 400,
           "height": 400
         },
+        {
+          "name": "Multiple Image Example - Set DebugBorder to see whats up",
+          "description" : [
+            "This demonstrates the use of debugBorder for visual aid",
+            "You can see the padding is correct but now the images are being centred to maintain their aspect ratio"
+          ],
+          "percentage": 0.8,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "text-header": "Big header",
+            "text-footer": "Big footer",
+            "debugBorder": "anything"
+          },
+          "width": 400,
+          "height": 400
+        },
+        {
+          "name": "Multiple Image Example - Add 2x font-size to the height and everything is good",
+          "description" : [
+            "This demonstrates that adding height to compensate for the header and footer gets everything back to normal"
+          ],
+          "percentage": 0.8,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "text-header": "Big header",
+            "text-footer": "Big footer",
+            "debugBorder": "anything"
+          },
+          "width": 400,
+          "height": 448
+        }
+      ]
+    },
+    {
+      "name": "Multiple Image Graphic - Rectangle",
+      "scenarios": [
+        {
+          "name": "Multiple Image Example - Minimal Config",
+          "description" : [
+            "This demonstrates a minimal invocation of the widget with multiple images"
+          ],
+          "percentage": 0.8,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/perl_248_128.jpg",
+            "debugBorder": "anything"
+          },
+          "width": 600,
+          "height": 300
+        },
+        {
+          "name": "Multiple Image Example - Text Header and Footer",
+          "description" : [
+            "This demonstrates the use of header and footer text",
+            "Notice how the adition of the footer messes with the internal horizontal padding ?!"
+          ],
+          "percentage": 0.8,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/perl_248_128.jpg",
+            "text-header": "Big header",
+            "text-footer": "Big footer",
+            "debugBorder": "anything"
+          },
+          "width": 600,
+          "height": 348
+        }
+      ]
+    },
+    {
+      "name": "Multiple Image Graphic - Forcing num cols or num rows",
+      "scenarios": [
         {
           "name": "Multiple Image Example - Force 1 Row",
           "description" : [

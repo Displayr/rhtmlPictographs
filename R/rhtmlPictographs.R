@@ -28,8 +28,9 @@
 #'   - font-family: css - optional. default 'Verdana,sans-serif'. Controls font. See : https://developer.mozilla.org/en/docs/Web/CSS/font-family
 #'   - font-weight: css - optional. default 900. Controls font thickness. See : https://developer.mozilla.org/en/docs/Web/CSS/font-weight
 #'   - font-size: css - optional. default 24px. Controls font size. See : https://developer.mozilla.org/en/docs/Web/CSS/font-size
-#'   - font-color: css - optional. default white. Controls font color. Note this maps to the css 'color' property. See : https://developer.mozilla.org/en/docs/Web/CSS/color
+#'   - font-color: css - optional. default black. Controls font color. Note this maps to the css 'color' property. See : https://developer.mozilla.org/en/docs/Web/CSS/color
 #'   - tooltip: string - optional. default unset. A string to display on mouse hover over the graphic
+#'   - debugBorder: existence - optional. default unset. Set this key to anything, and then debug borders will be drawn
 #'
 #' @examples
 #'
