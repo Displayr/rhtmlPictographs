@@ -76,6 +76,13 @@ graphic <- function(percentage, width = NULL, height = NULL, settingsJsonString 
     input,
     width = width,
     height = height,
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      defaultWidth = 600,
+      defaultHeight = 600,
+      browser.fill = TRUE,
+      viewer.fill = TRUE,
+      padding = 0
+    ),
     package = 'rhtmlPictographs'
   )
 }
