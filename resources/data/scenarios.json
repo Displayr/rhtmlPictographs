@@ -37,6 +37,7 @@
           "percentage": 0.4,
           "settings": {
             "text-overlay": "percentage",
+            "font-color": "white",
             "font-size": "96px",
             "baseImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/black_square_512.png",
             "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png"
@@ -96,55 +97,111 @@
       ]
     },
     {
-      "name": "Multiple Image Graphic",
+      "name": "Multiple Image Graphic - Squares",
       "scenarios": [
         {
-          "name": "Multiple Image Example - Minimal Config",
+          "name": "Multiple Squares Example - Minimal Config",
           "description" : [
             "This demonstrates a minimal invocation of the widget with multiple images"
           ],
           "percentage": 0.8,
           "settings": {
             "numImages": 3,
-            "baseImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/black_square_512.png",
             "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png"
           },
           "width": 400,
           "height": 400
         },
         {
-          "name": "Multiple Image Example - No Base Image",
+          "name": "Multiple Squares Example - Text Header and Footer",
           "description" : [
-            "This demonstrates the base image is not necessary"
+            "This demonstrates the use of header and footer text",
+            "Notice how the adition of the footer messes with the internal horizontal padding ?!"
           ],
           "percentage": 0.8,
           "settings": {
             "numImages": 3,
-            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png"
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "text-header": "Big header",
+            "text-footer": "Big footer"
           },
           "width": 400,
           "height": 400
         },
         {
-          "name": "Multiple Image Example - Text Header and Footer",
+          "name": "Multiple Squares Example - Set DebugBorder to see whats up",
           "description" : [
-            "This demonstrates the use of header and footer text"
+            "This demonstrates the use of debugBorder for visual aid",
+            "You can see the padding is correct but now the images are being centred to maintain their aspect ratio"
           ],
           "percentage": 0.8,
           "settings": {
             "numImages": 3,
-            "baseImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/black_square_512.png",
             "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
             "text-header": "Big header",
             "text-footer": "Big footer",
-            "font-family": "verdana",
-            "font-weight": "900",
-            "font-size": "24px",
-            "font-color": "blue"
+            "debugBorder": "anything"
           },
           "width": 400,
           "height": 400
         },
+        {
+          "name": "Multiple Squares Example - Add 2x font-size to the height and everything is good",
+          "description" : [
+            "This demonstrates that adding height to compensate for the header and footer gets everything back to normal"
+          ],
+          "percentage": 0.8,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "text-header": "Big header",
+            "text-footer": "Big footer",
+            "debugBorder": "anything"
+          },
+          "width": 400,
+          "height": 448
+        }
+      ]
+    },
+    {
+      "name": "Multiple Image Graphic - Rectangle",
+      "scenarios": [
+        {
+          "name": "Multiple Rectangles Example - Minimal Config",
+          "description" : [
+            "This demonstrates a minimal invocation of the widget with multiple images"
+          ],
+          "percentage": 0.8,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/perl_248_128.jpg",
+            "debugBorder": "anything"
+          },
+          "width": 600,
+          "height": 300
+        },
+        {
+          "name": "Multiple Rectangles Example - Text Header and Footer",
+          "description" : [
+            "This demonstrates the use of header and footer text",
+            "Notice how the adition of the footer messes with the internal horizontal padding ?!"
+          ],
+          "percentage": 0.8,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/perl_248_128.jpg",
+            "text-header": "Big header",
+            "text-footer": "Big footer",
+            "debugBorder": "anything"
+          },
+          "width": 600,
+          "height": 348
+        }
+      ]
+    },
+    {
+      "name": "Multiple Image Graphic - Forcing num cols or num rows",
+      "scenarios": [
         {
           "name": "Multiple Image Example - Force 1 Row",
           "description" : [
@@ -154,12 +211,13 @@
           "settings": {
             "numImages": 12,
             "numRows": 1,
+            "bannerRatio": 0.5,
             "baseImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/black_square_512.png",
             "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
             "text-header": "Only one row",
             "font-family": "verdana",
             "font-weight": "900",
-            "font-size": "24px",
+            "font-size": "32px",
             "font-color": "blue"
           },
           "width": 400,
@@ -176,13 +234,204 @@
             "numCols": 1,
             "baseImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/black_square_512.png",
             "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
-            "text-header": "Only one column",
             "font-family": "verdana",
             "font-weight": "900",
             "font-size": "24px",
             "font-color": "blue"
           },
           "width": 100,
+          "height": 400
+        }
+      ]
+    },
+    {
+      "name": "Multiple Image Graphic - configure inner padding ratios",
+      "scenarios": [
+        {
+          "name": "Multiple Image Example - set the inner padding to match the image size",
+          "description" : [
+            "A value of 0.5 sets the padding = the image size",
+            "For more info, these two parameters sets the padding value of the call to .rangebands : https://github.com/mbostock/d3/wiki/Ordinal-Scales#ordinal_rangeBands"
+          ],
+          "percentage": 1,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "interColumnPadding": "0.5",
+            "interRowPadding": "0.5"
+          },
+          "width": 400,
+          "height": 400
+        },
+        {
+          "name": "Multiple Image Example - set the inner padding to 0",
+          "description" : [
+            "A value of 0 removes all inner padding",
+            "For more info, these two parameters sets the padding value of the call to .rangebands : https://github.com/mbostock/d3/wiki/Ordinal-Scales#ordinal_rangeBands"
+          ],
+          "percentage": 1,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "interColumnPadding": "0",
+            "interRowPadding": "0"
+          },
+          "width": 400,
+          "height": 400
+        }
+      ]
+    },
+    {
+      "name": "Multiple Image Graphic - preserveAspectRatio values",
+      "scenarios": [
+        {
+          "name": "Multiple Image Example - preserveAspectRatio unset or set to 'xMidYMid' (i.e., the defaults)",
+          "description" : [
+            "The preserveAspectRatio does not come into play until the image is resized. Try resizing.",
+            "Docs: https://developer.mozilla.org/en/docs/Web/SVG/Attribute/preserveAspectRatio"
+          ],
+          "percentage": 1,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "preserveAspectRatio": "xMidYMid"
+          },
+          "width": 600,
+          "height": 400
+        },
+        {
+          "name": "Multiple Image Example - preserveAspectRatio = 'none'",
+          "description" : [
+            "The preserveAspectRatio does not come into play until the image is resized. Try resizing.",
+            "Docs: https://developer.mozilla.org/en/docs/Web/SVG/Attribute/preserveAspectRatio"
+          ],
+          "percentage": 1,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "preserveAspectRatio": "none"
+          },
+          "width": 600,
+          "height": 400
+        },
+        {
+          "name": "Multiple Image Example - preserveAspectRatio = 'xMinYMin'",
+          "description" : [
+            "The preserveAspectRatio does not come into play until the image is resized. Try resizing.",
+            "Docs: https://developer.mozilla.org/en/docs/Web/SVG/Attribute/preserveAspectRatio"
+          ],
+          "percentage": 1,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "preserveAspectRatio": "xMinYMin"
+          },
+          "width": 600,
+          "height": 400
+        },
+        {
+          "name": "Multiple Image Example - preserveAspectRatio = 'xMidYMin'",
+          "description" : [
+            "The preserveAspectRatio does not come into play until the image is resized. Try resizing.",
+            "Docs: https://developer.mozilla.org/en/docs/Web/SVG/Attribute/preserveAspectRatio"
+          ],
+          "percentage": 1,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "preserveAspectRatio": "xMidYMin"
+          },
+          "width": 600,
+          "height": 400
+        },
+        {
+          "name": "Multiple Image Example - preserveAspectRatio = 'xMaxYMin'",
+          "description" : [
+            "The preserveAspectRatio does not come into play until the image is resized. Try resizing.",
+            "Docs: https://developer.mozilla.org/en/docs/Web/SVG/Attribute/preserveAspectRatio"
+          ],
+          "percentage": 1,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "preserveAspectRatio": "xMaxYMin"
+          },
+          "width": 600,
+          "height": 400
+        },
+        {
+          "name": "Multiple Image Example - preserveAspectRatio = 'xMinYMid'",
+          "description" : [
+            "The preserveAspectRatio does not come into play until the image is resized. Try resizing.",
+            "Docs: https://developer.mozilla.org/en/docs/Web/SVG/Attribute/preserveAspectRatio"
+          ],
+          "percentage": 1,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "preserveAspectRatio": "xMinYMid"
+          },
+          "width": 600,
+          "height": 400
+        },
+        {
+          "name": "Multiple Image Example - preserveAspectRatio = 'xMaxYMid'",
+          "description" : [
+            "The preserveAspectRatio does not come into play until the image is resized. Try resizing.",
+            "Docs: https://developer.mozilla.org/en/docs/Web/SVG/Attribute/preserveAspectRatio"
+          ],
+          "percentage": 1,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "preserveAspectRatio": "xMaxYMid"
+          },
+          "width": 600,
+          "height": 400
+        },
+        {
+          "name": "Multiple Image Example - preserveAspectRatio = 'xMinYMax'",
+          "description" : [
+            "The preserveAspectRatio does not come into play until the image is resized. Try resizing.",
+            "Docs: https://developer.mozilla.org/en/docs/Web/SVG/Attribute/preserveAspectRatio"
+          ],
+          "percentage": 1,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "preserveAspectRatio": "xMinYMax"
+          },
+          "width": 600,
+          "height": 400
+        },
+        {
+          "name": "Multiple Image Example - preserveAspectRatio = 'xMidYMax'",
+          "description" : [
+            "The preserveAspectRatio does not come into play until the image is resized. Try resizing.",
+            "Docs: https://developer.mozilla.org/en/docs/Web/SVG/Attribute/preserveAspectRatio"
+          ],
+          "percentage": 1,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "preserveAspectRatio": "xMidYMax"
+          },
+          "width": 600,
+          "height": 400
+        },
+        {
+          "name": "Multiple Image Example - preserveAspectRatio = 'xMaxYMax'",
+          "description" : [
+            "The preserveAspectRatio does not come into play until the image is resized. Try resizing.",
+            "Docs: https://developer.mozilla.org/en/docs/Web/SVG/Attribute/preserveAspectRatio"
+          ],
+          "percentage": 1,
+          "settings": {
+            "numImages": 3,
+            "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png",
+            "preserveAspectRatio": "xMaxYMax"
+          },
+          "width": 600,
           "height": 400
         }
       ]

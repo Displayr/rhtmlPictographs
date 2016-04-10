@@ -24,7 +24,16 @@
       <pre style="padding-left:20px" class="settings"></pre>
     </div>
 
-    <div class="content-window" style="padding-top:50px"></div>
+    <form id="resize-form" style="padding-top:10px" >
+      <label for="width-input">Width</label>
+      <input type="text" id="width-input" class="width-input" value="200"></input>
+      <label for="height-input">Height</label>
+      <input type="text" id="height-input" class="height-input" value="200"></input>
+      <button class="resize-button">Resize</button>
+    </form>
+
+    <div class="content-window" style="padding-top:10px"></div>
+
 
     <!-- NB This script should be defined before rhtmlPictographs.js is loaded-->
     <script>
@@ -41,6 +50,7 @@
       }
 
       myWidgetDefinition = null;
+      myWidgetInstance = null
 
       // This is a stub that will capture the widget definition,
       // so that we can use it once the page finishes loading
@@ -54,6 +64,21 @@
       $(document).ready( function() {
         console.log("Document ready. Fetching scenarios");
 
+        $('#resize-form').bind('submit', function(event) {
+          event.preventDefault();
+          console.log("resize submit");
+
+          width = $('#width-input').val();
+          height = $('#height-input').val();
+
+          container = $('.content-window')
+            .css('width', width)
+            .css('height', height)
+
+          myWidgetDefinition.resize(container, width, height, myWidgetInstance);
+
+          return false;
+        });
 
         $.ajax('./resources/data/scenarios.json').done(function (response) {
           console.log("Scenario retrieved. Instantiating captured widget");
@@ -144,12 +169,17 @@
           $('.settings').text(JSON.stringify(scenario.settings, {}, 2));
 
 
-          widgetInstance = myWidgetDefinition.initialize($('.content-window'),scenario.width,scenario.height);
+          myWidgetInstance = myWidgetDefinition.initialize($('.content-window'),scenario.width,scenario.height);
           params = {
             percentage: scenario.percentage,
             settingsJsonString: scenario.settings
           };
-          myWidgetDefinition.renderValue($('.content-window'), params, widgetInstance);
+
+          container = $('.content-window')
+            .css('width', scenario.width)
+            .css('height', scenario.height)
+
+          myWidgetDefinition.renderValue(container, params, myWidgetInstance);
 
         }).fail( function(error) {
           console.error("Download of ./resources/data/scenarios.json failed. Probably invalid JSON.");

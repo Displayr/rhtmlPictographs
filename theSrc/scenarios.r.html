@@ -29,8 +29,12 @@
             $('.pre-content').append($('<span>').html('#' + feature.name));
             $('.pre-content').append($('<br>'));
             _.forEach(feature.scenarios, function(scenario) {
-              $('.pre-content').append($('<span>').html('#' + scenario.name));
+              $('.pre-content').append($('<span>').html('##' + scenario.name));
               $('.pre-content').append($('<br>'));
+              _.forEach(scenario.description, function(line) {
+                $('.pre-content').append($('<span>').html('###' + line));
+                $('.pre-content').append($('<br>'));
+              });
 
 //rhtmlPictographs::graphic(0.8, 400, 400, '{"numImages": 22, "numRows": 6, "baseImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/black_square_512.png", "variableImageUrl": "https://s3-ap-southeast-2.amazonaws.com/kyle-public-numbers-assets/htmlwidgets/CroppedImage/blue_square_512.png", "text-header": "Big header", "text-footer": "Big footer", "font-family": "verdana", "font-weight": "900", "font-size": "24px", "font-color": "blue"}')
               rCommand = 'rhtmlPictographs::graphic(' +
