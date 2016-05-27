@@ -36,7 +36,8 @@ class ImageFactory
     config = {}
     configParts = []
 
-    if matches = configString.match ImageFactory.regexes.http
+    httpRegex = new RegExp '^(.*?):?(https?://.*)$'
+    if matches = configString.match httpRegex
       configParts = _.without matches[1].split(':'), 'url'
       config.type = 'url'
       config.url = matches[2]
@@ -48,7 +49,7 @@ class ImageFactory
         throw new Error "Invalid image creation configString '#{configString}' : unknown image type #{type}"
       config['type'] = type
 
-    if type is 'url' and !config.url?
+    if type in ['url'] and !config.url?
       config.url = configParts.pop()
       hasDot = new RegExp /\./
       unless config.url and config.url.match(hasDot)
@@ -112,7 +113,33 @@ class ImageFactory
       .attr 'height', (d) -> height * ratio(d.percentage)
       .style 'fill', color
 
-  @_addImageTo: (d3Node, config, width, height) ->
+  @addRecoloredSvgTo: (d3Node, config, width, height) ->
+
+    unless config.color and config.url
+      throw new Error "Cannot recolor svg without svg url and color"
+
+    onDownloadSuccess = (data) ->
+      svg = jQuery(data).find('svg');
+      cleanedSvgString = RecolorSvg.recolor(svg,config.color, width, height)
+      d3Node.html(cleanedSvgString)
+
+    onDownloadFail = (data) ->
+      throw new Error "could not download #{config.url}"
+
+    jQuery.ajax({url: config.url, dataType: 'xml' })
+      .done(onDownloadSuccess)
+      .fail(onDownloadFail)
+
+  @addExternalImage: (d3Node, config, width, height) ->
+    if config.color
+      if config.url.match(/\.svg$/)
+        ImageFactory.addRecoloredSvgTo d3Node, config, width, height
+      else
+        throw new Error "Cannot recolor #{config.url}: unsupported image type for recoloring"
+    else
+      ImageFactory._addExternalImage d3Node, config, width, height
+
+  @_addExternalImage: (d3Node, config, width, height) ->
     ratio = (p) ->
       return if config.scale then p else 1
 
@@ -215,7 +242,7 @@ class ImageFactory
     ellipse: ImageFactory.addEllipseTo
     square: ImageFactory.addRectTo
     rect: ImageFactory.addRectTo
-    url : ImageFactory._addImageTo
+    url : ImageFactory.addExternalImage
   }
 
   @keywordHandlers = {
@@ -227,10 +254,6 @@ class ImageFactory
     pie: 'radialclip'
     horizontalclip: 'horizontalclip'
     horizontal: 'horizontalclip'
-  }
-
-  @regexes = {
-    http: new RegExp '^(.*?):?(https?://.*)$'
   }
 
   constructor: () ->

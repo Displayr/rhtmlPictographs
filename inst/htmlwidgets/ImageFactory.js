@@ -30,13 +30,14 @@ ImageFactory = (function() {
   };
 
   ImageFactory.parseConfigString = function(configString) {
-    var config, configParts, handler, hasDot, matches, part, type, unknownParts;
+    var config, configParts, handler, hasDot, httpRegex, matches, part, type, unknownParts;
     if (!(configString.length > 0)) {
       throw new Error("Invalid image creation configString '' : empty string");
     }
     config = {};
     configParts = [];
-    if (matches = configString.match(ImageFactory.regexes.http)) {
+    httpRegex = new RegExp('^(.*?):?(https?://.*)$');
+    if (matches = configString.match(httpRegex)) {
       configParts = _.without(matches[1].split(':'), 'url');
       config.type = 'url';
       config.url = matches[2];
@@ -48,7 +49,7 @@ ImageFactory = (function() {
       }
       config['type'] = type;
     }
-    if (type === 'url' && (config.url == null)) {
+    if ((type === 'url') && (config.url == null)) {
       config.url = configParts.pop();
       hasDot = new RegExp(/\./);
       if (!(config.url && config.url.match(hasDot))) {
@@ -128,7 +129,39 @@ ImageFactory = (function() {
     }).style('fill', color);
   };
 
-  ImageFactory._addImageTo = function(d3Node, config, width, height) {
+  ImageFactory.addRecoloredSvgTo = function(d3Node, config, width, height) {
+    var onDownloadFail, onDownloadSuccess;
+    if (!(config.color && config.url)) {
+      throw new Error("Cannot recolor svg without svg url and color");
+    }
+    onDownloadSuccess = function(data) {
+      var cleanedSvgString, svg;
+      svg = jQuery(data).find('svg');
+      cleanedSvgString = RecolorSvg.recolor(svg, config.color, width, height);
+      return d3Node.html(cleanedSvgString);
+    };
+    onDownloadFail = function(data) {
+      throw new Error("could not download " + config.url);
+    };
+    return jQuery.ajax({
+      url: config.url,
+      dataType: 'xml'
+    }).done(onDownloadSuccess).fail(onDownloadFail);
+  };
+
+  ImageFactory.addExternalImage = function(d3Node, config, width, height) {
+    if (config.color) {
+      if (config.url.match(/\.svg$/)) {
+        return ImageFactory.addRecoloredSvgTo(d3Node, config, width, height);
+      } else {
+        throw new Error("Cannot recolor " + config.url + ": unsupported image type for recoloring");
+      }
+    } else {
+      return ImageFactory._addExternalImage(d3Node, config, width, height);
+    }
+  };
+
+  ImageFactory._addExternalImage = function(d3Node, config, width, height) {
     var ratio;
     ratio = function(p) {
       if (config.scale) {
@@ -229,7 +262,7 @@ ImageFactory = (function() {
     ellipse: ImageFactory.addEllipseTo,
     square: ImageFactory.addRectTo,
     rect: ImageFactory.addRectTo,
-    url: ImageFactory._addImageTo
+    url: ImageFactory.addExternalImage
   };
 
   ImageFactory.keywordHandlers = {
@@ -241,10 +274,6 @@ ImageFactory = (function() {
     pie: 'radialclip',
     horizontalclip: 'horizontalclip',
     horizontal: 'horizontalclip'
-  };
-
-  ImageFactory.regexes = {
-    http: new RegExp('^(.*?):?(https?://.*)$')
   };
 
   function ImageFactory() {}

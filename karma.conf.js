@@ -5,6 +5,7 @@ module.exports = function(config) {
     browsers: ['Chrome'],
     basePath: '',
     files: require('./build/externalLibs.json').concat([
+      'theSrc/scripts/RecolorSvg.coffee',
       'theSrc/scripts/ImageFactory.coffee',
       'theSrc/scripts/ColorFactory.coffee',
       'theSrc/scripts/BaseCell.coffee',

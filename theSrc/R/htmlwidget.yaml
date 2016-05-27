@@ -15,6 +15,7 @@ dependencies:
    version: 0.0.1
    src: htmlwidgets/
    script:
+     - RecolorSvg.js
      - ImageFactory.js
      - ColorFactory.js
      - BaseCell.js

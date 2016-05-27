@@ -1,0 +1,29 @@
+{
+  "features": [
+    {
+      "name": "Radial Testing",
+      "scenarios": [
+        {
+          "name": "radial",
+          "description": [],
+          "settings": {
+            "width": 2000,
+            "table": {
+              "rows": [
+                [
+                  { "type": "graphic", "value": { "variableImage": "url:red:/images/poop.svg" } },
+                  { "type": "graphic", "value": { "variableImage": "url:red:/images/blue_circle_512.svg" } },
+                  { "type": "graphic", "value": { "variableImage": "url:red:/images/soyuz_rocket.svg" } },
+                  { "type": "graphic", "value": { "variableImage": "url:red:/images/dollar_sign_green.svg" } },
+                  { "type": "graphic", "value": { "variableImage": "url:red:/images/rocket_black.svg" } },
+                  { "type": "graphic", "value": { "variableImage": "url:red:/images/square_rounded_edges_grey.svg" } },
+                  { "type": "graphic", "value": { "variableImage": "url:red:/images/stickman_green.svg" } }
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
