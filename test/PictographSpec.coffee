@@ -362,7 +362,7 @@ describe 'Pictograph class:', ->
 
 
       # @TODO: This IMO demonstrates a bug. We were given h/w = 1000/1000,
-      # but we generated a grpahic of 1010/1010 because of padding
+      # but we generated a graphic of 1010/1010 because of padding
       describe 'specify innerRowPadding and innerColumnPadding:', ->
         beforeEach ->
           @makeTable { numRows: 2, numCols: 2, height: 1000, width: 1000, innerRowPadding: 10, innerColumnPadding: 10 }
