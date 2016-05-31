@@ -89,17 +89,24 @@
         var featureFileLocation = './features/';
         var featureFile = getQueryVariable('featureFile') || 'features.json';
 
+        var handleFailure = function(error) {
+          console.error(error);
+          $('body').append($('<div>').text(error));
+        }
+
         $.ajax(featureFileLocation + featureFile).done(function (response) {
           console.log("Scenario retrieved. Instantiating captured widget");
 
           var featureIndex = parseInt(getQueryVariable('featureIndex'));
           var featureLength = response.features.length;
+          if (featureIndex >= featureLength) { return handleFailure("Error: featureIndex out of bounds"); }
           var feature = response.features[featureIndex];
 
           var scenarioIndex = parseInt(getQueryVariable('scenarioIndex'));
           var scenarioLength = feature.scenarios.length;
+          if (scenarioIndex >= scenarioLength) { return handleFailure("Error: scenarioIndex out of bounds"); }
           var scenario = feature.scenarios[scenarioIndex];
-          
+
           var width = 600; // defaults from htmlwidget.R (dont have to match though);
           var height = 600; // defaults from htmlwidget.R (dont have to match though);
           var settings = null;
@@ -234,14 +241,13 @@
           myWidgetDefinition.renderValue(container, settings, myWidgetInstance);
 
         }).fail( function(error) {
-          console.error("Download of ./theSrc/features/features.json failed. Probably invalid JSON.");
-          console.error(error);
-          $('body').append($('<div>').text("Failure to download/parse ./theSrc/features/features.json (probably invalid JSON). See dev tools console for error logging."));
+          handleFailure("Error: download of '" + featureFile + "' failed: " + JSON.stringify(error));
         });
       });
     </script>
 
     <script src="scripts/RecolorSvg.js"></script>
+    <script src="scripts/RecolorBitmap.js"></script>
     <script src="scripts/ColorFactory.js"></script>
     <script src="scripts/ImageFactory.js"></script>
     <script src="scripts/DisplayError.js"></script>

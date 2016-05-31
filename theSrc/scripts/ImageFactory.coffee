@@ -6,6 +6,7 @@ class ImageFactory
 
   @addImageTo: (config, width, height) ->
     d3Node = d3.select(this)
+    {top,left} = $(this).offset()
 
     if _.isString config
       config = ImageFactory.parseConfigString config
@@ -13,7 +14,7 @@ class ImageFactory
       unless config.type of ImageFactory.types
         throw new Error "Invalid image creation config : unknown image type #{config.type}"
 
-    newImage = ImageFactory.types[config.type](d3Node, config, width, height)
+    newImage = ImageFactory.types[config.type](d3Node, config, width, height, parseInt(left), parseInt(top))
 
     uniqueClipId = null
     if config.verticalclip
@@ -115,13 +116,10 @@ class ImageFactory
 
   @addRecoloredSvgTo: (d3Node, config, width, height) ->
 
-    unless config.color and config.url
-      throw new Error "Cannot recolor svg without svg url and color"
-
     onDownloadSuccess = (data) ->
       svg = jQuery(data).find('svg');
-      cleanedSvgString = RecolorSvg.recolor(svg,config.color, width, height)
-      d3Node.html(cleanedSvgString)
+      cleanedSvgString = RecolorSvg.recolor svg, config.color, width, height
+      d3Node.html cleanedSvgString
 
     onDownloadFail = (data) ->
       throw new Error "could not download #{config.url}"
@@ -130,10 +128,73 @@ class ImageFactory
       .done(onDownloadSuccess)
       .fail(onDownloadFail)
 
-  @addExternalImage: (d3Node, config, width, height) ->
+  @addRecoloredBitmapTo: (d3Node, config, width, height, x, y) ->
+    # note canvas width height define the coordinate system, so they are only useful inside the canvas
+    foreignCanvasHtml = """
+    <foreignObject x="#{x}" y="#{y-100}">
+      <canvas id="canvas#{x}" width="#{width}" height="#{height}"></canvas>
+    </foreignObject>
+"""
+
+    d3Node.html foreignCanvasHtml
+
+    canvas = document.getElementById "canvas#{x}"
+    ctx = canvas.getContext '2d'
+
+    ctx.fillStyle = config.color
+    console.log "x y"
+    console.log x, y
+    ctx.fillRect(0, 0, width, height)
+
+    if config.color == 'red'
+      [newRed,newGreen,newBlue] = [255,0,0]
+    if config.color == 'green'
+      [newRed,newGreen,newBlue] = [0,255,0]
+    if config.color == 'blue'
+      [newRed,newGreen,newBlue] = [0,0,255]
+
+    console.log "recoloring, #{[x, y, width, height]}  #{[newRed,newGreen,newBlue]}"
+
+    img = new Image()
+    img.crossOrigin = "anonymous"
+    img.src = config.url
+    img.onload = () ->
+      ctx.drawImage img, 0, 0, width, height
+      recolor width, height, newRed, newGreen, newBlue
+
+    recolor = (width, height, newRed, newGreen, newBlue) ->
+      imgData = ctx.getImageData(0, 0, width, height);
+      data = imgData.data;
+
+      i = 0
+      console.log "data length #{data.length}"
+      blackCount = 0
+      while i < data.length
+        red = data[i + 0]
+        green = data[i + 1]
+        blue = data[i + 2]
+        #alpha = data[i + 3]
+#        if i % 100 == 0
+#          console.log "looping r: #{red} g: #{green} b: #{blue}"
+
+        #isBlack
+        if (red < 30 && green < 30 && blue < 30)
+          blackCount++
+          data[i + 0] = newRed
+          data[i + 1] = newGreen
+          data[i + 2] = newBlue
+
+        i += 4
+      console.log "done looping"
+      console.log "blackCount = #{blackCount}"
+      ctx.putImageData(imgData, 0, 0);
+
+  @addExternalImage: (d3Node, config, width, height, x, y) ->
     if config.color
       if config.url.match(/\.svg$/)
         ImageFactory.addRecoloredSvgTo d3Node, config, width, height
+      else if config.url.match(/\.png$/)
+        ImageFactory.addRecoloredBitmapTo d3Node, config, width, height, x, y
       else
         throw new Error "Cannot recolor #{config.url}: unsupported image type for recoloring"
     else
@@ -143,7 +204,7 @@ class ImageFactory
     ratio = (p) ->
       return if config.scale then p else 1
 
-    return d3Node.append("svg:image")
+    return d3Node.append('svg:image')
       .attr 'x', (d) -> width * (1 - ratio(d.percentage)) / 2
       .attr 'y', (d) -> height * (1 - ratio(d.percentage)) / 2
       .attr 'width', (d) -> width * ratio(d.percentage)

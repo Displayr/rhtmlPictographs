@@ -3,8 +3,9 @@ var ImageFactory;
 
 ImageFactory = (function() {
   ImageFactory.addImageTo = function(config, width, height) {
-    var d3Node, newImage, uniqueClipId;
+    var d3Node, left, newImage, top, uniqueClipId, _ref;
     d3Node = d3.select(this);
+    _ref = $(this).offset(), top = _ref.top, left = _ref.left;
     if (_.isString(config)) {
       config = ImageFactory.parseConfigString(config);
     } else {
@@ -12,7 +13,7 @@ ImageFactory = (function() {
         throw new Error("Invalid image creation config : unknown image type " + config.type);
       }
     }
-    newImage = ImageFactory.types[config.type](d3Node, config, width, height);
+    newImage = ImageFactory.types[config.type](d3Node, config, width, height, parseInt(left), parseInt(top));
     uniqueClipId = null;
     if (config.verticalclip) {
       config.verticalclip = ImageFactory.addVerticalClip(d3Node, config, width, height);
@@ -131,9 +132,6 @@ ImageFactory = (function() {
 
   ImageFactory.addRecoloredSvgTo = function(d3Node, config, width, height) {
     var onDownloadFail, onDownloadSuccess;
-    if (!(config.color && config.url)) {
-      throw new Error("Cannot recolor svg without svg url and color");
-    }
     onDownloadSuccess = function(data) {
       var cleanedSvgString, svg;
       svg = jQuery(data).find('svg');
@@ -149,10 +147,64 @@ ImageFactory = (function() {
     }).done(onDownloadSuccess).fail(onDownloadFail);
   };
 
-  ImageFactory.addExternalImage = function(d3Node, config, width, height) {
+  ImageFactory.addRecoloredBitmapTo = function(d3Node, config, width, height, x, y) {
+    var canvas, ctx, foreignCanvasHtml, img, newBlue, newGreen, newRed, recolor, _ref, _ref1, _ref2;
+    foreignCanvasHtml = "<foreignObject x=\"" + x + "\" y=\"" + (y - 100) + "\">\n  <canvas id=\"canvas" + x + "\" width=\"" + width + "\" height=\"" + height + "\"></canvas>\n</foreignObject>";
+    d3Node.html(foreignCanvasHtml);
+    canvas = document.getElementById("canvas" + x);
+    ctx = canvas.getContext('2d');
+    ctx.fillStyle = config.color;
+    console.log("x y");
+    console.log(x, y);
+    ctx.fillRect(0, 0, width, height);
+    if (config.color === 'red') {
+      _ref = [255, 0, 0], newRed = _ref[0], newGreen = _ref[1], newBlue = _ref[2];
+    }
+    if (config.color === 'green') {
+      _ref1 = [0, 255, 0], newRed = _ref1[0], newGreen = _ref1[1], newBlue = _ref1[2];
+    }
+    if (config.color === 'blue') {
+      _ref2 = [0, 0, 255], newRed = _ref2[0], newGreen = _ref2[1], newBlue = _ref2[2];
+    }
+    console.log("recoloring, " + [x, y, width, height] + "  " + [newRed, newGreen, newBlue]);
+    img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = config.url;
+    img.onload = function() {
+      ctx.drawImage(img, 0, 0, width, height);
+      return recolor(width, height, newRed, newGreen, newBlue);
+    };
+    return recolor = function(width, height, newRed, newGreen, newBlue) {
+      var blackCount, blue, data, green, i, imgData, red;
+      imgData = ctx.getImageData(0, 0, width, height);
+      data = imgData.data;
+      i = 0;
+      console.log("data length " + data.length);
+      blackCount = 0;
+      while (i < data.length) {
+        red = data[i + 0];
+        green = data[i + 1];
+        blue = data[i + 2];
+        if (red < 30 && green < 30 && blue < 30) {
+          blackCount++;
+          data[i + 0] = newRed;
+          data[i + 1] = newGreen;
+          data[i + 2] = newBlue;
+        }
+        i += 4;
+      }
+      console.log("done looping");
+      console.log("blackCount = " + blackCount);
+      return ctx.putImageData(imgData, 0, 0);
+    };
+  };
+
+  ImageFactory.addExternalImage = function(d3Node, config, width, height, x, y) {
     if (config.color) {
       if (config.url.match(/\.svg$/)) {
         return ImageFactory.addRecoloredSvgTo(d3Node, config, width, height);
+      } else if (config.url.match(/\.png$/)) {
+        return ImageFactory.addRecoloredBitmapTo(d3Node, config, width, height, x, y);
       } else {
         throw new Error("Cannot recolor " + config.url + ": unsupported image type for recoloring");
       }
@@ -170,7 +222,7 @@ ImageFactory = (function() {
         return 1;
       }
     };
-    return d3Node.append("svg:image").attr('x', function(d) {
+    return d3Node.append('svg:image').attr('x', function(d) {
       return width * (1 - ratio(d.percentage)) / 2;
     }).attr('y', function(d) {
       return height * (1 - ratio(d.percentage)) / 2;
