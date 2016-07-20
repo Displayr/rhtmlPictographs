@@ -2,6 +2,18 @@
 var ImageFactory;
 
 ImageFactory = (function() {
+  ImageFactory.imageDownloadPromises = {};
+
+  ImageFactory.getOrDownload = function(url) {
+    if (!(url in ImageFactory.imageDownloadPromises)) {
+      ImageFactory.imageDownloadPromises[url] = jQuery.ajax({
+        url: url,
+        dataType: 'text'
+      });
+    }
+    return ImageFactory.imageDownloadPromises[url];
+  };
+
   ImageFactory.addImageTo = function(config, width, height, dataAttributes) {
     var d3Node, newImagePromise;
     d3Node = d3.select(this);
@@ -221,9 +233,10 @@ ImageFactory = (function() {
     var newColor;
     newColor = ColorFactory.getColor(config.color);
     return new Promise(function(resolve, reject) {
-      var onDownloadFail, onDownloadSuccess;
-      onDownloadSuccess = function(data) {
-        var cleanedSvgString, ratio, svg, x, y;
+      var onDownloadSuccess;
+      onDownloadSuccess = function(xmlString) {
+        var cleanedSvgString, data, ratio, svg, x, y;
+        data = jQuery.parseXML(xmlString);
         svg = jQuery(data).find('svg');
         ratio = config.scale ? dataAttributes.proportion : 1;
         x = width * (1 - ratio) / 2;
@@ -235,13 +248,7 @@ ImageFactory = (function() {
           newImage: d3Node.html(cleanedSvgString)
         });
       };
-      onDownloadFail = function(data) {
-        return reject(new Error("could not download " + config.url));
-      };
-      return jQuery.ajax({
-        url: config.url,
-        dataType: 'xml'
-      }).done(onDownloadSuccess).fail(onDownloadFail);
+      return ImageFactory.getOrDownload(config.url).done(onDownloadSuccess).fail(reject);
     });
   };
 
