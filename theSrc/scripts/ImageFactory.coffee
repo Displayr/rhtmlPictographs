@@ -2,6 +2,13 @@
 # I am a singleton, all my methods and variables are static
 
 class ImageFactory
+  #NB TODO there is no eviction policy for this cache of images, so it will grow unbounded
+  @imageDownloadPromises = {}
+  @getOrDownload: (url) ->
+    unless url of ImageFactory.imageDownloadPromises
+      ImageFactory.imageDownloadPromises[url] = jQuery.ajax({url: url, dataType: 'text' })
+
+    return ImageFactory.imageDownloadPromises[url]
 
   @addImageTo: (config, width, height, dataAttributes) ->
     d3Node = d3.select(this)
@@ -182,12 +189,13 @@ class ImageFactory
   # TODO this is extremely inefficient for multiImage graphics - SO BAD !
   @addRecoloredSvgTo: (d3Node, config, width, height, dataAttributes) ->
     newColor = ColorFactory.getColor config.color
+
     return new Promise (resolve, reject) ->
-      onDownloadSuccess = (data) ->
+      onDownloadSuccess = (xmlString) ->
+        data = jQuery.parseXML xmlString
         svg = jQuery(data).find('svg')
 
         ratio = if config.scale then dataAttributes.proportion else 1
-
         x = width * (1 - ratio) / 2
         y = height * (1 - ratio) / 2
         width = width * ratio
@@ -197,13 +205,7 @@ class ImageFactory
 
         return resolve { newImage: d3Node.html(cleanedSvgString) }
 
-      onDownloadFail = (data) ->
-        return reject new Error "could not download #{config.url}"
-
-      # TODO Does jQuery.ajax make the promise ?
-      jQuery.ajax({url: config.url, dataType: 'xml' })
-        .done(onDownloadSuccess)
-        .fail(onDownloadFail)
+      return ImageFactory.getOrDownload(config.url).done(onDownloadSuccess).fail(reject)
 
   @_addExternalImage: (d3Node, config, width, height) ->
     ratio = (p) ->
