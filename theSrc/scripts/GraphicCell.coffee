@@ -178,7 +178,7 @@ class GraphicCell extends BaseCell
 
     #NB To adhere to SVG "last drawn goes on top policy", we must delay variable image rendering until base image drawn
     #the baseImageCompletePrpmise will not resolve until base images are "appended"
-    parentSvg = @parentSvg
+    # parentSvg = @parentSvg
     baseImageCompletePromise = Promise.resolve()
     if @config.baseImage?
       baseImageConfig = @config.baseImage

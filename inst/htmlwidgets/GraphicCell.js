@@ -120,7 +120,7 @@ GraphicCell = (function(_super) {
   };
 
   GraphicCell.prototype._draw = function() {
-    var backgroundRect, baseImageCompletePromise, baseImageConfig, baseImageRenderPromises, d3Data, enteringLeafNodes, graphicContainer, gridLayout, imageHeight, imageWidth, parentSvg, textSpanWidth, variableImageCompletePromise, variableImageConfig, yMidpoint;
+    var backgroundRect, baseImageCompletePromise, baseImageConfig, baseImageRenderPromises, d3Data, enteringLeafNodes, graphicContainer, gridLayout, imageHeight, imageWidth, textSpanWidth, variableImageCompletePromise, variableImageConfig, yMidpoint;
     this._computeDimensions();
     this.parentSvg.append("svg:rect").attr('width', this.width).attr('height', this.height).attr('class', 'background-rect').attr('fill', this.config['background-color'] || 'none');
     if (this.config['text-header'] != null) {
@@ -172,7 +172,6 @@ GraphicCell = (function(_super) {
     if (this.config['debugBorder'] != null) {
       backgroundRect.attr('stroke', 'black').attr('stroke-width', '1');
     }
-    parentSvg = this.parentSvg;
     baseImageCompletePromise = Promise.resolve();
     if (this.config.baseImage != null) {
       baseImageConfig = this.config.baseImage;

@@ -33,7 +33,7 @@ ImageFactory = (function() {
         document.body.appendChild(tmpImg);
         tmpImg.onerror = function() {
           tmpImg.remove();
-          return reject("getImageDimensions failed");
+          return reject(new Error("Image not found: " + url));
         };
         return tmpImg.onload = function() {
           var aspectRatio;
@@ -110,9 +110,6 @@ ImageFactory = (function() {
         newImage.attr('clip-path', "url(#" + config.radialclip + ")");
       }
       return newImage;
-    })["catch"](function(error) {
-      console.log("newImage fail : " + error);
-      throw new Error("Image resource not found : " + config.url);
     });
   };
 
@@ -302,7 +299,7 @@ ImageFactory = (function() {
           newImage: d3Node.append('g').html(cleanedSvgString)
         });
       };
-      return ImageFactory.getOrDownload(config.url).done(onDownloadSuccess).fail(reject);
+      return ImageFactory.getOrDownload(config.url).done(onDownloadSuccess).fail(reject(new Error("Downloading svg failed: " + config.url)));
     });
   };
 
@@ -342,7 +339,7 @@ ImageFactory = (function() {
             newImage: d3Node.append('g').html(svgString)
           });
         };
-        return ImageFactory.getOrDownload(config.url).done(onDownloadSuccess).fail(reject);
+        return ImageFactory.getOrDownload(config.url).done(onDownloadSuccess).fail(reject(new Error("Downloading svg failed: " + config.url)));
       });
     } else {
       newImage = d3Node.append("svg:image").attr('x', function(d) {

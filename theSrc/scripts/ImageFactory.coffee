@@ -27,7 +27,7 @@ class ImageFactory
         document.body.appendChild(tmpImg)
         tmpImg.onerror = ->
           tmpImg.remove()
-          reject("getImageDimensions failed")
+          reject(new Error("Image not found: #{url}"))
 
         tmpImg.onload = () ->
           aspectRatio = tmpImg.getBoundingClientRect().height/tmpImg.getBoundingClientRect().width
@@ -97,10 +97,7 @@ class ImageFactory
         newImage.attr 'clip-path', "url(##{config.radialclip})"
 
       return newImage
-      )
-      .catch (error) ->
-        console.log "newImage fail : #{error}"
-        throw new Error "Image resource not found : #{config.url}"
+    )
 
   @parseConfigString: (configString) ->
     unless configString.length > 0
@@ -257,7 +254,9 @@ class ImageFactory
 
         return resolve { newImage: d3Node.append('g').html(cleanedSvgString) }
 
-      return ImageFactory.getOrDownload(config.url).done(onDownloadSuccess).fail(reject)
+      return ImageFactory.getOrDownload(config.url)
+                         .done(onDownloadSuccess)
+                         .fail(reject(new Error("Downloading svg failed: #{config.url}")))
 
   @_addExternalImage: (d3Node, config, width, height) ->
     ratio = (p) ->
@@ -291,7 +290,9 @@ class ImageFactory
 
           return resolve { newImage: d3Node.append('g').html(svgString) }
 
-        return ImageFactory.getOrDownload(config.url).done(onDownloadSuccess).fail(reject)
+        return ImageFactory.getOrDownload(config.url)
+                           .done(onDownloadSuccess)
+                           .fail(reject(new Error("Downloading svg failed: #{config.url}")))
     else
       newImage = d3Node.append("svg:image")
         .attr 'x', (d) -> width * (1 - ratio(d.proportion)) / 2
