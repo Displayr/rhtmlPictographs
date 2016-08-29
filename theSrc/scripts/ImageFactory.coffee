@@ -17,7 +17,7 @@ class ImageFactory
     return ImageFactory.imageDownloadPromises[url]
 
   @imageSvgDimensions = {}
-  @getImageDimensions: (url, imageBoxDim, width, height) ->
+  @getImageDimensions: (d3Node, url, imageBoxDim, width, height) ->
     return new Promise((resolve, reject) -> resolve(imageBoxDim)) unless url
 
     unless url of ImageFactory.imageSvgDimensions
@@ -25,6 +25,10 @@ class ImageFactory
         tmpImg = document.createElement('img')
         tmpImg.setAttribute 'src', url
         document.body.appendChild(tmpImg)
+        tmpImg.onerror = ->
+          tmpImg.remove()
+          reject("getImageDimensions failed")
+
         tmpImg.onload = () ->
           aspectRatio = tmpImg.getBoundingClientRect().height/tmpImg.getBoundingClientRect().width
           if aspectRatio > 1
@@ -41,6 +45,8 @@ class ImageFactory
           tmpImg.remove()
           resolve(imageBoxDim)
           )
+
+
     return ImageFactory.imageSvgDimensions[url]
 
   @addImageTo: (d3Node, config, width, height, dataAttributes) ->
@@ -59,7 +65,7 @@ class ImageFactory
       y: 0
     config.imageBoxDim = imageBoxDim
 
-    getDimensionsPromise = ImageFactory.getImageDimensions(config.url, imageBoxDim, width, height)
+    getDimensionsPromise = ImageFactory.getImageDimensions(d3Node, config.url, imageBoxDim, width, height)
     getImageDataPromise = ImageFactory.types[config.type](d3Node, config, width, height, dataAttributes)
     return Promise.all([getDimensionsPromise, getImageDataPromise]).then((values) ->
       config.imageBoxDim = values[0]
@@ -94,6 +100,7 @@ class ImageFactory
       )
       .catch (error) ->
         console.log "newImage fail : #{error}"
+        throw new Error "newImage fail : #{config.url}"
 
   @parseConfigString: (configString) ->
     unless configString.length > 0

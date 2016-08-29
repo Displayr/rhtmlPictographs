@@ -19,7 +19,7 @@ ImageFactory = (function() {
 
   ImageFactory.imageSvgDimensions = {};
 
-  ImageFactory.getImageDimensions = function(url, imageBoxDim, width, height) {
+  ImageFactory.getImageDimensions = function(d3Node, url, imageBoxDim, width, height) {
     if (!url) {
       return new Promise(function(resolve, reject) {
         return resolve(imageBoxDim);
@@ -31,6 +31,10 @@ ImageFactory = (function() {
         tmpImg = document.createElement('img');
         tmpImg.setAttribute('src', url);
         document.body.appendChild(tmpImg);
+        tmpImg.onerror = function() {
+          tmpImg.remove();
+          return reject("getImageDimensions failed");
+        };
         return tmpImg.onload = function() {
           var aspectRatio;
           aspectRatio = tmpImg.getBoundingClientRect().height / tmpImg.getBoundingClientRect().width;
@@ -70,7 +74,7 @@ ImageFactory = (function() {
       y: 0
     };
     config.imageBoxDim = imageBoxDim;
-    getDimensionsPromise = ImageFactory.getImageDimensions(config.url, imageBoxDim, width, height);
+    getDimensionsPromise = ImageFactory.getImageDimensions(d3Node, config.url, imageBoxDim, width, height);
     getImageDataPromise = ImageFactory.types[config.type](d3Node, config, width, height, dataAttributes);
     return Promise.all([getDimensionsPromise, getImageDataPromise]).then(function(values) {
       var clipId, clipMaker, imageBox, newImage, newImageData;
@@ -107,7 +111,8 @@ ImageFactory = (function() {
       }
       return newImage;
     })["catch"](function(error) {
-      return console.log("newImage fail : " + error);
+      console.log("newImage fail : " + error);
+      throw new Error("newImage fail : " + config.url);
     });
   };
 

@@ -297,6 +297,8 @@ class Pictograph extends RhtmlSvgWidget
         cell.col = columnIndex
 
   _redraw: () ->
+    console.log 'redraw'
+    console.log @rootElement
     @cssCollector.draw()
     @_computeTableLayout()
     @_recomputeSizing()
@@ -346,7 +348,10 @@ class Pictograph extends RhtmlSvgWidget
         d3.select(this).classed 'graphic', true
         graphic = new GraphicCell d3.select(this), [tableId, cssWrapperClass], d.width, d.height, sizes
         graphic.setConfig d.value
-        graphic.draw()
+        try
+          graphic.draw()
+        catch
+          console.log 'cauth'
         cellInstances.push graphic
 
       else if d.type is 'label'

@@ -354,6 +354,8 @@ Pictograph = (function(_super) {
 
   Pictograph.prototype._redraw = function() {
     var addLines, cellInstances, enteringCells, sizes, tableCells, tableId;
+    console.log('redraw');
+    console.log(this.rootElement);
     this.cssCollector.draw();
     this._computeTableLayout();
     this._recomputeSizing();
@@ -395,7 +397,11 @@ Pictograph = (function(_super) {
         d3.select(this).classed('graphic', true);
         graphic = new GraphicCell(d3.select(this), [tableId, cssWrapperClass], d.width, d.height, sizes);
         graphic.setConfig(d.value);
-        graphic.draw();
+        try {
+          graphic.draw();
+        } catch (_error) {
+          console.log('cauth');
+        }
         return cellInstances.push(graphic);
       } else if (d.type === 'label') {
         d3.select(this).classed('label', true);

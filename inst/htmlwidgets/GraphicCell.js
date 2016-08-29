@@ -120,7 +120,7 @@ GraphicCell = (function(_super) {
   };
 
   GraphicCell.prototype._draw = function() {
-    var backgroundRect, baseImageCompletePromise, baseImageConfig, baseImageRenderPromises, d3Data, enteringLeafNodes, graphicContainer, gridLayout, imageHeight, imageWidth, textSpanWidth, variableImageCompletePromise, variableImageConfig, yMidpoint;
+    var backgroundRect, baseImageCompletePromise, baseImageConfig, baseImageRenderPromises, d3Data, enteringLeafNodes, graphicContainer, gridLayout, imageHeight, imageWidth, parentSvg, textSpanWidth, variableImageCompletePromise, variableImageConfig, yMidpoint;
     this._computeDimensions();
     this.parentSvg.append("svg:rect").attr('width', this.width).attr('height', this.height).attr('class', 'background-rect').attr('fill', this.config['background-color'] || 'none');
     if (this.config['text-header'] != null) {
@@ -172,6 +172,7 @@ GraphicCell = (function(_super) {
     if (this.config['debugBorder'] != null) {
       backgroundRect.attr('stroke', 'black').attr('stroke-width', '1');
     }
+    parentSvg = this.parentSvg;
     baseImageCompletePromise = Promise.resolve();
     if (this.config.baseImage != null) {
       baseImageConfig = this.config.baseImage;
@@ -181,7 +182,11 @@ GraphicCell = (function(_super) {
         d3Node = d3.select(this);
         return baseImageRenderPromises.push(ImageFactory.addImageTo(d3Node, baseImageConfig, imageWidth, imageHeight, dataAttributes));
       });
-      baseImageCompletePromise = Promise.all(baseImageRenderPromises);
+      baseImageCompletePromise = Promise.all(baseImageRenderPromises)["catch"](function(error) {
+        var de;
+        de = new DisplayError(parentSvg, 'de');
+        return parentSvg.append('image').attr('xlink:href', de.dataUri()).attr('x', 0).attr('y', 0).attr('width', 50).attr('height', 50).append('title').text(error);
+      });
     }
     variableImageCompletePromise = Promise.resolve();
     if (this.config.variableImage != null) {
