@@ -182,11 +182,7 @@ GraphicCell = (function(_super) {
         d3Node = d3.select(this);
         return baseImageRenderPromises.push(ImageFactory.addImageTo(d3Node, baseImageConfig, imageWidth, imageHeight, dataAttributes));
       });
-      baseImageCompletePromise = Promise.all(baseImageRenderPromises)["catch"](function(error) {
-        var de;
-        de = new DisplayError(parentSvg, 'de');
-        return parentSvg.append('image').attr('xlink:href', de.dataUri()).attr('x', 0).attr('y', 0).attr('width', 50).attr('height', 50).append('title').text(error);
-      });
+      baseImageCompletePromise = Promise.all(baseImageRenderPromises);
     }
     variableImageCompletePromise = Promise.resolve();
     if (this.config.variableImage != null) {

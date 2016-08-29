@@ -186,17 +186,17 @@ class GraphicCell extends BaseCell
       enteringLeafNodes.each (dataAttributes) ->
         d3Node = d3.select(this)
         baseImageRenderPromises.push ImageFactory.addImageTo(d3Node, baseImageConfig, imageWidth, imageHeight, dataAttributes)
-      baseImageCompletePromise = Promise.all(baseImageRenderPromises).catch((error) ->
-        de = new DisplayError parentSvg, 'de'
-        parentSvg.append 'image'
-                  .attr 'xlink:href', de.dataUri()
-                  .attr 'x', 0
-                  .attr 'y', 0
-                  .attr 'width', 50
-                  .attr 'height', 50
-                  .append 'title'
-                  .text error
-      )
+      baseImageCompletePromise = Promise.all(baseImageRenderPromises)#.catch((error) ->
+      #   de = new DisplayError parentSvg, 'de'
+      #   parentSvg.append 'image'
+      #             .attr 'xlink:href', de.dataUri()
+      #             .attr 'x', 0
+      #             .attr 'y', 0
+      #             .attr 'width', 50
+      #             .attr 'height', 50
+      #             .append 'title'
+      #             .text error
+      # )
 
     variableImageCompletePromise = Promise.resolve()
     if @config.variableImage?

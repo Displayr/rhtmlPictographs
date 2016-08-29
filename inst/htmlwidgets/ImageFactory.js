@@ -112,7 +112,7 @@ ImageFactory = (function() {
       return newImage;
     })["catch"](function(error) {
       console.log("newImage fail : " + error);
-      throw new Error("newImage fail : " + config.url);
+      throw new Error("Image resource not found : " + config.url);
     });
   };
 
