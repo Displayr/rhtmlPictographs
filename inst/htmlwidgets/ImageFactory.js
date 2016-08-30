@@ -343,7 +343,7 @@ ImageFactory = (function() {
             newImage: d3Node.append('g').html(svgString)
           });
         };
-        onDownloadFailure = reject(new Error("Downloading svg failed: " + config.url));
+        onDownloadFailure = reject(new Error("Downloading img failed: " + config.url));
         return ImageFactory.getOrDownload(config.url).done(onDownloadSuccess).fail(onDownloadFailure);
       });
     } else {
