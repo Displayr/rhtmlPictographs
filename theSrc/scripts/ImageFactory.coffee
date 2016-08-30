@@ -256,7 +256,7 @@ class ImageFactory
 
         return resolve { newImage: d3Node.append('g').html(cleanedSvgString) }
 
-      onDownloadFailure = reject(new Error("Downloading svg failed: #{config.url}"))
+      onDownloadFailure = -> reject(new Error("Downloading svg failed: #{config.url}"))
 
       return ImageFactory.getOrDownload(config.url)
                          .done(onDownloadSuccess)
@@ -294,7 +294,7 @@ class ImageFactory
 
           return resolve { newImage: d3Node.append('g').html(svgString) }
 
-        onDownloadFailure = reject(new Error("Downloading img failed: #{config.url}"))
+        onDownloadFailure = -> reject(new Error("Downloading img failed: #{config.url}"))
 
         return ImageFactory.getOrDownload(config.url)
                            .done(onDownloadSuccess)
