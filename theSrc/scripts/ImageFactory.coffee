@@ -17,7 +17,7 @@ class ImageFactory
     return ImageFactory.imageDownloadPromises[url]
 
   @imageSvgDimensions = {}
-  @getImageDimensions: (d3Node, url, imageBoxDim, width, height) ->
+  @getImageDimensions: (url, imageBoxDim, width, height) ->
     return new Promise((resolve, reject) -> resolve(imageBoxDim)) unless url
 
     unless url of ImageFactory.imageSvgDimensions
@@ -65,7 +65,7 @@ class ImageFactory
       y: 0
     config.imageBoxDim = imageBoxDim
 
-    getDimensionsPromise = ImageFactory.getImageDimensions(d3Node, config.url, imageBoxDim, width, height)
+    getDimensionsPromise = ImageFactory.getImageDimensions(config.url, imageBoxDim, width, height)
     getImageDataPromise = ImageFactory.types[config.type](d3Node, config, width, height, dataAttributes)
     return Promise.all([getDimensionsPromise, getImageDataPromise]).then((values) ->
       config.imageBoxDim = values[0]

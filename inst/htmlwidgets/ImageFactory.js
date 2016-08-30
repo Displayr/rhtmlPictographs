@@ -19,7 +19,7 @@ ImageFactory = (function() {
 
   ImageFactory.imageSvgDimensions = {};
 
-  ImageFactory.getImageDimensions = function(d3Node, url, imageBoxDim, width, height) {
+  ImageFactory.getImageDimensions = function(url, imageBoxDim, width, height) {
     if (!url) {
       return new Promise(function(resolve, reject) {
         return resolve(imageBoxDim);
@@ -74,7 +74,7 @@ ImageFactory = (function() {
       y: 0
     };
     config.imageBoxDim = imageBoxDim;
-    getDimensionsPromise = ImageFactory.getImageDimensions(d3Node, config.url, imageBoxDim, width, height);
+    getDimensionsPromise = ImageFactory.getImageDimensions(config.url, imageBoxDim, width, height);
     getImageDataPromise = ImageFactory.types[config.type](d3Node, config, width, height, dataAttributes);
     return Promise.all([getDimensionsPromise, getImageDataPromise]).then(function(values) {
       var clipId, clipMaker, imageBox, newImage, newImageData;
