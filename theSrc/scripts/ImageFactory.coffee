@@ -97,7 +97,9 @@ class ImageFactory
         newImage.attr 'clip-path', "url(##{config.radialclip})"
 
       return newImage
-    )
+    ).catch (err) ->
+      console.log "image error: #{err.message}"
+      throw err
 
   @parseConfigString: (configString) ->
     unless configString.length > 0
@@ -254,9 +256,11 @@ class ImageFactory
 
         return resolve { newImage: d3Node.append('g').html(cleanedSvgString) }
 
+      onDownloadFailure = reject(new Error("Downloading svg failed: #{config.url}"))
+
       return ImageFactory.getOrDownload(config.url)
                          .done(onDownloadSuccess)
-                         .fail(reject(new Error("Downloading svg failed: #{config.url}")))
+                         .fail(onDownloadFailure)
 
   @_addExternalImage: (d3Node, config, width, height) ->
     ratio = (p) ->
@@ -290,9 +294,11 @@ class ImageFactory
 
           return resolve { newImage: d3Node.append('g').html(svgString) }
 
+        onDownloadFailure = reject(new Error("Downloading svg failed: #{config.url}"))
+
         return ImageFactory.getOrDownload(config.url)
                            .done(onDownloadSuccess)
-                           .fail(reject(new Error("Downloading svg failed: #{config.url}")))
+                           .fail(onDownloadFailure)
     else
       newImage = d3Node.append("svg:image")
         .attr 'x', (d) -> width * (1 - ratio(d.proportion)) / 2

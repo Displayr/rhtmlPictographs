@@ -3,6 +3,7 @@ var DisplayError;
 
 DisplayError = (function() {
   function DisplayError(el, error) {
+    this.el = el;
     this.error = error;
     this.rootElement = _.has(el, 'length') ? el[0] : el;
   }
@@ -16,6 +17,13 @@ DisplayError = (function() {
     errorContainer.append(errorText);
     $(this.rootElement).empty();
     return $(this.rootElement).append(errorContainer);
+  };
+
+  DisplayError.prototype.drawSvg = function() {
+    var errorContainer;
+    errorContainer = $();
+    this.el.append('image').attr('xlink:href', this.dataUri()).attr('x', 0).attr('y', 0).attr('width', 50).attr('height', 50).append('title').text(this.error);
+    return this.el.append('text').style('fill', 'red').attr('x', 50).attr('y', 50).text(this.error);
   };
 
   DisplayError.prototype.dataUri = function() {
