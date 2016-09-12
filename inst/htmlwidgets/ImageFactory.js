@@ -184,7 +184,7 @@ ImageFactory = (function() {
     color = ColorFactory.getColor(config.color);
     newImage = d3Node.append("svg:circle").classed('circle', true).attr('cx', width / 2).attr('cy', height / 2).attr('r', function(d) {
       return ratio(d.proportion) * diameter / 2;
-    }).style('fill', color);
+    }).style('fill', color).attr('shape-rendering', 'crispEdges');
     return Promise.resolve({
       newImage: newImage,
       unscaledBox: {
@@ -210,7 +210,7 @@ ImageFactory = (function() {
       return width * ratio(d.proportion) / 2;
     }).attr('ry', function(d) {
       return height * ratio(d.proportion) / 2;
-    }).style('fill', color);
+    }).style('fill', color).attr('shape-rendering', 'crispEdges');
     return Promise.resolve({
       newImage: newImage
     });
@@ -235,7 +235,7 @@ ImageFactory = (function() {
       return ratio(d.proportion) * length;
     }).attr('height', function(d) {
       return ratio(d.proportion) * length;
-    }).style('fill', color);
+    }).style('fill', color).attr('shape-rendering', 'crispEdges');
     return Promise.resolve({
       newImage: newImage,
       unscaledBox: {
@@ -265,7 +265,7 @@ ImageFactory = (function() {
       return width * ratio(d.proportion);
     }).attr('height', function(d) {
       return height * ratio(d.proportion);
-    }).style('fill', color);
+    }).style('fill', color).attr('shape-rendering', 'crispEdges');
     return Promise.resolve({
       newImage: newImage
     });

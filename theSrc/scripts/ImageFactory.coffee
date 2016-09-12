@@ -162,6 +162,7 @@ class ImageFactory
       .attr 'cy', height/2
       .attr 'r', (d) -> ratio(d.proportion) * diameter / 2
       .style 'fill', color
+      .attr 'shape-rendering', 'crispEdges'
 
     return Promise.resolve {
       newImage: newImage
@@ -185,6 +186,7 @@ class ImageFactory
       .attr 'rx', (d) -> width * ratio(d.proportion) / 2
       .attr 'ry', (d) -> height * ratio(d.proportion) / 2
       .style 'fill', color
+      .attr 'shape-rendering', 'crispEdges'
 
     return Promise.resolve { newImage: newImage }
 
@@ -201,6 +203,7 @@ class ImageFactory
       .attr 'width', (d) -> ratio(d.proportion) * length
       .attr 'height', (d) -> ratio(d.proportion) * length
       .style 'fill', color
+      .attr 'shape-rendering', 'crispEdges'
 
     return Promise.resolve {
       newImage: newImage
@@ -224,6 +227,7 @@ class ImageFactory
       .attr 'width', (d) -> width * ratio(d.proportion)
       .attr 'height', (d) -> height * ratio(d.proportion)
       .style 'fill', color
+      .attr 'shape-rendering', 'crispEdges'
 
     return Promise.resolve { newImage: newImage }
 
