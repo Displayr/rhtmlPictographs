@@ -58,8 +58,7 @@ ImageFactory = (function() {
     return ImageFactory.imageSvgDimensions[url];
   };
 
-  ImageFactory.addImageTo = function(d3Node, config, width, height, dataAttributes) {
-    var getDimensionsPromise, getImageDataPromise, imageBoxDim;
+  ImageFactory.addBaseImageTo = function(d3Node, config, width, height, dataAttributes) {
     if (_.isString(config)) {
       config = ImageFactory.parseConfigString(config);
     } else {
@@ -67,6 +66,25 @@ ImageFactory = (function() {
         throw new Error("Invalid image creation config : unknown image type " + config.type);
       }
     }
+    if (_.includes(['circle', 'ellipse', 'square', 'rect'], config.type)) {
+      config.baseShapeScale = 0.99;
+    }
+    return ImageFactory.addImageTo(d3Node, config, width, height, dataAttributes);
+  };
+
+  ImageFactory.addVarImageTo = function(d3Node, config, width, height, dataAttributes) {
+    if (_.isString(config)) {
+      config = ImageFactory.parseConfigString(config);
+    } else {
+      if (!(config.type in ImageFactory.types)) {
+        throw new Error("Invalid image creation config : unknown image type " + config.type);
+      }
+    }
+    return ImageFactory.addImageTo(d3Node, config, width, height, dataAttributes);
+  };
+
+  ImageFactory.addImageTo = function(d3Node, config, width, height, dataAttributes) {
+    var getDimensionsPromise, getImageDataPromise, imageBoxDim;
     imageBoxDim = {
       height: height,
       width: width,
@@ -172,7 +190,7 @@ ImageFactory = (function() {
   };
 
   ImageFactory.addCircleTo = function(d3Node, config, width, height) {
-    var color, diameter, newImage, ratio;
+    var baseShapeHiding, color, diameter, newImage, ratio;
     ratio = function(p) {
       if (config.scale) {
         return p;
@@ -182,8 +200,9 @@ ImageFactory = (function() {
     };
     diameter = Math.min(width, height);
     color = ColorFactory.getColor(config.color);
+    baseShapeHiding = config.baseShapeScale != null ? config.baseShapeScale : 1;
     newImage = d3Node.append("svg:circle").classed('circle', true).attr('cx', width / 2).attr('cy', height / 2).attr('r', function(d) {
-      return ratio(d.proportion) * diameter / 2;
+      return ratio(d.proportion) * diameter / 2 * baseShapeHiding;
     }).style('fill', color).attr('shape-rendering', 'crispEdges');
     return Promise.resolve({
       newImage: newImage,
@@ -197,7 +216,7 @@ ImageFactory = (function() {
   };
 
   ImageFactory.addEllipseTo = function(d3Node, config, width, height) {
-    var color, newImage, ratio;
+    var baseShapeHiding, color, newImage, ratio;
     ratio = function(p) {
       if (config.scale) {
         return p;
@@ -206,10 +225,11 @@ ImageFactory = (function() {
       }
     };
     color = ColorFactory.getColor(config.color);
+    baseShapeHiding = config.baseShapeScale != null ? config.baseShapeScale : 1;
     newImage = d3Node.append("svg:ellipse").classed('ellipse', true).attr('cx', width / 2).attr('cy', height / 2).attr('rx', function(d) {
-      return width * ratio(d.proportion) / 2;
+      return width * ratio(d.proportion) / 2 * baseShapeHiding;
     }).attr('ry', function(d) {
-      return height * ratio(d.proportion) / 2;
+      return height * ratio(d.proportion) / 2 * baseShapeHiding;
     }).style('fill', color).attr('shape-rendering', 'crispEdges');
     return Promise.resolve({
       newImage: newImage

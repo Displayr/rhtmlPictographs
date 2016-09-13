@@ -186,7 +186,7 @@ GraphicCell = (function(_super) {
       enteringLeafNodes.each(function(dataAttributes) {
         var d3Node;
         d3Node = d3.select(this);
-        return baseImageRenderPromises.push(ImageFactory.addImageTo(d3Node, baseImageConfig, imageWidth, imageHeight, dataAttributes));
+        return baseImageRenderPromises.push(ImageFactory.addBaseImageTo(d3Node, baseImageConfig, imageWidth, imageHeight, dataAttributes));
       });
       baseImageCompletePromise = Promise.all(baseImageRenderPromises)["catch"](imageErrorHandler);
     }
@@ -199,7 +199,7 @@ GraphicCell = (function(_super) {
         enteringLeafNodes.each(function(dataAttributes) {
           var d3Node;
           d3Node = d3.select(this);
-          return variableImageRenderPromises.push(ImageFactory.addImageTo(d3Node, variableImageConfig, imageWidth, imageHeight, dataAttributes));
+          return variableImageRenderPromises.push(ImageFactory.addVarImageTo(d3Node, variableImageConfig, imageWidth, imageHeight, dataAttributes));
         });
         return Promise.all(variableImageRenderPromises)["catch"](imageErrorHandler);
       });

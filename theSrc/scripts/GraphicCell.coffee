@@ -190,7 +190,7 @@ class GraphicCell extends BaseCell
       baseImageRenderPromises = []
       enteringLeafNodes.each (dataAttributes) ->
         d3Node = d3.select(this)
-        baseImageRenderPromises.push ImageFactory.addImageTo(d3Node, baseImageConfig, imageWidth, imageHeight, dataAttributes)
+        baseImageRenderPromises.push ImageFactory.addBaseImageTo(d3Node, baseImageConfig, imageWidth, imageHeight, dataAttributes)
       baseImageCompletePromise = Promise.all(baseImageRenderPromises).catch(imageErrorHandler)
 
     variableImageCompletePromise = Promise.resolve()
@@ -200,7 +200,7 @@ class GraphicCell extends BaseCell
         variableImageRenderPromises = []
         enteringLeafNodes.each (dataAttributes) ->
           d3Node = d3.select(this)
-          variableImageRenderPromises.push ImageFactory.addImageTo(d3Node, variableImageConfig, imageWidth, imageHeight, dataAttributes)
+          variableImageRenderPromises.push ImageFactory.addVarImageTo(d3Node, variableImageConfig, imageWidth, imageHeight, dataAttributes)
         return Promise.all(variableImageRenderPromises).catch(imageErrorHandler)
 
     #NB To adhere to SVG "last drawn goes on top policy", we must delay text-overlay image rendering until variable image drawn
