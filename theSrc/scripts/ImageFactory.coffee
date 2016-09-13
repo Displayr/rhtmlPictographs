@@ -53,7 +53,7 @@ class ImageFactory
     config = ImageFactory.parseConfigString config
 
     # VIS-121 - Prevent base svgs from peeking out (only for basic shapes)
-    config.baseShapeScale = 0.99 if _.includes(ImageFactory.basicShapes, config.type)
+    config.baseShapeScale = 0.98 if _.includes(ImageFactory.basicShapes, config.type)
     ImageFactory.addImageTo(d3Node, config, width, height, dataAttributes)
 
   @addVarImageTo: (d3Node, config, width, height, dataAttributes) ->

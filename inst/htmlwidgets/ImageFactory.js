@@ -61,7 +61,7 @@ ImageFactory = (function() {
   ImageFactory.addBaseImageTo = function(d3Node, config, width, height, dataAttributes) {
     config = ImageFactory.parseConfigString(config);
     if (_.includes(ImageFactory.basicShapes, config.type)) {
-      config.baseShapeScale = 0.99;
+      config.baseShapeScale = 0.98;
     }
     return ImageFactory.addImageTo(d3Node, config, width, height, dataAttributes);
   };
