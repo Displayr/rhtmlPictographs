@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+  <link href='/internal_www/style/internal_www.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and div.example elements -->
+<a href="/index.html">Back to Index</a>
+<h1>Multi Image Scaling and Layout</h1>
+
+<section>
+  <h2 class="hidden">Intro</h2>
+  <p>When we scale with multiple images, the image layout becomes important.</p>
+</section>
+
+<section>
+  <h3>Negative Example</h3>
+  <p>The easiest way to demonstrate is using a negative example. In the two graphics below we are clipping "fromright". Graphic 1 doesn't really look right. Graphic 2 is what we would expect.</p>
+  <p>The difference is that Graphic2 uses a layout that is consistent with the clip direction.</p>
+  <div class="row" data-ex-w="100" data-ex-h="66">
+    <pre class="example hide-config">
+{
+  "proportion": 0.789,
+  "numImages": 6,
+  "numRows": 2,
+  "layout": "right,down",
+  "variableImage": "circle:fromright:lightblue"
+}
+    </pre>
+    <pre class="example hide-config">
+{
+  "proportion": 0.789,
+  "numImages": 6,
+  "numRows": 2,
+  "variableImage": "circle:fromright:lightblue"
+}
+    </pre>
+  </div>
+</section>
+
+<section>
+  <h3>Pictograph Picks the "Correct" Layout</h3>
+  <p>The rhtmlPictograph library "correctly" chooses the desired layout based on the specified clip direction.</p>
+  <p>The following logic is applied:</p>
+  <ul>
+    <li>Default layout is "right,down" this means go left to right, row by row starting at the top, as "one would expect".</li>
+    <li>If a "fromright" clip direction is used, change the layout to "left,down", as in layout right to left, row by row starting at the top.</li>
+    <li>If a "frombottom" clip direction is used, change the layout to "right,up", as in layout left to right, row by row starting at the bottom.</li>
+  </ul>
+  <p>This is demonstrated in the following 8 examples.</p>
+  <div class="row" data-ex-w="100" data-ex-h="66">
+    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numRows": 2, "variableImage": "circle:fromleft:lightblue" } </pre>
+    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numRows": 2, "variableImage": "circle:fromright:lightblue" } </pre>
+    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numRows": 2, "variableImage": "circle:fromtop:lightblue" } </pre>
+    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numRows": 2, "variableImage": "circle:frombottom:lightblue" } </pre>
+  </div>
+
+  <div class="row" data-ex-w="66" data-ex-h="100">
+    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numCols": 2, "variableImage": "circle:fromleft:lightblue" } </pre>
+    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numCols": 2, "variableImage": "circle:fromright:lightblue" } </pre>
+    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numCols": 2, "variableImage": "circle:fromtop:lightblue" } </pre>
+    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numCols": 2, "variableImage": "circle:frombottom:lightblue" } </pre>
+  </div>
+</section>
+
+<section>
+  <h3>User Can Override Layout Choice</h3>
+  <p>If you wish full control of the layout there is a "layout" parameter available. The valid options and an example of each are provided below:</p>
+  <ul>
+    <li><e>right,down</e></li>
+    <li><e>right,up</e></li>
+    <li><e>left,down</e></li>
+    <li><e>left,down</e></li>
+    <li><e>down,right</e></li>
+    <li><e>down,left</e></li>
+    <li><e>up,right</e></li>
+    <li><e>up,left</e></li>
+  </ul>
+  <div class="row" data-ex-w="100" data-ex-h="66">
+    <pre class="example">{ "layout": "right,down", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+    <pre class="example">{ "layout": "right,up", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+    <pre class="example">{ "layout": "left,down", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+    <pre class="example">{ "layout": "left,up", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+  </div>
+  <div class="row" data-ex-w="100" data-ex-h="66">
+    <pre class="example">{ "layout": "down,right", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+    <pre class="example">{ "layout": "down,left", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+    <pre class="example">{ "layout": "up,right", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+    <pre class="example">{ "layout": "up,left", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+  </div>
+</section>
+
+<script src="/external/lodash.min.js"></script>
+<script src="/external/jquery.min.js"></script>
+<script src="/external/d3.min.js"></script>
+<script src="/external/d3-grid.js"></script>
+<script src="/external/rHtmlStatefulWidget.js"></script>
+<script src="/external/rHtmlSvgWidget.js"></script>
+
+<script src="/scripts/RecolorSvg.js"></script>
+<script src="/scripts/ColorFactory.js"></script>
+<script src="/scripts/ImageFactory.js"></script>
+<script src="/scripts/DisplayError.js"></script>
+<script src="/scripts/BaseCell.js"></script>
+<script src="/scripts/GraphicCell.js"></script>
+<script src="/scripts/LabelCell.js"></script>
+<script src="/scripts/Pictograph.js"></script>
+
+<script src="/internal_www/js/renderContentPage.js"></script>
+</body>
+</html>
+
+
+

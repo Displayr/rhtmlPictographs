@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+  <link href='/internal_www/style/internal_www.css' rel='stylesheet' type='text/css'>
+  <link href='/styles/main.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and div.example elements -->
+<a href="/index.html">Back to Index</a>
+<h1>TWE Tables</h1>
+
+<section snapshot-name="example_twe_finance_tables">
+  <div class="row" data-ex-w="900" data-ex-h="240">
+    <pre class="example hide-config no-border">{
+      "font-family": "Arvo",
+      "font-size": "30px",
+      "background-color": "#dddddd",
+      "table": {
+        "colWidths": [ 275, 125, 125, 125, 125, 125],
+        "rowHeights": [ 60, 60, 60, 60 ],
+        "lines": {
+          "horizontal": [ 0, 1, 2, 3, 4 ],
+          "vertical": [ 0, 1, 2, 3, 4, 5, 6 ]
+        },
+        "rows": [
+          [ "label:Year", "label:2015", "label:2014", "label:2013", "label:2012", "label:2011" ],
+          [ "label:Price / share", "label:4.90", "label:4.92", "label:5.72", "label:4.27", "label:3.34" ],
+          [ "label:Earnings / share", "label:11.9", { "type": "label", "value": { "text": "(-15.60)", "font-color": "red" } }, "label:7.3", "label:13.9", "label:18.4" ],
+          [ "label:P/E ratio", "label:0.41", { "type": "label", "value": { "text": "(-0.32)", "font-color": "red" } }, "label:0.78", "label:0.31", "label:0.18" ]
+        ]
+      }
+    }</pre>
+  </div>
+
+  <div class="row" data-ex-w="900" data-ex-h="240">
+    <pre class="example hide-config no-border">{
+      "font-family": "Arvo",
+      "font-size": "30px",
+      "background-color": "#dddddd",
+      "table": {
+        "colWidths": [ 275, 125, 125, 125, 125, 125],
+        "rowHeights": [ 60, 60, 60, 60 ],
+        "lines": {
+          "horizontal": [ 0, 1, 4 ],
+          "vertical": [ 0, 1, 6 ]
+        },
+        "rows": [
+          [ "label:Year", "label:2015", "label:2014", "label:2013", "label:2012", "label:2011" ],
+          [ "label:Price / share", "label:4.90", "label:4.92", "label:5.72", "label:4.27", "label:3.34" ],
+          [ "label:Earnings / share", "label:11.9", { "type": "label", "value": { "text": "(-15.60)", "font-color": "red" } }, "label:7.3", "label:13.9", "label:18.4" ],
+          [ "label:P/E ratio", "label:0.41", { "type": "label", "value": { "text": "(-0.32)", "font-color": "red" } }, "label:0.78", "label:0.31", "label:0.18" ]
+        ]
+      }
+    }</pre>
+  </div>
+
+  <div class="row" data-ex-w="900" data-ex-h="240">
+    <pre class="example hide-config no-border">{
+      "font-family": "Arvo",
+      "font-size": "30px",
+      "background-color": "#dddddd",
+      "table": {
+        "colWidths": [ 275, 125, 125, 125, 125, 125],
+        "rowHeights": [ 60, 60, 60, 60 ],
+        "lines": {
+          "horizontal": [ 0, 1, 2, 3, 4 ],
+          "vertical": [ 0, 1, 2, 3, 4, 5, 6 ]
+        },
+        "rows": [
+          [ "label:Year", "label:2015", "label:2014", "label:2013", "label:2012", "label:2011" ],
+          [ "label:Current Assets", "label:1 443.7", "label:1 218.3", "label:1 186", "label:1 200.3", "label: 1 298" ],
+          [ { "type": "label", "value": { "text": "Current Liabilities", "font-size":"27px" } }, "label:470.7", "label:582.1", "label:573.2", "label:540.5", "label:429.7" ],
+          [ "label:Current Ratio", "label:2.5", "label:2.1", "label:2.1", "label:2.2", "label:3.0" ]
+        ]
+      }
+    }</pre>
+  </div>
+
+  <div class="row" data-ex-w="900" data-ex-h="240">
+    <pre class="example hide-config no-border">{
+      "font-family": "Arvo",
+      "font-size": "30px",
+      "background-color": "#dddddd",
+      "table": {
+        "colWidths": [ 275, 125, 125, 125, 125, 125],
+        "rowHeights": [ 60, 60, 60, 60 ],
+        "lines": {
+          "horizontal": [ 0, 1, 2, 3, 4 ],
+          "vertical": [ 0, 1, 2, 3, 4, 5, 6 ]
+        },
+        "rows": [
+          [ "label:Year", "label:2015", "label:2014", "label:2013", "label:2012", "label:2011" ],
+          [ "label:Net Profit", "label:110.9", { "type": "label", "value": { "text": "(-241)", "font-color": "red" } }, "label:50.9", "label:140.5", "label:84.6" ],
+          [ "label:Sales", "label:1 848.3", "label:1 680.5", "label:1 656.5","label:1 640.8", "label:1 441" ],
+          [ "label:NPM Ratio", "label:5.6", { "type": "label", "value": { "text": "(-14.3)", "font-color": "red" } }, "label:3.1", "label:8.6", "label:5.9" ]
+        ]
+      }
+    }</pre>
+  </div>
+</section>
+
+<script src="/external/lodash.min.js"></script>
+<script src="/external/jquery.min.js"></script>
+<script src="/external/d3.min.js"></script>
+<script src="/external/d3-grid.js"></script>
+<script src="/external/rHtmlStatefulWidget.js"></script>
+<script src="/external/rHtmlSvgWidget.js"></script>
+
+<script src="/scripts/RecolorSvg.js"></script>
+<script src="/scripts/ColorFactory.js"></script>
+<script src="/scripts/ImageFactory.js"></script>
+<script src="/scripts/DisplayError.js"></script>
+<script src="/scripts/BaseCell.js"></script>
+<script src="/scripts/GraphicCell.js"></script>
+<script src="/scripts/LabelCell.js"></script>
+<script src="/scripts/Pictograph.js"></script>
+
+<script src="/internal_www/js/renderContentPage.js"></script>
+</body>
+</html>

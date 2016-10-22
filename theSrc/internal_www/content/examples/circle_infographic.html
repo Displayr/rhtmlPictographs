@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+  <link href='/internal_www/style/internal_www.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and div.example elements -->
+<a href="/index.html">Back to Index</a>
+<h1></h1>
+
+<section snapshot-name="example_circle_infographic">
+  <h2>Circle infographic V2 w/ palettes and shape support</h2>
+  <div class="row" data-ex-w="1100" data-ex-h="500">
+    <pre class="example hide-config">{
+        "font-color": "grey",
+        "font-family": "arial",
+        "font-weight": "200",
+        "font-size": "12px",
+        "table": {
+          "colWidths": [80, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30],
+          "rowHeights": [60, 60, 60, 60, 60, 60, 60, 30],
+          "colors": {
+            "palettes": {
+              "displayr1": [ "red", "green", "blue" ]
+            }
+          },
+          "columnGutterLength": 12,
+          "lines": {
+            "padding-left": 80,
+            "padding-right": 20,
+            "horizontal": [ 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7 ],
+            "style": "stroke:grey;stroke-width:2"
+          },
+          "rows": [
+            [
+              {"type": "label", "value": { "padding-top": 23, "labels": ["displayr"] } },
+              {"type": "graphic", "value": { "proportion": 0.8, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.75, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.9, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.98, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.75, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.9, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:displayr" } },
+              {"type": "graphic", "value": { "proportion": 0.98, "variableImage": "circle:scale:displayr" } }
+            ],
+            [
+              {"type": "label", "value": { "padding-top": 23, "labels": ["google10"] } },
+              {"type": "graphic", "value": { "proportion": 0.8, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.75, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.9, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.98, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.75, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.9, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google10" } },
+              {"type": "graphic", "value": { "proportion": 0.98, "variableImage": "circle:scale:google10" } }
+            ],
+            [
+              {"type": "label", "value": { "padding-top": 23, "labels": ["google20"] } },
+              {"type": "graphic", "value": { "proportion": 0.95, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.61, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.34, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.83, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.73, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.87, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.68, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.50, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.96, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.35, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.99, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.82, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.68, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.69, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.90, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.65, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.66, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.97, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.41, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.61, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.33, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.91, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.70, "variableImage": "circle:scale:google20" } },
+              {"type": "graphic", "value": { "proportion": 0.67, "variableImage": "circle:scale:google20" } }
+            ],
+            [
+              {"type": "label", "value": { "padding-top": 23, "labels": ["d310"] } },
+              {"type": "graphic", "value": { "proportion": 0.65, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.35, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.38, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.38, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.53, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.84, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.67, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.61, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.57, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.38, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.33, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.82, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.61, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.89, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.50, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.50, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.42, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.37, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.44, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.30, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.65, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.66, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.70, "variableImage": "circle:scale:d310" } },
+              {"type": "graphic", "value": { "proportion": 0.81, "variableImage": "circle:scale:d310" } }
+            ],
+            [
+              {"type": "label", "value": { "padding-top": 23, "labels": ["d320"] } },
+              {"type": "graphic", "value": { "proportion": 0.72, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.63, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.64, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.68, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.65, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.98, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.88, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.68, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.72, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.45, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.80, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.65, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.95, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.39, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.77, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.41, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.84, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.62, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.57, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.67, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.63, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.96, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.68, "variableImage": "circle:scale:d320" } },
+              {"type": "graphic", "value": { "proportion": 0.61, "variableImage": "circle:scale:d320" } }
+            ],
+            [
+              {"type": "label", "value": { "padding-top": 23, "labels": ["d320b"] } },
+              {"type": "graphic", "value": { "proportion": 0.65, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.79, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.78, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.69, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.45, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.64, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.44, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.81, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.39, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.33, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.61, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.43, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.56, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.90, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.74, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.37, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.36, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.60, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.43, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.64, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.68, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.63, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.78, "variableImage": "circle:scale:d320b" } },
+              {"type": "graphic", "value": { "proportion": 0.79, "variableImage": "circle:scale:d320b" } }
+            ],
+            [
+              {"type": "label", "value": { "padding-top": 23, "labels": ["d320c"] } },
+              {"type": "graphic", "value": { "proportion": 0.30, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.39, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.93, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.72, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.55, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.68, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.65, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.77, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.69, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.74, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.85, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.35, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.31, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.95, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.45, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.47, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.80, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.67, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.34, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.43, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.74, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.91, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.97, "variableImage": "circle:scale:d320c" } },
+              {"type": "graphic", "value": { "proportion": 0.62, "variableImage": "circle:scale:d320c" } }
+            ],
+            [
+              {"type": "label", "value": ""},
+              {"type": "label", "value": "1"},
+              {"type": "label", "value": "2"},
+              {"type": "label", "value": "3"},
+              {"type": "label", "value": "4"},
+              {"type": "label", "value": "5"},
+              {"type": "label", "value": "6"},
+              {"type": "label", "value": "7"},
+              {"type": "label", "value": "8"},
+              {"type": "label", "value": "9"},
+              {"type": "label", "value": "10"},
+              {"type": "label", "value": "11"},
+              {"type": "label", "value": "12"},
+              {"type": "label", "value": "13"},
+              {"type": "label", "value": "14"},
+              {"type": "label", "value": "15"},
+              {"type": "label", "value": "16"},
+              {"type": "label", "value": "17"},
+              {"type": "label", "value": "18"},
+              {"type": "label", "value": "19"},
+              {"type": "label", "value": "20"},
+              {"type": "label", "value": "21"},
+              {"type": "label", "value": "22"},
+              {"type": "label", "value": "23"},
+              {"type": "label", "value": "24"}
+            ]
+          ]
+        }
+      }
+    </pre>
+  </div>
+</section>
+
+<script src="/external/lodash.min.js"></script>
+<script src="/external/jquery.min.js"></script>
+<script src="/external/d3.min.js"></script>
+<script src="/external/d3-grid.js"></script>
+<script src="/external/rHtmlStatefulWidget.js"></script>
+<script src="/external/rHtmlSvgWidget.js"></script>
+
+<script src="/scripts/RecolorSvg.js"></script>
+<script src="/scripts/ColorFactory.js"></script>
+<script src="/scripts/ImageFactory.js"></script>
+<script src="/scripts/DisplayError.js"></script>
+<script src="/scripts/BaseCell.js"></script>
+<script src="/scripts/GraphicCell.js"></script>
+<script src="/scripts/LabelCell.js"></script>
+<script src="/scripts/Pictograph.js"></script>
+
+<script src="/internal_www/js/renderContentPage.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+  <link href='/internal_www/style/internal_www.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and div.example elements -->
+<a href="/index.html">Back to Index</a>
+<h1>SVGs being recolored and clipped</h1>
+
+<section>
+  <div class="row" data-ex-w="305" data-ex-h="220">
+    <pre class="example hide-config">
+{
+  "font-size": "12px",
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [ 50, 50, 50 ],
+    "colWidths": [ 120, 180 ],
+    "rowGutterLength": 5,
+    "columnGutterLength": 5,
+    "rows": [
+      [
+        {
+          "type": "label",
+          "value": { "text": "First", "horizontal-align": "right", "vertical-align": "center" }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.3,
+            "numImages": 5.0,
+            "variableImage": "url:fromleft:green:https://dl.dropboxusercontent.com/u/539177224/train_grey.svg",
+            "numRows": 1
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": { "text": "Second", "horizontal-align": "right", "vertical-align": "center" }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.5,
+            "numImages": 5.0,
+            "variableImage": "url:fromleft:orange:https://dl.dropboxusercontent.com/u/539177224/train_grey.svg",
+            "numRows": 1
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": { "text": "Third", "horizontal-align": "right", "vertical-align": "center" }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.7,
+            "numImages": 5.0,
+            "variableImage": "url:fromleft:red:https://dl.dropboxusercontent.com/u/539177224/train_grey.svg",
+            "numRows": 1
+          }
+        }
+      ]
+    ]
+  }
+}
+    </pre>
+  </div>
+
+  <div class="row" data-ex-w="200" data-ex-h="100">
+    <pre class="example hide-config">
+{
+  "font-size": "10",
+  "proportion": 0.5,
+  "numImages": 5,
+  "numRows": 1,
+  "variableImage": "url:fromleft:red:https://dl.dropboxusercontent.com/u/539177224/star_filled.svg",
+  "baseImage": "url:red:https://dl.dropboxusercontent.com/u/539177224/star_unfilled.svg",
+  "text-overlay": "!!",
+  "background-color": "transparent",
+  "resizable": "false"
+}
+    </pre>
+  </div>
+
+</section>
+
+<script src="/external/lodash.min.js"></script>
+<script src="/external/jquery.min.js"></script>
+<script src="/external/d3.min.js"></script>
+<script src="/external/d3-grid.js"></script>
+<script src="/external/rHtmlStatefulWidget.js"></script>
+<script src="/external/rHtmlSvgWidget.js"></script>
+
+<script src="/scripts/RecolorSvg.js"></script>
+<script src="/scripts/ColorFactory.js"></script>
+<script src="/scripts/ImageFactory.js"></script>
+<script src="/scripts/DisplayError.js"></script>
+<script src="/scripts/BaseCell.js"></script>
+<script src="/scripts/GraphicCell.js"></script>
+<script src="/scripts/LabelCell.js"></script>
+<script src="/scripts/Pictograph.js"></script>
+
+<script src="/internal_www/js/renderContentPage.js"></script>
+</body>
+</html>

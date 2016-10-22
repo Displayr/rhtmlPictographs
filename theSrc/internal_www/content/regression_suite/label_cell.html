@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+  <link href='/internal_www/style/internal_www.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!-- NB Important dev note: This file is used to auto generate r files in the example hide-configs directory. If you modify ensure you maintain the format of sections, containing h2, p, and div.example hide-config elements -->
+<div snapshot-name="label_cell_basic">
+  <div class="row">
+    <div class="example hide-config">{ "table": { "rows": [ [ "label:A label" ] ] } }</div>
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": "A label" } ] ] } }</div>
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": [ "Line 1", "Line 2" ] } ] ] } }</div>
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": { "text": "A label", "font-color" : "red", "font-size": "20px", "font-family": "impact", "font-weight" : "100" } } ] ] } }</div>
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": [{ "text": "label 1" }, { "text": "label 2" }] } ] ] } }</div>
+  </div>
+  <div class="row">
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": { "padding-top": 10, "padding-inner": 18, "labels": [ "Line 1", { "text": "Line 2", "font-size": "14px", "font-color": "red" } ] } } ] ] } }</div>
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": { "background-color" : "#dddddd", "labels": [ "row1", "row2" ] } } ] ] } }</div>
+  </div>
+</div>
+<div snapshot-name="label_cell_positioning">
+  <div class="row">
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "top", "labels": [ "row1", "row2" ] } } ] ] } }</div>
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": { "padding-top": "15", "vertical-align": "top", "labels": [ "row1", "row2" ] } } ] ] } }</div>
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "center", "labels": [ "row1", "row2" ] } } ] ] } }</div>
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": { "padding-bottom": "15", "vertical-align": "bottom", "labels": [ "row1", "row2" ] } } ] ] } }</div>
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "bottom", "labels": [ "row1", "row2" ] } } ] ] } }</div>
+  </div>
+
+  <div class="row" data-ex-w="200">
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "left" } } ] ] } }</div>
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "center" } } ] ] } }</div>
+    <div class="example hide-config">{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "right" } } ] ] } }</div>
+  </div>
+
+  <div class="row" data-ex-w="400">
+    <div class="example hide-config">{ "font-color": "lightblue", "font-family": "Arvo, serif", "table": { "rows": [ [ { "type": "label", "value": { "padding-top": "5", "padding-inner": "5", "padding-left": "15", "padding-right": "15", "labels": [ { "text" : "Left Aligned", "horizontal-align": "left" }, { "text" : "Center Aligned", "horizontal-align": "center" }, { "text" : "Right Aligned", "horizontal-align": "right" } ] } } ] ] } }</div>
+  </div>
+</div>
+<div snapshot-name="label_cell_smallcaps">
+  <div class="row" data-ex-w="850">
+    <div class="example hide-config">{ "font-color": "lightblue", "font-family": "Arvo, serif", "table": { "rows": [ [ { "type": "label", "value": { "padding-left" : 5, "padding-inner" : 5, "labels": [ { "horizontal-align": "left", "text" : "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ", "font-variant": "small-caps" }, { "horizontal-align": "left", "text" : "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ", "font-variant": "normal"  } ] } } ] ] } }</div>
+  </div>
+</div>
+</body>
+
+<script src="/external/lodash.min.js"></script>
+<script src="/external/jquery.min.js"></script>
+<script src="/external/d3.min.js"></script>
+<script src="/external/d3-grid.js"></script>
+<script src="/external/rHtmlStatefulWidget.js"></script>
+<script src="/external/rHtmlSvgWidget.js"></script>
+
+<script src="/scripts/RecolorSvg.js"></script>
+<script src="/scripts/ColorFactory.js"></script>
+<script src="/scripts/ImageFactory.js"></script>
+<script src="/scripts/DisplayError.js"></script>
+<script src="/scripts/BaseCell.js"></script>
+<script src="/scripts/GraphicCell.js"></script>
+<script src="/scripts/LabelCell.js"></script>
+<script src="/scripts/Pictograph.js"></script>
+
+<script src="/internal_www/js/renderContentPage.js"></script>
+</body>
+</html>

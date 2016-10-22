@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+  <link href='/internal_www/style/internal_www.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and div.example elements -->
+<a href="/index.html">Back to Index</a>
+
+<section>
+  <h2 class="hidden">Intro</h2>
+  <p>This set of examples provides a tool to verify that the different scaling modes are handled correctly in a variety of situations.</p>
+</section>
+
+<section>
+  <h2>Different fill directions</h2>
+  <div class="row" data-ex-h="200">
+    <pre class="example">{ "numImages": 2, "numRows": 2, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:fromleft", "proportion": "=15/16" }</pre>
+    <pre class="example">{ "numImages": 2, "numRows": 2, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:fromright", "proportion": "=15/16" }</pre>
+    <pre class="example">{ "numImages": 2, "numRows": 2, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:frombottom", "proportion": "=15/16" }</pre>
+    <pre class="example">{ "numImages": 2, "numRows": 2, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:fromtop", "proportion": "=15/16" }</pre>
+  </div>
+</section>
+
+
+<section>
+  <h2>Squares</h2>
+  <div class="row" data-ex-w="200">
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:radial", "proportion": "=7/8" }</pre>
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:fromleft", "proportion": "=7/8" }</pre>
+    <pre class="example for-consideration">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:scale", "proportion": "=7/8" }</pre>
+    <pre class="example" data-ex-w="100" data-ex-h="200">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:frombottom", "proportion": "=7/8" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Rectangles</h2>
+  <div class="row" data-ex-w="200">
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "rect:lightblue", "variableImage": "rect:radial", "proportion": "=7/8" }</pre>
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "rect:lightblue", "variableImage": "rect:fromleft", "proportion": "=7/8" }</pre>
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "rect:lightblue", "variableImage": "rect:scale", "proportion": "=7/8" }</pre>
+    <pre class="example" data-ex-w="100" data-ex-h="200">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "rect:lightblue", "variableImage": "rect:frombottom", "proportion": "=7/8" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Circles</h2>
+  <div class="row" data-ex-w="200">
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "circle:lightblue", "variableImage": "circle:radial", "proportion": "=7/8" }</pre>
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "circle:lightblue", "variableImage": "circle:fromleft", "proportion": "=7/8" }</pre>
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "circle:lightblue", "variableImage": "circle:scale", "proportion": "=7/8" }</pre>
+    <pre class="example" data-ex-w="100" data-ex-h="200">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "circle:lightblue", "variableImage": "circle:frombottom", "proportion": "=7/8" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Ellipse</h2>
+  <div class="row" data-ex-w="200">
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "ellipse:lightblue", "variableImage": "ellipse:radial", "proportion": "=7/8" }</pre>
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "ellipse:lightblue", "variableImage": "ellipse:fromleft", "proportion": "=7/8" }</pre>
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "ellipse:lightblue", "variableImage": "ellipse:scale", "proportion": "=7/8" }</pre>
+    <pre class="example" data-ex-w="100" data-ex-h="200">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "ellipse:lightblue", "variableImage": "ellipse:frombottom", "proportion": "=7/8" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>External Image URL</h2>
+  <p>This shows a limitation of scaling an external image that doesn't "fit" the cell.</p>
+  <p>In these examples a cell of 200x100 (or 100x200) contains an external image of a circle, which is scaled to fit such that the circle has a diameter of 100 and is centred in the cell.</p>
+  <p>The issue is there is no way to now what proportion of the cell is occupied by the image, so the scaling takes place accross the entire cell, not just for the content occupied by the image.</p>
+  <div class="row" data-ex-w="200">
+    <div class="example for-consideration">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "url:fromleft:/images/blue_circle_512.svg", "proportion": "=7/8" }</div>
+    <div class="example for-consideration">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "url:radial:/images/blue_circle_512.svg", "proportion": "=7/8" }</div>
+  </div>
+  <div class="row" data-ex-w="200">
+    <div class="example for-consideration">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "url:scale:/images/blue_circle_512.svg", "proportion": "=5/8" }</div>
+    <div class="example for-consideration" data-ex-w="100" data-ex-h="200">{ "numImages": 1, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "url:frombottom:/images/blue_circle_512.svg", "proportion": "=7/8" }</div>
+  </div>
+</section>
+
+<section>
+  <h2>Recolored SVG</h2>
+  <div class="row" data-ex-w="100">
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "variableImage": "url:radial:red:/images/blue_circle_512.svg", "proportion": "=7/8" }</pre>
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "variableImage": "url:fromleft:red:/images/blue_circle_512.svg", "proportion": "=7/8" }</pre>
+  </div>
+  <div class="row" data-ex-w="100">
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "variableImage": "url:scale:red:/images/blue_circle_512.svg", "proportion": "=6/8" }</pre>
+    <pre class="example">{ "numImages": 1, "background-color": "#dddddd", "variableImage": "url:frombottom:red:/images/blue_circle_512.svg", "proportion": "=7/8" }</pre>
+  </div>
+</section>
+
+
+<script src="/external/lodash.min.js"></script>
+<script src="/external/jquery.min.js"></script>
+<script src="/external/d3.min.js"></script>
+<script src="/external/d3-grid.js"></script>
+<script src="/external/rHtmlStatefulWidget.js"></script>
+<script src="/external/rHtmlSvgWidget.js"></script>
+
+<script src="/scripts/RecolorSvg.js"></script>
+<script src="/scripts/ColorFactory.js"></script>
+<script src="/scripts/ImageFactory.js"></script>
+<script src="/scripts/DisplayError.js"></script>
+<script src="/scripts/BaseCell.js"></script>
+<script src="/scripts/GraphicCell.js"></script>
+<script src="/scripts/LabelCell.js"></script>
+<script src="/scripts/Pictograph.js"></script>
+
+<script src="/internal_www/js/renderContentPage.js"></script>
+</body>
+</html>
