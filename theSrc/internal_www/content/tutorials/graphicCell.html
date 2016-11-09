@@ -1,0 +1,333 @@
+<!doctype html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+  <link href='/internal_www/style/internal_www.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and .example elements -->
+<a href="/index.html">Back to Index</a>
+<h1>Single Graphic Cell Usage Tutorial</h1>
+<p>Graphic cells can be added as cells in tables or created independently. When we create a single graphic cell, under the hood the pictograph library is creating a table with one cell.</p>
+<p>The pictograph library even supports an all string interface for creating very simple single cell infographics.</p>
+<p>As such, the following four calls to rhtmlPictographs all produce the same blue circle</p>
+
+This string:
+<pre>
+  <span class="config-only">rhtmlPictographs::graphic('circle:lightblue')</span>
+</pre>
+
+Is the same as this single graphic cell config:
+<pre>
+  <span class="config-only">rhtmlPictographs::graphic('{"variableImage":"circle:lightblue"}')</span>
+</pre>
+
+Is the same as this table config:
+<pre>
+  <span class="config-only">rhtmlPictographs::graphic('{"table":{ "rows": [[ "circle:lightblue" ]] }}')</span>
+</pre>
+
+Is the same as this table config:
+<pre>
+  <span class="config-only">rhtmlPictographs::graphic('{"table":{ "rows": [[ {"type":"graphic", "value": { "variableImage":"circle:lightblue"} } ]] }}')</span>
+</pre>
+
+<br/>
+<p>The objective with the alternate syntax options above is to make it really easy to do really easy things, and only require the more verbose syntax when building more complex graphics.</p>
+
+<p>The rest of the tutorial uses examples that do not provide the rhtmlPictograph::graphic() wrapper around the config. In all cases, you can take the provided config, and do either:</p>
+<ul>
+  <li> pass it directly to <span class="config-only">rhtmlPictographs::graphic("CONFIG")</span></li>
+  <li> If its a string, then use it as a table cell definition : <span class="config-only">rhtmlPictographs::graphic('{"table":{ "rows": [[ "CONFIG" ]] }}')</span></li>
+  <li> If its an JSON object, then use it as a table cell definition as follows : <span class="config-only">rhtmlPictographs::graphic('{"table":{ "rows": [[ { "type": "graphic", "value": CONFIG } ]] }}')</span></li>
+</ul>
+
+<section>
+  <h2>Shapes</h2>
+  <p> Several basic SVG shapes are supported, as well as the use of external image URLs, and image 'data URIs' (where the image is encoded in base64).</p>
+  <div class="row" data-ex-h="100" data-ex-w="150">
+    <pre class="example">circle</pre>
+    <pre class="example">ellipse</pre>
+    <pre class="example">rect</pre>
+    <pre class="example">square</pre>
+    <pre class="example">url:/images/black_circle_512.svg</pre>
+  </div>
+  <div class="row" data-ex-h="100" data-ex-w="150">
+    <pre class="example">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAgElEQVQYlW2PQQ7CMAwEZyIL8S5ezpe4VijLoUkbCrnY8k52bR/P7QXcgQYCdAh7PytbDegGDOHfS6uE+Ytf+Jj3OiOu4hoPTU9RRMHBaka11d5cncBBT7ggJAt0tEElAQz1tbLrUXNjgfTa3bKkLu5Ti5Rmm7DYcL82oSskoLw/acsyJxuTWyQAAAAASUVORK5CYII=</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Combining Shapes and Keywords</h2>
+  <p>We can modify each of the shape types above by adding one or more keywords. These will all be demonstrated below, but this section just talks about how to combine and order the keywords in the string.</p>
+  <p>Graphic cell strings always start with a type and then have zero or more keywords after the type. Colons are used to seperate the parts of the string.</p>
+  <p>The following ordering rules apply:</p>
+  <ul>
+    <li>The string must start with a valid type: [circle, ellipse, square, rect, url, data].</li>
+    <li>url and data types must end with the actual URL. In other words, the last part of the string must be the URL/data string.</li>
+    <li>Otherwise the order of the tokens does not matter.</li>
+    <li>If a keyword is not recognized (e.g., red, pink, lightblue) we assume its a color and use it as a color.</li>
+    <li>There can be at most one unrecognized keywords. For example "circle:fromleft:red" is valid but "circle:fromleft:red:blue" is invalid.</li>
+  </ul>
+
+  <p>Some quick examples, note that what each keyword does is described below:</p>
+  <ul>
+    <li>circle:blue</li>
+    <li>circle:blue:radial</li>
+    <li>circle:radial:blue</li>
+    <li>url:blue:http://somesvg.com/that_i_will_recolor_to_blue.svg</li>
+    <li>data:scale:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAzklEQVRYhe2XQQ=</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Add colors to shapes</h2>
+  <div class="row">
+    <div class="example">circle</div>
+    <div class="example">circle:red</div>
+    <div class="example">circle:#336699</div>
+  </div>
+</section>
+
+<section>
+  <h2>Use a color scheme</h2>
+  <p>There are 7 predefined palettes: [google10, google20, displayr, d310, d320, d320b, d320c], simply include the name of the color palette in the config string and a color will be chosen from the palette</p>
+  <p>Users can also define their own color palettes, this is shown in the <a href="/tutorial/table.html">table tutorial</a></p>
+  <div class="row">
+    <div class="example">circle:displayr</div>
+    <div class="example">circle:displayr</div>
+    <div class="example">circle:displayr</div>
+    <div class="example">circle:displayr</div>
+    <div class="example">circle:displayr</div>
+  </div>
+</section>
+
+<section>
+  <h2>Original SVGs</h2>
+  <p>External SVGs can be recolored simply by providing a color in the config string. Here are the original SVGs:</p>
+  <div class="row" data-ex-h="100" data-ex-w="100">
+    <div class="example">url:/images/blue_circle_512.svg</div>
+    <div class="example">url:/images/soyuz_rocket.svg</div>
+    <div class="example">url:/images/dollar_sign_green.svg</div>
+    <div class="example">url:/images/rocket_black.svg</div>
+    <div class="example">url:/images/stickman_green.svg</div>
+  </div>
+</section>
+
+<section>
+  <h2>Recolored SVGs</h2>
+  <p>And here are the SVGs recolored red</p>
+  <div class="row" data-ex-h="100" data-ex-w="100">
+    <div class="example">url:red:/images/blue_circle_512.svg</div>
+    <div class="example">url:red:/images/soyuz_rocket.svg</div>
+    <div class="example">url:red:/images/dollar_sign_green.svg</div>
+    <div class="example">url:red:/images/rocket_black.svg</div>
+    <div class="example">url:red:/images/stickman_green.svg</div>
+  </div>
+</section>
+
+<section>
+  <h2>Use a proportion and a scaling technique</h2>
+  <p>Proportions can be provided and visually represented using 4 different scaling techniques:</p>
+  <ul>
+    <li>Scaling the size of the image</li>
+    <li>Horizontal clipping</li>
+    <li>Vertical clipping</li>
+    <li>Radial clipping (like a pie graph)</li>
+  </ul>
+  <p>Each technique will work with any of the shape types defined above.</p>
+
+  <div class="row" data-ex-h="100" data-ex-w="100">
+    <div class="example">{ "variableImage": "circle:fromleft", "proportion": "0.75" }</div>
+    <div class="example">{ "variableImage": "circle:fromright", "proportion": "0.75" }</div>
+    <div class="example">{ "variableImage": "circle:frombottom", "proportion": "0.75" }</div>
+    <div class="example">{ "variableImage": "circle:fromtop", "proportion": "0.75" }</div>
+  </div>
+  <div class="row" data-ex-h="100" data-ex-w="100">
+    <div class="example">{ "variableImage": "circle:scale", "proportion": "0.75" }</div>
+    <div class="example">{ "variableImage": "circle:radial", "proportion": "0.75" }</div>
+  </div>
+
+  <p>There are also some aliases (horizontal=fromleft, vertical=frombottom, pie=radial) that behave the same as above</p>
+  <div class="row" data-ex-h="100" data-ex-w="100">
+    <div class="example">{ "variableImage": "circle:horizontal", "proportion": "0.75" }</div>
+    <div class="example">{ "variableImage": "circle:vertical", "proportion": "0.75" }</div>
+    <div class="example">{ "variableImage": "circle:pie", "proportion": "0.75" }</div>
+  </div>
+
+</section>
+
+<section>
+  <h2>Use a fraction in the proportion field</h2>
+  <p>If the proportion string starts with '=', then the remaining string will be interpreted as Javascript, so we can pass in fractions or other mathematical expressions.</p>
+  <p>Note the final value must still lie between the inclusive range of [0,1].</p>
+  <div class="row">
+    <pre class="example">{ "variableImage": "circle:radial", "proportion": "=7/8" }</pre>
+    <pre class="example">{ "variableImage": "circle:radial", "proportion": "=(3+4)/(2+6)" }</pre>
+    <pre class="example">{ "variableImage": "circle:radial", "proportion": "=(Math.sqrt(4) + 5)/8" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Add text</h2>
+  <p>Text can be placed above, below, or inlaid on the graphic.</p>
+  <p>By default the text will inherit font settings from the table, but they can be overridden individually.</p>
+  <div class="row" data-ex-h="200" data-ex-w="200">
+    <pre class="example">{ "variableImage": "circle:lightblue", "text-header": "top", "text-overlay": "overlay", "text-footer": "bottom" }</pre>
+    <pre class="example">{ "variableImage": "circle:lightblue", "font-color": "orange", "font-size": "16px", "font-family": "Arial", "font-weight": "900", "text-header": "top", "text-overlay": "overlay", "text-footer": "bottom" }</pre>
+    <pre class="example">{ "variableImage": "circle:lightblue", "text-header" : { "text":"top", "font-color": "orange", "font-size": "16px", "font-family": "Arial", "font-weight": "900" }, "text-overlay": "overlay", "text-footer": "bottom" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Add text with left and right alignment</h2>
+  <p>Text can be placed above, below, or inlaid on the graphic.</p>
+  <p>By default the text will inherit font settings from the table, but they can be overridden individually.</p>
+  <div class="row" data-ex-h="200" data-ex-w="200">
+    <pre class="example">{
+      "variableImage": "circle:lightblue",
+      "text-header" : { "text": "LEFT", "horizontal-align": "left", "padding-left": "6" },
+      "text-overlay": "overlay",
+      "text-footer": { "text": "RIGHT", "horizontal-align": "right", "padding-right": "6" }
+    }
+    </pre>
+  </div>
+</section>
+
+<section>
+  <h2>Use Text Presets</h2>
+  <p>The strings "proportion" and "percentage" will auto generate text based on the proportion field.</p>
+  <div class="row" data-ex-h="200" data-ex-w="200">
+    <pre class="example">{ "variableImage": "circle:lightblue", "proportion": "0.66", "text-header" : "proportion", "text-overlay" : "proportion", "text-footer" : "proportion" }</pre>
+    <pre class="example">{ "variableImage": "circle:lightblue", "proportion": "0.66", "text-header" : "percentage", "text-overlay" : "percentage", "text-footer" : "percentage" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Background Color</h2>
+  <p>By design, background color covers the entire cell and does not respect padding</p>
+  <div class="row">
+    <pre class="example">{ "variableImage": "circle:lightblue", "background-color":"green" }</pre>
+    <pre class="example">{ "padding": "10 10 10 10", "variableImage": "circle:lightblue", "background-color":"green" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>BaseImage</h2>
+  <p> Base image syntax is identical to variableImage syntax.</p>
+  <p> The base image is rendered "underneath" the variable image.</p>
+  <div class="row">
+    <pre class="example">{ "variableImage": "rect:fromleft:lightblue", "proportion": "0.66", "baseImage": "rect:green" }</pre>
+    <pre class="example">{ "variableImage": "rect:fromleft:lightblue", "proportion": "0.66", "baseImage": "circle:green" }</pre>
+    <pre class="example">{ "variableImage": "rect:fromleft:lightblue", "proportion": "0.66", "baseImage": "circle:green", "background-color": "pink" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>ImageGrids Basics</h2>
+  <p> The base and variable image can be repeated, arranged into rows, and have some padding applied.</p>
+  <div class="row">
+    <pre class="example">{ "variableImage": "circle:lightblue", "numImages": "3" }</pre>
+    <pre class="example">{ "variableImage": "circle:lightblue", "numImages": "3", "numRows": "3" }</pre>
+    <pre class="example">{ "variableImage": "circle:lightblue", "numImages": "3", "numRows": "1" }</pre>
+    <pre class="example">{ "variableImage": "circle:lightblue", "numImages": "3", "numCols": "3" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>ImageGrids Text Handling</h2>
+  <p> The text overlay is applied to each image, whereas the header and footer are only applied once.</p>
+  <div class="row" data-ex-w="400" data-ex-h="200">
+    <pre class="example">{ "variableImage": "circle:lightblue", "numImages": "2", "text-header": "header", "text-overlay": "overlay", "text-footer": "footer" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>ImageGrids Debug Borders</h2>
+  <p> If you are having trouble with placement or sizing, temporarily add a <em>image-background-color</em> or enable dbebug borders to get a visual aid.</p>
+  <div class="row" data-ex-w="400" data-ex-h="200">
+    <pre class="example">{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "2", "text-header": "header", "text-overlay": "overlay", "text-footer": "footer" }</pre>
+    <pre class="example">{ "debugBorder": "anything", "variableImage": "circle:lightblue", "numImages": "2", "text-header": "header", "text-overlay": "overlay", "text-footer": "footer" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>ImageGrids With Proportion Set</h2>
+  <p> When multiple images are specified and a proportion is used, the proportion is applied to the area of all the images. As a result, some images will be rendered completely where others will be partially or not at all.</p>
+  <p> There are some nuances around layout and clipping, which are covered in the <a href="/internal_www/content/tutorials/multi_image_scaling.html">Multi Image Scaling and Layout</a> advanced topic.</p>
+  <div class="row" data-ex-h="50">
+    <pre class="example">{ "variableImage": "circle:lightblue:fromleft", "numImages": "3", "numRows": "1", "proportion": "=5/6" }</pre>
+    <pre class="example">{ "variableImage": "circle:lightblue:scale", "numImages": "3", "numRows": "1", "proportion": "=5/6" }</pre>
+  </div>
+  <div class="row" data-ex-h="50">
+    <pre class="example">{ "variableImage": "circle:lightblue:fromleft", "numImages": "20", "numRows": "2", "proportion": "0.25" }</pre>
+    <pre class="example">{ "variableImage": "circle:lightblue:fromleft", "numImages": "20", "numRows": "2", "proportion": "0.75" }</pre>
+    <pre class="example">{ "variableImage": "circle:lightblue:fromleft", "numImages": "20", "numRows": "2", "proportion": "1" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>ImageGrids With Outer Padding</h2>
+  <p>Two types of padding is applied to the graphic cells: outer padding and gutter proportions. This example covers outer padding.</p>
+  <p>Outer padding (specified using "padding") is the number of pixels around the outer edge of the graphic.</p>
+  <p>It closely resembles the CSS padding attribute in that it is an array of <b><em>4 numbers: Top Right Bottom Left</em></b>.
+
+  <div class="row">
+    <pre class="example">{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "4" }</pre>
+    <pre class="example">{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "4", "padding": "15 15 15 15" }</pre>
+    <pre class="example">{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "4", "padding": "15 0 15 0" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>ImageGrids With Gutter Proportions</h2>
+  <p>Two types of padding is applied to the graphic cells: outer padding and gutter proportions. This example covers gutter proportions.</p>
+  <p>Gutter simply means the space between two images (think bowling).</p>
+  <p>Gutter Proportions (specified using rowGutter and columnGutter) specify the proportion of the total width/hieght to be used by the gutter vs the image itself.</p>
+  <p><b><em>A gutter proportion of 0.5 means that the gutter should be as big as the image.</em></b> A gutter proportion of 0 means no gutter. A gutter proportion of 1 means all gutter (you wouldn't use this). <b><em>The default gutter proportions are rowGutter: 0.05 and columnGutter: 0.05.</em></b></p>
+  <p>For more info, the two gutter params set the padding value of the call to .rangebands : https://github.com/mbostock/d3/wiki/Ordinal-Scales#ordinal_rangeBands</p>
+
+  <div class="row">
+    <pre class="example">{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "4" }</pre>
+    <pre class="example">{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "4", "rowGutter": "0", "columnGutter":"0" }</pre>
+  </div>
+  <div class="row">
+    <pre class="example">{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "4", "rowGutter": "0.1", "columnGutter": "0" }</pre>
+    <pre class="example">{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "4", "rowGutter": "0.5", "columnGutter": "0" }</pre>
+    <pre class="example">{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "4", "rowGutter": "0.9", "columnGutter": "0" }</pre>
+  </div>
+  <div class="row">
+    <pre class="example">{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "4", "rowGutter": "0", "columnGutter": "0.1" }</pre>
+    <pre class="example">{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "4", "rowGutter": "0", "columnGutter": "0.5" }</pre>
+    <pre class="example">{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "4", "rowGutter": "0", "columnGutter": "0.9" }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Customization via CSS</h2>
+  <p> CSS customizations can be provided, keeping in mind that the CSS must be valid in an SVG context.</p>
+  <p>SVG and CSS docs : https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/SVG_and_CSS</p>
+  <div class="row">
+    <pre class="example">{ "variableImage": "circle:lightblue", "numImages": "4", "css": { ".node-xy-1-1 circle" : { "stroke" : "black" } } }</pre>
+  </div>
+</section>
+
+<script src="/external/lodash.min.js"></script>
+<script src="/external/jquery.min.js"></script>
+<script src="/external/d3.min.js"></script>
+<script src="/external/d3-grid.js"></script>
+<script src="/external/rHtmlStatefulWidget.js"></script>
+<script src="/external/rHtmlSvgWidget.js"></script>
+
+<script src="/scripts/RecolorSvg.js"></script>
+<script src="/scripts/ColorFactory.js"></script>
+<script src="/scripts/ImageFactory.js"></script>
+<script src="/scripts/DisplayError.js"></script>
+<script src="/scripts/BaseCell.js"></script>
+<script src="/scripts/GraphicCell.js"></script>
+<script src="/scripts/LabelCell.js"></script>
+<script src="/scripts/Pictograph.js"></script>
+
+<script src="/internal_www/js/renderContentPage.js"></script>
+</body>
+</html>

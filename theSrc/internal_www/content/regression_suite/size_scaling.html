@@ -1,0 +1,241 @@
+<!doctype html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+  <link href='/internal_www/style/internal_www.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and div.example elements -->
+<a href="/index.html">Back to Index</a>
+
+<section>
+  <h2 class="hidden">Intro</h2>
+  <p>This set of examples provides a tool to verify that the size scaling technique is handled correctly in a variety of situations.</p>
+</section>
+
+<section snapshot-name="size_scale_circle_in_square">
+  <h2>Circle</h2>
+  <div class="row" data-ex-w="100" data-ex-h="62">
+    <pre class="example hide-config">{ "proportion": "=0.5 + 1/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 2/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 3/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 4/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="100" data-ex-h="62">
+    <pre class="example hide-config">{ "proportion": "=0.5 + 5/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 6/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 7/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 8/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="100" data-ex-h="62">
+    <pre class="example hide-config">{ "proportion": "=0.5 + 9/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 10/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 11/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 12/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="100" data-ex-h="62">
+    <pre class="example hide-config">{ "proportion": "=0.5 + 13/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 14/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 15/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 16/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+  </div>
+</section>
+
+<section snapshot-name="size_scale_circle_in_rectangle">
+  <h2>Circle in Rectangle</h2>
+  <div class="row" data-ex-w="150" data-ex-h="62">
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 1/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 2/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 3/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 4/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="150" data-ex-h="62">
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 5/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 6/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 7/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 8/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="150" data-ex-h="62">
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 9/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 10/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 11/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 12/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="150" data-ex-h="62">
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 13/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 14/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 15/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 16/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }</pre>
+  </div>
+</section>
+
+<section snapshot-name="size_scale_ellipse_in_rectangle">
+  <h2>Ellipse in Rectangle</h2>
+  <div class="row" data-ex-w="150" data-ex-h="62">
+    <pre class="example hide-config">{ "proportion": "=0.5 + 1/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 2/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 3/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 4/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="150" data-ex-h="62">
+    <pre class="example hide-config">{ "proportion": "=0.5 + 5/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 6/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 7/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 8/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="150" data-ex-h="62">
+    <pre class="example hide-config">{ "proportion": "=0.5 + 9/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 10/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 11/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 12/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="150" data-ex-h="62">
+    <pre class="example hide-config">{ "proportion": "=0.5 + 13/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 14/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 15/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "proportion": "=0.5 + 16/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "ellipse:scale:lightblue", "background-color": "#dddddd" }</pre>
+  </div>
+</section>
+
+<section class="for-consideration" snapshot-name="size_scale_external_circle_svg_in_rectangle">
+  <h2>External SVG Image in Rectangle With Different Aspect Ratio</h2>
+  <p>This shows a limitation of scaling an external image that doesn't "fit" the cell.</p>
+  <p>In these examples a cell of 200x100 (or 100x200) contains an external image of a circle, which is scaled to fit such that the circle has a diameter of 100 and is centred in the cell.</p>
+  <p>The issue is there is no way to now what proportion of the cell is occupied by the image, so the scaling takes place accross the entire cell, not just for the content occupied by the image.</p>
+
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 1/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 2/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 3/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 4/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 5/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 6/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 7/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 8/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 9/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 10/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 11/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 12/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 13/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 14/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 15/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 16/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+  </div>
+</section>
+
+
+<section class="for-consideration" snapshot-name="size_scale_recolored_external_circle_svg_in_rectangle">
+  <h2>External Recolored SVG Image in Rectangle With Different Aspect Ratio</h2>
+  <p>Same issue as above.</p>
+
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 1/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 2/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 3/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 4/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 5/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 6/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 7/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 8/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 9/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 10/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 11/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 12/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 13/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 14/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 15/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 16/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+  </div>
+</section>
+
+<section class="for-consideration" snapshot-name="single_image_size_scale_recolored_external_circle_svg_in_rectangle">
+  <h2>(Single Image) External Recolored SVG Image in Rectangle With Different Aspect Ratio</h2>
+  <p>Same issue as above.</p>
+
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=1/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=2/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=3/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=4/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=5/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=6/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=7/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=8/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=9/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=10/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=11/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=12/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=13/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=14/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=15/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=16/16", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }</pre>
+  </div>
+</section>
+
+<section class="for-consideration" snapshot-name="size_scale_external_circle_png_in_rectangle">
+  <h2>External PNG Image in Rectangle With Different Aspect Ratio</h2>
+  <p>Same issue as above.</p>
+
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 1/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 2/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 3/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 4/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 5/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 6/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 7/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 8/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 9/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 10/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 11/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{  "debugBorder": "true", "proportion": "=0.5 + 12/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+  </div>
+  <div class="row" data-ex-w="200" data-ex-h="62">
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 13/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 14/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 15/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+    <pre class="example hide-config">{ "debugBorder": "true", "proportion": "=0.5 + 16/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:scale:/images/blue_circle_512.png", "background-color": "#dddddd" }</pre>
+  </div>
+</section>
+
+<script src="/external/lodash.min.js"></script>
+<script src="/external/jquery.min.js"></script>
+<script src="/external/d3.min.js"></script>
+<script src="/external/d3-grid.js"></script>
+<script src="/external/rHtmlStatefulWidget.js"></script>
+<script src="/external/rHtmlSvgWidget.js"></script>
+
+<script src="/scripts/RecolorSvg.js"></script>
+<script src="/scripts/ColorFactory.js"></script>
+<script src="/scripts/ImageFactory.js"></script>
+<script src="/scripts/DisplayError.js"></script>
+<script src="/scripts/BaseCell.js"></script>
+<script src="/scripts/GraphicCell.js"></script>
+<script src="/scripts/LabelCell.js"></script>
+<script src="/scripts/Pictograph.js"></script>
+
+<script src="/internal_www/js/renderContentPage.js"></script>
+</body>
+</html>

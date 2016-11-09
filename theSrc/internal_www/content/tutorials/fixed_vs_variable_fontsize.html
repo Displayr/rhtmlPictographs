@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+  <link href='/internal_www/style/internal_www.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and div.example elements -->
+<a href="/index.html">Back to Index</a>
+<h1>Fixed Vs Variable Sized Fonts</h1>
+
+<section>
+  <h2>Font size is fixed by default, can be configured</h2>
+  <p>By default, if no font-size is specified, then fonts will be fixed size and will stay the same size when the pictograph is resized.</p>
+  <p>Any font that is specified in units of "px" will also stay the same size when the pictograph is resized.</p>
+  <p>Any font that is specified without a unit, will resize when the pictograph is resized.</p>
+  <p>Other font units, such as 'em' should not be used as they are not explicitly supported. They might work, but dont do it.</p>
+
+
+  <div class="row" data-ex-w="100" data-ex-h="100">
+    <pre class="example" data-resize-controls="true">
+{
+  "font-size": "10px",
+  "table": {
+    "rows": [
+      [ "label:A", "label:A", "label:A", "label:A", "label:A" ],
+      [ { "type": "label", "value": { "text": "A", "font-size": "10" } } ],
+      [ "label:A" ],
+      [ "label:A" ],
+      [ "label:A" ]
+    ]
+  }
+}
+    </pre>
+
+    <pre class="example" data-resize-controls="true">
+{
+  "font-size": "10",
+  "table": {
+    "rows": [
+      [ "label:A", "label:A", "label:A", "label:A", "label:A" ],
+      [ { "type": "label", "value": { "text": "A", "font-size": "10px" } } ],
+      [ "label:A" ],
+      [ "label:A" ],
+      [ "label:A" ]
+    ]
+  }
+}
+    </pre>
+  </div>
+
+  <div class="row" data-ex-w="100" data-ex-h="100">
+    <pre class="example" data-resize-controls="true">
+{
+  "table": {
+    "rows": [
+      [
+        { "type": "graphic", "value": { "variableImage": "circle:lightblue", "text-overlay": { "text": "A", "font-size": "10" } } },
+        { "type": "graphic", "value": { "variableImage": "circle:lightblue", "text-overlay": { "text": "A", "font-size": "10px" } } }
+      ]
+    ]
+  }
+}
+    </pre>
+  </div>
+
+</section>
+
+<script src="/external/lodash.min.js"></script>
+<script src="/external/jquery.min.js"></script>
+<script src="/external/d3.min.js"></script>
+<script src="/external/d3-grid.js"></script>
+<script src="/external/rHtmlStatefulWidget.js"></script>
+<script src="/external/rHtmlSvgWidget.js"></script>
+
+<script src="/scripts/RecolorSvg.js"></script>
+<script src="/scripts/ColorFactory.js"></script>
+<script src="/scripts/ImageFactory.js"></script>
+<script src="/scripts/DisplayError.js"></script>
+<script src="/scripts/BaseCell.js"></script>
+<script src="/scripts/GraphicCell.js"></script>
+<script src="/scripts/LabelCell.js"></script>
+<script src="/scripts/Pictograph.js"></script>
+
+<script src="/internal_www/js/renderContentPage.js"></script>
+</body>
+</html>

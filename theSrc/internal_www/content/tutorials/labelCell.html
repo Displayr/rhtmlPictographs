@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+  <link href='/internal_www/style/internal_www.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and div.example elements -->
+<a href="/index.html">Back to Index</a>
+<h1>Label Cell Usage Tutorial</h1>
+
+<section>
+  <h2>Simplest Label Using shorthand "string syntax"</h2>
+  <p> In its absolute simplest for we specify a label cell simply as a string that starts with "label:". In this for the cell does not even need to be an object with a '{type: 'label', value: ...}</p>
+  <div class="row">
+    <pre class="example">{ "table": { "rows": [ [ "label:A label" ] ] } }</pre>
+  </div>
+
+  <h2>Simplest Label, Multiple Label, Object as Label</h2>
+  <p> In the next simplest form, we specify the cell as an object with type=label, and use a single string for the "value" of the "value" key</p>
+  <p> In the next simplest form, we specify an array of strings for the value</p>
+  <p> If we need more control than that, we can set value to an object of keys, or an array of objects with keys</p>
+
+  <p>The following parameters can be set once for the label cell:</p>
+  <ul>
+    <li><b>padding-top</b>: Sets padding above the first label</li>
+    <li><b>padding-inner</b>: Sets padding between labels</li>
+    <li><b>padding-bottom</b>: Sets padding below the last label</li>
+    <li><b>padding-left</b>: Sets padding on left of label IF label is left aligned</li>
+    <li><b>padding-right</b>: Sets padding on right of label ID label is right aligned</li>
+    <li><b>vertical-align</b>: Sets the vertical alignment of the group of labels in the cell. Valid values are 'top', 'center', and 'bottom'.</li>
+    <li><b>background-color</b>: Sets the background color.</li>
+  </ul>
+
+  <p>The following parameters can be set for each label:</p>
+  <ul>
+    <li><b>text</b>: The text of the label</li>
+    <li><b>font-family</b>: A browser supported font - see <a href="https://developer.mozilla.org/en/docs/Web/CSS/font-family">mozilla docs</a></li>
+    <li><b>font-color</b>: Sets the color of the font</li>
+    <li><b>font-size</b>: Size of the font - see <a href="https://developer.mozilla.org/en/docs/Web/CSS/font-size">mozilla docs</a></li>
+    <li><b>font-weight</b>: Weight of the font - see <a href="https://developer.mozilla.org/en/docs/Web/CSS/font-weight">mozilla docs</a></li>
+    <li><b>font-variant</b>: can be used to set small-caps - see example below - see <a href="https://developer.mozilla.org/en/docs/Web/CSS/font-variant">mozilla docs</a></li>
+    <li><b>horizontal-align</b>: set to left, center, or right. It aligns the text horizontally</li>
+    <li>any other valid CSS property that is valid on SVG Text</li>
+  </ul>
+  <div class="row">
+    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": "A label" } ] ] } }</pre>
+    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": [ "Line 1", "Line 2" ] } ] ] } }</pre>
+    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "text": "A label", "font-color" : "red", "font-size": "20px", "font-family": "impact", "font-weight" : "100" } } ] ] } }</pre>
+    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": [{ "text": "label 1" }, { "text": "label 2" }] } ] ] } }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Multi Label, With Padding, With Different Fonts on Each Line</h2>
+  <div class="row">
+    <pre class="example">{ "table": {
+      "rows": [ [ {
+        "type": "label",
+        "value": {
+          "padding-top": 10,
+          "padding-inner": 18,
+          "labels": [
+            "Line 1",
+            { "text": "Line 2", "font-size": "14px", "font-color": "red" }
+          ]
+        }
+      } ] ] } }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Setting a background color</h2>
+  <div class="row">
+    <pre class="example">{ "table": { "rows": [ [ { "type": "label",
+      "value": {
+        "background-color" : "#dddddd",
+        "labels": [ "row1", "row2" ]
+      } } ] ] } }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Vertical Text Alignment in labels</h2>
+  <p>By default, the labels are vertically centered, with all unallocated vertical space being split above and below the labels.</p>
+  <p>The valid values for vertical-align are 'top', 'center', and 'bottom'</p>
+
+  <div class="row">
+    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "top", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
+    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "padding-top": "15", "vertical-align": "top", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
+    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "center", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
+    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "padding-bottom": "15", "vertical-align": "bottom", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
+    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "bottom", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Horizontal Text Alignment in labels</h2>
+  <p>The attribute to control horizontal text alignment is called <b><em>horizontal-align</em></b>. In order to use horizontal-align you must specify the label as an object, not as a simple string.</p>
+  <p>There are three options: <b><em>left, middle, and right</em></b>. For convenience the keywords "start", "centre", "center", and "end" are also valid.</p>
+  <p>When specifying left aligned labels, you will probably want to add "padding-left" as well, so that the label does not crowd the border</p>
+  <p>When specifying right aligned labels, you will probably want to add "padding-right" as well, so that the label does not crowd the border</p>
+
+  <div class="row" data-ex-w="200">
+    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "left" } } ] ] } }</pre>
+    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "center" } } ] ] } }</pre>
+    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "right" } } ] ] } }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Putting all the label alignments together</h2>
+  <div class="row" data-ex-w="400">
+    <pre class="example">{ "font-color": "lightblue", "font-family": "Arvo, serif", "table": { "rows": [ [ { "type": "label",
+      "value": {
+      "padding-top": "5",
+      "padding-inner": "5",
+      "padding-left": "15",
+      "padding-right": "15",
+      "labels": [
+        { "text" : "Left Aligned", "horizontal-align": "left" },
+        { "text" : "Center Aligned", "horizontal-align": "center" },
+        { "text" : "Right Aligned", "horizontal-align": "right" }
+      ]
+      } } ] ] } }</pre>
+  </div>
+</section>
+
+<section>
+  <h2>Using small capital letters</h2>
+  <p>The font-variant small-caps can be set, which renders all lower case letters as small upper case letters.</p>
+  <div class="row" data-ex-w="850">
+    <pre class="example">{ "font-color": "lightblue", "font-family": "Arvo, serif", "table": { "rows": [ [ { "type": "label",
+      "value": {
+        "padding-left" : 5,
+        "padding-inner" : 5,
+        "labels": [
+          { "horizontal-align": "left", "text" : "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ", "font-variant": "small-caps" },
+          { "horizontal-align": "left", "text" : "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ", "font-variant": "normal"  }
+        ]
+      } } ] ] } }</pre>
+  </div>
+</section>
+
+<script src="/external/lodash.min.js"></script>
+<script src="/external/jquery.min.js"></script>
+<script src="/external/d3.min.js"></script>
+<script src="/external/d3-grid.js"></script>
+<script src="/external/rHtmlStatefulWidget.js"></script>
+<script src="/external/rHtmlSvgWidget.js"></script>
+
+<script src="/scripts/RecolorSvg.js"></script>
+<script src="/scripts/ColorFactory.js"></script>
+<script src="/scripts/ImageFactory.js"></script>
+<script src="/scripts/DisplayError.js"></script>
+<script src="/scripts/BaseCell.js"></script>
+<script src="/scripts/GraphicCell.js"></script>
+<script src="/scripts/LabelCell.js"></script>
+<script src="/scripts/Pictograph.js"></script>
+
+<script src="/internal_www/js/renderContentPage.js"></script>
+</body>
+</html>

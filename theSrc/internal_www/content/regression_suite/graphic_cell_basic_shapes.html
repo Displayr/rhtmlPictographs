@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+  <link href='/internal_www/style/internal_www.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<div class="row" snapshot-name="circle" data-ex-w="200" data-ex-h="200">
+  <pre class="example hide-config">{ "variableImage": "circle:blue", "numImages": 2 }</pre>
+  <pre class="example hide-config">{ "variableImage": "circle:green", "numImages": 2 }</pre>
+  <pre class="example hide-config">{ "variableImage": "circle:red", "numImages": 2 }</pre>
+</div>
+
+<div class="row" snapshot-name="ellipse" data-ex-w="200" data-ex-h="200">
+  <pre class="example hide-config">{ "variableImage": "ellipse:blue", "numImages": 2 }</pre>
+  <pre class="example hide-config">{ "variableImage": "ellipse:green", "numImages": 2 }</pre>
+  <pre class="example hide-config">{ "variableImage": "ellipse:red", "numImages": 2 }</pre>
+</div>
+
+<div class="row" snapshot-name="square" data-ex-w="200" data-ex-h="200">
+  <pre class="example hide-config">{ "variableImage": "square:blue", "numImages": 2 }</pre>
+  <pre class="example hide-config">{ "variableImage": "square:green", "numImages": 2 }</pre>
+  <pre class="example hide-config">{ "variableImage": "square:red", "numImages": 2 }</pre>
+</div>
+
+<div class="row" snapshot-name="rect" data-ex-w="200" data-ex-h="200">
+  <pre class="example hide-config">{ "variableImage": "rect:blue", "numImages": 2 }</pre>
+  <pre class="example hide-config">{ "variableImage": "rect:green", "numImages": 2 }</pre>
+  <pre class="example hide-config">{ "variableImage": "rect:red", "numImages": 2 }</pre>
+</div>
+
+<div snapshot-name="svg_recoloring">
+  <div class="row" data-ex-w="200" data-ex-h="150">
+    <div class="example hide-config">{ "variableImage" : "url:red:/images/blue_circle_512.svg", "numImages": 2 }</div>
+    <div class="example hide-config">{ "variableImage" : "url:red:/images/soyuz_rocket.svg", "numImages": 2 }</div>
+    <div class="example hide-config">{ "variableImage" : "url:red:/images/dollar_sign_green.svg", "numImages": 2 }</div>
+  </div>
+  <div class="row" data-ex-w="200" data-ex-h="150">
+    <div class="example hide-config">{ "variableImage" : "url:red:/images/rocket_black.svg", "numImages": 2 }</div>
+    <div class="example hide-config">{ "variableImage" : "url:red:/images/stickman_green.svg", "numImages": 2 }</div>
+  </div>
+</div>
+
+<div snapshot-name="circle_scaling">
+  <div class="row" data-ex-h="100" data-ex-w="150">
+    <div class="example hide-config">{ "variableImage": "circle:fromleft", "numImages": 2, "proportion": "0.66" }</div>
+    <div class="example hide-config">{ "variableImage": "circle:fromright", "numImages": 2, "proportion": "0.66" }</div>
+    <div class="example hide-config">{ "variableImage": "circle:frombottom", "numImages": 2, "proportion": "0.66" }</div>
+  </div>
+  <div class="row" data-ex-h="100" data-ex-w="150">
+    <div class="example hide-config">{ "variableImage": "circle:fromtop", "numImages": 2, "proportion": "0.66" }</div>
+    <div class="example hide-config">{ "variableImage": "circle:scale", "numImages": 2, "proportion": "0.66" }</div>
+    <div class="example hide-config">{ "variableImage": "circle:radial", "numImages": 2, "proportion": "0.66" }</div>
+  </div>
+</div>
+
+<div class="row" snapshot-name="text_placement" data-ex-h="200" data-ex-w="300">
+  <div class="example hide-config">{ "variableImage": "circle:lightblue", "numImages": 2, "text-header" : { "text":"top", "font-color": "orange", "font-size": "16px", "font-family": "Arial", "font-weight": "900" }, "text-overlay": "overlay", "text-footer": "bottom" }</div>
+  <div class="example hide-config">{ "variableImage": "circle:lightblue", "numImages": 2, "text-header" : { "text": "LEFT", "horizontal-align": "left", "padding-left": "6" }, "text-overlay": "overlay", "text-footer": { "text": "RIGHT", "horizontal-align": "right", "padding-right": "6" } }</div>
+</div>
+
+<div class="row" snapshot-name="background_color" data-ex-w="200" data-ex-h="200">
+  <pre class="example hide-config">{ "variableImage": "circle:lightblue", "numImages": 2, "background-color":"green" }</pre>
+  <pre class="example hide-config">{ "padding": "10 10 10 10", "variableImage": "circle:lightblue", "numImages": 2, "background-color":"green" }</pre>
+</div>
+
+<div class="row" snapshot-name="base_image" data-ex-w="200" data-ex-h="150">
+  <pre class="example hide-config">{ "variableImage": "rect:fromleft:lightblue", "numImages": 2, "proportion": "0.75", "baseImage": "rect:green" }</pre>
+  <pre class="example hide-config">{ "variableImage": "rect:fromleft:lightblue", "numImages": 2, "proportion": "0.75", "baseImage": "circle:green" }</pre>
+  <pre class="example hide-config">{ "variableImage": "rect:fromleft:lightblue", "numImages": 2, "proportion": "0.75", "baseImage": "circle:green", "background-color": "pink" }</pre>
+</div>
+
+<script src="/external/lodash.min.js"></script>
+<script src="/external/jquery.min.js"></script>
+<script src="/external/d3.min.js"></script>
+<script src="/external/d3-grid.js"></script>
+<script src="/external/rHtmlStatefulWidget.js"></script>
+<script src="/external/rHtmlSvgWidget.js"></script>
+
+<script src="/scripts/RecolorSvg.js"></script>
+<script src="/scripts/ColorFactory.js"></script>
+<script src="/scripts/ImageFactory.js"></script>
+<script src="/scripts/DisplayError.js"></script>
+<script src="/scripts/BaseCell.js"></script>
+<script src="/scripts/GraphicCell.js"></script>
+<script src="/scripts/LabelCell.js"></script>
+<script src="/scripts/Pictograph.js"></script>
+
+<script src="/internal_www/js/renderContentPage.js"></script>
+</body>
+</html>

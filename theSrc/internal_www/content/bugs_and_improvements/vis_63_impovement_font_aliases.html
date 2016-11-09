@@ -1,0 +1,73 @@
+
+
+<!doctype html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+  <link href='/internal_www/style/internal_www.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and div.example elements -->
+<a href="/index.html">Back to Index</a>
+<h1>Font Aliases would simplify pictograph definitions</h1>
+
+<section>
+  <p>An example of a definition without font aliases:</p>
+  <div class="row" data-ex-w="350" data-ex-h="60">
+    <pre class="example">{
+      "table": {
+        "lines": {
+          "horizontal": [ 0, 1],
+          "vertical": [ 0, 1, 2, 3, 4]
+        },
+        "rows": [ [
+          { "type" : "label", "value": { "text": "font1", "font-size": "14px", "font-color": "red", "font-weight": "900", "font-variant": "small-caps", "horizontal-align": "left", "font-family": "arial" } },
+          { "type" : "label", "value": { "text": "font2", "font-size": "24px", "font-color": "blue", "font-weight": "100", "horizontal-align": "center", "font-family": "Arvo" } },
+          { "type" : "label", "value": { "text": "font1", "font-size": "14px", "font-color": "red", "font-weight": "900", "font-variant": "small-caps", "horizontal-align": "left", "font-family": "arial" } },
+          { "type" : "label", "value": { "text": "font2", "font-size": "24px", "font-color": "blue", "font-weight": "100", "horizontal-align": "center", "font-family": "Arvo" } }
+        ] ]
+      }
+    }</pre>
+  </div>
+
+  <p>The same defintion with font aliases:</p>
+  <pre>{
+    "table": {
+      "lines": {
+        "horizontal": [ 0, 1],
+        "vertical": [ 0, 1, 2, 3, 4]
+      },
+      "fonts": {
+        "font1": { "font-size": "14px", "font-color": "red", "font-weight": "900", "font-variant": "small-caps", "horizontal-align": "left", "font-family": "arial" }
+        "font2": { "font-size": "24px", "font-color": "blue", "font-weight": "100", "horizontal-align": "center", "font-family": "Arvo" }
+      },
+      "rows": [ [
+        { "type" : "label", "value": { "text": "font1", "font-alias": "font1" } },
+        { "type" : "label", "value": { "text": "font2", "font-alias": "font2" } },
+        { "type" : "label", "value": { "text": "font1", "font-alias": "font1" } },
+        { "type" : "label", "value": { "text": "font2", "font-alias": "font2" } }
+      ] ]
+    }
+  }</pre>
+
+</section>
+
+<script src="/external/lodash.min.js"></script>
+<script src="/external/jquery.min.js"></script>
+<script src="/external/d3.min.js"></script>
+<script src="/external/d3-grid.js"></script>
+<script src="/external/rHtmlStatefulWidget.js"></script>
+<script src="/external/rHtmlSvgWidget.js"></script>
+
+<script src="/scripts/RecolorSvg.js"></script>
+<script src="/scripts/ColorFactory.js"></script>
+<script src="/scripts/ImageFactory.js"></script>
+<script src="/scripts/DisplayError.js"></script>
+<script src="/scripts/BaseCell.js"></script>
+<script src="/scripts/GraphicCell.js"></script>
+<script src="/scripts/LabelCell.js"></script>
+<script src="/scripts/Pictograph.js"></script>
+
+<script src="/internal_www/js/renderContentPage.js"></script>
+</body>
+</html>

@@ -28,7 +28,7 @@ Steps:
 
 You should now see a page listing tutorial sections and several examples. Each of these pages has one or more pictographs defined.
 
-Choose an example or add another example/tutorial to the [demo section](theSrc/demo/content). When changes to the [widget source code](theSrc/scripts) or any other file in `./theSrc` are saved, the browser will automatically reload.
+Choose an example or add another example/tutorial to the [internal www content](theSrc/internal_www/content). When changes to the [widget source code](theSrc/scripts) or any other file in `./theSrc` are saved, the browser will automatically reload.
 
 # Docs
 
@@ -50,4 +50,4 @@ A bit out of date [here](docs/pictograph-dom-class-names.md)
 
 ## R Examples
 
-The R eamples are auto generated from the [contents of the html demo](theSrc/demo). You are strongly encouraged to view the demo in it's intended glorious format in the browser, and only use the [R examples file](examples/) for reference.
+The R examples are auto generated from the [internal www contents](theSrc/internal_www). You are strongly encouraged to view the contents in it's intended glorious format (using a browser), and only use the [R examples file](examples/) for reference.
