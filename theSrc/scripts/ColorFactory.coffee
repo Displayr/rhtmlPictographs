@@ -10,9 +10,6 @@ class ColorFactory
   @processNewConfig: (config) ->
     if config.palettes
       for newPalette of config.palettes
-        if _.has ColorFactory.palettes, newPalette
-          throw new Error "cannot define #{newPalette} palette twice"
-
         if _.has ColorFactory.aliases, newPalette
           throw new Error "cannot define #{newPalette} palette, an alias with same name already exists"
 
@@ -25,9 +22,6 @@ class ColorFactory
       for alias of config.aliases
         if _.has ColorFactory.palettes, alias
           throw new Error "cannot define #{alias} alias, a palette with same name already exists"
-
-        if _.has ColorFactory.aliases, alias
-          throw new Error "cannot define #{alias} alias twice"
 
         ColorFactory.aliases[alias] = config.aliases[alias]
 

@@ -86,7 +86,6 @@ class Pictograph extends RhtmlSvgWidget
     super(@config)
 
   _processConfig: () ->
-
     #do not accept width and height from config, they were passed to constructor
     delete @config.width
     delete @config.height
