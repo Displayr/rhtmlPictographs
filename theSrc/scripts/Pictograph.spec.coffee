@@ -433,11 +433,11 @@ describe 'Pictograph class:', ->
         expect($('.table-cell').length).to.equal 6
 
       it 'labels each cell by row and column', ->
-        #not sure twhy there are two of everything. Test artifact
-        expect($('.table-cell-0-0').length).to.be.above 1
-        expect($('.table-cell-0-1').length).to.be.above 1
-        expect($('.table-cell-1-0').length).to.be.above 1
-        expect($('.table-cell-1-1').length).to.be.above 1
+
+        expect($('.table-cell-0-0').length).to.equal 1
+        expect($('.table-cell-0-1').length).to.equal 1
+        expect($('.table-cell-1-0').length).to.equal 1
+        expect($('.table-cell-1-1').length).to.equal 1
         expect($('.table-cell-1-2').length).to.equal 0
 
       it 'add a "label" class to indicate label cell type', ->

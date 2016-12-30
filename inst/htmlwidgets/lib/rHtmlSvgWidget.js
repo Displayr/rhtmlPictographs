@@ -51,6 +51,7 @@ RhtmlSvgWidget = (function(_super) {
 
   RhtmlSvgWidget.prototype._addRootSvgToRootElement = function() {
     var anonSvg;
+    $(this.rootElement).find('*').remove();
     anonSvg = $('<svg class="rhtmlwidget-outer-svg">').addClass(this.config['table-id']).attr('id', this.config['table-id']).attr('width', '100%').attr('height', '100%');
     $(this.rootElement).append(anonSvg);
     this.outerSvg = d3.select(anonSvg[0]);

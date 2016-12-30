@@ -10,9 +10,6 @@ ColorFactory = (function() {
     var alias, newPalette, _results;
     if (config.palettes) {
       for (newPalette in config.palettes) {
-        if (_.has(ColorFactory.palettes, newPalette)) {
-          throw new Error("cannot define " + newPalette + " palette twice");
-        }
         if (_.has(ColorFactory.aliases, newPalette)) {
           throw new Error("cannot define " + newPalette + " palette, an alias with same name already exists");
         }
@@ -27,9 +24,6 @@ ColorFactory = (function() {
       for (alias in config.aliases) {
         if (_.has(ColorFactory.palettes, alias)) {
           throw new Error("cannot define " + alias + " alias, a palette with same name already exists");
-        }
-        if (_.has(ColorFactory.aliases, alias)) {
-          throw new Error("cannot define " + alias + " alias twice");
         }
         _results.push(ColorFactory.aliases[alias] = config.aliases[alias]);
       }

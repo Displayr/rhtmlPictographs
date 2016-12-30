@@ -73,6 +73,6 @@
     "es6-promise": "^3.2.1",
     "jquery": "2.2.2",
     "lodash": "4.6.1",
-    "rhtmlBaseClasses": "git+https://github.com/NumbersInternational/rhtmlBaseClasses.git#v1.0.2"
+    "rhtmlBaseClasses": "git+https://github.com/NumbersInternational/rhtmlBaseClasses.git#rendervalue-fix"
   }
 }

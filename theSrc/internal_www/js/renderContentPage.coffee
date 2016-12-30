@@ -89,8 +89,17 @@ addExampleTo = (rowConfig) ->
   element.append innerExampleDiv.append(innerInnerExampleDiv)
 
   instance = new Pictograph innerInnerExampleDiv, exampleConfig.exW, exampleConfig.exH
-  instance.setConfig graphicCellConfig
+  instance.setConfig _.cloneDeep graphicCellConfig
   instance.draw()
+
+  if exampleConfig.redraw
+    console.log('redrawing')
+    console.log(exampleConfig.redraw)
+
+    setInterval () ->
+      instance.setConfig _.cloneDeep graphicCellConfig
+      instance.draw()
+    , exampleConfig.redraw
 
   instanceId = instance.config['table-id']
   innerInnerExampleDiv.attr('class', "inner-inner-example #{instanceId}")
