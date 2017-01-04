@@ -50,16 +50,18 @@ describe('ColorFactory class', function () {
     expect(ColorFactory.getColor('test')).to.equal('blue');
   }); // I will break if tests are added above ...
 
-  it('throws error on duplicate definition of alias', function () {
-    expect(() => ColorFactory.processNewConfig({ aliases: { primary: 'blue' } })).to.throw();
+  it('accepts and overrides on duplicate definition of alias', function () {
+    expect(() => ColorFactory.processNewConfig({ aliases: { primary: 'blue' } })).not.to.throw();
+    expect(ColorFactory.getColor('primary')).to.equal('blue');
   });
 
   it('throws error on duplicate definition of alias that is an palette', function () {
     expect(() => ColorFactory.processNewConfig({ palettes: { primary: ['blue'] } })).to.throw();
   });
 
-  it('throws error on duplicate definition of palette', function () {
-    expect(() => ColorFactory.processNewConfig({ palettes: { test: ['blue'] } })).to.throw();
+  it('accepts and overrides on duplicate definition of palette', function () {
+    expect(() => ColorFactory.processNewConfig({ palettes: { test: ['pink'] } })).not.to.throw();
+    expect(ColorFactory.getColor('test')).to.equal('pink');
   });
 
   return it('throws error on duplicate definition of palette that is an alias', function () {

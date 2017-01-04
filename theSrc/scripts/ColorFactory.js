@@ -28,10 +28,6 @@ class ColorFactory {
   static processNewConfig(config) {
     if (config.palettes) {
       _.forEach(config.palettes, (newPaletteColors, newPaletteName) => {
-        if (_.has(this.palettes, newPaletteName)) {
-          throw new Error(`cannot define ${newPaletteName} palette twice`);
-        }
-
         if (_.has(this.aliases, newPaletteName)) {
           throw new Error(`cannot define ${newPaletteName} palette, an alias with same name already exists`);
         }
@@ -47,10 +43,6 @@ class ColorFactory {
       _.forEach(config.aliases, (aliasColor, aliasName) => {
         if (_.has(this.palettes, aliasName)) {
           throw new Error(`cannot define ${aliasName} alias, a palette with same name already exists`);
-        }
-
-        if (_.has(this.aliases, aliasName)) {
-          throw new Error(`cannot define ${aliasName} alias twice`);
         }
 
         this.aliases[aliasName] = aliasColor;

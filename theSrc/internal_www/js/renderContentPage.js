@@ -99,11 +99,22 @@ const addExampleTo = function (rowConfig) {
 
   element.append(innerExampleDiv.append(innerInnerExampleDiv));
 
-  instance.setConfig(graphicCellConfig);
+  instance.setConfig(_.cloneDeep(graphicCellConfig));
   const instanceId = instance.config['table-id'];
   innerInnerExampleDiv.attr('class', `inner-inner-example ${instanceId}`);
 
   instance.draw();
+
+  if (exampleConfig.redraw) {
+
+    console.log('redrawing');
+    console.log(exampleConfig.redraw);
+
+    setInterval(() => {
+      instance.setConfig(_.cloneDeep(graphicCellConfig));
+      instance.draw();
+    }, exampleConfig.redraw);
+  }
 
   if (exampleConfig.resizeControls) {
     const resizeForm = $(makeFormHtml());

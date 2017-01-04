@@ -53,6 +53,8 @@ class RhtmlSvgWidget {
   }
 
   _addRootSvgToRootElement() {
+    $(this.rootElement).find('*').remove()
+
     const anonSvg = $('<svg class="rhtmlwidget-outer-svg">')
       .addClass(this.config['table-id'])
       .attr('id', this.config['table-id'])
