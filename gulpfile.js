@@ -1,25 +1,30 @@
 'use strict';
 
-var _ = require('lodash');
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var Promise = require('bluebird');
-var fs = Promise.promisifyAll(require('fs-extra'));
+const Promise = require('bluebird');
+const gulp = require('gulp');
+
+const _ = require('lodash');
+const $ = require('gulp-load-plugins')();
+const fs = Promise.promisifyAll(require('fs-extra'));
+const opn = require('opn')
+const runSequence = require('run-sequence');
+
+const widgetConfig = require('./build/config/widget.config.json');
 
 if (!_.has(gulp,'context')) {
   gulp.context = {
-    widgetName: 'rhtmlPictographs'
-  }
+    widgetName: widgetConfig.widgetName
+  };
 }
 else {
-  console.error('Unexpected build failure. gulp already has a context.')
-  process.exit(1)
+  console.error('Unexpected build failure. gulp already has a context.');
+  process.exit(1);
 }
 
 fs.readdirSync('./build/tasks').filter(function(file) {
   return (/\.js$/i).test(file);
 }).map(function(file) {
-  require('./build/tasks/' + file);
+  require(`./build/tasks/${file}`);
 });
 
 gulp.task('default', function () {
@@ -27,12 +32,11 @@ gulp.task('default', function () {
 });
 
 gulp.task('build', function(done) {
-  var runSequence = require('run-sequence');
-  runSequence('clean', 'testSpecs', 'core', ['makeDocs', 'makeExample'], done);
+  runSequence('clean', 'core', 'testSpecs', ['makeDocs', 'makeExample'], done);
 });
 
-gulp.task('core', ['compileCoffee', 'less', 'copy', 'buildContentManifest']);
+gulp.task('core', ['compileES6ToInst', 'less', 'copy', 'buildContentManifest']);
 
-gulp.task('serve', ['connect', 'watch'], function () {
-  require('opn')('http://localhost:9000');
+gulp.task('serve', ['core', 'compileInternalWeb', 'connect', 'watch'], function () {
+  opn('http://localhost:9000');
 });

@@ -14,6 +14,12 @@ h2 {
 p {
     width: 800px;
 }
+
+*[snapshot-name] p {
+    /* do not give anything inside a snapshot a fixed width, so that the snapshot size is limited to the content */
+    width: auto;
+}
+
 h2.hidden {
     display: none;
 }

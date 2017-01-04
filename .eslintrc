@@ -1,0 +1,66 @@
+{
+  "extends": "airbnb",
+  "globals": {
+    // all codebases
+    "document": true,
+    "_": true,
+    "jQuery": true,
+    "$": true,
+
+    // htmlwidget R boundary
+    "HTMLWidgets": true,
+
+    //rhtml base classes
+    "RhtmlSvgWidget": true,
+    "RhtmlStatefulWidget": true,
+
+    // test globals
+    "chai": true,
+    "sinon": true,
+    "expect": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "describe": true,
+    "it": true,
+
+    // rhtmlTemplate test specific
+    "Template": true,
+
+    // bdd globals
+    "browser": true,
+    "element": true,
+    "by": true,
+    "protractor": true
+
+  },
+  "rules": {
+
+    "arrow-body-style": "off",
+    "prefer-spread": "off",
+    "prefer-rest-params": "off",
+    "class-methods-use-this": "off",
+    "radix": "off",
+    "no-param-reassign": "off",
+    "no-eval": "off",
+
+    // specify the maximum length of a line in your program
+    // http://eslint.org/docs/rules/max-len
+    "max-len": ["error", 120, 2, {
+      "ignoreUrls": true,
+      "ignoreComments": false,
+      "ignoreRegExpLiterals": true,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true,
+    }],
+
+    "no-underscore-dangle": "off",
+    "no-console": "off",
+    "no-plusplus": "off",
+    "import/no-extraneous-dependencies": "off",
+
+    // would prefer these to only affect .spec files
+    "func-names": "off",
+    "prefer-arrow-callback": "off",
+    "import/no-dynamic-require": "off"
+  }
+}

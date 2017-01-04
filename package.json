@@ -1,7 +1,7 @@
 {
   "private": true,
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=6.1.0"
   },
   "devDependencies": {
     "bluebird": "^3.3.5",
@@ -13,6 +13,11 @@
     "connect": "3.0.1",
     "connect-livereload": "0.5.0",
     "del": "0.1.0",
+    "eslint": "^3.11.1",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.8.0",
     "eyes.protractor": "0.0.57",
     "fs-extra": "0.26.7",
     "gulp": "3.6.0",
@@ -41,6 +46,7 @@
     "gulp-uglify": "1.0.2",
     "gulp-useref": "1.0.2",
     "karma": "^0.13.22",
+    "karma-browserify": "^5.1.0",
     "karma-chai": "^0.1.0",
     "karma-chai-as-promised": "^0.1.2",
     "karma-chai-dom": "^1.1.0",
@@ -65,14 +71,13 @@
     "sinon-chai": "^2.8.0",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.0.0",
+    "watchify": "^3.8.0",
     "yargs": "^6.3.0"
   },
   "dependencies": {
     "d3": "3.5.16",
-    "d3-grid": "git+https://github.com/NumbersInternational/d3-grid.git#v1.0.3",
     "es6-promise": "^3.2.1",
     "jquery": "2.2.2",
-    "lodash": "4.6.1",
-    "rhtmlBaseClasses": "git+https://github.com/NumbersInternational/rhtmlBaseClasses.git#rendervalue-fix"
+    "lodash": "4.6.1"
   }
 }

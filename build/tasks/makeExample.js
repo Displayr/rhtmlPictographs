@@ -1,10 +1,9 @@
 const gulp = require('gulp');
+const shell = require('gulp-shell');
 
-gulp.task('makeExample', ['core'], function () {
-  var shell = require('gulp-shell');
-  // TODO this should be in build/helpers
-  return gulp.src('./build/scripts/convertContentToExamplesInR.js', {read: false})
+gulp.task('makeExample', function () {
+  return gulp.src('./build/scripts/convertContentToExamplesInR.js', { read: false })
     .pipe(shell([
       'node <%= file.path %>',
     ], {}));
-})
+});
