@@ -106,7 +106,6 @@ const addExampleTo = function (rowConfig) {
   instance.draw();
 
   if (exampleConfig.redraw) {
-
     console.log('redrawing');
     console.log(exampleConfig.redraw);
 
