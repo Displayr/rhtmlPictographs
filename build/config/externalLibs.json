@@ -1,9 +1,0 @@
-[
-  "node_modules/es6-promise/dist/es6-promise.min.js",
-  "node_modules/lodash/lodash.min.js",
-  "node_modules/jquery/dist/jquery.min.js",
-  "node_modules/d3/d3.min.js",
-  "node_modules/d3-grid/dist/d3-grid.js",
-  "node_modules/rhtmlBaseClasses/dist/rHtmlStatefulWidget.js",
-  "node_modules/rhtmlBaseClasses/dist/rHtmlSvgWidget.js"
-]

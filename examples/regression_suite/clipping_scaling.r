@@ -7,8 +7,8 @@
 
 ##Circle
 rhtmlPictographs::graphic('{ "proportion": "=0.5 + 1/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:fromleft:lightblue", "background-color": "#dddddd" }')
-rhtmlPictographs::graphic('{ "proportion": "=0.5 + 11/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:fromleft:lightblue", "background-color": "#dddddd" }')
-rhtmlPictographs::graphic('{ "proportion": "=0.5 + 13/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:fromleft:lightblue", "background-color": "#dddddd" }')
+rhtmlPictographs::graphic('{ "proportion": "=0.5 + 2/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:fromleft:lightblue", "background-color": "#dddddd" }')
+rhtmlPictographs::graphic('{ "proportion": "=0.5 + 3/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:fromleft:lightblue", "background-color": "#dddddd" }')
 rhtmlPictographs::graphic('{ "proportion": "=0.5 + 4/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:fromleft:lightblue", "background-color": "#dddddd" }')
 rhtmlPictographs::graphic('{ "proportion": "=0.5 + 5/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:fromleft:lightblue", "background-color": "#dddddd" }')
 rhtmlPictographs::graphic('{ "proportion": "=0.5 + 6/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:fromleft:lightblue", "background-color": "#dddddd" }')
