@@ -35,11 +35,11 @@ describe('Take visual regression snapshots', function () {
       browser.get(contentPath).then( () => {
         console.log(`Page ${contentPath} is loaded`);
       }).then( () => {
-        console.log(`Waiting 3 seconds for widgetsPage`);
-        return new Promise( (resolve, reject) => {
+        console.log(`Waiting ${global.visualDiffConfig.pageLoadWaitSeconds * 1000} seconds for widgetsPage`);
+        return new Promise( (resolve ) => {
           setTimeout(() => {
             return resolve()
-          }, 3000)
+          }, global.visualDiffConfig.pageLoadWaitSeconds * 1000)
         })
       }).then( () => {
         const donePromises = element.all(by.css('[snapshot-name]')).each(function(element) {

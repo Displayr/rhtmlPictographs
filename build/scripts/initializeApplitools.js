@@ -7,7 +7,8 @@ const requiredConfigKeys = [
   'browserWidth',
   'browserHeight',
   'defaultMatchTimeout',
-  'forceFullPageScreenshot'
+  'pageLoadWaitSeconds',
+  'forceFullPageScreenshot',
 ];
 
 module.exports = {
