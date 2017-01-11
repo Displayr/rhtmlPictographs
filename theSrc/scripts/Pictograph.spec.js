@@ -432,8 +432,8 @@ describe('Pictograph class:', function () {
       beforeEach(function () {
         this.placement = function (rowIndex, colIndex) {
           return [
-            this.instance.config.table.rows[rowIndex][colIndex].xFactory,
-            this.instance.config.table.rows[rowIndex][colIndex].yFactory,
+            this.instance.config.table.rows[rowIndex][colIndex].x,
+            this.instance.config.table.rows[rowIndex][colIndex].y,
             this.instance.config.table.rows[rowIndex][colIndex].width,
             this.instance.config.table.rows[rowIndex][colIndex].height,
           ];

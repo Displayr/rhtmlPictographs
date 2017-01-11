@@ -342,8 +342,8 @@ class Pictograph extends RhtmlSvgWidget {
 
     table.rows.forEach((row, rowIndex) => {
       row.forEach((cell, colIndex) => {
-        cell.xFactory = _.sum(_.slice(table.colWidths, 0, colIndex)) + (numGuttersAt(colIndex) * table.columnGutterLength);
-        cell.yFactory = _.sum(_.slice(table.rowHeights, 0, rowIndex)) + (numGuttersAt(rowIndex) * table.rowGutterLength);
+        cell.x = _.sum(_.slice(table.colWidths, 0, colIndex)) + (numGuttersAt(colIndex) * table.columnGutterLength);
+        cell.y = _.sum(_.slice(table.rowHeights, 0, rowIndex)) + (numGuttersAt(rowIndex) * table.rowGutterLength);
         cell.width = table.colWidths[colIndex];
         cell.height = table.rowHeights[rowIndex];
         cell.row = rowIndex;
@@ -387,7 +387,7 @@ class Pictograph extends RhtmlSvgWidget {
       .enter()
       .append('g')
         .attr('class', 'table-cell')
-        .attr('transform', d => `translate(${d.xFactory},${d.yFactory})`);
+        .attr('transform', d => `translate(${d.x},${d.y})`);
 
     const tableId = this.config['table-id'];
     this.cellInstances = [];

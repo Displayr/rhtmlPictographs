@@ -1,6 +1,6 @@
 import d3 from 'd3';
 
-import GraphicCellGrid from './graphicCellGrid';
+import GraphicCellGrid from './GraphicCellGrid';
 import BaseCell from './BaseCell';
 import ImageFactory from './ImageFactory';
 import DisplayError from './DisplayError';
@@ -256,7 +256,7 @@ class GraphicCell extends BaseCell {
           const cssLocation = `node-index-${d.i} node-xy-${d.row}-${d.col}`;
           return `node ${cssLocation}`;
         })
-        .attr('transform', d => `translate(${d.xFactory},${d.yFactory})`);
+        .attr('transform', d => `translate(${d.x},${d.y})`);
 
     const imageWidth = gridLayout.nodeSize()[0];
     const imageHeight = gridLayout.nodeSize()[1];

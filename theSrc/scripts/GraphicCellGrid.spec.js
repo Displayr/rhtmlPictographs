@@ -1,9 +1,9 @@
-import GraphicCellGrid from './graphicCellGrid';
+import GraphicCellGrid from './GraphicCellGrid';
 
 function justXY(node) {
   return {
-    xFactory: node.xFactory,
-    yFactory: node.yFactory,
+    x: node.x,
+    y: node.y,
   };
 }
 
@@ -13,10 +13,10 @@ describe('d3 grid:', function () {
     const nodes = [{}, {}, {}, {}];
 
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0 },
-      { xFactory: 1, yFactory: 0 },
-      { xFactory: 0, yFactory: 1 },
-      { xFactory: 1, yFactory: 1 },
+      { x: 0, y: 0 },
+      { x: 1, y: 0 },
+      { x: 0, y: 1 },
+      { x: 1, y: 1 },
     ]);
   });
 
@@ -25,7 +25,7 @@ describe('d3 grid:', function () {
     const nodes = [{}];
 
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0.5, yFactory: 0.5 },
+      { x: 0.5, y: 0.5 },
     ]);
   });
 
@@ -34,11 +34,11 @@ describe('d3 grid:', function () {
     const nodes = [{}, {}, {}, {}, {}];
 
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0 },
-      { xFactory: 0.5, yFactory: 0 },
-      { xFactory: 1, yFactory: 0 },
-      { xFactory: 0, yFactory: 1 },
-      { xFactory: 0.5, yFactory: 1 },
+      { x: 0, y: 0 },
+      { x: 0.5, y: 0 },
+      { x: 1, y: 0 },
+      { x: 0, y: 1 },
+      { x: 0.5, y: 1 },
     ]);
   });
 
@@ -48,11 +48,11 @@ describe('d3 grid:', function () {
     const nodes = [{}, {}, {}, {}, {}];
 
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0 },
-      { xFactory: 150, yFactory: 0 },
-      { xFactory: 300, yFactory: 0 },
-      { xFactory: 0, yFactory: 500 },
-      { xFactory: 150, yFactory: 500 },
+      { x: 0, y: 0 },
+      { x: 150, y: 0 },
+      { x: 300, y: 0 },
+      { x: 0, y: 500 },
+      { x: 150, y: 500 },
     ]);
   });
 
@@ -61,11 +61,11 @@ describe('d3 grid:', function () {
     const nodes = [{}, {}, {}, {}, {}];
 
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0 },
-      { xFactory: 1, yFactory: 0 },
-      { xFactory: 0, yFactory: 0.5 },
-      { xFactory: 1, yFactory: 0.5 },
-      { xFactory: 0, yFactory: 1 },
+      { x: 0, y: 0 },
+      { x: 1, y: 0 },
+      { x: 0, y: 0.5 },
+      { x: 1, y: 0.5 },
+      { x: 0, y: 1 },
     ]);
   });
 
@@ -74,11 +74,11 @@ describe('d3 grid:', function () {
     const nodes = [{}, {}, {}, {}, {}];
 
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0 },
-      { xFactory: 1, yFactory: 0 },
-      { xFactory: 0, yFactory: 0.5 },
-      { xFactory: 1, yFactory: 0.5 },
-      { xFactory: 0, yFactory: 1 },
+      { x: 0, y: 0 },
+      { x: 1, y: 0 },
+      { x: 0, y: 0.5 },
+      { x: 1, y: 0.5 },
+      { x: 0, y: 1 },
     ]);
   });
 
@@ -95,11 +95,11 @@ describe('d3 grid:', function () {
     const nodes = [{}, {}, {}, {}, {}];
 
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0.5 },
-      { xFactory: 0.25, yFactory: 0.5 },
-      { xFactory: 0.5, yFactory: 0.5 },
-      { xFactory: 0.75, yFactory: 0.5 },
-      { xFactory: 1, yFactory: 0.5 },
+      { x: 0, y: 0.5 },
+      { x: 0.25, y: 0.5 },
+      { x: 0.5, y: 0.5 },
+      { x: 0.75, y: 0.5 },
+      { x: 1, y: 0.5 },
     ]);
   });
 
@@ -108,19 +108,19 @@ describe('d3 grid:', function () {
     let nodes = [{}, {}, {}, {}, {}];
 
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0 },
-      { xFactory: 0.5, yFactory: 0 },
-      { xFactory: 1, yFactory: 0 },
-      { xFactory: 0, yFactory: 1 },
-      { xFactory: 0.5, yFactory: 1 },
+      { x: 0, y: 0 },
+      { x: 0.5, y: 0 },
+      { x: 1, y: 0 },
+      { x: 0, y: 1 },
+      { x: 0.5, y: 1 },
     ]);
 
     nodes = [{}, {}, {}, {}];
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0 },
-      { xFactory: 1, yFactory: 0 },
-      { xFactory: 0, yFactory: 1 },
-      { xFactory: 1, yFactory: 1 },
+      { x: 0, y: 0 },
+      { x: 1, y: 0 },
+      { x: 0, y: 1 },
+      { x: 1, y: 1 },
     ]);
   });
 
@@ -129,22 +129,22 @@ describe('d3 grid:', function () {
     let nodes = [{}, {}, {}, {}, {}];
 
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0 },
-      { xFactory: 1, yFactory: 0 },
-      { xFactory: 0, yFactory: 0.5 },
-      { xFactory: 1, yFactory: 0.5 },
-      { xFactory: 0, yFactory: 1 },
+      { x: 0, y: 0 },
+      { x: 1, y: 0 },
+      { x: 0, y: 0.5 },
+      { x: 1, y: 0.5 },
+      { x: 0, y: 1 },
     ]);
 
     nodes = [{}, {}, {}, {}, {}, {}, {}];
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0 },
-      { xFactory: 1, yFactory: 0 },
-      { xFactory: 0, yFactory: 1 / 3 },
-      { xFactory: 1, yFactory: 1 / 3 },
-      { xFactory: 0, yFactory: 2 / 3 },
-      { xFactory: 1, yFactory: 2 / 3 },
-      { xFactory: 0, yFactory: 1 },
+      { x: 0, y: 0 },
+      { x: 1, y: 0 },
+      { x: 0, y: 1 / 3 },
+      { x: 1, y: 1 / 3 },
+      { x: 0, y: 2 / 3 },
+      { x: 1, y: 2 / 3 },
+      { x: 0, y: 1 },
 
     ]);
   });
@@ -154,21 +154,21 @@ describe('d3 grid:', function () {
     const nodes = [{}, {}, {}, {}, {}];
 
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0 },
-      { xFactory: 1 / 3, yFactory: 0 },
-      { xFactory: 2 / 3, yFactory: 0 },
-      { xFactory: 0, yFactory: 0.5 },
-      { xFactory: 1 / 3, yFactory: 0.5 },
+      { x: 0, y: 0 },
+      { x: 1 / 3, y: 0 },
+      { x: 2 / 3, y: 0 },
+      { x: 0, y: 0.5 },
+      { x: 1 / 3, y: 0.5 },
     ]);
 
     l.cols(2);
 
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0 },
-      { xFactory: 0.5, yFactory: 0 },
-      { xFactory: 0, yFactory: 1 / 3 },
-      { xFactory: 0.5, yFactory: 1 / 3 },
-      { xFactory: 0, yFactory: 2 / 3 },
+      { x: 0, y: 0 },
+      { x: 0.5, y: 0 },
+      { x: 0, y: 1 / 3 },
+      { x: 0.5, y: 1 / 3 },
+      { x: 0, y: 2 / 3 },
     ]);
   });
 
@@ -182,21 +182,21 @@ describe('d3 grid:', function () {
     const nodes = [{}, {}, {}, {}, {}];
 
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0 },
-      { xFactory: 0.4, yFactory: 0 },
-      { xFactory: 0.8, yFactory: 0 },
-      { xFactory: 0, yFactory: 2 / 3 },
-      { xFactory: 0.4, yFactory: 2 / 3 },
+      { x: 0, y: 0 },
+      { x: 0.4, y: 0 },
+      { x: 0.8, y: 0 },
+      { x: 0, y: 2 / 3 },
+      { x: 0.4, y: 2 / 3 },
     ]);
 
     l.cols(2);
 
     expect(l.compute(nodes).map(justXY)).to.deep.equal([
-      { xFactory: 0, yFactory: 0 },
-      { xFactory: 2 / 3, yFactory: 0 },
-      { xFactory: 0, yFactory: 0.4 },
-      { xFactory: 2 / 3, yFactory: 0.4 },
-      { xFactory: 0, yFactory: 0.8 },
+      { x: 0, y: 0 },
+      { x: 2 / 3, y: 0 },
+      { x: 0, y: 0.4 },
+      { x: 2 / 3, y: 0.4 },
+      { x: 0, y: 0.8 },
     ]);
   });
 

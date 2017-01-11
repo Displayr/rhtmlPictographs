@@ -148,8 +148,8 @@ class GraphicCellGrid {
 
     let i = -1;
     while (++i < this.nodes.length) {
-      this.nodes[i].xFactory = this.xFactory(nextVacantSpot.col);
-      this.nodes[i].yFactory = this.yFactory(nextVacantSpot.row);
+      this.nodes[i].x = this.xFactory(nextVacantSpot.col);
+      this.nodes[i].y = this.yFactory(nextVacantSpot.row);
       this.nodes[i].col = nextVacantSpot.col;
       this.nodes[i].row = nextVacantSpot.row;
       this.nodes[i].rowOrder = nextVacantSpot.rowOrder;
