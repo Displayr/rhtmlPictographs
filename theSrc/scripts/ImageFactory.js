@@ -80,8 +80,8 @@ class ImageFactory {
             imageBoxDim.height = (imageHeight * containerWidth) / imageWidth;
           }
 
-          imageBoxDim.x = (containerWidth - imageBoxDim.width) / 2;
-          imageBoxDim.y = (containerHeight - imageBoxDim.height) / 2;
+          imageBoxDim.xFactory = (containerWidth - imageBoxDim.width) / 2;
+          imageBoxDim.yFactory = (containerHeight - imageBoxDim.height) / 2;
           imageBoxDim.aspectRatio = imageAspectRatio;
 
           tmpImg.remove();
@@ -126,8 +126,8 @@ class ImageFactory {
       // why unscaledBox? if we place a 100x100 circle in a 200x100 container, the circle goes in the middle.
       // when we create the clipPath, we need to know the circle doesn't start at 0,0 it starts at 50,0
       const imageBox = newImageData.unscaledBox || {
-        x: config.imageBoxDim.x,
-        y: config.imageBoxDim.y,
+        x: config.imageBoxDim.xFactory,
+        y: config.imageBoxDim.yFactory,
         width: config.imageBoxDim.width,
         height: config.imageBoxDim.height,
       };
@@ -379,8 +379,8 @@ class ImageFactory {
     d3Node.append('clipPath')
       .attr('id', uniqueId)
       .append('rect')
-        .attr('x', imageBox.x)
-        .attr('y', d => imageBox.y + (imageBox.height * (1 - d.proportion)))
+        .attr('x', imageBox.xFactory)
+        .attr('y', d => imageBox.yFactory + (imageBox.height * (1 - d.proportion)))
         .attr('width', imageBox.width)
         .attr('height', d => imageBox.height * d.proportion);
     return uniqueId;
@@ -391,8 +391,8 @@ class ImageFactory {
     d3Node.append('clipPath')
       .attr('id', uniqueId)
       .append('rect')
-        .attr('x', imageBox.x)
-        .attr('y', d => imageBox.y)
+        .attr('x', imageBox.xFactory)
+        .attr('y', d => imageBox.yFactory)
         .attr('width', imageBox.width)
         .attr('height', d => imageBox.height * d.proportion);
     return uniqueId;
@@ -403,8 +403,8 @@ class ImageFactory {
     d3Node.append('clipPath')
       .attr('id', uniqueId)
       .append('rect')
-        .attr('x', imageBox.x)
-        .attr('y', imageBox.y)
+        .attr('x', imageBox.xFactory)
+        .attr('y', imageBox.yFactory)
         .attr('width', d => imageBox.width * d.proportion)
         .attr('height', imageBox.height);
     return uniqueId;
@@ -415,8 +415,8 @@ class ImageFactory {
     d3Node.append('clipPath')
       .attr('id', uniqueId)
       .append('rect')
-        .attr('x', d => imageBox.x + (imageBox.width * (1 - d.proportion)))
-        .attr('y', imageBox.y)
+        .attr('x', d => imageBox.xFactory + (imageBox.width * (1 - d.proportion)))
+        .attr('y', imageBox.yFactory)
         .attr('width', d => imageBox.width * d.proportion)
         .attr('height', imageBox.height);
     return uniqueId;

@@ -1,9 +1,6 @@
 import d3 from 'd3';
 
-/* eslint-disable no-unused-vars */
-import d3Grid from './d3Grid'; // this import initializes d3.layout.grid
-/* eslint-enable no-unused-vars */
-
+import GraphicCellGrid from './graphicCellGrid';
 import BaseCell from './BaseCell';
 import ImageFactory from './ImageFactory';
 import DisplayError from './DisplayError';
@@ -123,7 +120,7 @@ class GraphicCell extends BaseCell {
     }
 
     if (this.config.layout) {
-      const validLayoutValues = d3.layout.grid().validDirections();
+      const validLayoutValues = GraphicCellGrid.validInputDirections();
       if (!validLayoutValues.includes(this.config.layout)) {
         throw new Error(`Invalid layout ${this.config.layout}. Valid values: [${validLayoutValues.join('|')}]`);
       }
@@ -225,9 +222,9 @@ class GraphicCell extends BaseCell {
 
     const d3Data = this._generateDataArray(this.config.proportion, this.config.numImages);
 
-    const gridLayout = d3.layout.grid()
+    const gridLayout = new GraphicCellGrid()
       .bands()
-      .size([this.dimensions.graphicWidth, this.dimensions.graphicHeight])
+      .containerSize([this.dimensions.graphicWidth, this.dimensions.graphicHeight])
       .padding([this.config.columnGutter, this.config.rowGutter]);
 
     if (this.config.numRows != null) { gridLayout.rows(this.config.numRows); }
@@ -251,16 +248,15 @@ class GraphicCell extends BaseCell {
       gridLayout.direction(this.config.layout);
     }
 
-
     const enteringLeafNodes = graphicContainer.selectAll('.node')
-      .data(gridLayout(d3Data))
+      .data(gridLayout.compute(d3Data))
       .enter()
       .append('g')
         .attr('class', function (d) {
           const cssLocation = `node-index-${d.i} node-xy-${d.row}-${d.col}`;
           return `node ${cssLocation}`;
         })
-        .attr('transform', d => `translate(${d.x},${d.y})`);
+        .attr('transform', d => `translate(${d.xFactory},${d.yFactory})`);
 
     const imageWidth = gridLayout.nodeSize()[0];
     const imageHeight = gridLayout.nodeSize()[1];
