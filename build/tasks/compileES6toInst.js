@@ -17,7 +17,6 @@ gulp.task('compileES6ToInst', function () {
       file.contents = browserify(file.path, { debug: true })
         .transform(babelify, {
           presets: ['es2015-ie'],
-          // presets: ['es2015'],
           plugins: ['transform-object-assign', 'array-includes'],
         })
         .bundle();
