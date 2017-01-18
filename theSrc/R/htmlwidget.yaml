@@ -5,3 +5,9 @@ dependencies:
    src: htmlwidgets/lib/style
    stylesheet:
      main.css
+
+ - name: Maps
+   version: 1.0.0
+   src: htmlwidgets
+   script:
+     - rhtmlPictographs.js.map

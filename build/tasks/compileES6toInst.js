@@ -4,6 +4,7 @@ const babelify = require('babelify');
 const gutil = require('gulp-util');
 const tap = require('gulp-tap');
 const buffer = require('gulp-buffer');
+const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 
 const widgetEntryPoint = require('../config/widget.config.json').widgetEntryPoint;
@@ -11,7 +12,6 @@ const widgetEntryPoint = require('../config/widget.config.json').widgetEntryPoin
 gulp.task('compileES6ToInst', function () {
   return gulp.src(widgetEntryPoint, { read: false })
     .pipe(tap(function (file) {
-
       gutil.log(`bundling ${file.path}`);
 
       file.contents = browserify(file.path, { debug: true })
@@ -22,6 +22,8 @@ gulp.task('compileES6ToInst', function () {
         .bundle();
     }))
     .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(uglify())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('inst/htmlwidgets/'));
 });
