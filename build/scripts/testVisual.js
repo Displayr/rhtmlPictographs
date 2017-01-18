@@ -25,31 +25,41 @@ describe('Take visual regression snapshots', function () {
   _.forEach(contentFiles, (contentPath) => {
     it(`Capturing ${contentPath} visual regression content`, function(done) {
 
-      eyes.open(
-        browser,
-        `rHtmlPictograph ${global.visualDiffConfig.testLabel}`,
-        contentPath,
-        { width: global.visualDiffConfig.browserWidth, height: global.visualDiffConfig.browserHeight }
-      );
+      let openedEyes = false;
 
       browser.get(contentPath).then( () => {
         console.log(`Page ${contentPath} is loaded`);
-      }).then( () => {
-        console.log(`Waiting ${global.visualDiffConfig.pageLoadWaitSeconds * 1000} seconds for widgetsPage`);
-        return new Promise( (resolve ) => {
-          setTimeout(() => {
-            return resolve()
-          }, global.visualDiffConfig.pageLoadWaitSeconds * 1000)
-        })
-      }).then( () => {
+      }).then(() => {
+        return element.all(by.css('[snapshot-name]')).count();
+      }).then((count) => {
+        if (count > 0) {
+
+          eyes.open(
+            browser,
+            `rHtmlPictograph ${global.visualDiffConfig.testLabel}`,
+            contentPath,
+            { width: global.visualDiffConfig.browserWidth, height: global.visualDiffConfig.browserHeight }
+          );
+          openedEyes = true;
+
+          console.log(`Waiting ${global.visualDiffConfig.pageLoadWaitSeconds * 1000} seconds for widgetsPage`);
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              return resolve();
+            }, global.visualDiffConfig.pageLoadWaitSeconds * 0);
+          });
+        } else {
+          console.log(`No snapshots on ${contentPath}. Skipping`);
+          return Promise.resolve();
+        }
+      }).then(() => {
         const donePromises = element.all(by.css('[snapshot-name]')).each(function(element) {
           return element.getAttribute('snapshot-name').then( (snapshotName) => {
             if (snapshotName) {
               console.log(`take snapshot ${contentPath} ${snapshotName}`);
               snapshotsCount++;
               eyes.checkRegionBy(by.css(`[snapshot-name="${snapshotName}"]`), snapshotName);
-            }
-            else {
+            } else {
               console.error(`snapshot on page ${contentPath} missing snapshot name`);
             }
           });
@@ -57,12 +67,12 @@ describe('Take visual regression snapshots', function () {
         return donePromises;
       }).then( () => {
         console.log(`done taking snapshots on ${contentPath}. Running snapshot count: ${snapshotsCount}`);
-        eyes.close(false);
+        if (openedEyes) { eyes.close(false); }
         done();
       }).catch( (error) => {
-        console.log("test error:");
-        console.log(error)
-        eyes.close(false);
+        console.log('test error:');
+        console.log(error);
+        if (openedEyes) { eyes.close(false); }
         done();
       })
     })

@@ -53,6 +53,7 @@
       "ignoreTemplateLiterals": true,
     }],
 
+    "no-else-return": "off",
     "no-underscore-dangle": "off",
     "no-console": "off",
     "no-plusplus": "off",
