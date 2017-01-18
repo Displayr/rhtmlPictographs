@@ -12,7 +12,7 @@ gulp.task('watch', ['connect'], function () {
   // when these files change then do this,
   // for example when the json file changes rerun the copy command
   gulp.watch('theSrc/**/*.json', ['copy']);
-  gulp.watch('theSrc/images/**/*', ['copy']); // @TODO Move ME into internal_wwww
+  gulp.watch('theSrc/internal_www/images/**/*', ['copy']);
   gulp.watch('theSrc/internal_www/**/*.html', ['copy']);
   gulp.watch('theSrc/internal_www/**/*.css', ['copy']);
   gulp.watch('theSrc/styles/**/*.less', ['less']);

@@ -8,7 +8,7 @@ gulp.task('copy', function () {
   ], {}).pipe(gulp.dest('browser'));
 
   gulp.src([
-    'theSrc/images/**/*',
+    'theSrc/internal_www/images/**/*',
   ], {}).pipe(gulp.dest('browser/images'));
 
   gulp.src('theSrc/R/htmlwidget.yaml')
