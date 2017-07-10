@@ -63,7 +63,13 @@ class BaseCell {
 
   getDimensionConstraints () {
     // TODO document expected format
-    return Promise.resolve({})
+    return Promise.resolve({
+      aspectRatio: null,
+      minWidth: null,
+      maxWidth: null,
+      minHeight: null,
+      maxHeight: null
+    })
   }
 
   draw () {

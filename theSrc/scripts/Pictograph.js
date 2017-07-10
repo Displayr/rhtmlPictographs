@@ -422,8 +422,10 @@ class Pictograph extends RhtmlSvgWidget {
     }
 
     const _computeCellSizes = () => {
+      console.log('_computeCellSizes')
       // assume cols first
       const columnPromise = new Promise((resolve, reject) => {
+        console.log('_computeCellSizes start columnPromise')
         let totalWidthAvailable = this.specifiedWidth - ((this.numTableRows - 1) * table.columnGutterLength)
 
         const fixedCellWidths = table.colWidths
@@ -445,28 +447,33 @@ class Pictograph extends RhtmlSvgWidget {
         // add setter / getter
 
         const someMorePromises = flexibleColumnIndexes.map((flexibleColumnIndex) => {
+          console.log('_computeCellSizes start some more promises')
           const cells = this.getAllCellsInColumn(flexibleColumnIndex)
-          const dimensionContraintPromises = cells.map((cell, rowIndex) => {
+          const dimensionConstraintPromises = cells.map((cell) => {
             return cell.instance.getDimensionConstraints()
           })
+          console.log('dimensionConstraintPromises:')
+          console.log(dimensionConstraintPromises)
+
           const columnWidthData = table.colWidths[flexibleColumnIndex]
-          return Promise.all(dimensionContraintPromises).then((dimensionContraints) => {
+          return Promise.all(dimensionConstraintPromises).then((dimensionConstraints) => {
+            console.log('got all dimensionConstraintPromises')
             if (columnWidthData.shrink) {
-              const maxOfMinSizes = Math.max.apply(null, _(dimensionContraints).map('minWidth').value())
+              const maxOfMinSizes = Math.max.apply(null, _(dimensionConstraints).map('minWidth').value())
               console.log(`maxOfMinSizes: ${maxOfMinSizes}`)
               columnWidthData.size = maxOfMinSizes
               totalWidthAvailable -= columnWidthData.size
             }
 
             if (columnWidthData.grow) {
-              dimensionContraints.map((dimensionContraint, rowIndex) => {
+              dimensionConstraints.map((dimensionContraint, rowIndex) => {
                 dimensionContraint.minWidth = table.rowHeights[rowIndex].min * dimensionContraint.aspectRatio
                 dimensionContraint.maxWidth = table.rowHeights[rowIndex].max * dimensionContraint.aspectRatio
                 console.log(table.rowHeights[rowIndex])
                 console.log(dimensionContraint)
               })
 
-              const minOfMaxSizes = Math.min.apply(null, _(dimensionContraints).map('maxWidth').value())
+              const minOfMaxSizes = Math.min.apply(null, _(dimensionConstraints).map('maxWidth').value())
               console.log(`minOfMaxSizes: ${minOfMaxSizes}`)
               columnWidthData.size = Math.min(minOfMaxSizes, totalWidthAvailable)
               totalWidthAvailable -= columnWidthData.size
@@ -474,7 +481,7 @@ class Pictograph extends RhtmlSvgWidget {
           })
         })
 
-        return resolve(someMorePromises)
+        return resolve(Promise.all(someMorePromises))
       })
 
       // TODO do this
@@ -486,6 +493,7 @@ class Pictograph extends RhtmlSvgWidget {
     }
 
     const _computeCellPlacement = () => {
+      console.log('_computeCellPlacement')
       table.rows.forEach((row, rowIndex) => {
         row.forEach((cell, colIndex) => {
           cell.x = _.sum(_(table.colWidths).slice(0, colIndex).map('size').value()) + (numGuttersAt(colIndex) * table.columnGutterLength)
@@ -505,23 +513,6 @@ class Pictograph extends RhtmlSvgWidget {
       .then(_processCellSizeSpecifications.bind(this))
       .then(_computeCellSizes.bind(this))
       .then(_computeCellPlacement.bind(this))
-  }
-
-  _computeMinWidthOfColumn (index) {
-    const cellSpecs = this.config.table.rows.map(row => row[index])
-    console.log('cellSpecs')
-    console.log(JSON.stringify(cellSpecs, {}, 2))
-
-    // TODO for now do poor mans texst width calculation
-    let minWidths = cellSpecs.map((cellSpec) => {
-      if (_.get(cellSpec, 'value.text')) { return cellSpec.value.text.length * 4 }
-      return null
-    }).filter(minWidth => !_.isNull(minWidth))
-
-    console.log(`minWidths: ${minWidths}`)
-    const maxOfTheMins = Math.max(...minWidths)
-    console.log(`maxOfTheMins: ${maxOfTheMins}`)
-    return maxOfTheMins
   }
 
   _redraw () {

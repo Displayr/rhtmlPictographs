@@ -75,7 +75,9 @@ class LabelCell extends BaseCell {
     return Promise.resolve({
       apectRatio: null,
       minWidth: this.labels[0].text.length * 5,
-      maxWidth: 30
+      maxWidth: 30,
+      minHeight: null,
+      maxHeight: null
     })
   }
 

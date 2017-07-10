@@ -1,7 +1,7 @@
 import BaseImageType from './base.imagetype'
 
 class SquareType extends BaseImageType {
-  aspectRatio () {
+  calculateDesiredAspectRatio () {
     return Promise.resolve(1)
   }
 

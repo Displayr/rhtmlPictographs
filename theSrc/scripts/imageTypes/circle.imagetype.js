@@ -12,6 +12,10 @@ class CircleType extends BaseImageType {
     return this.imageDimensions
   }
 
+  calculateDesiredAspectRatio () {
+    return Promise.resolve(1)
+  }
+
   appendToSvg () {
     this.imageHandle = this.d3Node.append('svg:circle')
       .classed('circle', true)

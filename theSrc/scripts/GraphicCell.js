@@ -35,8 +35,8 @@ class GraphicCell extends BaseCell {
 
   setConfig (config) {
     this.config = _.cloneDeep(config)
-    console.log('graphic cell config')
-    console.log(JSON.stringify(config, {}, 2))
+    // console.log('graphic cell config')
+    // console.log(JSON.stringify(config, {}, 2))
 
     const invalidRootAttributes = _.difference(_.keys(this.config), GraphicCell.validRootAttributes)
     if (invalidRootAttributes.length > 0) {
@@ -169,15 +169,18 @@ class GraphicCell extends BaseCell {
     const numRows = gridLayout.numRows
     const numCols = gridLayout.numCols
 
-    const imageAspectRatio = 1 // TODO for squares this works, make it work for everything
+    return ImageFactory.calculateAspectRatio(this.config.variableImage).then((imageAspectRatio) => {
+      console.log(`ImageFactory.calculateAspectRatio returned ${imageAspectRatio}`)
+      const cellHeightInImageUnits = (1.0 / parseFloat(imageAspectRatio)) * numRows + (numRows - 1) * (1.0 / parseFloat(imageAspectRatio)) * gridLayout.rowGutter()
+      const cellWidthInImageUnits = parseFloat(imageAspectRatio) * numCols + (numCols - 1) * parseFloat(imageAspectRatio) * gridLayout.columnGutter()
 
-    const cellHeightInImageUnits = (1.0 / parseFloat(imageAspectRatio)) * numRows + (numRows - 1) * (1.0 / parseFloat(imageAspectRatio)) * gridLayout.rowGutter()
-    const cellWidthInImageUnits = parseFloat(imageAspectRatio) * numCols + (numCols - 1) * parseFloat(imageAspectRatio) * gridLayout.columnGutter()
-
-    return Promise.resolve({
-      aspectRatio: cellWidthInImageUnits / cellHeightInImageUnits,
-      minWidth: null,
-      maxWidth: null
+      return {
+        aspectRatio: cellWidthInImageUnits / cellHeightInImageUnits,
+        minWidth: null,
+        maxWidth: null,
+        minHeight: null,
+        maxHeight: null
+      }
     })
   }
 

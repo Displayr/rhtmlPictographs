@@ -19,8 +19,13 @@ class BaseImageType {
     }
   }
 
+  // return a Promise that resolves with an int or null if the image type has no applicalble aspect ratio (e.g., rectangle)
+  calculateDesiredAspectRatio () {
+    return Promise.resolve(1)
+  }
+
   /*
-     return value:
+     return value: Promise that resolves to
        imageDimensions object (plain JS object) containing keys:
          width: expected width of image in container,
          height: expected height of image in container,
