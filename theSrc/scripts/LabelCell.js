@@ -64,9 +64,18 @@ class LabelCell extends BaseCell {
       if (labelConfig['font-size'] == null) { labelConfig['font-size'] = BaseCell.getDefault('font-size') }
 
       _.forEach(labelConfig, (labelValue, labelKey) => {
+        // TODO does text belong here
         if (['class', 'text', 'horizontal-align'].includes(labelKey)) { return }
         this.setCss(labelConfig.class, labelKey, labelValue)
       })
+    })
+  }
+
+  getDimensionConstraints () {
+    return Promise.resolve({
+      apectRatio: null,
+      minWidth: this.labels[0].text.length * 5,
+      maxWidth: 30
     })
   }
 

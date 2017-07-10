@@ -21,9 +21,19 @@ class BaseCell {
     this.defaults = {}
   }
 
-  constructor (parentSvg, myCssSelector, width = 1, height = 1, pictographSizeInfo) {
-    this.parentSvg = parentSvg
+  constructor () {
+    this.requiresResize = false
+    this.cssBucket = {}
+    this.pictographSizeInfo = {}
+    this.width = 1
+    this.height = 1
+  }
 
+  setParentSvg (parentSvg) {
+    this.parentSvg = parentSvg
+  }
+
+  setCssSelector (myCssSelector) {
     if (_.isString(myCssSelector)) {
       this.myCssSelectorArray = [myCssSelector]
     } else if (_.isArray(myCssSelector)) {
@@ -31,21 +41,29 @@ class BaseCell {
     } else {
       throw new Error(`Invalid myCssSelector: ${myCssSelector}`)
     }
+  }
 
-    this.width = width
-    this.height = height
-    this._verifyKeyIsPositiveInt(this, 'width')
-    this._verifyKeyIsPositiveInt(this, 'height')
-
-    if (pictographSizeInfo == null) { pictographSizeInfo = {} }
+  setPictographSizeInfo (pictographSizeInfo) {
     this.pictographSizeInfo = pictographSizeInfo
+  }
 
-    this.requiresResize = false
-    this.cssBucket = {}
+  setWidth (width) {
+    this.width = width
+    this._verifyKeyIsPositiveInt(this, 'width')
+  }
+
+  setHeight (height) {
+    this.height = height
+    this._verifyKeyIsPositiveInt(this, 'height')
   }
 
   setConfig (config) {
     this.config = config
+  }
+
+  getDimensionConstraints () {
+    // TODO document expected format
+    return Promise.resolve({})
   }
 
   draw () {

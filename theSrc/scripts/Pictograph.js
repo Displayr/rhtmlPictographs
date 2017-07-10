@@ -5,6 +5,7 @@ import $ from 'jquery'
 import BaseCell from './BaseCell'
 import GraphicCell from './GraphicCell'
 import LabelCell from './LabelCell'
+import EmptyCell from './EmptyCell'
 import ColorFactory from './ColorFactory'
 import RhtmlSvgWidget from './rhtmlSvgWidget'
 
@@ -147,7 +148,8 @@ class Pictograph extends RhtmlSvgWidget {
     if (!_.isBoolean(this.config.resizable)) { throw new Error('resizable must be [true|false]') }
 
     // @TODO extract CssCollector from BaseCell. This is hacky
-    this.cssCollector = new BaseCell(null, `${this.config['table-id']}`)
+    this.cssCollector = new BaseCell()
+    this.cssCollector.setCssSelector(this.config['table-id'])
     this.cssCollector._draw = () => _.noop
 
     if (this.config.table.rows == null) { throw new Error("Must specify 'table.rows'") }
@@ -163,10 +165,14 @@ class Pictograph extends RhtmlSvgWidget {
         _.range(this.numTableCols - row.length).forEach(() => { row.push({ type: 'empty' }) })
       }
 
-      this.config.table.rows[rowIndex] = row.map((cellDefinition) => {
+      this.config.table.rows[rowIndex] = row.map((cellDefinition, columnIndex) => {
         if (_.isString(cellDefinition)) {
           return this._convertStringDefinitionToCellDefinition(cellDefinition)
         }
+        cellDefinition.rowIndex = rowIndex
+        cellDefinition.columnIndex = columnIndex
+        // creating this now might cause rerender issues
+        cellDefinition.instance = this.createCellInstance(cellDefinition)
         return cellDefinition
       })
     })
@@ -195,6 +201,38 @@ class Pictograph extends RhtmlSvgWidget {
     }
 
     if (this.config.table.colors) { ColorFactory.processNewConfig(this.config.table.colors) }
+  }
+
+  createCellInstance (cellDefinition) {
+    let cellInstance = null
+    if (cellDefinition.type === 'graphic') {
+      cellInstance = new GraphicCell()
+    } else if (cellDefinition.type === 'label') {
+      cellInstance = new LabelCell()
+    } else if (cellDefinition.type === 'empty') {
+      cellInstance = new EmptyCell()
+    } else {
+      throw new Error(`Invalid cell definition: ${JSON.stringify(cellDefinition)} : missing or invalid type`)
+    }
+
+    cellInstance.setCssSelector([
+      this.config['table-id'],
+      `table-cell-${cellDefinition.rowIndex}-${cellDefinition.colIndex}`
+    ])
+
+    cellInstance.setConfig(cellDefinition.value)
+
+    return cellInstance
+  }
+
+  getAllCellsInColumn (columnIndex) {
+    return _.range(this.numTableRows).map((rowIndex) => {
+      return this.getCell(rowIndex, columnIndex)
+    })
+  }
+
+  getCell (rowIndex, columnIndex) {
+    return this.config.table.rows[rowIndex][columnIndex]
   }
 
   _convertStringDefinitionToCellDefinition (stringDefinition) {
@@ -289,131 +327,262 @@ class Pictograph extends RhtmlSvgWidget {
     const numGuttersAt = index => index
     const table = this.config.table
 
-    if (table.rowHeights) {
-      if (!_.isArray(table.rowHeights)) {
-        throw new Error('rowHeights must be array')
+    const processCellSizeSpec = (input, range) => {
+      const output = {}
+      let match = false
+
+      if (!_.isNaN(parseInt(input))) {
+        match = true
+        output.min = parseInt(input)
+        output.max = parseInt(input)
+        output.size = parseInt(input)
+        output.flexible = false
       }
 
-      if (table.rowHeights.length !== this.numTableRows) {
-        throw new Error('rowHeights length must match num rows specified')
+      if (input.match(/^proportion:[0-9.]+$/)) {
+        match = true
+        const [, proportion] = input.match(/^proportion:([0-9.]+)$/)
+        output.min = range * parseFloat(proportion)
+        output.max = range * parseFloat(proportion)
+        output.size = range * parseFloat(proportion)
+        output.flexible = false
       }
 
-      table.rowHeights = table.rowHeights.map(function (candidate) {
-        const rowHeight = parseInt(candidate)
-        if (_.isNaN(rowHeight)) {
-          throw new Error(`Invalid rowHeight '${candidate}': must be integer`)
-        }
-        return rowHeight
-      })
-
-      const sumSpecified = _.sum(table.rowHeights) + ((this.numTableRows - 1) * table.rowGutterLength)
-      if (sumSpecified > this.specifiedHeight) {
-        throw new Error(`Cannot specify rowHeights/rowGutterLength where sum(rows+padding) exceeds table height: ${sumSpecified} !< ${this.specifiedHeight}`)
+      if (input === 'max') {
+        match = true
+        output.min = null
+        output.max = null
+        output.size = null
+        output.flexible = true
+        output.grow = true
       }
-    } else {
-      table.rowHeights = _.range(this.numTableRows).map(() => parseInt(this.specifiedHeight / this.numTableRows))
+
+      if (input === 'min') {
+        match = true
+        output.min = null
+        output.max = null
+        output.size = null
+        output.flexible = true
+        output.shrink = true
+      }
+
+      if (!match) {
+        throw new Error(`Invalid cell size specification: '${input}'`)
+      }
+
+      return output
     }
 
-    if (table.colWidths) {
-      if (!_.isArray(table.colWidths)) {
-        throw new Error('colWidths must be array')
-      }
-
-      if (table.colWidths.length !== this.numTableCols) {
-        throw new Error('colWidths length must match num columns specified')
-      }
-
-      table.colWidths = table.colWidths.map(function (candidate) {
-        const colWidth = parseInt(candidate)
-        if (_.isNaN(colWidth)) {
-          throw new Error(`Invalid colWidth '${candidate}': must be integer`)
+    const _processCellSizeSpecifications = () => {
+      const totalHeightAvailable = this.specifiedHeight - ((this.numTableRows - 1) * table.rowGutterLength)
+      if (table.rowHeights) {
+        if (!_.isArray(table.rowHeights)) {
+          throw new Error('rowHeights must be array')
         }
-        return colWidth
-      })
 
-      const sumSpecified = _.sum(table.colWidths) + ((this.numTableCols - 1) * table.columnGutterLength)
-      if (sumSpecified > this.specifiedWidth) {
-        throw new Error(`Cannot specify colWidths/columnGutterLength where sum(cols+padding) exceeds table width: : ${sumSpecified} !< ${this.specifiedWidth}`)
+        if (table.rowHeights.length !== this.numTableRows) {
+          throw new Error('rowHeights length must match num rows specified')
+        }
+
+        table.rowHeights = table.rowHeights.map((candidate) => {
+          return processCellSizeSpec(candidate, totalHeightAvailable)
+        })
+      } else {
+        table.rowHeights = _.range(this.numTableRows).map(() => {
+          return {
+            min: parseInt(totalHeightAvailable / this.numTableRows),
+            max: parseInt(totalHeightAvailable / this.numTableRows),
+            flexible: false
+          }
+        })
       }
-    } else {
-      table.colWidths = _.range(this.numTableCols).map(() => parseInt(this.specifiedWidth / this.numTableCols))
+
+      const totalWidthAvailable = this.specifiedWidth - ((this.numTableRows - 1) * table.columnGutterLength)
+      if (table.colWidths) {
+        if (!_.isArray(table.colWidths)) {
+          throw new Error('colWidths must be array')
+        }
+
+        if (table.colWidths.length !== this.numTableCols) {
+          throw new Error('colWidths length must match num columns specified')
+        }
+
+        table.colWidths = table.colWidths.map((candidate) => {
+          return processCellSizeSpec(candidate, totalWidthAvailable)
+        })
+      } else {
+        table.colWidths = _.range(this.numTableCols).map(() => {
+          return {
+            min: parseInt(totalWidthAvailable / this.numTableCols),
+            max: parseInt(totalWidthAvailable / this.numTableCols),
+            flexible: false
+          }
+        })
+      }
     }
 
-    table.rows.forEach((row, rowIndex) => {
-      row.forEach((cell, colIndex) => {
-        cell.x = _.sum(_.slice(table.colWidths, 0, colIndex)) + (numGuttersAt(colIndex) * table.columnGutterLength)
-        cell.y = _.sum(_.slice(table.rowHeights, 0, rowIndex)) + (numGuttersAt(rowIndex) * table.rowGutterLength)
-        cell.width = table.colWidths[colIndex]
-        cell.height = table.rowHeights[rowIndex]
-        cell.row = rowIndex
-        cell.col = colIndex
+    const _computeCellSizes = () => {
+      // assume cols first
+      const columnPromise = new Promise((resolve, reject) => {
+        let totalWidthAvailable = this.specifiedWidth - ((this.numTableRows - 1) * table.columnGutterLength)
+
+        const fixedCellWidths = table.colWidths
+          .filter(columnWidthData => !columnWidthData.flexible)
+          .map(columnWidthData => columnWidthData.min)
+
+        totalWidthAvailable -= _.sum(fixedCellWidths)
+
+        // get promises for all flexible cells
+        const flexibleColumnIndexes = table.colWidths.map((columnWidthData, index) => {
+          if (columnWidthData.flexible) {
+            return index
+          }
+          return null
+        }).filter(indexOrNull => !_.isNull(indexOrNull))
+
+        // alternate path : stop what we are doing, and focus on
+        // combine the configs and the cell instances together
+        // add setter / getter
+
+        const someMorePromises = flexibleColumnIndexes.map((flexibleColumnIndex) => {
+          const cells = this.getAllCellsInColumn(flexibleColumnIndex)
+          const dimensionContraintPromises = cells.map((cell, rowIndex) => {
+            return cell.instance.getDimensionConstraints()
+          })
+          const columnWidthData = table.colWidths[flexibleColumnIndex]
+          return Promise.all(dimensionContraintPromises).then((dimensionContraints) => {
+            if (columnWidthData.shrink) {
+              const maxOfMinSizes = Math.max.apply(null, _(dimensionContraints).map('minWidth').value())
+              console.log(`maxOfMinSizes: ${maxOfMinSizes}`)
+              columnWidthData.size = maxOfMinSizes
+              totalWidthAvailable -= columnWidthData.size
+            }
+
+            if (columnWidthData.grow) {
+              dimensionContraints.map((dimensionContraint, rowIndex) => {
+                dimensionContraint.minWidth = table.rowHeights[rowIndex].min * dimensionContraint.aspectRatio
+                dimensionContraint.maxWidth = table.rowHeights[rowIndex].max * dimensionContraint.aspectRatio
+                console.log(table.rowHeights[rowIndex])
+                console.log(dimensionContraint)
+              })
+
+              const minOfMaxSizes = Math.min.apply(null, _(dimensionContraints).map('maxWidth').value())
+              console.log(`minOfMaxSizes: ${minOfMaxSizes}`)
+              columnWidthData.size = Math.min(minOfMaxSizes, totalWidthAvailable)
+              totalWidthAvailable -= columnWidthData.size
+            }
+          })
+        })
+
+        return resolve(someMorePromises)
       })
-    })
+
+      // TODO do this
+      const rowPromise = new Promise((resolve, reject) => {
+        resolve()
+      })
+
+      return Promise.all([columnPromise, rowPromise])
+    }
+
+    const _computeCellPlacement = () => {
+      table.rows.forEach((row, rowIndex) => {
+        row.forEach((cell, colIndex) => {
+          cell.x = _.sum(_(table.colWidths).slice(0, colIndex).map('size').value()) + (numGuttersAt(colIndex) * table.columnGutterLength)
+          cell.y = _.sum(_(table.rowHeights).slice(0, rowIndex).map('size').value()) + (numGuttersAt(rowIndex) * table.rowGutterLength)
+          cell.width = table.colWidths[colIndex].size
+          cell.height = table.rowHeights[rowIndex].size
+          cell.row = rowIndex
+          cell.col = colIndex
+          console.log(`doing cell placement for row: ${rowIndex}, col: ${colIndex}`)
+          console.log(JSON.stringify(cell, {}, 2))
+        })
+      })
+      return Promise.resolve()
+    }
+
+    return Promise.resolve()
+      .then(_processCellSizeSpecifications.bind(this))
+      .then(_computeCellSizes.bind(this))
+      .then(_computeCellPlacement.bind(this))
+  }
+
+  _computeMinWidthOfColumn (index) {
+    const cellSpecs = this.config.table.rows.map(row => row[index])
+    console.log('cellSpecs')
+    console.log(JSON.stringify(cellSpecs, {}, 2))
+
+    // TODO for now do poor mans texst width calculation
+    let minWidths = cellSpecs.map((cellSpec) => {
+      if (_.get(cellSpec, 'value.text')) { return cellSpec.value.text.length * 4 }
+      return null
+    }).filter(minWidth => !_.isNull(minWidth))
+
+    console.log(`minWidths: ${minWidths}`)
+    const maxOfTheMins = Math.max(...minWidths)
+    console.log(`maxOfTheMins: ${maxOfTheMins}`)
+    return maxOfTheMins
   }
 
   _redraw () {
-    this.cssCollector.draw()
-    this._computeTableLayout() // @TODO I can be done once not every time
-    this._computeTableLinesLayout() // @TODO I can be done once not every time
-    this._recomputeSizing()
+    return Promise.resolve(this.cssCollector.draw())
+      .then(this._computeTableLayout.bind(this))
+      .then(this._computeTableLinesLayout.bind(this))
+      .then(this._recomputeSizing.bind(this))
+      .then(() => {
+        const tableCells = _.flatten(this.config.table.rows)
 
-    const tableCells = _.flatten(this.config.table.rows)
+        const addLines = (lineType, data) => this.outerSvg.selectAll(`.${lineType}`)
+          .data(data)
+          .enter()
+          .append('line')
+            .attr('x1', d => d.x1)
+            .attr('x2', d => d.x2)
+            .attr('y1', d => d.y1)
+            .attr('y2', d => d.y2)
+            .attr('style', d => d.style)
+            .attr('class', d => `line ${lineType} line-${d.position}`)
 
-    const addLines = (lineType, data) => this.outerSvg.selectAll(`.${lineType}`)
-      .data(data)
-      .enter()
-      .append('line')
-        .attr('x1', d => d.x1)
-        .attr('x2', d => d.x2)
-        .attr('y1', d => d.y1)
-        .attr('y2', d => d.y2)
-        .attr('style', d => d.style)
-        .attr('class', d => `line ${lineType} line-${d.position}`)
+        if (this.config['background-color']) {
+          this.outerSvg.append('svg:rect')
+          .attr('class', 'background')
+          .attr('width', this.specifiedWidth)
+          .attr('height', this.specifiedHeight)
+          .attr('fill', this.config['background-color'])
+        }
 
-    if (this.config['background-color']) {
-      this.outerSvg.append('svg:rect')
-      .attr('class', 'background')
-      .attr('width', this.specifiedWidth)
-      .attr('height', this.specifiedHeight)
-      .attr('fill', this.config['background-color'])
-    }
+        addLines('horizontal-line', this.config.table.lines.horizontal)
+        addLines('vertical-line', this.config.table.lines.vertical)
 
-    addLines('horizontal-line', this.config.table.lines.horizontal)
-    addLines('vertical-line', this.config.table.lines.vertical)
+        const enteringCells = this.outerSvg.selectAll('.table-cell')
+          .data(tableCells)
+          .enter()
+          .append('g')
+            .attr('class', 'table-cell')
+            .attr('transform', d => `translate(${d.x},${d.y})`)
 
-    const enteringCells = this.outerSvg.selectAll('.table-cell')
-      .data(tableCells)
-      .enter()
-      .append('g')
-        .attr('class', 'table-cell')
-        .attr('transform', d => `translate(${d.x},${d.y})`)
+        const { sizes } = this
+        const table = this.config.table
+        enteringCells.each(function (d) {
+          const instance = table.rows[d.row][d.col].instance
+          console.log(`instance`)
+          console.log(console.log(instance))
 
-    const tableId = this.config['table-id']
-    this.cellInstances = []
-    const { cellInstances, sizes } = this // NB make this.cellInstances and this.sizes available for function below
-    enteringCells.each(function (d) {
-      const cssWrapperClass = `table-cell-${d.row}-${d.col}`
-      d3.select(this).classed(cssWrapperClass, true)
+          d3.select(this).classed(`table-cell-${d.row}-${d.col}`, true)
+          d3.select(this).classed(d.type, true)
 
-      if (d.type === 'graphic') {
-        d3.select(this).classed('graphic', true)
-        const graphic = new GraphicCell(d3.select(this), [tableId, cssWrapperClass], d.width, d.height, sizes)
-        graphic.setConfig(d.value)
-        graphic.draw()
-        return cellInstances.push(graphic)
-      } else if (d.type === 'label') {
-        d3.select(this).classed('label', true)
-        const label = new LabelCell(d3.select(this), [tableId, cssWrapperClass], d.width, d.height, sizes)
-        label.setConfig(d.value)
-        label.draw()
-        return cellInstances.push(label)
-      } else if (d.type === 'empty') {
-        return d3.select(this).classed('empty', true)
-      }
-      throw new Error(`Invalid cell definition: ${JSON.stringify(d)} : missing or invalid type`)
-    })
-
-    return null
+          instance.setParentSvg(d3.select(this))
+          instance.setWidth(d.width)
+          instance.setHeight(d.height)
+          instance.setPictographSizeInfo(sizes)
+          instance.draw()
+        })
+      })
+      .catch((error) => {
+        console.error(`error in pictograph _redraw: ${error.message}`)
+        console.error(error.stack)
+        throw error
+      })
   }
 
   // TODO pull from shared location
