@@ -97,7 +97,15 @@ class LabelCell extends BaseCell {
       const fontSize = this.getAdjustedTextSize(labelConfig['font-size'])
       const xOffset = this.computeHorizontalOffset(labelConfig['horizontal-align'])
 
-      this._addTextTo(this.parentSvg, labelConfig.text, labelConfig.class, labelConfig['horizontal-align'], xOffset, currentY + (fontSize / 2), fontSize)
+      this._addTextTo({
+        parent: this.parentSvg,
+        text: labelConfig.text,
+        myClass: labelConfig.class,
+        textAnchor: labelConfig['horizontal-align'],
+        x: xOffset,
+        y: currentY + (fontSize / 2),
+        fontSize: fontSize
+      })
 
       currentY += fontSize + this.config['padding-inner']
     })
@@ -139,7 +147,7 @@ class LabelCell extends BaseCell {
     })()
   }
 
-  _addTextTo (parent, text, myClass, textAnchor, x, y, fontSize) {
+  _addTextTo ({ parent, text, myClass, textAnchor, x, y, fontSize }) {
     return parent.append('svg:text')
       .attr('class', myClass)
       .attr('x', x)
