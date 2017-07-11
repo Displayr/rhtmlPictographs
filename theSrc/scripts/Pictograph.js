@@ -217,7 +217,7 @@ class Pictograph extends RhtmlSvgWidget {
 
     cellInstance.setCssSelector([
       this.config['table-id'],
-      `table-cell-${cellDefinition.rowIndex}-${cellDefinition.colIndex}`
+      `table-cell-${cellDefinition.rowIndex}-${cellDefinition.columnIndex}`
     ])
 
     cellInstance.setConfig(cellDefinition.value)

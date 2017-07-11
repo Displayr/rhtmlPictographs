@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import BaseCell from './BaseCell'
+import $ from 'jquery'
 
 class LabelCell extends BaseCell {
   setConfig (config) {
@@ -72,11 +73,54 @@ class LabelCell extends BaseCell {
   }
 
   getDimensionConstraints () {
+
+    const makeDivForEstimation = (labelConfig) => {
+
+      // TODO copied from cssDefaults in Pictograph
+      const defaults = {
+        'font-family': 'Verdana,sans-serif',
+        'font-weight': '900',
+        'font-size': '24px',
+      }
+
+      function getAttribute (attribute) {
+        if (_.has(labelConfig, attribute)) {
+          return labelConfig[attribute]
+        }
+        return defaults[attribute]
+      }
+
+      const styleComponents = [
+        `font-size:${getAttribute('font-size')}`,
+        `font-family:${getAttribute('font-family')}`,
+        `font-weight:${getAttribute('font-weight')}`
+      ]
+      return `<div style="${styleComponents.join(';')}">${labelConfig.text}</div>`
+    }
+
+    const uniqueId = `${Math.random()}`.replace('.', '')
+    const textDivsForEstimation = _(this.labels).map(makeDivForEstimation).value()
+    const divWrapper = $(`<div id="${uniqueId}" style="display:inline-block">`)
+    divWrapper.html(textDivsForEstimation)
+    $(document.body).append(divWrapper)
+    const { width: textWidth, height: textHeight } = document.getElementById(uniqueId).getBoundingClientRect()
+
+    const minHeight = textHeight +
+      (this.labels.length - 1) * this.config['padding-inner'] +
+      this.config['padding-top'] +
+      this.config['padding-bottom']
+
+    const minWidth = textWidth +
+      this.config['padding-left'] +
+      this.config['padding-right']
+
+    divWrapper.remove()
+
     return Promise.resolve({
+      minWidth,
+      minHeight,
       apectRatio: null,
-      minWidth: this.labels[0].text.length * 5,
-      maxWidth: 30,
-      minHeight: null,
+      maxWidth: null,
       maxHeight: null
     })
   }
