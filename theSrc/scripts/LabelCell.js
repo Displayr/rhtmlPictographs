@@ -73,14 +73,12 @@ class LabelCell extends BaseCell {
   }
 
   getDimensionConstraints () {
-
     const makeDivForEstimation = (labelConfig) => {
-
       // TODO copied from cssDefaults in Pictograph
       const defaults = {
         'font-family': 'Verdana,sans-serif',
         'font-weight': '900',
-        'font-size': '24px',
+        'font-size': '24px'
       }
 
       function getAttribute (attribute) {

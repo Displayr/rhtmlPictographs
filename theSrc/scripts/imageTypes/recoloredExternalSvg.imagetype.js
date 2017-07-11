@@ -6,7 +6,6 @@ import RecolorSvg from '../RecolorSvg'
 import geometryUtils from '../utils/geometryUtils'
 
 class RecoloredExternalSvg extends BaseImageType {
-
   calculateDesiredAspectRatio () {
     return new Promise((resolve, reject) => {
       const onDownloadSuccess = (xmlString) => {

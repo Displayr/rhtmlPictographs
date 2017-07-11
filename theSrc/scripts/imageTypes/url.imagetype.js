@@ -5,7 +5,6 @@ import CacheService from '../CacheService'
 import geometryUtils from '../utils/geometryUtils'
 
 class UrlType extends BaseImageType {
-
   _getImageWidthAndHeight () {
     const cacheKey = `dimensions-${this.config.url}`
     if (!CacheService.get(cacheKey)) {
