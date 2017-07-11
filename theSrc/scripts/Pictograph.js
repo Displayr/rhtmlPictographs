@@ -154,29 +154,6 @@ class Pictograph extends RhtmlSvgWidget {
 
     if (this.config.table.rows == null) { throw new Error("Must specify 'table.rows'") }
 
-    this.numTableRows = this.config.table.rows.length
-    this.numTableCols = Math.max.apply(null, this.config.table.rows.map(row => row.length))
-    this.config.table.rows.forEach((row, rowIndex) => {
-      if (!_.isArray(row)) {
-        throw new Error(`Invalid rows spec: row ${rowIndex} must be array of cell definitions`)
-      }
-
-      if (this.numTableCols !== row.length) {
-        _.range(this.numTableCols - row.length).forEach(() => { row.push({ type: 'empty' }) })
-      }
-
-      this.config.table.rows[rowIndex] = row.map((cellDefinition, columnIndex) => {
-        if (_.isString(cellDefinition)) {
-          return this._convertStringDefinitionToCellDefinition(cellDefinition)
-        }
-        cellDefinition.rowIndex = rowIndex
-        cellDefinition.columnIndex = columnIndex
-        // creating this now might cause rerender issues
-        cellDefinition.instance = this.createCellInstance(cellDefinition)
-        return cellDefinition
-      })
-    })
-
     _.forEach(Pictograph.cssDefaults, (defaultValue, cssAttribute) => {
       const cssValue = this.config[cssAttribute] ? this.config[cssAttribute] : defaultValue
 
@@ -201,6 +178,29 @@ class Pictograph extends RhtmlSvgWidget {
     }
 
     if (this.config.table.colors) { ColorFactory.processNewConfig(this.config.table.colors) }
+
+    this.numTableRows = this.config.table.rows.length
+    this.numTableCols = Math.max.apply(null, this.config.table.rows.map(row => row.length))
+    this.config.table.rows.forEach((row, rowIndex) => {
+      if (!_.isArray(row)) {
+        throw new Error(`Invalid rows spec: row ${rowIndex} must be array of cell definitions`)
+      }
+
+      if (this.numTableCols !== row.length) {
+        _.range(this.numTableCols - row.length).forEach(() => { row.push({ type: 'empty' }) })
+      }
+
+      this.config.table.rows[rowIndex] = row.map((cellDefinition, columnIndex) => {
+        if (_.isString(cellDefinition)) {
+          cellDefinition = this._convertStringDefinitionToCellDefinition(cellDefinition)
+        }
+        cellDefinition.rowIndex = rowIndex
+        cellDefinition.columnIndex = columnIndex
+        // creating this now might cause rerender issues
+        cellDefinition.instance = this.createCellInstance(cellDefinition)
+        return cellDefinition
+      })
+    })
   }
 
   createCellInstance (cellDefinition) {
@@ -392,6 +392,7 @@ class Pictograph extends RhtmlSvgWidget {
           return {
             min: parseInt(totalHeightAvailable / this.numTableRows),
             max: parseInt(totalHeightAvailable / this.numTableRows),
+            size: parseInt(totalHeightAvailable / this.numTableRows),
             flexible: false
           }
         })
@@ -415,6 +416,7 @@ class Pictograph extends RhtmlSvgWidget {
           return {
             min: parseInt(totalWidthAvailable / this.numTableCols),
             max: parseInt(totalWidthAvailable / this.numTableCols),
+            size: parseInt(totalWidthAvailable / this.numTableCols),
             flexible: false
           }
         })
@@ -422,10 +424,8 @@ class Pictograph extends RhtmlSvgWidget {
     }
 
     const _computeCellSizes = () => {
-      console.log('_computeCellSizes')
       // assume cols first
       const columnPromise = new Promise((resolve, reject) => {
-        console.log('_computeCellSizes start columnPromise')
         let totalWidthAvailable = this.specifiedWidth - ((this.numTableRows - 1) * table.columnGutterLength)
 
         const fixedCellWidths = table.colWidths
@@ -447,20 +447,15 @@ class Pictograph extends RhtmlSvgWidget {
         // add setter / getter
 
         const someMorePromises = flexibleColumnIndexes.map((flexibleColumnIndex) => {
-          console.log('_computeCellSizes start some more promises')
           const cells = this.getAllCellsInColumn(flexibleColumnIndex)
           const dimensionConstraintPromises = cells.map((cell) => {
             return cell.instance.getDimensionConstraints()
           })
-          console.log('dimensionConstraintPromises:')
-          console.log(dimensionConstraintPromises)
 
           const columnWidthData = table.colWidths[flexibleColumnIndex]
           return Promise.all(dimensionConstraintPromises).then((dimensionConstraints) => {
-            console.log('got all dimensionConstraintPromises')
             if (columnWidthData.shrink) {
               const maxOfMinSizes = Math.max.apply(null, _(dimensionConstraints).map('minWidth').value())
-              console.log(`maxOfMinSizes: ${maxOfMinSizes}`)
               columnWidthData.size = maxOfMinSizes
               totalWidthAvailable -= columnWidthData.size
             }
@@ -469,12 +464,9 @@ class Pictograph extends RhtmlSvgWidget {
               dimensionConstraints.map((dimensionContraint, rowIndex) => {
                 dimensionContraint.minWidth = table.rowHeights[rowIndex].min * dimensionContraint.aspectRatio
                 dimensionContraint.maxWidth = table.rowHeights[rowIndex].max * dimensionContraint.aspectRatio
-                console.log(table.rowHeights[rowIndex])
-                console.log(dimensionContraint)
               })
 
               const minOfMaxSizes = Math.min.apply(null, _(dimensionConstraints).map('maxWidth').value())
-              console.log(`minOfMaxSizes: ${minOfMaxSizes}`)
               columnWidthData.size = Math.min(minOfMaxSizes, totalWidthAvailable)
               totalWidthAvailable -= columnWidthData.size
             }
@@ -493,7 +485,6 @@ class Pictograph extends RhtmlSvgWidget {
     }
 
     const _computeCellPlacement = () => {
-      console.log('_computeCellPlacement')
       table.rows.forEach((row, rowIndex) => {
         row.forEach((cell, colIndex) => {
           cell.x = _.sum(_(table.colWidths).slice(0, colIndex).map('size').value()) + (numGuttersAt(colIndex) * table.columnGutterLength)
@@ -502,8 +493,6 @@ class Pictograph extends RhtmlSvgWidget {
           cell.height = table.rowHeights[rowIndex].size
           cell.row = rowIndex
           cell.col = colIndex
-          console.log(`doing cell placement for row: ${rowIndex}, col: ${colIndex}`)
-          console.log(JSON.stringify(cell, {}, 2))
         })
       })
       return Promise.resolve()
@@ -556,8 +545,6 @@ class Pictograph extends RhtmlSvgWidget {
         const table = this.config.table
         enteringCells.each(function (d) {
           const instance = table.rows[d.row][d.col].instance
-          console.log(`instance`)
-          console.log(console.log(instance))
 
           d3.select(this).classed(`table-cell-${d.row}-${d.col}`, true)
           d3.select(this).classed(d.type, true)

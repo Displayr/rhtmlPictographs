@@ -170,7 +170,6 @@ class GraphicCell extends BaseCell {
     const numCols = gridLayout.numCols
 
     return ImageFactory.calculateAspectRatio(this.config.variableImage).then((imageAspectRatio) => {
-      console.log(`ImageFactory.calculateAspectRatio returned ${imageAspectRatio}`)
       const cellHeightInImageUnits = (1.0 / parseFloat(imageAspectRatio)) * numRows + (numRows - 1) * (1.0 / parseFloat(imageAspectRatio)) * gridLayout.rowGutter()
       const cellWidthInImageUnits = parseFloat(imageAspectRatio) * numCols + (numCols - 1) * parseFloat(imageAspectRatio) * gridLayout.columnGutter()
 

@@ -154,7 +154,7 @@ class LabelCell extends BaseCell {
   }
 
   computeAllocatedVerticalSpace () {
-    let allocatedVerticalSpace = (this.config['padding-inner'] * this.labels.length) - 1
+    let allocatedVerticalSpace = this.config['padding-inner'] * (this.labels.length - 1)
     _.forEach(this.labels, (labelConfig) => {
       const labelFontSize = this.getAdjustedTextSize(labelConfig['font-size'])
       allocatedVerticalSpace += labelFontSize
