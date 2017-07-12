@@ -116,28 +116,38 @@ class Pictograph extends RhtmlSvgWidget {
     return super.setConfig(this.config)
   }
 
+  _processSimpleSingleGraphicCellConfig (config) {
+    const pictographConfig = _.pick(config, Pictograph.validRootAttributes)
+    const graphicCellConfig = _.pick(config, GraphicCell.validRootAttributes)
+
+    pictographConfig.table = { rows: [[{ type: 'graphic', value: graphicCellConfig }]] }
+
+    return pictographConfig
+  }
+
+  // TODO break into two, take valid as input param, move to utility
+  _checkForInvalidAttributes (config) {
+    const invalidRootAttributes = _.difference(_.keys(config), Pictograph.validRootAttributes)
+    if (invalidRootAttributes.length > 0) {
+      throw new Error(`Invalid attribute(s): ${JSON.stringify(invalidRootAttributes)}`)
+    }
+
+    const invalidTableAttributes = _.difference(_.keys(config.table), Pictograph.validTableAttributes)
+    if (invalidTableAttributes.length > 0) {
+      throw new Error(`Invalid table attribute(s): ${JSON.stringify(invalidTableAttributes)}`)
+    }
+  }
+
   _processConfig () {
     // update the specified width/height used in the baseclass used to redraw the SVG
     if (this.config.width) { this.specifiedWidth = this.config.width; delete this.config.width }
     if (this.config.height) { this.specifiedHeight = this.config.height; delete this.config.height }
 
     if (this.config.table == null) {
-      const pictographConfig = _.pick(this.config, Pictograph.validRootAttributes)
-      const graphicCellConfig = _.pick(this.config, GraphicCell.validRootAttributes)
-
-      pictographConfig.table = { rows: [[{ type: 'graphic', value: graphicCellConfig }]] }
-      this.config = pictographConfig
+      this.config = this._processSimpleSingleGraphicCellConfig(this.config)
     }
 
-    const invalidRootAttributes = _.difference(_.keys(this.config), Pictograph.validRootAttributes)
-    if (invalidRootAttributes.length > 0) {
-      throw new Error(`Invalid attribute(s): ${JSON.stringify(invalidRootAttributes)}`)
-    }
-
-    const invalidTableAttributes = _.difference(_.keys(this.config.table), Pictograph.validTableAttributes)
-    if (invalidTableAttributes.length > 0) {
-      throw new Error(`Invalid table attribute(s): ${JSON.stringify(invalidTableAttributes)}`)
-    }
+    this._checkForInvalidAttributes(this.config)
 
     this._verifyKeyIsInt(this.config.table, 'rowGutterLength', 0)
     this._verifyKeyIsInt(this.config.table, 'columnGutterLength', 0)
