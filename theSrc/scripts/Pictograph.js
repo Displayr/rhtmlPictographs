@@ -339,7 +339,8 @@ class Pictograph extends RhtmlSvgWidget {
         output.flexible = false
       }
 
-      if (input.match(/^proportion:[0-9.]+$/)) {
+      // TODO catch this number vs string issue earlier
+      if (`${input}`.match(/^proportion:[0-9.]+$/)) {
         match = true
         const [, proportion] = input.match(/^proportion:([0-9.]+)$/)
         output.min = range * parseFloat(proportion)
