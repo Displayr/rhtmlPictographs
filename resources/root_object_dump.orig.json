@@ -1,0 +1,949 @@
+{
+  "rootElement": {},
+  "initialWidth": 1000,
+  "initialHeight": 800,
+  "specifiedWidth": 1000,
+  "specifiedHeight": 800,
+  "sizes": {
+    "specifiedContainerWidth": 1000,
+    "specifiedContainerHeight": 800,
+    "actualWidth": 1000,
+    "actualHeight": 800,
+    "viewBoxWidth": 1000,
+    "viewBoxHeight": 800,
+    "ratios": {
+      "textSize": 1,
+      "containerDelta": {
+        "width": 1,
+        "height": 1
+      },
+      "containerToViewBox": {
+        "width": 1,
+        "height": 1
+      }
+    }
+  },
+  "config": {
+    "background-color": "transparent",
+    "table": {
+      "rowHeights": [
+        {
+          "min": 131.666614,
+          "max": 131.666614,
+          "size": 131.666614,
+          "flexible": false
+        },
+        {
+          "min": 131.666614,
+          "max": 131.666614,
+          "size": 131.666614,
+          "flexible": false
+        },
+        {
+          "min": 131.666614,
+          "max": 131.666614,
+          "size": 131.666614,
+          "flexible": false
+        },
+        {
+          "min": 131.666614,
+          "max": 131.666614,
+          "size": 131.666614,
+          "flexible": false
+        },
+        {
+          "min": 131.666614,
+          "max": 131.666614,
+          "size": 131.666614,
+          "flexible": false
+        },
+        {
+          "min": 131.666614,
+          "max": 131.666614,
+          "size": 131.666614,
+          "flexible": false
+        }
+      ],
+      "colWidths": [
+        {
+          "min": null,
+          "max": null,
+          "size": 122.0625,
+          "flexible": true,
+          "shrink": true
+        },
+        {
+          "min": null,
+          "max": null,
+          "size": 680.083646020137,
+          "flexible": true,
+          "grow": true
+        }
+      ],
+      "rowGutterLength": 2,
+      "columnGutterLength": 2,
+      "rows": [
+        [
+          {
+            "type": "label",
+            "value": {
+              "padding-right": 0,
+              "padding-top": 1,
+              "padding-bottom": 0,
+              "vertical-align": "center",
+              "text": "With parents/guardian",
+              "font-size": "12px",
+              "font-weight": "normal",
+              "horizontal-align": "end",
+              "font-family": "arial",
+              "font-color": "#2C2C2C",
+              "padding-inner": 0,
+              "padding-left": 0,
+              "class": "label-0"
+            },
+            "rowIndex": 0,
+            "columnIndex": 0,
+            "instance": {
+              "requiresResize": false,
+              "cssBucket": {
+                ".rhtmlwidget-0 .table-cell-0-0 .label-0": {
+                  "padding-right": 0,
+                  "padding-top": 1,
+                  "padding-bottom": 0,
+                  "vertical-align": "center",
+                  "font-size": "12px",
+                  "font-weight": "normal",
+                  "font-family": "arial",
+                  "padding-inner": 0,
+                  "padding-left": 0
+                },
+                ".rhtmlwidget-0 .table-cell-0-0 text.label-0": {
+                  "fill": "#2C2C2C"
+                },
+                ".rhtmlwidget-0 .table-cell-0-0 .label-0 text": {
+                  "fill": "#2C2C2C"
+                }
+              },
+              "pictographSizeInfo": {},
+              "width": 1,
+              "height": 1,
+              "myCssSelectorArray": [
+                "rhtmlwidget-0",
+                "table-cell-0-0"
+              ],
+              "config": {
+                "padding-right": 0,
+                "padding-top": 1,
+                "padding-bottom": 0,
+                "vertical-align": "center",
+                "text": "With parents/guardian",
+                "font-size": "12px",
+                "font-weight": "normal",
+                "horizontal-align": "end",
+                "font-family": "arial",
+                "font-color": "#2C2C2C",
+                "padding-inner": 0,
+                "padding-left": 0,
+                "class": "label-0"
+              },
+              "labels": [
+                {
+                  "padding-right": 0,
+                  "padding-top": 1,
+                  "padding-bottom": 0,
+                  "vertical-align": "center",
+                  "text": "With parents/guardian",
+                  "font-size": "12px",
+                  "font-weight": "normal",
+                  "horizontal-align": "end",
+                  "font-family": "arial",
+                  "font-color": "#2C2C2C",
+                  "padding-inner": 0,
+                  "padding-left": 0,
+                  "class": "label-0"
+                }
+              ]
+            },
+            "x": 0,
+            "y": 0,
+            "width": 122.0625,
+            "height": 131.666614,
+            "row": 0,
+            "col": 0
+          },
+          {
+            "type": "graphic",
+            "value": {
+              "proportion": 0.166667,
+              "numImages": 6,
+              "variableImage": "url:#E41A1C:fromleft:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+              "baseImage": "url:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+              "numRows": 1,
+              "columnGutter": 0,
+              "rowGutter": 0,
+              "padding": "1 0 0 0"
+            },
+            "rowIndex": 0,
+            "columnIndex": 1,
+            "instance": {
+              "requiresResize": false,
+              "cssBucket": {},
+              "pictographSizeInfo": {},
+              "width": 1,
+              "height": 1,
+              "myCssSelectorArray": [
+                "rhtmlwidget-0",
+                "table-cell-0-1"
+              ],
+              "config": {
+                "proportion": 0.166667,
+                "numImages": 6,
+                "variableImage": "url:#E41A1C:fromleft:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+                "baseImage": "url:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+                "numRows": 1,
+                "columnGutter": 0,
+                "rowGutter": 0,
+                "padding": {
+                  "top": 1,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "floatingLabels": []
+              }
+            },
+            "x": 124.0625,
+            "y": 0,
+            "width": 680.083646020137,
+            "height": 131.666614,
+            "row": 0,
+            "col": 1
+          }
+        ],
+        [
+          {
+            "type": "label",
+            "value": {
+              "padding-right": 0,
+              "padding-top": 0,
+              "padding-bottom": 0,
+              "vertical-align": "center",
+              "text": "Alone",
+              "font-size": "12px",
+              "font-weight": "normal",
+              "horizontal-align": "end",
+              "font-family": "arial",
+              "font-color": "#2C2C2C",
+              "padding-inner": 0,
+              "padding-left": 0,
+              "class": "label-0"
+            },
+            "rowIndex": 1,
+            "columnIndex": 0,
+            "instance": {
+              "requiresResize": false,
+              "cssBucket": {
+                ".rhtmlwidget-0 .table-cell-1-0 .label-0": {
+                  "padding-right": 0,
+                  "padding-top": 0,
+                  "padding-bottom": 0,
+                  "vertical-align": "center",
+                  "font-size": "12px",
+                  "font-weight": "normal",
+                  "font-family": "arial",
+                  "padding-inner": 0,
+                  "padding-left": 0
+                },
+                ".rhtmlwidget-0 .table-cell-1-0 text.label-0": {
+                  "fill": "#2C2C2C"
+                },
+                ".rhtmlwidget-0 .table-cell-1-0 .label-0 text": {
+                  "fill": "#2C2C2C"
+                }
+              },
+              "pictographSizeInfo": {},
+              "width": 1,
+              "height": 1,
+              "myCssSelectorArray": [
+                "rhtmlwidget-0",
+                "table-cell-1-0"
+              ],
+              "config": {
+                "padding-right": 0,
+                "padding-top": 0,
+                "padding-bottom": 0,
+                "vertical-align": "center",
+                "text": "Alone",
+                "font-size": "12px",
+                "font-weight": "normal",
+                "horizontal-align": "end",
+                "font-family": "arial",
+                "font-color": "#2C2C2C",
+                "padding-inner": 0,
+                "padding-left": 0,
+                "class": "label-0"
+              },
+              "labels": [
+                {
+                  "padding-right": 0,
+                  "padding-top": 0,
+                  "padding-bottom": 0,
+                  "vertical-align": "center",
+                  "text": "Alone",
+                  "font-size": "12px",
+                  "font-weight": "normal",
+                  "horizontal-align": "end",
+                  "font-family": "arial",
+                  "font-color": "#2C2C2C",
+                  "padding-inner": 0,
+                  "padding-left": 0,
+                  "class": "label-0"
+                }
+              ]
+            },
+            "x": 0,
+            "y": 133.666614,
+            "width": 122.0625,
+            "height": 131.666614,
+            "row": 1,
+            "col": 0
+          },
+          {
+            "type": "graphic",
+            "value": {
+              "proportion": 0.333333,
+              "numImages": 6,
+              "variableImage": "url:#377EB8:fromleft:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+              "baseImage": "url:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+              "numRows": 1,
+              "columnGutter": 0,
+              "rowGutter": 0,
+              "padding": "0 0 0 0"
+            },
+            "rowIndex": 1,
+            "columnIndex": 1,
+            "instance": {
+              "requiresResize": false,
+              "cssBucket": {},
+              "pictographSizeInfo": {},
+              "width": 1,
+              "height": 1,
+              "myCssSelectorArray": [
+                "rhtmlwidget-0",
+                "table-cell-1-1"
+              ],
+              "config": {
+                "proportion": 0.333333,
+                "numImages": 6,
+                "variableImage": "url:#377EB8:fromleft:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+                "baseImage": "url:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+                "numRows": 1,
+                "columnGutter": 0,
+                "rowGutter": 0,
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "floatingLabels": []
+              }
+            },
+            "x": 124.0625,
+            "y": 133.666614,
+            "width": 680.083646020137,
+            "height": 131.666614,
+            "row": 1,
+            "col": 1
+          }
+        ],
+        [
+          {
+            "type": "label",
+            "value": {
+              "padding-right": 0,
+              "padding-top": 0,
+              "padding-bottom": 0,
+              "vertical-align": "center",
+              "text": "With partner only",
+              "font-size": "12px",
+              "font-weight": "normal",
+              "horizontal-align": "end",
+              "font-family": "arial",
+              "font-color": "#2C2C2C",
+              "padding-inner": 0,
+              "padding-left": 0,
+              "class": "label-0"
+            },
+            "rowIndex": 2,
+            "columnIndex": 0,
+            "instance": {
+              "requiresResize": false,
+              "cssBucket": {
+                ".rhtmlwidget-0 .table-cell-2-0 .label-0": {
+                  "padding-right": 0,
+                  "padding-top": 0,
+                  "padding-bottom": 0,
+                  "vertical-align": "center",
+                  "font-size": "12px",
+                  "font-weight": "normal",
+                  "font-family": "arial",
+                  "padding-inner": 0,
+                  "padding-left": 0
+                },
+                ".rhtmlwidget-0 .table-cell-2-0 text.label-0": {
+                  "fill": "#2C2C2C"
+                },
+                ".rhtmlwidget-0 .table-cell-2-0 .label-0 text": {
+                  "fill": "#2C2C2C"
+                }
+              },
+              "pictographSizeInfo": {},
+              "width": 1,
+              "height": 1,
+              "myCssSelectorArray": [
+                "rhtmlwidget-0",
+                "table-cell-2-0"
+              ],
+              "config": {
+                "padding-right": 0,
+                "padding-top": 0,
+                "padding-bottom": 0,
+                "vertical-align": "center",
+                "text": "With partner only",
+                "font-size": "12px",
+                "font-weight": "normal",
+                "horizontal-align": "end",
+                "font-family": "arial",
+                "font-color": "#2C2C2C",
+                "padding-inner": 0,
+                "padding-left": 0,
+                "class": "label-0"
+              },
+              "labels": [
+                {
+                  "padding-right": 0,
+                  "padding-top": 0,
+                  "padding-bottom": 0,
+                  "vertical-align": "center",
+                  "text": "With partner only",
+                  "font-size": "12px",
+                  "font-weight": "normal",
+                  "horizontal-align": "end",
+                  "font-family": "arial",
+                  "font-color": "#2C2C2C",
+                  "padding-inner": 0,
+                  "padding-left": 0,
+                  "class": "label-0"
+                }
+              ]
+            },
+            "x": 0,
+            "y": 267.333228,
+            "width": 122.0625,
+            "height": 131.666614,
+            "row": 2,
+            "col": 0
+          },
+          {
+            "type": "graphic",
+            "value": {
+              "proportion": 0.5,
+              "numImages": 6,
+              "variableImage": "url:#4DAF4A:fromleft:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+              "baseImage": "url:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+              "numRows": 1,
+              "columnGutter": 0,
+              "rowGutter": 0,
+              "padding": "0 0 0 0"
+            },
+            "rowIndex": 2,
+            "columnIndex": 1,
+            "instance": {
+              "requiresResize": false,
+              "cssBucket": {},
+              "pictographSizeInfo": {},
+              "width": 1,
+              "height": 1,
+              "myCssSelectorArray": [
+                "rhtmlwidget-0",
+                "table-cell-2-1"
+              ],
+              "config": {
+                "proportion": 0.5,
+                "numImages": 6,
+                "variableImage": "url:#4DAF4A:fromleft:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+                "baseImage": "url:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+                "numRows": 1,
+                "columnGutter": 0,
+                "rowGutter": 0,
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "floatingLabels": []
+              }
+            },
+            "x": 124.0625,
+            "y": 267.333228,
+            "width": 680.083646020137,
+            "height": 131.666614,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        [
+          {
+            "type": "label",
+            "value": {
+              "padding-right": 0,
+              "padding-top": 0,
+              "padding-bottom": 0,
+              "vertical-align": "center",
+              "text": "With children only",
+              "font-size": "12px",
+              "font-weight": "normal",
+              "horizontal-align": "end",
+              "font-family": "arial",
+              "font-color": "#2C2C2C",
+              "padding-inner": 0,
+              "padding-left": 0,
+              "class": "label-0"
+            },
+            "rowIndex": 3,
+            "columnIndex": 0,
+            "instance": {
+              "requiresResize": false,
+              "cssBucket": {
+                ".rhtmlwidget-0 .table-cell-3-0 .label-0": {
+                  "padding-right": 0,
+                  "padding-top": 0,
+                  "padding-bottom": 0,
+                  "vertical-align": "center",
+                  "font-size": "12px",
+                  "font-weight": "normal",
+                  "font-family": "arial",
+                  "padding-inner": 0,
+                  "padding-left": 0
+                },
+                ".rhtmlwidget-0 .table-cell-3-0 text.label-0": {
+                  "fill": "#2C2C2C"
+                },
+                ".rhtmlwidget-0 .table-cell-3-0 .label-0 text": {
+                  "fill": "#2C2C2C"
+                }
+              },
+              "pictographSizeInfo": {},
+              "width": 1,
+              "height": 1,
+              "myCssSelectorArray": [
+                "rhtmlwidget-0",
+                "table-cell-3-0"
+              ],
+              "config": {
+                "padding-right": 0,
+                "padding-top": 0,
+                "padding-bottom": 0,
+                "vertical-align": "center",
+                "text": "With children only",
+                "font-size": "12px",
+                "font-weight": "normal",
+                "horizontal-align": "end",
+                "font-family": "arial",
+                "font-color": "#2C2C2C",
+                "padding-inner": 0,
+                "padding-left": 0,
+                "class": "label-0"
+              },
+              "labels": [
+                {
+                  "padding-right": 0,
+                  "padding-top": 0,
+                  "padding-bottom": 0,
+                  "vertical-align": "center",
+                  "text": "With children only",
+                  "font-size": "12px",
+                  "font-weight": "normal",
+                  "horizontal-align": "end",
+                  "font-family": "arial",
+                  "font-color": "#2C2C2C",
+                  "padding-inner": 0,
+                  "padding-left": 0,
+                  "class": "label-0"
+                }
+              ]
+            },
+            "x": 0,
+            "y": 400.99984200000006,
+            "width": 122.0625,
+            "height": 131.666614,
+            "row": 3,
+            "col": 0
+          },
+          {
+            "type": "graphic",
+            "value": {
+              "proportion": 0.666667,
+              "numImages": 6,
+              "variableImage": "url:#984EA3:fromleft:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+              "baseImage": "url:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+              "numRows": 1,
+              "columnGutter": 0,
+              "rowGutter": 0,
+              "padding": "0 0 0 0"
+            },
+            "rowIndex": 3,
+            "columnIndex": 1,
+            "instance": {
+              "requiresResize": false,
+              "cssBucket": {},
+              "pictographSizeInfo": {},
+              "width": 1,
+              "height": 1,
+              "myCssSelectorArray": [
+                "rhtmlwidget-0",
+                "table-cell-3-1"
+              ],
+              "config": {
+                "proportion": 0.666667,
+                "numImages": 6,
+                "variableImage": "url:#984EA3:fromleft:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+                "baseImage": "url:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+                "numRows": 1,
+                "columnGutter": 0,
+                "rowGutter": 0,
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "floatingLabels": []
+              }
+            },
+            "x": 124.0625,
+            "y": 400.99984200000006,
+            "width": 680.083646020137,
+            "height": 131.666614,
+            "row": 3,
+            "col": 1
+          }
+        ],
+        [
+          {
+            "type": "label",
+            "value": {
+              "padding-right": 0,
+              "padding-top": 0,
+              "padding-bottom": 0,
+              "vertical-align": "center",
+              "text": "With partner & children",
+              "font-size": "12px",
+              "font-weight": "normal",
+              "horizontal-align": "end",
+              "font-family": "arial",
+              "font-color": "#2C2C2C",
+              "padding-inner": 0,
+              "padding-left": 0,
+              "class": "label-0"
+            },
+            "rowIndex": 4,
+            "columnIndex": 0,
+            "instance": {
+              "requiresResize": false,
+              "cssBucket": {
+                ".rhtmlwidget-0 .table-cell-4-0 .label-0": {
+                  "padding-right": 0,
+                  "padding-top": 0,
+                  "padding-bottom": 0,
+                  "vertical-align": "center",
+                  "font-size": "12px",
+                  "font-weight": "normal",
+                  "font-family": "arial",
+                  "padding-inner": 0,
+                  "padding-left": 0
+                },
+                ".rhtmlwidget-0 .table-cell-4-0 text.label-0": {
+                  "fill": "#2C2C2C"
+                },
+                ".rhtmlwidget-0 .table-cell-4-0 .label-0 text": {
+                  "fill": "#2C2C2C"
+                }
+              },
+              "pictographSizeInfo": {},
+              "width": 1,
+              "height": 1,
+              "myCssSelectorArray": [
+                "rhtmlwidget-0",
+                "table-cell-4-0"
+              ],
+              "config": {
+                "padding-right": 0,
+                "padding-top": 0,
+                "padding-bottom": 0,
+                "vertical-align": "center",
+                "text": "With partner & children",
+                "font-size": "12px",
+                "font-weight": "normal",
+                "horizontal-align": "end",
+                "font-family": "arial",
+                "font-color": "#2C2C2C",
+                "padding-inner": 0,
+                "padding-left": 0,
+                "class": "label-0"
+              },
+              "labels": [
+                {
+                  "padding-right": 0,
+                  "padding-top": 0,
+                  "padding-bottom": 0,
+                  "vertical-align": "center",
+                  "text": "With partner & children",
+                  "font-size": "12px",
+                  "font-weight": "normal",
+                  "horizontal-align": "end",
+                  "font-family": "arial",
+                  "font-color": "#2C2C2C",
+                  "padding-inner": 0,
+                  "padding-left": 0,
+                  "class": "label-0"
+                }
+              ]
+            },
+            "x": 0,
+            "y": 534.666456,
+            "width": 122.0625,
+            "height": 131.666614,
+            "row": 4,
+            "col": 0
+          },
+          {
+            "type": "graphic",
+            "value": {
+              "proportion": 0.833333,
+              "numImages": 6,
+              "variableImage": "url:#FF7F00:fromleft:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+              "baseImage": "url:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+              "numRows": 1,
+              "columnGutter": 0,
+              "rowGutter": 0,
+              "padding": "0 0 0 0"
+            },
+            "rowIndex": 4,
+            "columnIndex": 1,
+            "instance": {
+              "requiresResize": false,
+              "cssBucket": {},
+              "pictographSizeInfo": {},
+              "width": 1,
+              "height": 1,
+              "myCssSelectorArray": [
+                "rhtmlwidget-0",
+                "table-cell-4-1"
+              ],
+              "config": {
+                "proportion": 0.833333,
+                "numImages": 6,
+                "variableImage": "url:#FF7F00:fromleft:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+                "baseImage": "url:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+                "numRows": 1,
+                "columnGutter": 0,
+                "rowGutter": 0,
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "floatingLabels": []
+              }
+            },
+            "x": 124.0625,
+            "y": 534.666456,
+            "width": 680.083646020137,
+            "height": 131.666614,
+            "row": 4,
+            "col": 1
+          }
+        ],
+        [
+          {
+            "type": "label",
+            "value": {
+              "padding-right": 0,
+              "padding-top": 0,
+              "padding-bottom": 1,
+              "vertical-align": "center",
+              "text": "In shared accom...",
+              "font-size": "12px",
+              "font-weight": "normal",
+              "horizontal-align": "end",
+              "font-family": "arial",
+              "font-color": "#2C2C2C",
+              "padding-inner": 0,
+              "padding-left": 0,
+              "class": "label-0"
+            },
+            "rowIndex": 5,
+            "columnIndex": 0,
+            "instance": {
+              "requiresResize": false,
+              "cssBucket": {
+                ".rhtmlwidget-0 .table-cell-5-0 .label-0": {
+                  "padding-right": 0,
+                  "padding-top": 0,
+                  "padding-bottom": 1,
+                  "vertical-align": "center",
+                  "font-size": "12px",
+                  "font-weight": "normal",
+                  "font-family": "arial",
+                  "padding-inner": 0,
+                  "padding-left": 0
+                },
+                ".rhtmlwidget-0 .table-cell-5-0 text.label-0": {
+                  "fill": "#2C2C2C"
+                },
+                ".rhtmlwidget-0 .table-cell-5-0 .label-0 text": {
+                  "fill": "#2C2C2C"
+                }
+              },
+              "pictographSizeInfo": {},
+              "width": 1,
+              "height": 1,
+              "myCssSelectorArray": [
+                "rhtmlwidget-0",
+                "table-cell-5-0"
+              ],
+              "config": {
+                "padding-right": 0,
+                "padding-top": 0,
+                "padding-bottom": 1,
+                "vertical-align": "center",
+                "text": "In shared accom...",
+                "font-size": "12px",
+                "font-weight": "normal",
+                "horizontal-align": "end",
+                "font-family": "arial",
+                "font-color": "#2C2C2C",
+                "padding-inner": 0,
+                "padding-left": 0,
+                "class": "label-0"
+              },
+              "labels": [
+                {
+                  "padding-right": 0,
+                  "padding-top": 0,
+                  "padding-bottom": 1,
+                  "vertical-align": "center",
+                  "text": "In shared accom...",
+                  "font-size": "12px",
+                  "font-weight": "normal",
+                  "horizontal-align": "end",
+                  "font-family": "arial",
+                  "font-color": "#2C2C2C",
+                  "padding-inner": 0,
+                  "padding-left": 0,
+                  "class": "label-0"
+                }
+              ]
+            },
+            "x": 0,
+            "y": 668.33307,
+            "width": 122.0625,
+            "height": 131.666614,
+            "row": 5,
+            "col": 0
+          },
+          {
+            "type": "graphic",
+            "value": {
+              "proportion": 1,
+              "numImages": 6,
+              "variableImage": "url:#FFFF33:fromleft:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+              "baseImage": "url:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+              "numRows": 1,
+              "columnGutter": 0,
+              "rowGutter": 0,
+              "padding": "0 0 1 0"
+            },
+            "rowIndex": 5,
+            "columnIndex": 1,
+            "instance": {
+              "requiresResize": false,
+              "cssBucket": {},
+              "pictographSizeInfo": {},
+              "width": 1,
+              "height": 1,
+              "myCssSelectorArray": [
+                "rhtmlwidget-0",
+                "table-cell-5-1"
+              ],
+              "config": {
+                "proportion": 1,
+                "numImages": 6,
+                "variableImage": "url:#FFFF33:fromleft:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+                "baseImage": "url:https://dl.dropboxusercontent.com/u/539177224/building_grey.svg",
+                "numRows": 1,
+                "columnGutter": 0,
+                "rowGutter": 0,
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 1,
+                  "left": 0
+                },
+                "floatingLabels": []
+              }
+            },
+            "x": 124.0625,
+            "y": 668.33307,
+            "width": 680.083646020137,
+            "height": 131.666614,
+            "row": 5,
+            "col": 1
+          }
+        ]
+      ],
+      "lines": {
+        "horizontal": [],
+        "vertical": [],
+        "padding-left": 0,
+        "padding-right": 0,
+        "padding-top": 0,
+        "padding-bottom": 0
+      }
+    },
+    "table-id": "rhtmlwidget-0",
+    "resizable": true
+  },
+  "cssCollector": {
+    "requiresResize": false,
+    "cssBucket": {
+      ".rhtmlwidget-0": {
+        "font-family": "Verdana,sans-serif",
+        "font-weight": "900"
+      },
+      "text.rhtmlwidget-0": {
+        "fill": "black"
+      },
+      ".rhtmlwidget-0 text": {
+        "fill": "black"
+      }
+    },
+    "pictographSizeInfo": {},
+    "width": 1,
+    "height": 1,
+    "myCssSelectorArray": [
+      "rhtmlwidget-0"
+    ]
+  },
+  "numTableRows": 6,
+  "numTableCols": 2,
+  "outerSvg": [
+    [
+      {}
+    ]
+  ]
+}

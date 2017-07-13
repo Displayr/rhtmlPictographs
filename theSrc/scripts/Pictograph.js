@@ -7,9 +7,12 @@ import GraphicCell from './GraphicCell'
 import LabelCell from './LabelCell'
 import EmptyCell from './EmptyCell'
 import ColorFactory from './ColorFactory'
-import RhtmlSvgWidget from './rhtmlSvgWidget'
 
-class Pictograph extends RhtmlSvgWidget {
+class Pictograph {
+  static initClass () {
+    this.widgetIndex = -1
+  }
+
   static get validRootAttributes () {
     return [
       'background-color',
@@ -47,7 +50,12 @@ class Pictograph extends RhtmlSvgWidget {
   }
 
   constructor (el, width, height) {
-    super(el, width, height)
+    Pictograph.widgetIndex++
+    this.rootElement = _.has(el, 'length') ? el[0] : el
+    this.initialWidth = width
+    this.initialHeight = height
+    this.specifiedWidth = width
+    this.specifiedHeight = height
     this._initializeSizing(width, height)
   }
 
@@ -113,7 +121,8 @@ class Pictograph extends RhtmlSvgWidget {
     if (_.isString(this.config)) {
       this.config = { variableImage: this.config }
     }
-    return super.setConfig(this.config)
+    if (!this.config['table-id']) { this.config['table-id'] = `rhtmlwidget-${Pictograph.widgetIndex}` }
+    return this._processConfig()
   }
 
   _processSimpleSingleGraphicCellConfig (config) {
@@ -515,6 +524,12 @@ class Pictograph extends RhtmlSvgWidget {
       .then(_computeCellPlacement.bind(this))
   }
 
+  draw () {
+    this._manipulateRootElementSize()
+    this._addRootSvgToRootElement()
+    return this._redraw()
+  }
+
   _redraw () {
     return Promise.resolve(this.cssCollector.draw())
       .then(this._computeTableLayout.bind(this))
@@ -522,7 +537,7 @@ class Pictograph extends RhtmlSvgWidget {
       .then(this._recomputeSizing.bind(this))
       .then(() => {
         const tableCells = _.flatten(this.config.table.rows)
-
+        
         const addLines = (lineType, data) => this.outerSvg.selectAll(`.${lineType}`)
           .data(data)
           .enter()
@@ -590,6 +605,42 @@ class Pictograph extends RhtmlSvgWidget {
 
     input[key] = parseInt(input[key])
   }
+
+  _manipulateRootElementSize () {
+    // root element has width and height in a style tag. Clear that
+    $(this.rootElement).attr('style', '')
+
+    if (this.config.resizable) {
+      return $(this.rootElement).width('100%').height('100%')
+    }
+    return $(this.rootElement).width(this.specifiedWidth).height(this.specifiedHeight)
+  }
+
+  _addRootSvgToRootElement () {
+    $(this.rootElement).find('*').remove()
+
+    const anonSvg = $('<svg class="rhtmlwidget-outer-svg">')
+      .addClass(this.config['table-id'])
+      .attr('id', this.config['table-id'])
+    // .attr('width', '100%')
+    // .attr('height', '100%')
+
+    $(this.rootElement).append(anonSvg)
+
+    this.outerSvg = d3.select(anonSvg[0])
+
+    // NB JQuery insists on lowercasing attributes, so we must use JS directly
+    // when setting viewBox and preserveAspectRatio ?!
+    document.getElementsByClassName(`${this.config['table-id']} rhtmlwidget-outer-svg`)[0]
+      .setAttribute('viewBox', `0 0 ${this.specifiedWidth} ${this.specifiedHeight}`)
+    if (this.config.preserveAspectRatio != null) {
+      document.getElementsByClassName(`${this.config['table-id']} rhtmlwidget-outer-svg`)[0]
+        .setAttribute('preserveAspectRatio', this.config.preserveAspectRatio)
+    }
+
+    return null
+  }
 }
+Pictograph.initClass()
 
 module.exports = Pictograph

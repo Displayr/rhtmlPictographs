@@ -1,0 +1,123 @@
+{
+  "background-color": "transparent",
+  "widgetSize": {
+    "initialWidth": 1000,
+    "initialHeight": 800,
+    "specifiedContainerWidth": 1000,
+    "specifiedContainerHeight": 800,
+    "actualWidth": 1000,
+    "actualHeight": 800,
+    "viewBoxWidth": 1000,
+    "viewBoxHeight": 800,
+    "ratios": {
+      "textSize": 1,
+      "containerDelta": {
+        "width": 1,
+        "height": 1
+      },
+      "containerToViewBox": {
+        "width": 1,
+        "height": 1
+      }
+    },
+    "padding": {
+      "top" : 0,
+      "right" : 0,
+      "bottom" : 0,
+      "left" : 0
+    }
+  },
+  "gridInfo": {
+    "dimensions": {
+      "row": 2,
+      "column": 6
+    },
+    "sizes": {
+      "row": [ 124, 124, 124, 124, 124, 124 ],
+      "column" : [ 100, 600 ]
+    },
+    "constraints": {
+      "row": [
+        {
+          "min": null,
+          "max": null,
+          "size": 122.0625,
+          "flexible": true,
+          "shrink": true
+        },
+        "x6"
+      ],
+      "column": [
+        {
+          "min": null,
+          "max": null,
+          "size": 122.0625,
+          "flexible": true,
+          "shrink": true
+        },
+        "x2"
+      ]
+    },
+    "gutters": {
+      "row": 3,
+      "column": 4
+    },
+    "lines": {
+      "horizontal": [],
+      "vertical": [],
+      "padding-left": 0,
+      "padding-right": 0,
+      "padding-top": 0,
+      "padding-bottom": 0
+    }
+  },
+  "cells": {
+    "instances": [
+      [
+        "labelCell",
+        "GraphicCell"
+      ],
+      [
+        "labelCell",
+        "GraphicCell"
+      ],
+      [
+        "labelCell",
+        "GraphicCell"
+      ],
+      [
+        "labelCell",
+        "GraphicCell"
+      ],
+      [
+        "labelCell",
+        "GraphicCell"
+      ],
+      [
+        "labelCell",
+        "GraphicCell"
+      ]
+    ]
+  },
+  "cssCollector": {
+    "requiresResize": false,
+    "cssBucket": {
+      ".rhtmlwidget-0": {
+        "font-family": "Verdana,sans-serif",
+        "font-weight": "900"
+      },
+      "text.rhtmlwidget-0": {
+        "fill": "black"
+      },
+      ".rhtmlwidget-0 text": {
+        "fill": "black"
+      }
+    },
+    "pictographSizeInfo": {},
+    "width": 1,
+    "height": 1,
+    "myCssSelectorArray": [
+      "rhtmlwidget-0"
+    ]
+  }
+}
