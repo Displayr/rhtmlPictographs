@@ -51,6 +51,11 @@ class PictographConfig {
   constructor () {
     PictographConfig.widgetIndex++
 
+    this.alignment = {
+      horizontal: 'center', // left|center|right
+      vertical: 'center' // top|center|bottom
+    }
+
     this.size = {
       initial: {width: null, height: null}, // what was the first specified dimension
       specified: {width: null, height: null}, // what are the current specified dimensions
@@ -91,6 +96,20 @@ class PictographConfig {
 
     if (userConfigObject.width) { this.setWidth(userConfigObject.width) }
     if (userConfigObject.height) { this.setHeight(userConfigObject.height) }
+
+    if (userConfigObject['horizontal-align']) {
+      if (!['left', 'center', 'right'].includes(userConfigObject['horizontal-align'])) {
+        throw new Error(`Invalid horizontal-align '${userConfigObject['horizontal-align']}': must be 'left', 'center', or 'right'`)
+      }
+      this.alignment.horizontal = userConfigObject['horizontal-align']
+    }
+
+    if (userConfigObject['vertical-align']) {
+      if (!['top', 'center', 'bottom'].includes(userConfigObject['vertical-align'])) {
+        throw new Error(`Invalid vertical-align '${userConfigObject['vertical-align']}': must be 'top', 'center', or 'bottom'`)
+      }
+      this.alignment.vertical = userConfigObject['vertical-align']
+    }
 
     // TODO something better here
     if (userConfigObject.resizable === 'true') { this.resizable = true }
@@ -194,13 +213,8 @@ class PictographConfig {
     }
     this.gridInfo.flexible.column = (_.findIndex(this.gridInfo.sizes.column, { flexible: true }) !== -1)
 
-    const sumWidthSpecified = _(this.gridInfo.sizes.column)
-        .filter(columnSizeData => columnSizeData.size)
-        .map('size')
-        .sum() + (this.gridInfo.dimensions.column - 1) * this.size.gutter.column
-
-    if (sumWidthSpecified > this.size.specified.width) {
-      throw new Error(`Cannot specify columnWidth/columnGutterLength where sum(rows+padding) exceeds table width: ${sumWidthSpecified} !< ${this.size.specified.width}`)
+    if (this.totalAllocatedHorizontalSpace > this.size.specified.width) {
+      throw new Error(`Cannot specify columnWidth/columnGutterLength where sum(rows+padding) exceeds table width: ${this.totalAllocatedHorizontalSpace} !< ${this.size.specified.width}`)
     }
 
     const totalHeightAvailable = this.size.specified.height - ((this.gridInfo.dimensions.row - 1) * this.size.gutter.row)
@@ -227,18 +241,28 @@ class PictographConfig {
       })
     }
     this.gridInfo.flexible.row = (_.findIndex(this.gridInfo.sizes.row, { flexible: true }) !== -1)
-    const sumHeightSpecified = _(this.gridInfo.sizes.row)
-        .filter(rowSizeData => rowSizeData.size)
-        .map('size')
-        .sum() + (this.gridInfo.dimensions.row - 1) * this.size.gutter.row
 
-    if (sumHeightSpecified > this.size.specified.height) {
-      throw new Error(`Cannot specify rowHeights/rowGutterLength where sum(rows+padding) exceeds table height: ${sumHeightSpecified} !< ${this.size.specified.height}`)
+    if (this.totalAllocatedVerticalSpace > this.size.specified.height) {
+      throw new Error(`Cannot specify rowHeights/rowGutterLength where sum(rows+padding) exceeds table height: ${this.totalAllocatedVerticalSpace} !< ${this.size.specified.height}`)
     }
 
     if (this.gridInfo.flexible.row && this.gridInfo.flexible.column) {
       throw new Error('Cannot currently handle flexible rows and columns: must choose one or fix all dimensions')
     }
+  }
+
+  get totalAllocatedHorizontalSpace () {
+    return _(this.gridInfo.sizes.column)
+      .filter(columnSizeData => columnSizeData.size)
+      .map('size')
+      .sum() + (this.gridInfo.dimensions.column - 1) * this.size.gutter.column
+  }
+
+  get totalAllocatedVerticalSpace () {
+    return _(this.gridInfo.sizes.row)
+        .filter(rowSizeData => rowSizeData.size)
+        .map('size')
+        .sum() + (this.gridInfo.dimensions.row - 1) * this.size.gutter.row
   }
 
   _processCellSizeSpec (input, range) {

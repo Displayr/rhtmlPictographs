@@ -40,7 +40,7 @@ class Pictograph {
     this.config.processUserConfig(userConfig)
   }
 
-  getAllCellsInDimension(dimension, dimensionIndex) {
+  getAllCellsInDimension (dimension, dimensionIndex) {
     if (dimension === 'row') {
       return this.getAllCellsInRow(dimensionIndex)
     } else if (dimension === 'column') {
@@ -198,10 +198,34 @@ class Pictograph {
     }
 
     const _computeCellPlacement = () => {
+      const freeXSpace = (this.config.size.specified.width - this.config.totalAllocatedHorizontalSpace)
+      let xOffset = null
+      if (this.config.alignment.horizontal === 'left') {
+        xOffset = 0
+      } else if (this.config.alignment.horizontal === 'center') {
+        xOffset = freeXSpace / 2
+      } else if (this.config.alignment.horizontal === 'right') {
+        xOffset = freeXSpace
+      } else {
+        throw new Error(`(should not get here) : Invalid horizontal alignment '${this.config.alignment.horizontal}'`)
+      }
+
+      const freeYSpace = (this.config.size.specified.height - this.config.totalAllocatedVerticalSpace)
+      let yOffset = null
+      if (this.config.alignment.vertical === 'top') {
+        yOffset = 0
+      } else if (this.config.alignment.vertical === 'center') {
+        yOffset = freeYSpace / 2
+      } else if (this.config.alignment.vertical === 'bottom') {
+        yOffset = freeYSpace
+      } else {
+        throw new Error(`(should not get here) : Invalid vertical alignment '${this.config.alignment.vertical}'`)
+      }
+
       this.config.cells.forEach((row, rowIndex) => {
         row.forEach((cell, colIndex) => {
-          cell.x = _.sum(_(this.config.gridInfo.sizes.column).slice(0, colIndex).map('size').value()) + (numGuttersAt(colIndex) * this.config.size.gutter.column)
-          cell.y = _.sum(_(this.config.gridInfo.sizes.row).slice(0, rowIndex).map('size').value()) + (numGuttersAt(rowIndex) * this.config.size.gutter.row)
+          cell.x = xOffset + _.sum(_(this.config.gridInfo.sizes.column).slice(0, colIndex).map('size').value()) + (numGuttersAt(colIndex) * this.config.size.gutter.column)
+          cell.y = yOffset + _.sum(_(this.config.gridInfo.sizes.row).slice(0, rowIndex).map('size').value()) + (numGuttersAt(rowIndex) * this.config.size.gutter.row)
           cell.width = this.config.gridInfo.sizes.column[colIndex].size
           cell.height = this.config.gridInfo.sizes.row[rowIndex].size
         })
