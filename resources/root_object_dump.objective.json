@@ -1,14 +1,19 @@
 {
+  "id": "foo",
   "background-color": "transparent",
-  "widgetSize": {
-    "initialWidth": 1000,
-    "initialHeight": 800,
-    "specifiedContainerWidth": 1000,
-    "specifiedContainerHeight": 800,
-    "actualWidth": 1000,
-    "actualHeight": 800,
-    "viewBoxWidth": 1000,
-    "viewBoxHeight": 800,
+  "size": {
+    "initial": {
+      "width": 500,
+      "height": 500
+    },
+    "specified": {
+      "width": 500,
+      "height": 500
+    },
+    "viewBox": {
+      "width": 500,
+      "height": 500
+    },
     "ratios": {
       "textSize": 1,
       "containerDelta": {
@@ -20,7 +25,7 @@
         "height": 1
       }
     },
-    "padding": {
+    "outerPadding": {
       "top" : 0,
       "right" : 0,
       "bottom" : 0,
@@ -71,34 +76,32 @@
       "padding-bottom": 0
     }
   },
-  "cells": {
-    "instances": [
+  "cells": [
       [
-        "labelCell",
-        "GraphicCell"
+        "[Object LabelCell]",
+        "[Object GraphicCell]"
       ],
       [
-        "labelCell",
-        "GraphicCell"
+        "[Object LabelCell]",
+        "[Object GraphicCell]"
       ],
       [
-        "labelCell",
-        "GraphicCell"
+        "[Object LabelCell]",
+        "[Object GraphicCell]"
       ],
       [
-        "labelCell",
-        "GraphicCell"
+        "[Object LabelCell]",
+        "[Object GraphicCell]"
       ],
       [
-        "labelCell",
-        "GraphicCell"
+        "[Object LabelCell]",
+        "[Object GraphicCell]"
       ],
       [
-        "labelCell",
-        "GraphicCell"
+        "[Object LabelCell]",
+        "[Object GraphicCell]"
       ]
-    ]
-  },
+    ],
   "cssCollector": {
     "requiresResize": false,
     "cssBucket": {
