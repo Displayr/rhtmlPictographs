@@ -77,6 +77,18 @@ class PictographConfig {
       constraints: {row: [], column: []}
     }
 
+    this.lines = {
+      horizontal: [],
+      vertical: [],
+      style: 'stroke:black;stroke-width:2',
+      padding: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      }
+    }
+
     this.cells = [] // array of arrays
 
     this.resizable = null // boolean
@@ -87,7 +99,7 @@ class PictographConfig {
   }
 
   processUserConfig (userConfig) {
-    let userConfigObject = (_.isString(userConfig)) ? { variableImage: userConfig } : userConfig
+    let userConfigObject = (_.isString(userConfig)) ? {variableImage: userConfig} : userConfig
     if (userConfigObject.table == null) {
       userConfigObject = this._transformGraphicCellConfigToPictographConfig(userConfigObject)
     }
@@ -97,6 +109,26 @@ class PictographConfig {
     if (userConfigObject.width) { this.setWidth(userConfigObject.width) }
     if (userConfigObject.height) { this.setHeight(userConfigObject.height) }
 
+    // TODO validate preserveAspectRatio
+    this.preserveAspectRatio = userConfigObject.preserveAspectRatio
+
+    // TODO something better here
+    if (userConfigObject.resizable === 'true') { this.resizable = true }
+    if (userConfigObject.resizable === true) { this.resizable = true }
+    if (userConfigObject.resizable === 'false') { this.resizable = false }
+    if (userConfigObject.resizable === false) { this.resizable = false }
+    if (userConfigObject.resizable == null) { this.resizable = true }
+    if (!_.isBoolean(this.resizable)) { throw new Error('resizable must be [true|false]') }
+
+    if (userConfigObject.table.colors) { ColorFactory.processNewConfig(tableConfig.colors) }
+
+    this._processPictographPadding(userConfigObject)
+    this._processCssConfig(userConfigObject)
+    this._processGridConfig(userConfigObject)
+    this._processLineConfig(userConfigObject)
+  }
+
+  _processPictographPadding (userConfigObject) {
     if (userConfigObject['horizontal-align']) {
       if (!['left', 'center', 'right'].includes(userConfigObject['horizontal-align'])) {
         throw new Error(`Invalid horizontal-align '${userConfigObject['horizontal-align']}': must be 'left', 'center', or 'right'`)
@@ -110,22 +142,13 @@ class PictographConfig {
       }
       this.alignment.vertical = userConfigObject['vertical-align']
     }
+  }
 
-    // TODO something better here
-    if (userConfigObject.resizable === 'true') { this.resizable = true }
-    if (userConfigObject.resizable === true) { this.resizable = true }
-    if (userConfigObject.resizable === 'false') { this.resizable = false }
-    if (userConfigObject.resizable === false) { this.resizable = false }
-    if (userConfigObject.resizable == null) { this.resizable = true }
-    if (!_.isBoolean(this.resizable)) { throw new Error('resizable must be [true|false]') }
-
+  _processCssConfig (userConfigObject) {
     // @TODO extract CssCollector from BaseCell. This is hacky
     this.cssCollector = new BaseCell()
     this.cssCollector.setCssSelector(this.id)
     this.cssCollector._draw = () => _.noop
-
-    // TODO validate preserveAspectRatio
-    this.preserveAspectRatio = userConfigObject.preserveAspectRatio
 
     _.forEach(PictographConfig.cssDefaults, (defaultValue, cssAttribute) => {
       const cssValue = userConfigObject[cssAttribute] ? userConfigObject[cssAttribute] : defaultValue
@@ -149,16 +172,16 @@ class PictographConfig {
         })
       })
     }
+  }
 
+  _processGridConfig (userConfigObject) {
     const tableConfig = userConfigObject.table
-    if (tableConfig.rows == null) { throw new Error("Must specify 'table.rows'") }
+    if (tableConfig.rows == null) { throw new Error('Must specify \'table.rows\'') }
 
-    this.size.gutter.row = this._extractInt({ input: tableConfig, key: 'rowGutterLength', defaultValue: 0 })
-    this.size.gutter.column = this._extractInt({ input: tableConfig, key: 'columnGutterLength', defaultValue: 0 })
+    this.size.gutter.row = this._extractInt({input: tableConfig, key: 'rowGutterLength', defaultValue: 0})
+    this.size.gutter.column = this._extractInt({input: tableConfig, key: 'columnGutterLength', defaultValue: 0})
     this.gridInfo.dimensions.row = tableConfig.rows.length
     this.gridInfo.dimensions.column = Math.max.apply(null, tableConfig.rows.map(row => row.length))
-
-    if (tableConfig.colors) { ColorFactory.processNewConfig(tableConfig.colors) }
 
     this.cells = tableConfig.rows.map((row, rowIndex) => {
       if (!_.isArray(row)) {
@@ -166,7 +189,7 @@ class PictographConfig {
       }
 
       if (this.gridInfo.dimensions.column !== row.length) {
-        _.range(this.gridInfo.dimensions.column - row.length).forEach(() => { row.push({ type: 'empty' }) })
+        _.range(this.gridInfo.dimensions.column - row.length).forEach(() => { row.push({type: 'empty'}) })
       }
 
       return row.map((cellDefinition, columnIndex) => {
@@ -211,7 +234,7 @@ class PictographConfig {
         }
       })
     }
-    this.gridInfo.flexible.column = (_.findIndex(this.gridInfo.sizes.column, { flexible: true }) !== -1)
+    this.gridInfo.flexible.column = (_.findIndex(this.gridInfo.sizes.column, {flexible: true}) !== -1)
 
     if (this.totalAllocatedHorizontalSpace > this.size.specified.width) {
       throw new Error(`Cannot specify columnWidth/columnGutterLength where sum(rows+padding) exceeds table width: ${this.totalAllocatedHorizontalSpace} !< ${this.size.specified.width}`)
@@ -240,7 +263,7 @@ class PictographConfig {
         }
       })
     }
-    this.gridInfo.flexible.row = (_.findIndex(this.gridInfo.sizes.row, { flexible: true }) !== -1)
+    this.gridInfo.flexible.row = (_.findIndex(this.gridInfo.sizes.row, {flexible: true}) !== -1)
 
     if (this.totalAllocatedVerticalSpace > this.size.specified.height) {
       throw new Error(`Cannot specify rowHeights/rowGutterLength where sum(rows+padding) exceeds table height: ${this.totalAllocatedVerticalSpace} !< ${this.size.specified.height}`)
@@ -251,11 +274,54 @@ class PictographConfig {
     }
   }
 
+  _processLineConfig (userConfigObject) {
+    const tableConfig = userConfigObject.table
+
+    if (!tableConfig.lines) { return }
+    this.lines.horizontal = (tableConfig.lines.horizontal || []).sort().map((lineValue) => {
+      const linePlacement = this._verifyFloat({
+        input: lineValue,
+        message: `Invalid horizontal line value '${lineValue}: must be float`
+      })
+
+      if (linePlacement > this.gridInfo.dimensions.row || linePlacement < 0) {
+        throw new Error(`Cannot create horizontal line at '${linePlacement}': out of bounds`)
+      }
+
+      return linePlacement
+    })
+    this.lines.vertical = (tableConfig.lines.vertical || []).sort().map((lineValue) => {
+      const linePlacement = this._verifyFloat({
+        input: lineValue,
+        message: `Invalid vertical line value '${lineValue}: must be float`
+      })
+
+      if (linePlacement > this.gridInfo.dimensions.column || linePlacement < 0) {
+        throw new Error(`Cannot create vertical line at '${linePlacement}': out of bounds`)
+      }
+
+      return linePlacement
+    })
+
+    _.keys(this.lines.padding).forEach(paddingAttr => {
+      this.lines.padding[paddingAttr] = this._extractInt({
+        input: tableConfig.lines,
+        key: `padding-${paddingAttr}`,
+        defaultValue: 0,
+        message: `Invalid line padding-${paddingAttr} '${tableConfig.lines[`padding-${paddingAttr}`]}': must be Integer`
+      })
+    })
+
+    if (_.has(userConfigObject, 'style')) {
+      this.lines.style = userConfigObject.style
+    }
+  }
+
   get totalAllocatedHorizontalSpace () {
     return _(this.gridInfo.sizes.column)
-      .filter(columnSizeData => columnSizeData.size)
-      .map('size')
-      .sum() + (this.gridInfo.dimensions.column - 1) * this.size.gutter.column
+        .filter(columnSizeData => columnSizeData.size)
+        .map('size')
+        .sum() + (this.gridInfo.dimensions.column - 1) * this.size.gutter.column
   }
 
   get totalAllocatedVerticalSpace () {
@@ -345,7 +411,7 @@ class PictographConfig {
     this.size.specified.height = newValue
   }
 
-  recomputeSizing ({ specifiedWidth, specifiedHeight, actualWidth, actualHeight }) {
+  recomputeSizing ({specifiedWidth, specifiedHeight, actualWidth, actualHeight}) {
     const size = this.size
     const ratios = size.ratios
 
@@ -383,7 +449,7 @@ class PictographConfig {
     const pictographConfig = _.pick(config, PictographConfig.validRootAttributes)
     const graphicCellConfig = _.pick(config, GraphicCell.validRootAttributes)
 
-    pictographConfig.table = { rows: [[{ type: 'graphic', value: graphicCellConfig }]] }
+    pictographConfig.table = {rows: [[{type: 'graphic', value: graphicCellConfig}]]}
 
     return pictographConfig
   }
@@ -398,24 +464,35 @@ class PictographConfig {
 
     return {
       type: 'graphic',
-      value: { variableImage: stringDefinition }
+      value: {variableImage: stringDefinition}
     }
   }
 
   // TODO pull from shared location
-  _extractInt ({ input, key, defaultValue, message = 'Must be integer' }) {
+  _extractInt ({input, key, defaultValue, message = 'Must be integer'}) {
     if (!_.isUndefined(defaultValue)) {
       if (!_.has(input, key)) {
-        input[key] = defaultValue
-        return
+        return defaultValue
       }
     }
 
-    if (_.isNaN(parseInt(input[key]))) {
-      throw new Error(`invalid '${key}': ${input[key]}. ${message}.`)
-    }
+    return this._verifyInt({input: input[key], message: `invalid '${key}': ${input[key]}. ${message}.`})
+  }
 
-    return parseInt(input[key])
+  _verifyInt ({input, message = 'Must be integer'}) {
+    const result = parseInt(input)
+    if (_.isNaN(result)) {
+      throw new Error(message)
+    }
+    return result
+  }
+
+  _verifyFloat ({input, message = 'Must be integer'}) {
+    const result = parseFloat(input)
+    if (_.isNaN(result)) {
+      throw new Error(message)
+    }
+    return result
   }
 }
 PictographConfig.initClass()
