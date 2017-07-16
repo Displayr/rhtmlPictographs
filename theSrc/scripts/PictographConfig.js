@@ -67,6 +67,7 @@ class PictographConfig {
 
     this.gridInfo = {
       dimensions: {row: null, column: null},
+      flexible: {row: false, column: false},
       sizes: {row: [], column: []},
       constraints: {row: [], column: []}
     }
@@ -191,6 +192,16 @@ class PictographConfig {
         }
       })
     }
+    this.gridInfo.flexible.column = (_.findIndex(this.gridInfo.sizes.column, { flexible: true }) !== -1)
+
+    const sumWidthSpecified = _(this.gridInfo.sizes.column)
+        .filter(columnSizeData => columnSizeData.size)
+        .map('size')
+        .sum() + (this.gridInfo.dimensions.column - 1) * this.size.gutter.column
+
+    if (sumWidthSpecified > this.size.specified.width) {
+      throw new Error(`Cannot specify columnWidth/columnGutterLength where sum(rows+padding) exceeds table width: ${sumWidthSpecified} !< ${this.size.specified.width}`)
+    }
 
     const totalHeightAvailable = this.size.specified.height - ((this.gridInfo.dimensions.row - 1) * this.size.gutter.row)
     if (tableConfig.rowHeights) {
@@ -214,6 +225,19 @@ class PictographConfig {
           flexible: false
         }
       })
+    }
+    this.gridInfo.flexible.row = (_.findIndex(this.gridInfo.sizes.row, { flexible: true }) !== -1)
+    const sumHeightSpecified = _(this.gridInfo.sizes.row)
+        .filter(rowSizeData => rowSizeData.size)
+        .map('size')
+        .sum() + (this.gridInfo.dimensions.row - 1) * this.size.gutter.row
+
+    if (sumHeightSpecified > this.size.specified.height) {
+      throw new Error(`Cannot specify rowHeights/rowGutterLength where sum(rows+padding) exceeds table height: ${sumHeightSpecified} !< ${this.size.specified.height}`)
+    }
+
+    if (this.gridInfo.flexible.row && this.gridInfo.flexible.column) {
+      throw new Error('Cannot currently handle flexible rows and columns: must choose one or fix all dimensions')
     }
   }
 

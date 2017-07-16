@@ -174,11 +174,9 @@ class GraphicCell extends BaseCell {
       const cellWidthInImageUnits = parseFloat(imageAspectRatio) * numCols + (numCols - 1) * parseFloat(imageAspectRatio) * gridLayout.columnGutter()
 
       return {
-        aspectRatio: cellWidthInImageUnits / cellHeightInImageUnits,
-        minWidth: null,
-        maxWidth: null,
-        minHeight: null,
-        maxHeight: null
+        aspectRatio: parseFloat(cellWidthInImageUnits / cellHeightInImageUnits),
+        width: {min: null, max: null},
+        height: {min: null, max: null}
       }
     })
   }

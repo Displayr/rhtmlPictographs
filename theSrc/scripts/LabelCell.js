@@ -115,11 +115,9 @@ class LabelCell extends BaseCell {
     divWrapper.remove()
 
     return Promise.resolve({
-      minWidth,
-      minHeight,
       apectRatio: null,
-      maxWidth: null,
-      maxHeight: null
+      width: {min: minWidth, max: null},
+      height: {min: minHeight, max: null}
     })
   }
 

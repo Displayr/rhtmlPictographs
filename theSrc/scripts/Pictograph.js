@@ -40,10 +40,23 @@ class Pictograph {
     this.config.processUserConfig(userConfig)
   }
 
+  getAllCellsInDimension(dimension, dimensionIndex) {
+    if (dimension === 'row') {
+      return this.getAllCellsInRow(dimensionIndex)
+    } else if (dimension === 'column') {
+      return this.getAllCellsInColumn(dimensionIndex)
+    }
+    throw new Error(`getAllCellsInDimension called with invalid dimension '${dimension}'`)
+  }
+
   getAllCellsInColumn (columnIndex) {
     return _.range(this.config.gridInfo.dimensions.row).map((rowIndex) => {
       return this.getCell(rowIndex, columnIndex)
     })
+  }
+
+  getAllCellsInRow (rowIndex) {
+    return this.config.cells[rowIndex]
   }
 
   getCell (rowIndex, columnIndex) {
@@ -130,64 +143,58 @@ class Pictograph {
     const numGuttersAt = index => index
 
     const _computeCellSizes = () => {
-      // assume cols first
-      const columnPromise = new Promise((resolve, reject) => {
-        let totalWidthAvailable = this.config.size.specified.width - ((this.config.gridInfo.dimensions.column - 1) * this.config.size.gutter.column)
+      if (this.config.gridInfo.flexible.column || this.config.gridInfo.flexible.row) {
+        // should I introduce the term 'vector' into the code : https://english.stackexchange.com/questions/132493/common-term-for-row-and-column
 
-        const fixedCellWidths = this.config.gridInfo.sizes.column
-          .filter(columnWidthData => !columnWidthData.flexible)
-          .map(columnWidthData => columnWidthData.min)
+        const flexibleDimension = (this.config.gridInfo.flexible.column) ? 'column' : 'row'
+        const fixedDimension = (flexibleDimension === 'column') ? 'row' : 'column'
+        const flexibleSize = (flexibleDimension === 'column') ? 'width' : 'height'
 
-        totalWidthAvailable -= _.sum(fixedCellWidths)
+        let totalRangeAvailable = this.config.size.specified[flexibleSize] - ((this.config.gridInfo.dimensions[flexibleDimension] - 1) * this.config.size.gutter[flexibleDimension])
+
+        const sumFixedCellSize = this.config.gridInfo.sizes[flexibleDimension]
+          .filter(cellSizeData => !cellSizeData.flexible)
+          .map(cellSizeData => cellSizeData.min)
+
+        totalRangeAvailable -= _.sum(sumFixedCellSize)
 
         // get promises for all flexible cells
-        const flexibleColumnIndexes = this.config.gridInfo.sizes.column.map((columnWidthData, index) => {
-          if (columnWidthData.flexible) {
+        const flexibleIndexes = this.config.gridInfo.sizes[flexibleDimension].map((cellSizeData, index) => {
+          if (cellSizeData.flexible) {
             return index
           }
           return null
         }).filter(indexOrNull => !_.isNull(indexOrNull))
 
-        // alternate path : stop what we are doing, and focus on
-        // combine the configs and the cell instances together
-        // add setter / getter
-
-        const someMorePromises = flexibleColumnIndexes.map((flexibleColumnIndex) => {
-          const cells = this.getAllCellsInColumn(flexibleColumnIndex)
-          const dimensionConstraintPromises = cells.map((cell) => {
+        return Promise.all(flexibleIndexes.map(flexibleIndex => {
+          const dimensionConstraintPromises = this.getAllCellsInDimension(flexibleDimension, flexibleIndex).map((cell) => {
             return cell.instance.getDimensionConstraints()
           })
 
-          const columnWidthData = this.config.gridInfo.sizes.column[flexibleColumnIndex]
+          const cellSizeData = this.config.gridInfo.sizes[flexibleDimension][flexibleIndex]
           return Promise.all(dimensionConstraintPromises).then((dimensionConstraints) => {
-            if (columnWidthData.shrink) {
-              const maxOfMinSizes = Math.max.apply(null, _(dimensionConstraints).map('minWidth').value())
-              columnWidthData.size = maxOfMinSizes
-              totalWidthAvailable -= columnWidthData.size
+            if (cellSizeData.shrink) {
+              const maxOfMinSizes = Math.max.apply(null, _(dimensionConstraints).map(`${flexibleSize}.min`).value())
+              cellSizeData.size = maxOfMinSizes
+              totalRangeAvailable -= cellSizeData.size
             }
 
-            if (columnWidthData.grow) {
-              dimensionConstraints.map((dimensionContraint, rowIndex) => {
-                dimensionContraint.minWidth = this.config.gridInfo.sizes.row[rowIndex].min * dimensionContraint.aspectRatio
-                dimensionContraint.maxWidth = this.config.gridInfo.sizes.row[rowIndex].max * dimensionContraint.aspectRatio
+            if (cellSizeData.grow) {
+              dimensionConstraints.map((dimensionContraint, dimensionIndex) => {
+                const aspectRatioMultiplier = (flexibleDimension === 'column') ? dimensionContraint.aspectRatio : (1.0 / dimensionContraint.aspectRatio)
+                dimensionContraint[flexibleSize].min = this.config.gridInfo.sizes[fixedDimension][dimensionIndex].min * aspectRatioMultiplier
+                dimensionContraint[flexibleSize].max = this.config.gridInfo.sizes[fixedDimension][dimensionIndex].max * aspectRatioMultiplier
               })
 
-              const minOfMaxSizes = Math.min.apply(null, _(dimensionConstraints).map('maxWidth').value())
-              columnWidthData.size = Math.min(minOfMaxSizes, totalWidthAvailable)
-              totalWidthAvailable -= columnWidthData.size
+              const minOfMaxSizes = Math.min.apply(null, _(dimensionConstraints).map(`${flexibleSize}.max`).value())
+              cellSizeData.size = Math.min(minOfMaxSizes, totalRangeAvailable)
+              totalRangeAvailable -= cellSizeData.size
             }
           })
-        })
-
-        return resolve(Promise.all(someMorePromises))
-      })
-
-      // TODO do this
-      const rowPromise = new Promise((resolve, reject) => {
-        resolve()
-      })
-
-      return Promise.all([columnPromise, rowPromise])
+        }))
+      } else {
+        return Promise.resolve()
+      }
     }
 
     const _computeCellPlacement = () => {
@@ -220,6 +227,9 @@ class Pictograph {
       .then(this._recomputeSizing.bind(this))
       .then(() => {
         const tableCells = _.flatten(this.config.cells)
+
+        console.log(`config`)
+        console.log(JSON.stringify(this.config, {}, 2))
 
         // const addLines = (lineType, data) => this.outerSvg.selectAll(`.${lineType}`)
         //   .data(data)

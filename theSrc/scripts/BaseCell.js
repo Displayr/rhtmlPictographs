@@ -65,10 +65,8 @@ class BaseCell {
     // TODO document expected format
     return Promise.resolve({
       aspectRatio: null,
-      minWidth: null,
-      maxWidth: null,
-      minHeight: null,
-      maxHeight: null
+      width: {min: null, max: null},
+      height: {min: null, max: null}
     })
   }
 
