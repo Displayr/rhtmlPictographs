@@ -99,6 +99,7 @@ class LabelCell extends BaseCell {
     const uniqueId = `${Math.random()}`.replace('.', '')
     const textDivsForEstimation = _(this.labels).map(makeDivForEstimation).value()
     const divWrapper = $(`<div id="${uniqueId}" style="display:inline-block">`)
+    console.log(textDivsForEstimation)
     divWrapper.html(textDivsForEstimation)
     $(document.body).append(divWrapper)
     const { width: textWidth, height: textHeight } = document.getElementById(uniqueId).getBoundingClientRect()
@@ -114,11 +115,14 @@ class LabelCell extends BaseCell {
 
     divWrapper.remove()
 
-    return Promise.resolve({
+    // TODO might not be safe to cache these (if font size changes for ex), add some invalidate logic and cache otherwise
+    this.dimensionConstraints = {
       apectRatio: null,
       width: {min: minWidth, max: null},
       height: {min: minHeight, max: null}
-    })
+    }
+
+    return Promise.resolve(this.dimensionConstraints)
   }
 
   _draw () {

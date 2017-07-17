@@ -246,8 +246,8 @@ class Pictograph {
       .then(() => {
         const tableCells = _.flatten(this.config.cells)
 
-        // console.log(`config`)
-        // console.log(JSON.stringify(this.config, {}, 2))
+        console.log(`config`)
+        console.log(JSON.stringify(this.config, {}, 2))
 
         if (this.config['background-color']) {
           this.outerSvg.append('svg:rect')
@@ -282,6 +282,9 @@ class Pictograph {
         const { size } = this.config
         enteringCells.each(function (d) {
           const instance = d.instance
+
+          console.log('d')
+          console.log(JSON.stringify(d, {}, 2))
 
           d3.select(this).classed(`table-cell-${d.row}-${d.column}`, true)
           d3.select(this).classed(d.type, true)

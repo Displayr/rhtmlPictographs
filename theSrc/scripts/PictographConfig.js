@@ -198,9 +198,9 @@ class PictographConfig {
         }
 
         return {
-          instance: this.createCellInstance(cellDefinition),
+          instance: this.createCellInstance(cellDefinition, rowIndex, columnIndex),
           type: cellDefinition.type,
-          // this null data is completed in PictographConfig._computeCellPlacement
+          // this null data is completed in Pictograph._computeCellPlacement
           x: null,
           y: null,
           width: null,
@@ -377,7 +377,7 @@ class PictographConfig {
     return output
   }
 
-  createCellInstance (cellDefinition) {
+  createCellInstance (cellDefinition, rowIndex, columnIndex) {
     let cellInstance = null
     if (cellDefinition.type === 'graphic') {
       cellInstance = new GraphicCell()
@@ -389,9 +389,12 @@ class PictographConfig {
       throw new Error(`Invalid cell definition: ${JSON.stringify(cellDefinition)} : missing or invalid type`)
     }
 
+    console.log('cellDefinition')
+    console.log(JSON.stringify(cellDefinition, {}, 2))
+
     cellInstance.setCssSelector([
       this.id,
-      `table-cell-${cellDefinition.rowIndex}-${cellDefinition.columnIndex}`
+      `table-cell-${rowIndex}-${columnIndex}`
     ])
 
     cellInstance.setConfig(cellDefinition.value)
