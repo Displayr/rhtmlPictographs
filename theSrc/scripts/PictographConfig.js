@@ -112,6 +112,9 @@ class PictographConfig {
     // TODO validate preserveAspectRatio
     this.preserveAspectRatio = userConfigObject.preserveAspectRatio
 
+    // TODO validate background-color
+    this['background-color'] = userConfigObject['background-color']
+
     // TODO something better here
     if (userConfigObject.resizable === 'true') { this.resizable = true }
     if (userConfigObject.resizable === true) { this.resizable = true }
@@ -120,7 +123,7 @@ class PictographConfig {
     if (userConfigObject.resizable == null) { this.resizable = true }
     if (!_.isBoolean(this.resizable)) { throw new Error('resizable must be [true|false]') }
 
-    if (userConfigObject.table.colors) { ColorFactory.processNewConfig(tableConfig.colors) }
+    if (userConfigObject.table.colors) { ColorFactory.processNewConfig(userConfigObject.table.colors) }
 
     this._processPictographPadding(userConfigObject)
     this._processCssConfig(userConfigObject)

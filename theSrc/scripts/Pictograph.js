@@ -19,8 +19,8 @@ class Pictograph {
 
     // TODO test this flatten works
     // TODO cell Instance.resize must be mod to account for new config style
-    _(this.conifg.cells).flatten().each(cellInstance =>
-      cellInstance.resize(this.config.size))
+    _(this.config.cells).flatten().each(cellData =>
+      cellData.instance.resize(this.config.size))
   }
 
   _recomputeSizing (specifiedWidth, specifiedHeight) {
@@ -64,7 +64,6 @@ class Pictograph {
   }
 
   _computeTableLines () {
-
     const numGuttersAt = index => index
 
     const calcLineVariableDimension = function (linePosition, cellSizes, paddingSize) {
@@ -182,7 +181,6 @@ class Pictograph {
     }
 
     const _computeCellPlacement = () => {
-
       const pictographOffsets = this._computePictographOffsets()
 
       this.config.cells.forEach((row, rowIndex) => {
@@ -202,7 +200,6 @@ class Pictograph {
   }
 
   _computePictographOffsets () {
-
     let offsets = {
       x: null,
       y: null
