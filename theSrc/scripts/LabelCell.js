@@ -99,7 +99,7 @@ class LabelCell extends BaseCell {
     const uniqueId = `${Math.random()}`.replace('.', '')
     const textDivsForEstimation = _(this.labels).map(makeDivForEstimation).value()
     const divWrapper = $(`<div id="${uniqueId}" style="display:inline-block">`)
-    console.log(textDivsForEstimation)
+
     divWrapper.html(textDivsForEstimation)
     $(document.body).append(divWrapper)
     const { width: textWidth, height: textHeight } = document.getElementById(uniqueId).getBoundingClientRect()

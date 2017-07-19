@@ -17,10 +17,26 @@ class Pictograph {
 
     this._recomputeSizing(newSpecifiedWidth, newSpecifiedHeight)
 
-    // TODO test this flatten works
-    // TODO cell Instance.resize must be mod to account for new config style
-    _(this.config.cells).flatten().each(cellData =>
-      cellData.instance.resize(this.config.size))
+    if (this.config.gridInfo.flexible.row || this.config.gridInfo.flexible.column) {
+      // we are from scratch so reset the ratios. TODO needs refactor
+
+      console.log('resetting textSize')
+      this.config.size.ratios.textSize = 1
+      this.config.size.ratios.containerDelta = {width: 1, height: 1}
+      this.config.size.ratios.containerToViewBox = {width: 1, height: 1}
+
+      // TODO this is going to double add CSS which is no good
+      console.log('full redraw bru!')
+
+      // recompute the cell sizing spec as the dimensions of the container have changed
+      this.config._processGridConfig(this.config._userConfigObject)
+
+      this.draw(true)
+    } else {
+      _(this.config.cells).flatten().each(cellData => {
+        cellData.instance.resize(this.config.size)
+      })
+    }
   }
 
   _recomputeSizing (specifiedWidth, specifiedHeight) {
@@ -90,8 +106,6 @@ class Pictograph {
     }
 
     const pictographOffsets = this._computePictographOffsets()
-    console.log('pictographOffsets')
-    console.log(pictographOffsets)
 
     const computedHorizontalLines = this.config.lines.horizontal.map((linePosition) => {
       const y = calcLineVariableDimension(linePosition, this.config.gridInfo.sizes.row, this.config.size.gutter.row)
@@ -230,74 +244,73 @@ class Pictograph {
     return offsets
   }
 
-  draw () {
+  draw (resize = false) {
     this._manipulateRootElementSize()
     this._addRootSvgToRootElement()
-    return this._redraw()
+    return this._redraw(resize)
   }
 
-  _redraw () {
+  _redraw (resize) {
     return Promise.resolve(this.config.cssCollector.draw())
       .then(this._computeTableLayout.bind(this))
-      .then(this._recomputeSizing.bind(this))
       .then(() => {
-        const tableCells = _.flatten(this.config.cells)
-
-        console.log(`config`)
-        console.log(JSON.stringify(this.config, {}, 2))
-
-        if (this.config['background-color']) {
-          this.outerSvg.append('svg:rect')
-          .attr('class', 'background')
-          .attr('width', this.config.size.specified.width)
-          .attr('height', this.config.size.specified.height)
-          .attr('fill', this.config['background-color'])
+        if (!resize) { // currently resize calls and adjusts the result of recompute TODO refactor
+          this._recomputeSizing()
         }
-
-        const computedLines = this._computeTableLines()
-        console.log(computedLines)
-        this.outerSvg.selectAll(`.line`)
-          .data(computedLines)
-          .enter()
-          .append('line')
-            .attr('x1', d => d.x1)
-            .attr('x2', d => d.x2)
-            .attr('y1', d => d.y1)
-            .attr('y2', d => d.y2)
-            .attr('style', d => d.style)
-            .attr('class', function (d) {
-              return `line ${d.orientation}-line line-${d.position}`
-            })
-
-        const enteringCells = this.outerSvg.selectAll('.table-cell')
-          .data(tableCells)
-          .enter()
-          .append('g')
-            .attr('class', 'table-cell')
-            .attr('transform', d => `translate(${d.x},${d.y})`)
-
-        const { size } = this.config
-        enteringCells.each(function (d) {
-          const instance = d.instance
-
-          console.log('d')
-          console.log(JSON.stringify(d, {}, 2))
-
-          d3.select(this).classed(`table-cell-${d.row}-${d.column}`, true)
-          d3.select(this).classed(d.type, true)
-
-          instance.setParentSvg(d3.select(this))
-          instance.setWidth(d.width)
-          instance.setHeight(d.height)
-          instance.setPictographSizeInfo(size)
-          instance.draw()
-        })
       })
+      .then(this._render.bind(this))
       .catch((error) => {
         console.error(`error in pictograph _redraw: ${error.message}`)
         console.error(error.stack)
         throw error
       })
+  }
+
+  _render () {
+    const tableCells = _.flatten(this.config.cells)
+
+    if (this.config['background-color']) {
+      this.outerSvg.append('svg:rect')
+        .attr('class', 'background')
+        .attr('width', this.config.size.specified.width)
+        .attr('height', this.config.size.specified.height)
+        .attr('fill', this.config['background-color'])
+    }
+
+    const computedLines = this._computeTableLines()
+    this.outerSvg.selectAll(`.line`)
+      .data(computedLines)
+      .enter()
+      .append('line')
+      .attr('x1', d => d.x1)
+      .attr('x2', d => d.x2)
+      .attr('y1', d => d.y1)
+      .attr('y2', d => d.y2)
+      .attr('style', d => d.style)
+      .attr('class', function (d) {
+        return `line ${d.orientation}-line line-${d.position}`
+      })
+
+    const enteringCells = this.outerSvg.selectAll('.table-cell')
+      .data(tableCells)
+      .enter()
+      .append('g')
+      .attr('class', 'table-cell')
+      .attr('transform', d => `translate(${d.x},${d.y})`)
+
+    const {size} = this.config
+    enteringCells.each(function (d) {
+      const instance = d.instance
+
+      d3.select(this).classed(`table-cell-${d.row}-${d.column}`, true)
+      d3.select(this).classed(d.type, true)
+
+      instance.setParentSvg(d3.select(this))
+      instance.setWidth(d.width)
+      instance.setHeight(d.height)
+      instance.setPictographSizeInfo(size)
+      instance.draw()
+    })
   }
 
   // TODO pull from shared location
@@ -322,8 +335,10 @@ class Pictograph {
     $(this.rootElement).attr('style', '')
 
     if (this.config.resizable) {
+      console.log(`setting root div to $(this.rootElement).width('100%').height('100%')`)
       return $(this.rootElement).width('100%').height('100%')
     }
+    console.log(`setting root div to $(this.rootElement).width(this.config.size.specified.width).height(this.config.size.specified.height)`)
     return $(this.rootElement).width(this.config.size.specified.width).height(this.config.size.specified.height)
   }
 
@@ -342,6 +357,7 @@ class Pictograph {
 
     // NB JQuery insists on lowercasing attributes, so we must use JS directly
     // when setting viewBox and preserveAspectRatio ?!
+    console.log(`setting sxg viewbox to 0 0 ${this.config.size.specified.width} ${this.config.size.specified.height}`)
     document.getElementsByClassName(`${this.config.id} rhtmlwidget-outer-svg`)[0]
       .setAttribute('viewBox', `0 0 ${this.config.size.specified.width} ${this.config.size.specified.height}`)
     if (this.config.preserveAspectRatio != null) {

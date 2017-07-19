@@ -57,16 +57,16 @@ class PictographConfig {
     }
 
     this.size = {
+      // some of these may no longer be necessary
       initial: {width: null, height: null}, // what was the first specified dimension
       specified: {width: null, height: null}, // what are the current specified dimensions
-      viewBox: {width: null, height: null}, // what are the actual dimensions (via jquery inspection)
+      viewBox: {width: null, height: null}, // what are the viewbox dimensions
       actual: {width: null, height: null}, // what is the actual size (via jquery inspection)
       ratios: {
         textSize: 1,
         containerDelta: {width: 1, height: 1}, // on each resize how did dimensions change
         containerToViewBox: {width: 1, height: 1}  // the ratio between current actual, and the viewBox
       },
-      outerPadding: {top: 0, right: 0, bottom: 0, left: 0},
       gutter: {row: 3, column: 4}
     }
 
@@ -74,6 +74,7 @@ class PictographConfig {
       dimensions: {row: null, column: null},
       flexible: {row: false, column: false},
       sizes: {row: [], column: []},
+      // TODO constraints should be cached
       constraints: {row: [], column: []}
     }
 
@@ -105,6 +106,8 @@ class PictographConfig {
     }
 
     this._throwOnInvalidAttributes(userConfigObject)
+
+    this._userConfigObject = userConfigObject
 
     if (userConfigObject.width) { this.setWidth(userConfigObject.width) }
     if (userConfigObject.height) { this.setHeight(userConfigObject.height) }
@@ -392,9 +395,6 @@ class PictographConfig {
       throw new Error(`Invalid cell definition: ${JSON.stringify(cellDefinition)} : missing or invalid type`)
     }
 
-    console.log('cellDefinition')
-    console.log(JSON.stringify(cellDefinition, {}, 2))
-
     cellInstance.setCssSelector([
       this.id,
       `table-cell-${rowIndex}-${columnIndex}`
@@ -418,6 +418,7 @@ class PictographConfig {
   }
 
   recomputeSizing ({specifiedWidth, specifiedHeight, actualWidth, actualHeight}) {
+    console.log('recompute sizing')
     const size = this.size
     const ratios = size.ratios
 

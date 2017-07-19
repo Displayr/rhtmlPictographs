@@ -137,6 +137,7 @@ class BaseCell {
   getAdjustedTextSize (textSizeInput) {
     if (textSizeInput.indexOf('px') !== -1) {
       this.requiresResize = true
+      console.log(`this.pictographSizeInfo.ratios.textSize: ${this.pictographSizeInfo.ratios.textSize}`)
       return this.pictographSizeInfo.ratios.textSize * parseInt(textSizeInput.replace(/(px|em)/, ''))
     }
     return parseInt(textSizeInput)

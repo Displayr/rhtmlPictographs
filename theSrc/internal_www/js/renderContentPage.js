@@ -29,6 +29,7 @@ const getRelativeResizersHtml = () =>
 <div style="text-align:center;width:100%">
   <button class="relative-resize-button more-button">+25</button> <button class="relative-resize-button less-button">-25</button>
   <button class="relative-resize-button more-width-button">+25 W</button> <button class="relative-resize-button less-width-button">-25 W</button> <button class="relative-resize-button more-height-button">+25 H</button> <button class="relative-resize-button less-height-button">-25 H</button>
+  <button class="relative-resize-button lot-more-width-button">+200 W</button> <button class="relative-resize-button lot-less-width-button">-200 W</button> <button class="relative-resize-button lot-more-height-button">+200 H</button> <button class="relative-resize-button lot-less-height-button">-200 H</button>
 </div>\
 `
 
@@ -93,6 +94,10 @@ const addExampleTo = function (rowConfig) {
     $(`.${exampleNumber} .less-width-button`).bind('click', newResizeHandler(-25, 0))
     $(`.${exampleNumber} .more-height-button`).bind('click', newResizeHandler(0, 25))
     $(`.${exampleNumber} .less-height-button`).bind('click', newResizeHandler(0, -25))
+    $(`.${exampleNumber} .lot-more-width-button`).bind('click', newResizeHandler(200, 0))
+    $(`.${exampleNumber} .lot-less-width-button`).bind('click', newResizeHandler(-200, 0))
+    $(`.${exampleNumber} .lot-more-height-button`).bind('click', newResizeHandler(0, 200))
+    $(`.${exampleNumber} .lot-less-height-button`).bind('click', newResizeHandler(0, -200))
   }
 
   element.append(innerExampleDiv.append(innerInnerExampleDiv))
