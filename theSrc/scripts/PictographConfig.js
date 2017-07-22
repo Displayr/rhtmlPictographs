@@ -48,6 +48,20 @@ class PictographConfig {
     }
   }
 
+  get totalAllocatedHorizontalSpace () {
+    return _(this.gridInfo.sizes.column)
+        .filter(columnSizeData => columnSizeData.size)
+        .map('size')
+        .sum() + (this.gridInfo.dimensions.column - 1) * this.size.gutter.column
+  }
+
+  get totalAllocatedVerticalSpace () {
+    return _(this.gridInfo.sizes.row)
+        .filter(rowSizeData => rowSizeData.size)
+        .map('size')
+        .sum() + (this.gridInfo.dimensions.row - 1) * this.size.gutter.row
+  }
+
   constructor () {
     PictographConfig.widgetIndex++
 
@@ -125,10 +139,10 @@ class PictographConfig {
     this._processCssConfig()
     this._processGridDimensions()
     this._processCellDefinitions()
-    this._processGridWidth() // NB these must be recalled every time there is a resize
-    this._processGridHeight() // NB these must be recalled every time there is a resize
+    this._processGridWidthSpec() // NB these must be recomputed every time there is a resize
+    this._processGridHeightSpec() // NB these must be recomputed every time there is a resize
 
-    // temporary
+    // NB TODO temporary limitation (remove this - hard tho ...)
     if (this.gridInfo.flexible.row && this.gridInfo.flexible.column) {
       throw new Error('Cannot currently handle flexible rows and columns: must choose one or fix all dimensions')
     }
@@ -227,7 +241,7 @@ class PictographConfig {
     })
   }
 
-  _processGridWidth (userConfigObject = this._userConfig) {
+  _processGridWidthSpec (userConfigObject = this._userConfig) {
     const tableConfig = userConfigObject.table
 
     this.size.gutter.column = this._extractInt({input: tableConfig, key: 'columnGutterLength', defaultValue: 0})
@@ -261,7 +275,7 @@ class PictographConfig {
     }
   }
 
-  _processGridHeight (userConfigObject = this._userConfig) {
+  _processGridHeightSpec (userConfigObject = this._userConfig) {
     const tableConfig = userConfigObject.table
 
     this.size.gutter.row = this._extractInt({input: tableConfig, key: 'rowGutterLength', defaultValue: 0})
@@ -336,20 +350,6 @@ class PictographConfig {
     if (_.has(userConfigObject, 'style')) {
       this.lines.style = userConfigObject.style
     }
-  }
-
-  get totalAllocatedHorizontalSpace () {
-    return _(this.gridInfo.sizes.column)
-        .filter(columnSizeData => columnSizeData.size)
-        .map('size')
-        .sum() + (this.gridInfo.dimensions.column - 1) * this.size.gutter.column
-  }
-
-  get totalAllocatedVerticalSpace () {
-    return _(this.gridInfo.sizes.row)
-        .filter(rowSizeData => rowSizeData.size)
-        .map('size')
-        .sum() + (this.gridInfo.dimensions.row - 1) * this.size.gutter.row
   }
 
   _processGridSizeSpec (input, range) {
@@ -464,7 +464,6 @@ class PictographConfig {
     if (specifiedHeight) { size.specified.height = specifiedHeight }
   }
 
-  // TODO break into two, take valid as input param, move to utility
   _throwOnInvalidAttributes (userInput) {
     const invalidRootAttributes = _.difference(_.keys(userInput), PictographConfig.validRootAttributes)
     if (invalidRootAttributes.length > 0) {
@@ -504,7 +503,6 @@ class PictographConfig {
     }
   }
 
-  // TODO pull from shared location
   _extractInt ({input, key, defaultValue, message = 'Must be integer'}) {
     if (!_.isUndefined(defaultValue)) {
       if (!_.has(input, key)) {

@@ -12,19 +12,48 @@ class Pictograph {
     this.rootElement = _.has(el, 'length') ? el[0] : el
   }
 
+  setConfig (userConfig) {
+    this.config.processUserConfig(userConfig)
+  }
+
+  draw () {
+    this.config.cssCollector.draw()
+    this._removeAllContentFromRootElement()
+    this._manipulateRootElementSize()
+    this._addSvgToRootElement()
+
+    return Promise.resolve()
+      .then(this._computeCellSizes.bind(this))
+      .then(this._computeCellPlacement.bind(this))
+      .then(this._recomputeSizing.bind(this))
+      .then(this._render.bind(this))
+      .catch((error) => {
+        console.error(`error in pictograph draw: ${error.message}`)
+        console.error(error.stack)
+        throw error
+      })
+  }
+
   resize (specifiedWidth, specifiedHeight) {
     if (this.config.resizable === false) { return }
 
     if (this.config.gridInfo.flexible.row || this.config.gridInfo.flexible.column) {
       this.config.resetSizing({ specifiedWidth, specifiedHeight })
+      this.config._processGridWidthSpec()
+      this.config._processGridHeightSpec()
 
-      // recompute the cell sizing spec as the dimensions of the container have changed
-      this.config._processGridWidth()
-      this.config._processGridHeight()
+      this._removeAllContentFromRootElement()
+      this._addSvgToRootElement()
 
-      // TODO this is going to double add CSS which is no good
-      // In the general case when user updates config, displayr will call renderValue again, I need to make sure not to add CSS twice
-      this.draw(true)
+      return Promise.resolve()
+        .then(this._computeCellSizes.bind(this))
+        .then(this._computeCellPlacement.bind(this))
+        .then(this._render.bind(this))
+        .catch((error) => {
+          console.error(`error in pictograph resize: ${error.message}`)
+          console.error(error.stack)
+          throw error
+        })
 
     // TODO deprecate this alternate form of resizing if the new method is proven stable
     } else {
@@ -48,57 +77,52 @@ class Pictograph {
     })
   }
 
-  setConfig (userConfig) {
-    this.config.processUserConfig(userConfig)
-  }
-
-  getAllCellsInDimension (dimension, dimensionIndex) {
+  _getAllCellsInDimension (dimension, dimensionIndex) {
     if (dimension === 'row') {
-      return this.getAllCellsInRow(dimensionIndex)
+      return this._getAllCellsInRow(dimensionIndex)
     } else if (dimension === 'column') {
-      return this.getAllCellsInColumn(dimensionIndex)
+      return this._getAllCellsInColumn(dimensionIndex)
     }
     throw new Error(`getAllCellsInDimension called with invalid dimension '${dimension}'`)
   }
 
-  getAllCellsInColumn (columnIndex) {
+  _getAllCellsInColumn (columnIndex) {
     return _.range(this.config.gridInfo.dimensions.row).map((rowIndex) => {
-      return this.getCell(rowIndex, columnIndex)
+      return this._getCell(rowIndex, columnIndex)
     })
   }
 
-  getAllCellsInRow (rowIndex) {
+  _getAllCellsInRow (rowIndex) {
     return this.config.cells[rowIndex]
   }
 
-  getCell (rowIndex, columnIndex) {
+  _getCell (rowIndex, columnIndex) {
     return this.config.cells[rowIndex][columnIndex]
   }
 
   _computeTableLines () {
-    const numGuttersAt = index => index
+    const numberOfGuttersAtIndex = (index) => { return index }
 
-    const calcLineVariableDimension = function (linePosition, cellSizes, paddingSize) {
-      const numCellsPast = Math.floor(linePosition)
-      const fractionOfCell = linePosition - numCellsPast
-      // TODO one line cleanup
-      const sizeOfNumCellsPast = _.sum(_.slice(cellSizes, 0, numCellsPast).map(cellSize => cellSize.size))
+    const calcLineVariableDimension = function (linePosition, cellSizes, gutterSize) {
+      const numberOfCellsPast = Math.floor(linePosition)
+      const fractionOfCell = linePosition - numberOfCellsPast
+      const sizeOfCellsPast = _(cellSizes).slice(0, numberOfCellsPast).map('size').sum()
 
       let sizeOfGuttersPast = 0
-      if (numCellsPast > 0 && numCellsPast < cellSizes.length) {
-        sizeOfGuttersPast = (numGuttersAt(numCellsPast) * paddingSize) - (0.5 * paddingSize)
-      } else if (numCellsPast > 0 && numCellsPast === cellSizes.length) {
-        sizeOfGuttersPast = numGuttersAt(numCellsPast - 1) * paddingSize
+      if (numberOfCellsPast > 0 && numberOfCellsPast < cellSizes.length) {
+        sizeOfGuttersPast = (numberOfGuttersAtIndex(numberOfCellsPast) * gutterSize) - (0.5 * gutterSize)
+      } else if (numberOfCellsPast > 0 && numberOfCellsPast === cellSizes.length) {
+        sizeOfGuttersPast = numberOfGuttersAtIndex(numberOfCellsPast - 1) * gutterSize
       }
 
       let sizeOfFraction = 0
-      if (numCellsPast === 0) {
-        sizeOfFraction = fractionOfCell * cellSizes[numCellsPast].size
-      } else if (numCellsPast < cellSizes.length) {
-        sizeOfFraction = fractionOfCell * (cellSizes[numCellsPast].size + paddingSize)
+      if (numberOfCellsPast === 0) {
+        sizeOfFraction = fractionOfCell * cellSizes[numberOfCellsPast].size
+      } else if (numberOfCellsPast < cellSizes.length) {
+        sizeOfFraction = fractionOfCell * (cellSizes[numberOfCellsPast].size + gutterSize)
       }
 
-      return sizeOfNumCellsPast + sizeOfGuttersPast + sizeOfFraction
+      return sizeOfCellsPast + sizeOfGuttersPast + sizeOfFraction
     }
 
     const pictographOffsets = this._computePictographOffsets()
@@ -132,81 +156,75 @@ class Pictograph {
     return _.flatten([computedHorizontalLines, computedVerticalLines])
   }
 
-  _computeTableLayout () {
-    const numGuttersAt = index => index
+  _computeCellSizes () {
+    if (this.config.gridInfo.flexible.column || this.config.gridInfo.flexible.row) {
+      // should I introduce the term 'vector' into the code ? (https://english.stackexchange.com/questions/132493/common-term-for-row-and-column)
 
-    const _computeCellSizes = () => {
-      if (this.config.gridInfo.flexible.column || this.config.gridInfo.flexible.row) {
-        // should I introduce the term 'vector' into the code ? (https://english.stackexchange.com/questions/132493/common-term-for-row-and-column)
+      const flexibleDimension = (this.config.gridInfo.flexible.column) ? 'column' : 'row'
+      const fixedDimension = (flexibleDimension === 'column') ? 'row' : 'column'
+      const flexibleSize = (flexibleDimension === 'column') ? 'width' : 'height'
 
-        const flexibleDimension = (this.config.gridInfo.flexible.column) ? 'column' : 'row'
-        const fixedDimension = (flexibleDimension === 'column') ? 'row' : 'column'
-        const flexibleSize = (flexibleDimension === 'column') ? 'width' : 'height'
+      let totalRangeAvailable = this.config.size.specified[flexibleSize] - ((this.config.gridInfo.dimensions[flexibleDimension] - 1) * this.config.size.gutter[flexibleDimension])
 
-        let totalRangeAvailable = this.config.size.specified[flexibleSize] - ((this.config.gridInfo.dimensions[flexibleDimension] - 1) * this.config.size.gutter[flexibleDimension])
+      const sumFixedCellSize = _(this.config.gridInfo.sizes[flexibleDimension])
+        .filter(cellSizeData => !cellSizeData.flexible)
+        .map('size')
+        .sum()
 
-        const sumFixedCellSize = this.config.gridInfo.sizes[flexibleDimension]
-          .filter(cellSizeData => !cellSizeData.flexible)
-          .map(cellSizeData => cellSizeData.min)
+      totalRangeAvailable -= sumFixedCellSize
 
-        totalRangeAvailable -= _.sum(sumFixedCellSize)
+      // get promises for all flexible cells
+      const flexibleCellIndexes = this.config.gridInfo.sizes[flexibleDimension].map((cellSizeData, index) => {
+        if (cellSizeData.flexible) {
+          return index
+        }
+        return null
+      }).filter(indexOrNull => !_.isNull(indexOrNull))
 
-        // get promises for all flexible cells
-        const flexibleIndexes = this.config.gridInfo.sizes[flexibleDimension].map((cellSizeData, index) => {
-          if (cellSizeData.flexible) {
-            return index
-          }
-          return null
-        }).filter(indexOrNull => !_.isNull(indexOrNull))
-
-        return Promise.all(flexibleIndexes.map(flexibleIndex => {
-          const dimensionConstraintPromises = this.getAllCellsInDimension(flexibleDimension, flexibleIndex).map((cell) => {
-            return cell.instance.getDimensionConstraints()
-          })
-
-          const cellSizeData = this.config.gridInfo.sizes[flexibleDimension][flexibleIndex]
-          return Promise.all(dimensionConstraintPromises).then((dimensionConstraints) => {
-            if (cellSizeData.shrink) {
-              const maxOfMinSizes = Math.max.apply(null, _(dimensionConstraints).map(`${flexibleSize}.min`).value())
-              cellSizeData.size = maxOfMinSizes
-              totalRangeAvailable -= cellSizeData.size
-            }
-
-            if (cellSizeData.grow) {
-              dimensionConstraints.map((dimensionContraint, dimensionIndex) => {
-                const aspectRatioMultiplier = (flexibleDimension === 'column') ? dimensionContraint.aspectRatio : (1.0 / dimensionContraint.aspectRatio)
-                dimensionContraint[flexibleSize].min = this.config.gridInfo.sizes[fixedDimension][dimensionIndex].min * aspectRatioMultiplier
-                dimensionContraint[flexibleSize].max = this.config.gridInfo.sizes[fixedDimension][dimensionIndex].max * aspectRatioMultiplier
-              })
-
-              const minOfMaxSizes = Math.min.apply(null, _(dimensionConstraints).map(`${flexibleSize}.max`).value())
-              cellSizeData.size = Math.min(minOfMaxSizes, totalRangeAvailable)
-              totalRangeAvailable -= cellSizeData.size
-            }
-          })
-        }))
-      } else {
-        return Promise.resolve()
-      }
-    }
-
-    const _computeCellPlacement = () => {
-      const pictographOffsets = this._computePictographOffsets()
-
-      this.config.cells.forEach((row, rowIndex) => {
-        row.forEach((cell, colIndex) => {
-          cell.x = pictographOffsets.x + _.sum(_(this.config.gridInfo.sizes.column).slice(0, colIndex).map('size').value()) + (numGuttersAt(colIndex) * this.config.size.gutter.column)
-          cell.y = pictographOffsets.y + _.sum(_(this.config.gridInfo.sizes.row).slice(0, rowIndex).map('size').value()) + (numGuttersAt(rowIndex) * this.config.size.gutter.row)
-          cell.width = this.config.gridInfo.sizes.column[colIndex].size
-          cell.height = this.config.gridInfo.sizes.row[rowIndex].size
+      return Promise.all(flexibleCellIndexes.map(flexibleIndex => {
+        const dimensionConstraintPromises = this._getAllCellsInDimension(flexibleDimension, flexibleIndex).map((cell) => {
+          return cell.instance.getDimensionConstraints()
         })
-      })
+
+        const cellSizeData = this.config.gridInfo.sizes[flexibleDimension][flexibleIndex]
+        return Promise.all(dimensionConstraintPromises).then((dimensionConstraints) => {
+          if (cellSizeData.shrink) {
+            const maxOfMinSizes = Math.max.apply(null, _(dimensionConstraints).map(`${flexibleSize}.min`).value())
+            cellSizeData.size = maxOfMinSizes
+            totalRangeAvailable -= cellSizeData.size
+          }
+
+          if (cellSizeData.grow) {
+            dimensionConstraints.map((dimensionContraint, dimensionIndex) => {
+              const aspectRatioMultiplier = (flexibleDimension === 'column') ? dimensionContraint.aspectRatio : (1.0 / dimensionContraint.aspectRatio)
+              dimensionContraint[flexibleSize].min = this.config.gridInfo.sizes[fixedDimension][dimensionIndex].min * aspectRatioMultiplier
+              dimensionContraint[flexibleSize].max = this.config.gridInfo.sizes[fixedDimension][dimensionIndex].max * aspectRatioMultiplier
+            })
+
+            const minOfMaxSizes = Math.min.apply(null, _(dimensionConstraints).map(`${flexibleSize}.max`).value())
+            cellSizeData.size = Math.min(minOfMaxSizes, totalRangeAvailable)
+            totalRangeAvailable -= cellSizeData.size
+          }
+        })
+      }))
+    } else {
       return Promise.resolve()
     }
+  }
 
+  _computeCellPlacement () {
+    const numberOfGuttersAtIndex = (index) => { return index }
+    const pictographOffsets = this._computePictographOffsets()
+
+    this.config.cells.forEach((row, rowIndex) => {
+      row.forEach((cell, colIndex) => {
+        cell.x = pictographOffsets.x + _.sum(_(this.config.gridInfo.sizes.column).slice(0, colIndex).map('size').value()) + (numberOfGuttersAtIndex(colIndex) * this.config.size.gutter.column)
+        cell.y = pictographOffsets.y + _.sum(_(this.config.gridInfo.sizes.row).slice(0, rowIndex).map('size').value()) + (numberOfGuttersAtIndex(rowIndex) * this.config.size.gutter.row)
+        cell.width = this.config.gridInfo.sizes.column[colIndex].size
+        cell.height = this.config.gridInfo.sizes.row[rowIndex].size
+      })
+    })
     return Promise.resolve()
-      .then(_computeCellSizes.bind(this))
-      .then(_computeCellPlacement.bind(this))
   }
 
   _computePictographOffsets () {
@@ -238,28 +256,6 @@ class Pictograph {
     }
 
     return offsets
-  }
-
-  draw (resize = false) {
-    this._manipulateRootElementSize()
-    this._addRootSvgToRootElement()
-    return this._redraw(resize)
-  }
-
-  _redraw (resize) {
-    return Promise.resolve(this.config.cssCollector.draw())
-      .then(this._computeTableLayout.bind(this))
-      .then(() => {
-        if (!resize) { // currently resize calls and adjusts the result of recompute TODO refactor
-          this._recomputeSizing()
-        }
-      })
-      .then(this._render.bind(this))
-      .catch((error) => {
-        console.error(`error in pictograph _redraw: ${error.message}`)
-        console.error(error.stack)
-        throw error
-      })
   }
 
   _render () {
@@ -326,6 +322,10 @@ class Pictograph {
     input[key] = parseInt(input[key])
   }
 
+  _removeAllContentFromRootElement () {
+    $(this.rootElement).find('*').remove()
+  }
+
   _manipulateRootElementSize () {
     // root element has width and height in a style tag. Clear that
     $(this.rootElement).attr('style', '')
@@ -338,14 +338,10 @@ class Pictograph {
     return $(this.rootElement).width(this.config.size.specified.width).height(this.config.size.specified.height)
   }
 
-  _addRootSvgToRootElement () {
-    $(this.rootElement).find('*').remove()
-
+  _addSvgToRootElement () {
     const anonSvg = $('<svg class="rhtmlwidget-outer-svg">')
       .addClass(this.config.id)
       .attr('id', this.config.id)
-    // .attr('width', '100%')
-    // .attr('height', '100%')
 
     $(this.rootElement).append(anonSvg)
 
