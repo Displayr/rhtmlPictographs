@@ -188,13 +188,13 @@ class Pictograph {
 
         const cellSizeData = this.config.gridInfo.sizes[flexibleDimension][flexibleIndex]
         return Promise.all(dimensionConstraintPromises).then((dimensionConstraints) => {
-          if (cellSizeData.shrink) {
+          if (cellSizeData.type === 'label') {
             const maxOfMinSizes = Math.max.apply(null, _(dimensionConstraints).map(`${flexibleSize}.min`).value())
             cellSizeData.size = maxOfMinSizes
             totalRangeAvailable -= cellSizeData.size
           }
 
-          if (cellSizeData.grow) {
+          if (cellSizeData.type === 'graphic') {
             dimensionConstraints.map((dimensionContraint, dimensionIndex) => {
               const aspectRatioMultiplier = (flexibleDimension === 'column') ? dimensionContraint.aspectRatio : (1.0 / dimensionContraint.aspectRatio)
               dimensionContraint[flexibleSize].min = this.config.gridInfo.sizes[fixedDimension][dimensionIndex].min * aspectRatioMultiplier
@@ -331,10 +331,8 @@ class Pictograph {
     $(this.rootElement).attr('style', '')
 
     if (this.config.resizable) {
-      console.log(`setting root div to $(this.rootElement).width('100%').height('100%')`)
       return $(this.rootElement).width('100%').height('100%')
     }
-    console.log(`setting root div to $(this.rootElement).width(this.config.size.specified.width).height(this.config.size.specified.height)`)
     return $(this.rootElement).width(this.config.size.specified.width).height(this.config.size.specified.height)
   }
 
@@ -349,7 +347,6 @@ class Pictograph {
 
     // NB JQuery insists on lowercasing attributes, so we must use JS directly
     // when setting viewBox and preserveAspectRatio ?!
-    console.log(`setting sxg viewbox to 0 0 ${this.config.size.specified.width} ${this.config.size.specified.height}`)
     document.getElementsByClassName(`${this.config.id} rhtmlwidget-outer-svg`)[0]
       .setAttribute('viewBox', `0 0 ${this.config.size.specified.width} ${this.config.size.specified.height}`)
     if (this.config.preserveAspectRatio != null) {

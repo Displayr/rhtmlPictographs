@@ -358,37 +358,39 @@ class PictographConfig {
 
     if (!_.isNaN(parseInt(input))) {
       match = true
-      output.min = parseInt(input)
-      output.max = parseInt(input)
-      output.size = parseInt(input)
+      const size = parseInt(input)
+      output.min = size
+      output.max = size
+      output.size = size
       output.flexible = false
     }
 
     if (`${input}`.match(/^proportion:[0-9.]+$/)) {
       match = true
       const [, proportion] = input.match(/^proportion:([0-9.]+)$/)
-      output.min = range * parseFloat(proportion)
-      output.max = range * parseFloat(proportion)
-      output.size = range * parseFloat(proportion)
+      const size = range * parseFloat(proportion)
+      output.min = size
+      output.max = size
+      output.size = size
       output.flexible = false
     }
 
-    if (input === 'max') {
+    if (input === 'flexible:graphic') {
       match = true
       output.min = null
       output.max = null
       output.size = null
       output.flexible = true
-      output.grow = true
+      output.type = 'graphic'
     }
 
-    if (input === 'min') {
+    if (input === 'flexible:label') {
       match = true
       output.min = null
       output.max = null
       output.size = null
       output.flexible = true
-      output.shrink = true
+      output.type = 'label'
     }
 
     if (!match) {
