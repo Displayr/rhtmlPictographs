@@ -23,6 +23,7 @@ class BaseCell {
 
   constructor () {
     this.requiresResize = false
+    this.myCssSelectorArray = []
     this.cssBucket = {}
     this.pictographSizeInfo = {}
     this.width = 1

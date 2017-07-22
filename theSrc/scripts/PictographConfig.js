@@ -67,7 +67,7 @@ class PictographConfig {
         containerDelta: {width: 1, height: 1}, // on each resize how did dimensions change
         containerToViewBox: {width: 1, height: 1}  // the ratio between current actual, and the viewBox
       },
-      gutter: {row: 3, column: 4}
+      gutter: {row: 0, column: 0}
     }
 
     this.gridInfo = {
@@ -104,20 +104,39 @@ class PictographConfig {
     if (userConfigObject.table == null) {
       userConfigObject = this._transformGraphicCellConfigToPictographConfig(userConfigObject)
     }
+    if (userConfigObject.table.rows == null) { throw new Error('Must specify \'table.rows\'') }
 
     this._throwOnInvalidAttributes(userConfigObject)
+    this._userConfig = userConfigObject
 
-    this._userConfigObject = userConfigObject
-
-    if (userConfigObject.width) { this.setWidth(userConfigObject.width) }
-    if (userConfigObject.height) { this.setHeight(userConfigObject.height) }
+    if (this._userConfig.width) { this.setWidth(this._userConfig.width) }
+    if (this._userConfig.height) { this.setHeight(this._userConfig.height) }
 
     // TODO validate preserveAspectRatio
-    this.preserveAspectRatio = userConfigObject.preserveAspectRatio
+    this.preserveAspectRatio = this._userConfig.preserveAspectRatiox
 
     // TODO validate background-color
-    this['background-color'] = userConfigObject['background-color']
+    this['background-color'] = this._userConfig['background-color']
 
+    if (this._userConfig.table.colors) { ColorFactory.processNewConfig(this._userConfig.table.colors) }
+
+    this._processResizable()
+    this._processPictographPadding()
+    this._processCssConfig()
+    this._processGridDimensions()
+    this._processCellDefinitions()
+    this._processGridWidth() // NB these must be recalled every time there is a resize
+    this._processGridHeight() // NB these must be recalled every time there is a resize
+
+    // temporary
+    if (this.gridInfo.flexible.row && this.gridInfo.flexible.column) {
+      throw new Error('Cannot currently handle flexible rows and columns: must choose one or fix all dimensions')
+    }
+
+    this._processLineConfig(userConfigObject)
+  }
+
+  _processResizable (userConfigObject = this._userConfig) {
     // TODO something better here
     if (userConfigObject.resizable === 'true') { this.resizable = true }
     if (userConfigObject.resizable === true) { this.resizable = true }
@@ -125,16 +144,9 @@ class PictographConfig {
     if (userConfigObject.resizable === false) { this.resizable = false }
     if (userConfigObject.resizable == null) { this.resizable = true }
     if (!_.isBoolean(this.resizable)) { throw new Error('resizable must be [true|false]') }
-
-    if (userConfigObject.table.colors) { ColorFactory.processNewConfig(userConfigObject.table.colors) }
-
-    this._processPictographPadding(userConfigObject)
-    this._processCssConfig(userConfigObject)
-    this._processGridConfig(userConfigObject)
-    this._processLineConfig(userConfigObject)
   }
 
-  _processPictographPadding (userConfigObject) {
+  _processPictographPadding (userConfigObject = this._userConfig) {
     if (userConfigObject['horizontal-align']) {
       if (!['left', 'center', 'right'].includes(userConfigObject['horizontal-align'])) {
         throw new Error(`Invalid horizontal-align '${userConfigObject['horizontal-align']}': must be 'left', 'center', or 'right'`)
@@ -150,7 +162,7 @@ class PictographConfig {
     }
   }
 
-  _processCssConfig (userConfigObject) {
+  _processCssConfig (userConfigObject = this._userConfig) {
     // @TODO extract CssCollector from BaseCell. This is hacky
     this.cssCollector = new BaseCell()
     this.cssCollector.setCssSelector(this.id)
@@ -180,16 +192,13 @@ class PictographConfig {
     }
   }
 
-  _processGridConfig (userConfigObject) {
-    const tableConfig = userConfigObject.table
-    if (tableConfig.rows == null) { throw new Error('Must specify \'table.rows\'') }
+  _processGridDimensions (userConfigObject = this._userConfig) {
+    this.gridInfo.dimensions.row = userConfigObject.table.rows.length
+    this.gridInfo.dimensions.column = Math.max.apply(null, userConfigObject.table.rows.map(row => row.length))
+  }
 
-    this.size.gutter.row = this._extractInt({input: tableConfig, key: 'rowGutterLength', defaultValue: 0})
-    this.size.gutter.column = this._extractInt({input: tableConfig, key: 'columnGutterLength', defaultValue: 0})
-    this.gridInfo.dimensions.row = tableConfig.rows.length
-    this.gridInfo.dimensions.column = Math.max.apply(null, tableConfig.rows.map(row => row.length))
-
-    this.cells = tableConfig.rows.map((row, rowIndex) => {
+  _processCellDefinitions (userConfigObject = this._userConfig) {
+    this.cells = userConfigObject.table.rows.map((row, rowIndex) => {
       if (!_.isArray(row)) {
         throw new Error(`Invalid rows spec: row ${rowIndex} must be array of cell definitions`)
       }
@@ -216,7 +225,12 @@ class PictographConfig {
         }
       })
     })
+  }
 
+  _processGridWidth (userConfigObject = this._userConfig) {
+    const tableConfig = userConfigObject.table
+
+    this.size.gutter.column = this._extractInt({input: tableConfig, key: 'columnGutterLength', defaultValue: 0})
     const totalWidthAvailable = this.size.specified.width - ((this.gridInfo.dimensions.column - 1) * this.size.gutter.column)
     if (tableConfig.colWidths) {
       if (!_.isArray(tableConfig.colWidths)) {
@@ -228,7 +242,7 @@ class PictographConfig {
       }
 
       this.gridInfo.sizes.column = tableConfig.colWidths.map((candidate) => {
-        return this._processCellSizeSpec(candidate, totalWidthAvailable)
+        return this._processGridSizeSpec(candidate, totalWidthAvailable)
       })
     } else {
       this.gridInfo.sizes.column = _.range(this.gridInfo.dimensions.column).map(() => {
@@ -245,7 +259,12 @@ class PictographConfig {
     if (this.totalAllocatedHorizontalSpace > this.size.specified.width) {
       throw new Error(`Cannot specify columnWidth/columnGutterLength where sum(rows+padding) exceeds table width: ${this.totalAllocatedHorizontalSpace} !< ${this.size.specified.width}`)
     }
+  }
 
+  _processGridHeight (userConfigObject = this._userConfig) {
+    const tableConfig = userConfigObject.table
+
+    this.size.gutter.row = this._extractInt({input: tableConfig, key: 'rowGutterLength', defaultValue: 0})
     const totalHeightAvailable = this.size.specified.height - ((this.gridInfo.dimensions.row - 1) * this.size.gutter.row)
     if (tableConfig.rowHeights) {
       if (!_.isArray(tableConfig.rowHeights)) {
@@ -257,7 +276,7 @@ class PictographConfig {
       }
 
       this.gridInfo.sizes.row = tableConfig.rowHeights.map((candidate) => {
-        return this._processCellSizeSpec(candidate, totalHeightAvailable)
+        return this._processGridSizeSpec(candidate, totalHeightAvailable)
       })
     } else {
       this.gridInfo.sizes.row = _.range(this.gridInfo.dimensions.row).map(() => {
@@ -274,13 +293,9 @@ class PictographConfig {
     if (this.totalAllocatedVerticalSpace > this.size.specified.height) {
       throw new Error(`Cannot specify rowHeights/rowGutterLength where sum(rows+padding) exceeds table height: ${this.totalAllocatedVerticalSpace} !< ${this.size.specified.height}`)
     }
-
-    if (this.gridInfo.flexible.row && this.gridInfo.flexible.column) {
-      throw new Error('Cannot currently handle flexible rows and columns: must choose one or fix all dimensions')
-    }
   }
 
-  _processLineConfig (userConfigObject) {
+  _processLineConfig (userConfigObject = this._userConfig) {
     const tableConfig = userConfigObject.table
 
     if (!tableConfig.lines) { return }
@@ -337,7 +352,7 @@ class PictographConfig {
         .sum() + (this.gridInfo.dimensions.row - 1) * this.size.gutter.row
   }
 
-  _processCellSizeSpec (input, range) {
+  _processGridSizeSpec (input, range) {
     const output = {}
     let match = false
 
@@ -418,7 +433,6 @@ class PictographConfig {
   }
 
   recomputeSizing ({specifiedWidth, specifiedHeight, actualWidth, actualHeight}) {
-    console.log('recompute sizing')
     const size = this.size
     const ratios = size.ratios
 
@@ -426,13 +440,28 @@ class PictographConfig {
     ratios.containerToViewBox.height = (actualHeight * 1.0) / size.viewBox.height
     ratios.containerDelta.width = (actualWidth * 1.0) / size.actual.width
     ratios.containerDelta.height = (actualHeight * 1.0) / size.actual.height
+    ratios.textSize = 1.0 / Math.min(ratios.containerToViewBox.width, ratios.containerToViewBox.height)
 
-    size.actual.width = actualWidth
-    size.actual.height = actualHeight
+    if (actualWidth) { size.actual.width = actualWidth }
+    if (actualHeight) { size.actual.height = actualHeight }
     if (specifiedWidth) { size.specified.width = specifiedWidth }
     if (specifiedHeight) { size.specified.height = specifiedHeight }
+  }
 
-    ratios.textSize = 1.0 / Math.min(ratios.containerToViewBox.width, ratios.containerToViewBox.height)
+  resetSizing ({specifiedWidth, specifiedHeight, actualWidth, actualHeight}) {
+    const size = this.size
+    const ratios = size.ratios
+
+    ratios.containerToViewBox.width = 1
+    ratios.containerToViewBox.height = 1
+    ratios.containerDelta.width = 1
+    ratios.containerDelta.height = 1
+    ratios.textSize = 1
+
+    if (actualWidth) { size.actual.width = actualWidth }
+    if (actualHeight) { size.actual.height = actualHeight }
+    if (specifiedWidth) { size.specified.width = specifiedWidth }
+    if (specifiedHeight) { size.specified.height = specifiedHeight }
   }
 
   // TODO break into two, take valid as input param, move to utility

@@ -12,34 +12,30 @@ class Pictograph {
     this.rootElement = _.has(el, 'length') ? el[0] : el
   }
 
-  resize (newSpecifiedWidth, newSpecifiedHeight) {
+  resize (specifiedWidth, specifiedHeight) {
     if (this.config.resizable === false) { return }
 
-    this._recomputeSizing(newSpecifiedWidth, newSpecifiedHeight)
-
     if (this.config.gridInfo.flexible.row || this.config.gridInfo.flexible.column) {
-      // we are from scratch so reset the ratios. TODO needs refactor
-
-      console.log('resetting textSize')
-      this.config.size.ratios.textSize = 1
-      this.config.size.ratios.containerDelta = {width: 1, height: 1}
-      this.config.size.ratios.containerToViewBox = {width: 1, height: 1}
-
-      // TODO this is going to double add CSS which is no good
-      console.log('full redraw bru!')
+      this.config.resetSizing({ specifiedWidth, specifiedHeight })
 
       // recompute the cell sizing spec as the dimensions of the container have changed
-      this.config._processGridConfig(this.config._userConfigObject)
+      this.config._processGridWidth()
+      this.config._processGridHeight()
 
+      // TODO this is going to double add CSS which is no good
+      // In the general case when user updates config, displayr will call renderValue again, I need to make sure not to add CSS twice
       this.draw(true)
+
+    // TODO deprecate this alternate form of resizing if the new method is proven stable
     } else {
+      this._recomputeSizing({ specifiedWidth, specifiedHeight })
       _(this.config.cells).flatten().each(cellData => {
         cellData.instance.resize(this.config.size)
       })
     }
   }
 
-  _recomputeSizing (specifiedWidth, specifiedHeight) {
+  _recomputeSizing ({ specifiedWidth, specifiedHeight } = {}) {
     // TODO can I use this.outerSvg here instead ?
     const rootElement = $(`#${this.config.id}`)
     const actualWidth = rootElement.width()

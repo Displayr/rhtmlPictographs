@@ -35,8 +35,6 @@ class GraphicCell extends BaseCell {
 
   setConfig (config) {
     this.config = _.cloneDeep(config)
-    // console.log('graphic cell config')
-    // console.log(JSON.stringify(config, {}, 2))
 
     const invalidRootAttributes = _.difference(_.keys(this.config), GraphicCell.validRootAttributes)
     if (invalidRootAttributes.length > 0) {
