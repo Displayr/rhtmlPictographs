@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import BaseCell from './BaseCell'
+import $ from 'jquery'
 
 class LabelCell extends BaseCell {
   setConfig (config) {
@@ -64,10 +65,64 @@ class LabelCell extends BaseCell {
       if (labelConfig['font-size'] == null) { labelConfig['font-size'] = BaseCell.getDefault('font-size') }
 
       _.forEach(labelConfig, (labelValue, labelKey) => {
+        // TODO does text belong here
         if (['class', 'text', 'horizontal-align'].includes(labelKey)) { return }
         this.setCss(labelConfig.class, labelKey, labelValue)
       })
     })
+  }
+
+  getDimensionConstraints () {
+    const makeDivForEstimation = (labelConfig) => {
+      // TODO copied from cssDefaults in Pictograph
+      const defaults = {
+        'font-family': 'Verdana,sans-serif',
+        'font-weight': '900',
+        'font-size': '24px'
+      }
+
+      function getAttribute (attribute) {
+        if (_.has(labelConfig, attribute)) {
+          return labelConfig[attribute]
+        }
+        return defaults[attribute]
+      }
+
+      const styleComponents = [
+        `font-size:${getAttribute('font-size')}`,
+        `font-family:${getAttribute('font-family')}`,
+        `font-weight:${getAttribute('font-weight')}`
+      ]
+      return `<div style="${styleComponents.join(';')}">${labelConfig.text}</div>`
+    }
+
+    const uniqueId = `${Math.random()}`.replace('.', '')
+    const textDivsForEstimation = _(this.labels).map(makeDivForEstimation).value()
+    const divWrapper = $(`<div id="${uniqueId}" style="display:inline-block">`)
+
+    divWrapper.html(textDivsForEstimation)
+    $(document.body).append(divWrapper)
+    const { width: textWidth, height: textHeight } = document.getElementById(uniqueId).getBoundingClientRect()
+
+    const minHeight = textHeight +
+      (this.labels.length - 1) * this.config['padding-inner'] +
+      this.config['padding-top'] +
+      this.config['padding-bottom']
+
+    const minWidth = textWidth +
+      this.config['padding-left'] +
+      this.config['padding-right']
+
+    divWrapper.remove()
+
+    // TODO might not be safe to cache these (if font size changes for ex), add some invalidate logic and cache otherwise
+    this.dimensionConstraints = {
+      apectRatio: null,
+      width: {min: minWidth, max: null},
+      height: {min: minHeight, max: null}
+    }
+
+    return Promise.resolve(this.dimensionConstraints)
   }
 
   _draw () {
@@ -86,14 +141,22 @@ class LabelCell extends BaseCell {
       const fontSize = this.getAdjustedTextSize(labelConfig['font-size'])
       const xOffset = this.computeHorizontalOffset(labelConfig['horizontal-align'])
 
-      this._addTextTo(this.parentSvg, labelConfig.text, labelConfig.class, labelConfig['horizontal-align'], xOffset, currentY + (fontSize / 2), fontSize)
+      this._addTextTo({
+        parent: this.parentSvg,
+        text: labelConfig.text,
+        myClass: labelConfig.class,
+        textAnchor: labelConfig['horizontal-align'],
+        x: xOffset,
+        y: currentY + (fontSize / 2),
+        fontSize: fontSize
+      })
 
       currentY += fontSize + this.config['padding-inner']
     })
   }
 
   computeAllocatedVerticalSpace () {
-    let allocatedVerticalSpace = (this.config['padding-inner'] * this.labels.length) - 1
+    let allocatedVerticalSpace = this.config['padding-inner'] * (this.labels.length - 1)
     _.forEach(this.labels, (labelConfig) => {
       const labelFontSize = this.getAdjustedTextSize(labelConfig['font-size'])
       allocatedVerticalSpace += labelFontSize
@@ -128,7 +191,7 @@ class LabelCell extends BaseCell {
     })()
   }
 
-  _addTextTo (parent, text, myClass, textAnchor, x, y, fontSize) {
+  _addTextTo ({ parent, text, myClass, textAnchor, x, y, fontSize }) {
     return parent.append('svg:text')
       .attr('class', myClass)
       .attr('x', x)

@@ -112,6 +112,12 @@ class ImageFactory {
       })
   }
 
+  static calculateAspectRatio (config) {
+    config = ImageFactory.parseConfig(config)
+    const instance = ImageFactory.createInstance(null, config, null, null, null)
+    return instance.calculateDesiredAspectRatio()
+  }
+
   static createInstance (d3Node, config, width, height, dataAttributes) {
     if (!_.has(ImageFactory.types, config.type)) {
       throw new Error(`Invalid image type '${config.type}'`)

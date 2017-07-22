@@ -1,0 +1,424 @@
+<!doctype html>
+<html>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+    <link href='/styles/internal_www.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<h1>Table with Flexible Dimensions Tutorial</h1>
+
+<h2>Flexible Columns</h2>
+
+<div class="row">
+  <pre class="example hide-config no-border" data-ex-w="200" data-ex-h="200">{
+  "font-size": "8px",
+  "width": 200,
+  "height": 200,
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [ "proportion:0.33333", "proportion:0.33333", "proportion:0.33333" ],
+    "colWidths": [ "flexible:label", "flexible:graphic" ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "lines": {
+      "padding-left": "20",
+      "padding-right": "20",
+      "padding-top": "20",
+      "padding-bottom": "20",
+      "horizontal": [0,1,2,3],
+      "vertical": [0,1,2]
+    },
+    "rows": [
+      [
+        "label:label 1",
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromleft:lightblue",
+            "proportion": "=1/3",
+            "numRows": 1,
+            "columnGutter": 0.2,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        "label:label 2 is longer",
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromleft:lightblue",
+            "proportion": "=3/3",
+            "numRows": 1,
+            "columnGutter": 0.2,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        "label:label 3",
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromleft:lightblue",
+            "proportion": "=2/3",
+            "numRows": 1,
+            "columnGutter": 0.2,
+            "rowGutter": 0
+          }
+        }
+      ]
+    ]
+  }
+}</pre>
+
+  <pre class="example hide-config no-border" data-ex-w="200" data-ex-h="400">{
+  "font-size": "8px",
+  "width": 200,
+  "height": 400,
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [ "proportion:0.33333", "proportion:0.33333", "proportion:0.33333" ],
+    "colWidths": [ "flexible:label", "flexible:graphic" ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "lines": {
+      "padding-left": "20",
+      "padding-right": "20",
+      "padding-top": "20",
+      "padding-bottom": "20",
+      "horizontal": [0,1,2,3],
+      "vertical": [0,1,2]
+    },
+    "rows": [
+      [
+        "label:label 1",
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromleft:lightblue",
+            "proportion": "=1/3",
+            "numRows": 1,
+            "columnGutter": 0.2,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        "label:label 2 is longer",
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromleft:lightblue",
+            "proportion": "=3/3",
+            "numRows": 1,
+            "columnGutter": 0.2,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        "label:label 3",
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromleft:lightblue",
+            "proportion": "=2/3",
+            "numRows": 1,
+            "columnGutter": 0.2,
+            "rowGutter": 0
+          }
+        }
+      ]
+    ]
+  }
+}</pre>
+
+  <pre class="example hide-config no-border" data-ex-w="400" data-ex-h="200">{
+  "font-size": "8px",
+  "width": 400,
+  "height": 200,
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [ "proportion:0.33333", "proportion:0.33333", "proportion:0.33333" ],
+    "colWidths": [ "flexible:label", "flexible:graphic" ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "lines": {
+      "padding-left": "20",
+      "padding-right": "20",
+      "padding-top": "20",
+      "padding-bottom": "20",
+      "horizontal": [0,1,2,3],
+      "vertical": [0,1,2]
+    },
+    "rows": [
+      [
+        "label:label 1",
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromleft:lightblue",
+            "proportion": "=1/3",
+            "numRows": 1,
+            "columnGutter": 0.2,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        "label:label 2 is longer",
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromleft:lightblue",
+            "proportion": "=3/3",
+            "numRows": 1,
+            "columnGutter": 0.2,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        "label:label 3",
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromleft:lightblue",
+            "proportion": "=2/3",
+            "numRows": 1,
+            "columnGutter": 0.2,
+            "rowGutter": 0
+          }
+        }
+      ]
+    ]
+  }
+}</pre>
+</div>
+
+<h2>Flexible Rows</h2>
+
+<div class="row">
+  <pre class="example hide-config no-border" data-ex-w="200" data-ex-h="200">{
+  "font-size": "8px",
+  "width": 200,
+  "height": 200,
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [ "flexible:label", "flexible:graphic" ],
+    "colWidths": [ "proportion:0.33333", "proportion:0.33333", "proportion:0.33333" ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "lines": {
+      "padding-left": "20",
+      "padding-right": "20",
+      "padding-top": "20",
+      "padding-bottom": "20",
+      "horizontal": [0,1,2],
+      "vertical": [0,1,2,3]
+    },
+    "rows": [
+      [
+        "label:label 1",
+        "label:label 2 is longer",
+        "label:label 3"
+      ],
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromtop:lightblue",
+            "proportion": "=1/3",
+            "numRows": 3,
+            "columnGutter": 0,
+            "rowGutter": 0.2
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromtop:lightblue",
+            "proportion": "=3/3",
+            "numRows": 3,
+            "columnGutter": 0,
+            "rowGutter": 0.2
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromtop:lightblue",
+            "proportion": "=2/3",
+            "numRows": 3,
+            "columnGutter": 0,
+            "rowGutter": 0.2
+          }
+        }
+      ]
+    ]
+  }
+}</pre>
+
+  <pre class="example hide-config no-border" data-ex-w="200" data-ex-h="400">{
+  "font-size": "8px",
+  "width": 200,
+  "height": 400,
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [ "flexible:label", "flexible:graphic" ],
+    "colWidths": [ "proportion:0.33333", "proportion:0.33333", "proportion:0.33333" ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "lines": {
+      "padding-left": "20",
+      "padding-right": "20",
+      "padding-top": "20",
+      "padding-bottom": "20",
+      "horizontal": [0,1,2],
+      "vertical": [0,1,2,3]
+    },
+    "rows": [
+      [
+        "label:label 1",
+        "label:label 2 is longer",
+        "label:label 3"
+      ],
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromtop:lightblue",
+            "proportion": "=1/3",
+            "numRows": 3,
+            "columnGutter": 0,
+            "rowGutter": 0.2
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromtop:lightblue",
+            "proportion": "=3/3",
+            "numRows": 3,
+            "columnGutter": 0,
+            "rowGutter": 0.2
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromtop:lightblue",
+            "proportion": "=2/3",
+            "numRows": 3,
+            "columnGutter": 0,
+            "rowGutter": 0.2
+          }
+        }
+      ]
+    ]
+  }
+}</pre>
+
+  <pre class="example hide-config no-border" data-ex-w="400" data-ex-h="200">{
+  "font-size": "8px",
+  "width": 400,
+  "height": 200,
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [ "flexible:label", "flexible:graphic" ],
+    "colWidths": [ "proportion:0.33333", "proportion:0.33333", "proportion:0.33333" ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "lines": {
+      "padding-left": "20",
+      "padding-right": "20",
+      "padding-top": "20",
+      "padding-bottom": "20",
+      "horizontal": [0,1,2],
+      "vertical": [0,1,2,3]
+    },
+    "rows": [
+      [
+        "label:label 1",
+        "label:label 2 is longer",
+        "label:label 3"
+      ],
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromtop:lightblue",
+            "proportion": "=1/3",
+            "numRows": 3,
+            "columnGutter": 0,
+            "rowGutter": 0.2
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromtop:lightblue",
+            "proportion": "=3/3",
+            "numRows": 3,
+            "columnGutter": 0,
+            "rowGutter": 0.2
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromtop:lightblue",
+            "proportion": "=2/3",
+            "numRows": 3,
+            "columnGutter": 0,
+            "rowGutter": 0.2
+          }
+        }
+      ]
+    ]
+  }
+}</pre>
+</div>
+
+
+<script src="/js/renderContentPage.js"></script>
+</body>
+</html>

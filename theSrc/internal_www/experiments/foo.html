@@ -1,0 +1,61 @@
+
+<div id="div1" style="display:inline-block;font-size:24px;font-family:Verdana,sans-serif">
+  <div>abcdefghijklmnopqrstuvwxyz</div>
+  <div>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz</div>
+  <div>abcdefghijklmnopqrstuvwxyz</div>
+</div>
+
+<div id="div2" style="display:inline-block">
+  <div>abcdefghijklmnopqrstuvwxyz</div>
+  <div>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz</div>
+  <div>abcdefghijklmnopqrstuvwxyz</div>
+</div>
+
+<div id="div3" style="display:inline-block">
+  <div style="font-size:12px;font-family:arial">blah blah</div>
+  <div style="font-size:12px;font-family:arial">foo foo foo foo foo</div>
+  <div style="font-size:12px;font-family:arial">bar bar</div>
+</div>
+
+<div class="svg-wrapper" style="width:1000px;height:500px">
+  <div class="svg-inner-wrapper" style="width:100%;height:100%">
+    <svg viewBox="0 0 1000 500">
+      <!--<g id="svg-moops" class="table-cell table-cell-0-0 label" transform="translate(0,0)">-->
+      <!--<text class="label-0" x="15" y="21.5" text-anchor="start" style="font-size: 24px; dominant-baseline: central;">Left Aligned</text>-->
+      <!--<text class="label-1" x="200" y="50.5" text-anchor="middle" style="font-size: 24px; dominant-baseline: central;">Center Aligned</text>-->
+      <!--<text class="label-2" x="385" y="79.5" text-anchor="end" style="font-size: 24px; dominant-baseline: central;">Right Aligned</text>-->
+      <!--</g>-->
+      <g id="svg-1" class="table-cell table-cell-0-0 label" transform="translate(0,0)">
+        <text x="0" y="12">abcdefghijklmnopqrstuvwxyz</text>
+        <text x="0" y="22">abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz</text>
+        <text x="0" y="32">abcdefghijklmnopqrstuvwxyz</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<script src="/internal_www/external/jquery.min.js"></script>
+<script type="text/javascript">
+  console.log(`script start`)
+  $(document).ready(function() {
+    console.log(`ready`)
+//
+//    const tmpText = $('<div id="tmp">')
+//    tmpText.text('abcdefghijklmnopqrstuvwxyz')
+//    $('body').append(tmpText)
+//
+//    const otherTmpText = document.getElementById('tmp')
+//
+    function printSizeOf(id) {
+        const selection = document.getElementById(id)
+        const imageWidth = selection.getBoundingClientRect().width
+        const imageHeight = selection.getBoundingClientRect().height
+        console.log(`${id}: ${imageWidth} x ${imageHeight}`)
+    }
+
+    printSizeOf('div1')
+    printSizeOf('div2')
+    printSizeOf('div3')
+    printSizeOf('svg-1')
+  })
+</script>

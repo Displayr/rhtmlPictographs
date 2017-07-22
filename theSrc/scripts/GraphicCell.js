@@ -134,6 +134,82 @@ class GraphicCell extends BaseCell {
     }
   }
 
+  getDimensionConstraints () {
+    const gridLayout = new GraphicCellGrid()
+      .rowGutter(this.config.rowGutter)
+      .columnGutter(this.config.columnGutter)
+
+    if (this.config.numRows != null) { gridLayout.rows(this.config.numRows) }
+    if (this.config.numCols != null) { gridLayout.cols(this.config.numCols) }
+
+    if (_.isString(this.config.variableImage)) {
+      if (this.config.variableImage.match(/fromleft/)) {
+        gridLayout.direction('right,down')
+      }
+      if (this.config.variableImage.match(/fromright/)) {
+        gridLayout.direction('left,down')
+      }
+      if (this.config.variableImage.match(/fromtop/)) {
+        gridLayout.direction('right,down')
+      }
+      if (this.config.variableImage.match(/frombottom/)) {
+        gridLayout.direction('right,up')
+      }
+    }
+    if (this.config.layout) {
+      gridLayout.direction(this.config.layout)
+    }
+
+    const d3Data = this._generateDataArray(this.config.proportion, this.config.numImages)
+    gridLayout.nodes = d3Data
+
+    gridLayout._calcGridDimensions()
+    const numRows = gridLayout.numRows
+    const numCols = gridLayout.numCols
+
+    return ImageFactory.calculateAspectRatio(this.config.variableImage).then((imageAspectRatio) => {
+      const cellHeightInImageUnits = (1.0 / parseFloat(imageAspectRatio)) * numRows + (numRows - 1) * (1.0 / parseFloat(imageAspectRatio)) * gridLayout.rowGutter()
+      const cellWidthInImageUnits = parseFloat(imageAspectRatio) * numCols + (numCols - 1) * parseFloat(imageAspectRatio) * gridLayout.columnGutter()
+
+      return {
+        aspectRatio: parseFloat(cellWidthInImageUnits / cellHeightInImageUnits),
+        width: {min: null, max: null},
+        height: {min: null, max: null}
+      }
+    })
+  }
+
+  _computeEnteringLeafNodeData () {
+    const gridLayout = new GraphicCellGrid()
+      .containerWidth(this.dimensions.graphicWidth)
+      .containerHeight(this.dimensions.graphicHeight)
+      .rowGutter(this.config.rowGutter)
+      .columnGutter(this.config.columnGutter)
+
+    if (this.config.numRows != null) { gridLayout.rows(this.config.numRows) }
+    if (this.config.numCols != null) { gridLayout.cols(this.config.numCols) }
+
+    if (_.isString(this.config.variableImage)) {
+      if (this.config.variableImage.match(/fromleft/)) {
+        gridLayout.direction('right,down')
+      }
+      if (this.config.variableImage.match(/fromright/)) {
+        gridLayout.direction('left,down')
+      }
+      if (this.config.variableImage.match(/fromtop/)) {
+        gridLayout.direction('right,down')
+      }
+      if (this.config.variableImage.match(/frombottom/)) {
+        gridLayout.direction('right,up')
+      }
+    }
+    if (this.config.layout) {
+      gridLayout.direction(this.config.layout)
+    }
+
+    return gridLayout
+  }
+
   _throwErrorIfProportionSetAndNoScalingStrategyProvided () {
     if (this.config.proportion >= 1) { return }
     let matchingScalingStrategies = null
@@ -211,6 +287,9 @@ class GraphicCell extends BaseCell {
 
   _draw () {
     this._computeDimensions()
+    const gridLayout = this._computeEnteringLeafNodeData()
+    const d3Data = this._generateDataArray(this.config.proportion, this.config.numImages)
+    const enteringLeafNodeData = gridLayout.compute(d3Data)
 
     // NB the order of append operations matters as SVG is a last on top rendering model
 
@@ -244,37 +323,8 @@ class GraphicCell extends BaseCell {
       })
     }
 
-    const d3Data = this._generateDataArray(this.config.proportion, this.config.numImages)
-
-    const gridLayout = new GraphicCellGrid()
-      .containerWidth(this.dimensions.graphicWidth)
-      .containerHeight(this.dimensions.graphicHeight)
-      .rowGutter(this.config.rowGutter)
-      .columnGutter(this.config.columnGutter)
-
-    if (this.config.numRows != null) { gridLayout.rows(this.config.numRows) }
-    if (this.config.numCols != null) { gridLayout.cols(this.config.numCols) }
-
-    if (_.isString(this.config.variableImage)) {
-      if (this.config.variableImage.match(/fromleft/)) {
-        gridLayout.direction('right,down')
-      }
-      if (this.config.variableImage.match(/fromright/)) {
-        gridLayout.direction('left,down')
-      }
-      if (this.config.variableImage.match(/fromtop/)) {
-        gridLayout.direction('right,down')
-      }
-      if (this.config.variableImage.match(/frombottom/)) {
-        gridLayout.direction('right,up')
-      }
-    }
-    if (this.config.layout) {
-      gridLayout.direction(this.config.layout)
-    }
-
     const enteringLeafNodes = graphicContainer.selectAll('.node')
-      .data(gridLayout.compute(d3Data))
+      .data(enteringLeafNodeData)
       .enter()
       .append('g')
         .attr('class', function (d) {

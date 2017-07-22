@@ -8,4 +8,4 @@ Description: An R HTMLWidget that can generate single image graphics, mutli
     image graphics, or a table of single/multi image graphics
 License: GPL-3
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

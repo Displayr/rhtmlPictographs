@@ -11,4 +11,4 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
 script:
-  - gulp testSpecs && gulp testVisual --applitools.pageLoadDelay=3 --browserLogs=true
+  - gulp testVisual --applitools.pageLoadDelay=3 --browserLogs=true

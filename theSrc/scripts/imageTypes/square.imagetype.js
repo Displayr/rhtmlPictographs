@@ -1,6 +1,10 @@
 import BaseImageType from './base.imagetype'
 
 class SquareType extends BaseImageType {
+  calculateDesiredAspectRatio () {
+    return Promise.resolve(1)
+  }
+
   calculateImageDimensions () {
     const dim = this.imageDimensions
     dim.length = Math.min(this.containerWidth, this.containerHeight)
