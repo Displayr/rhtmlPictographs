@@ -6,28 +6,6 @@ import RecolorSvg from '../RecolorSvg'
 import geometryUtils from '../utils/geometryUtils'
 
 class RecoloredExternalSvg extends BaseImageType {
-  calculateDesiredAspectRatio () {
-    return new Promise((resolve, reject) => {
-      const onDownloadSuccess = (xmlString) => {
-        const data = $.parseXML(xmlString)
-        this.svg = $(data).find('svg')
-
-        let imageAspectRatio = this._extractAspectRatioFromSvg()
-        if (!imageAspectRatio) {
-          console.error(`WARN: recolor SVG from ${this.config.url} : Cannot compute aspect ratio : unexpected SVG format (no viewbox , no width & height).`)
-          return resolve(null)
-        }
-        return resolve(imageAspectRatio)
-      }
-
-      const onDownloadFailure = () => reject(new Error(`Downloading svg failed: ${this.config.url}`))
-
-      return this.getOrDownload(this.config.url)
-        .done(onDownloadSuccess)
-        .fail(onDownloadFailure)
-    })
-  }
-
   calculateImageDimensions () {
     return new Promise((resolve, reject) => {
       const onDownloadSuccess = (xmlString) => {
@@ -52,7 +30,6 @@ class RecoloredExternalSvg extends BaseImageType {
 
       const onDownloadFailure = () => reject(new Error(`Downloading svg failed: ${this.config.url}`))
 
-      // TODO make this promise like (abstract out the jquery)
       return this.getOrDownload(this.config.url)
         .done(onDownloadSuccess)
         .fail(onDownloadFailure)

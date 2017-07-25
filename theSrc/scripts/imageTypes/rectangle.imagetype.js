@@ -5,10 +5,6 @@ class RectangleType extends BaseImageType {
     return this.imageDimensions
   }
 
-  calculateDesiredAspectRatio () {
-    return Promise.resolve(null)
-  }
-
   appendToSvg () {
     this.imageHandle = this.d3Node.append('svg:rect')
       .classed('rect', true)
