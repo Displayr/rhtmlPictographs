@@ -25,7 +25,9 @@ class PictographConfig {
       'table',
       'table-id',
       'vertical-align',
-      'width'
+      'width',
+      'table-header',
+      'table-footer'
     ]
   }
 
@@ -58,14 +60,48 @@ class PictographConfig {
   }
 
   get totalAllocatedVerticalSpace () {
+    return this.tableHeaderHeight + this.gridHeight + this.tableFooterHeight
+  }
+
+  get gridHeight () {
     return _(this.gridInfo.sizes.row)
-        .filter(rowSizeData => rowSizeData.size)
-        .map('size')
-        .sum() + (this.gridInfo.dimensions.row - 1) * this.size.gutter.row
+      .filter(rowSizeData => rowSizeData.size)
+      .map('size')
+      .sum() + (this.gridInfo.dimensions.row - 1) * this.size.gutter.row
+  }
+
+  get tableHeaderHeight () {
+    if (this.tableHeader) {
+      // TODO this logic is repeated
+      const fontSize = this.tableHeader['font-size']
+      const adjustedTextSize = (fontSize.indexOf('px') !== -1)
+        ? this.size.ratios.textSize * parseInt(fontSize.replace(/(px|em)/, ''))
+        : parseInt(fontSize)
+
+      return this.tableHeader.padding.top + this.tableHeader.padding.bottom + adjustedTextSize
+    }
+
+    return 0
+  }
+
+  get tableFooterHeight () {
+    if (this.tableFooter) {
+      // TODO this logic is repeated
+      const fontSize = this.tableFooter['font-size']
+      const adjustedTextSize = (fontSize.indexOf('px') !== -1)
+        ? this.size.ratios.textSize * parseInt(fontSize.replace(/(px|em)/, ''))
+        : parseInt(fontSize)
+
+      return this.tableFooter.padding.top + this.tableFooter.padding.bottom + adjustedTextSize
+    }
+
+    return 0
   }
 
   constructor () {
     PictographConfig.widgetIndex++
+
+    this.cells = [] // array of arrays
 
     this.alignment = {
       horizontal: 'center', // left|center|right
@@ -73,7 +109,7 @@ class PictographConfig {
     }
 
     this.size = {
-      // some of these may no longer be necessary
+      // TODO some of these may no longer be necessary
       initial: {width: null, height: null}, // what was the first specified dimension
       specified: {width: null, height: null}, // what are the current specified dimensions
       viewBox: {width: null, height: null}, // what are the viewbox dimensions
@@ -106,11 +142,10 @@ class PictographConfig {
       }
     }
 
-    this.cells = [] // array of arrays
-
     this.resizable = null // boolean
-
     this.cssCollector = null
+    this.tableHeader = null
+    this.tableFooter = null
 
     this.id = this.assignTableId()
   }
@@ -139,6 +174,8 @@ class PictographConfig {
     this._processResizable()
     this._processPictographPadding()
     this._processCssConfig()
+    this._processTableHeader()
+    this._processTableFooter()
     this._processGridDimensions()
     this._processCellDefinitions()
     this._processGridWidthSpec() // NB these must be recomputed every time there is a resize
@@ -150,6 +187,136 @@ class PictographConfig {
     }
 
     this._processLineConfig(userConfigObject)
+  }
+
+  _processTableHeader (userConfigObject = this._userConfig, cssCollector = this.cssCollector) {
+    // TODO extract this duplicated code (from graphicCell) in to library
+    if (_.has(userConfigObject, 'table-header')) {
+      const textConfig = _.isString(userConfigObject['table-header']) ? {text: userConfigObject['table-header']} : userConfigObject['table-header']
+
+      if (textConfig.text == null) { throw new Error(`Invalid table-header config: must have text field`) }
+
+      if (textConfig['horizontal-align'] == null) { textConfig['horizontal-align'] = 'middle' }
+
+      if (['center', 'centre'].includes(textConfig['horizontal-align'])) { textConfig['horizontal-align'] = 'middle' }
+      if (['left'].includes(textConfig['horizontal-align'])) { textConfig['horizontal-align'] = 'start' }
+      if (['right'].includes(textConfig['horizontal-align'])) { textConfig['horizontal-align'] = 'end' }
+      if (!['start', 'middle', 'end'].includes(textConfig['horizontal-align'])) {
+        throw new Error(`Invalid horizontal align ${textConfig['horizontal-align']} : must be one of ['left', 'center', 'right']`)
+      }
+
+      if (textConfig.padding) {
+        const [paddingTop, paddingRight, paddingBottom, paddingLeft] = textConfig.padding.split(' ')
+        delete textConfig.padding
+
+        textConfig.padding = {
+          top: this._verifyInt({ input: paddingTop.replace(/(px|em)/, ''), message: 'invalid table-header padding' }),
+          right: this._verifyInt({ input: paddingRight.replace(/(px|em)/, ''), message: 'invalid table-header padding' }),
+          bottom: this._verifyInt({ input: paddingBottom.replace(/(px|em)/, ''), message: 'invalid table-header padding' }),
+          left: this._verifyInt({ input: paddingLeft.replace(/(px|em)/, ''), message: 'invalid table-header padding' })
+        }
+      } else {
+        textConfig.padding = {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        }
+      }
+
+      // NB vertical align is only used by floating labels
+      if (textConfig['vertical-align'] == null) { textConfig['vertical-align'] = 'center' }
+      if (['middle', 'centre'].includes(textConfig['vertical-align'])) { textConfig['vertical-align'] = 'center' }
+      if (!['top', 'center', 'bottom'].includes(textConfig['vertical-align'])) {
+        throw new Error(`Invalid vertical align ${textConfig['vertical-align']} : must be one of ['top', 'center', 'bottom']`)
+      }
+
+      textConfig['dominant-baseline'] = (() => {
+        switch (true) {
+          case textConfig['vertical-align'] === 'top':
+            return 'text-before-edge'
+          case textConfig['vertical-align'] === 'center':
+            return 'central'
+          case textConfig['vertical-align'] === 'bottom':
+            return 'text-after-edge'
+          default:
+            throw new Error(`Invalid vertical-align: ${textConfig['vertical-align']}`)
+        }
+      })()
+
+      // font-size must be present to compute dimensions
+      if (textConfig['font-size'] == null) { textConfig['font-size'] = BaseCell.getDefault('font-size') }
+      ['font-family', 'font-weight', 'font-color'].forEach((cssAttribute) => {
+        if (textConfig[cssAttribute] != null) { cssCollector.setCss('table-header', cssAttribute, textConfig[cssAttribute]) }
+      })
+
+      this.tableHeader = textConfig
+    }
+  }
+
+  _processTableFooter (userConfigObject = this._userConfig, cssCollector = this.cssCollector) {
+    // TODO extract this duplicated code (from graphicCell) in to library
+    if (_.has(userConfigObject, 'table-footer')) {
+      const textConfig = _.isString(userConfigObject['table-footer']) ? {text: userConfigObject['table-footer']} : userConfigObject['table-footer']
+
+      if (textConfig.text == null) { throw new Error(`Invalid table-footer config: must have text field`) }
+
+      if (textConfig['horizontal-align'] == null) { textConfig['horizontal-align'] = 'middle' }
+
+      if (['center', 'centre'].includes(textConfig['horizontal-align'])) { textConfig['horizontal-align'] = 'middle' }
+      if (['left'].includes(textConfig['horizontal-align'])) { textConfig['horizontal-align'] = 'start' }
+      if (['right'].includes(textConfig['horizontal-align'])) { textConfig['horizontal-align'] = 'end' }
+      if (!['start', 'middle', 'end'].includes(textConfig['horizontal-align'])) {
+        throw new Error(`Invalid horizontal align ${textConfig['horizontal-align']} : must be one of ['left', 'center', 'right']`)
+      }
+
+      if (textConfig.padding) {
+        const [paddingTop, paddingRight, paddingBottom, paddingLeft] = textConfig.padding.split(' ')
+        delete textConfig.padding
+
+        textConfig.padding = {
+          top: this._verifyInt({ input: paddingTop.replace(/(px|em)/, ''), message: 'invalid table-footer padding' }),
+          right: this._verifyInt({ input: paddingRight.replace(/(px|em)/, ''), message: 'invalid table-footer padding' }),
+          bottom: this._verifyInt({ input: paddingBottom.replace(/(px|em)/, ''), message: 'invalid table-footer padding' }),
+          left: this._verifyInt({ input: paddingLeft.replace(/(px|em)/, ''), message: 'invalid table-footer padding' })
+        }
+      } else {
+        textConfig.padding = {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        }
+      }
+
+      // NB vertical align is only used by floating labels
+      if (textConfig['vertical-align'] == null) { textConfig['vertical-align'] = 'center' }
+      if (['middle', 'centre'].includes(textConfig['vertical-align'])) { textConfig['vertical-align'] = 'center' }
+      if (!['top', 'center', 'bottom'].includes(textConfig['vertical-align'])) {
+        throw new Error(`Invalid vertical align ${textConfig['vertical-align']} : must be one of ['top', 'center', 'bottom']`)
+      }
+
+      textConfig['dominant-baseline'] = (() => {
+        switch (true) {
+          case textConfig['vertical-align'] === 'top':
+            return 'text-before-edge'
+          case textConfig['vertical-align'] === 'center':
+            return 'central'
+          case textConfig['vertical-align'] === 'bottom':
+            return 'text-after-edge'
+          default:
+            throw new Error(`Invalid vertical-align: ${textConfig['vertical-align']}`)
+        }
+      })()
+
+      // font-size must be present to compute dimensions
+      if (textConfig['font-size'] == null) { textConfig['font-size'] = BaseCell.getDefault('font-size') }
+      ['font-family', 'font-weight', 'font-color'].forEach((cssAttribute) => {
+        if (textConfig[cssAttribute] != null) { cssCollector.setCss('table-footer', cssAttribute, textConfig[cssAttribute]) }
+      })
+
+      this.tableFooter = textConfig
+    }
   }
 
   _processResizable (userConfigObject = this._userConfig) {
@@ -292,7 +459,11 @@ class PictographConfig {
     const tableConfig = userConfigObject.table
 
     this.size.gutter.row = this._extractInt({input: tableConfig, key: 'rowGutterLength', defaultValue: 0})
-    const totalHeightAvailable = this.size.specified.height - ((this.gridInfo.dimensions.row - 1) * this.size.gutter.row)
+    const totalHeightAvailable = this.size.specified.height -
+      ((this.gridInfo.dimensions.row - 1) * this.size.gutter.row) -
+      this.tableHeaderHeight -
+      this.tableFooterHeight
+
     if (tableConfig.rowHeights) {
       if (!_.isArray(tableConfig.rowHeights)) {
         throw new Error('rowHeights must be array')
@@ -557,6 +728,24 @@ class PictographConfig {
     }
 
     return this._verifyInt({input: input[key], message: `invalid '${key}': ${input[key]}. ${message}.`})
+  }
+
+  _verifyKeyIsInt (input, key, defaultValue, message = 'Must be integer') {
+    if (!_.isUndefined(defaultValue)) {
+      if (!_.has(input, key)) {
+        input[key] = defaultValue
+        return
+      }
+    }
+
+    if (_.isNaN(parseInt(input[key]))) {
+      throw new Error(`invalid '${key}': ${input[key]}. ${message}.`)
+    }
+
+    input[key] = _.verifyInt({
+      input: input[key],
+      message: `invalid '${key}': ${input[key]}. ${message}.`
+    })
   }
 
   _verifyInt ({input, message = 'Must be integer'}) {

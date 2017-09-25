@@ -368,11 +368,11 @@ class Pictograph {
 
     const freeYSpace = Math.max(0, (this.config.size.specified.height - this.config.totalAllocatedVerticalSpace))
     if (this.config.alignment.vertical === 'top') {
-      offsets.y = 0
+      offsets.y = this.config.tableHeaderHeight
     } else if (this.config.alignment.vertical === 'center') {
-      offsets.y = freeYSpace / 2
+      offsets.y = this.config.tableHeaderHeight + freeYSpace / 2
     } else if (this.config.alignment.vertical === 'bottom') {
-      offsets.y = freeYSpace
+      offsets.y = this.config.tableHeaderHeight + freeYSpace
     } else {
       throw new Error(`(should not get here) : Invalid vertical alignment '${this.config.alignment.vertical}'`)
     }
@@ -389,6 +389,26 @@ class Pictograph {
         .attr('width', this.config.size.specified.width)
         .attr('height', this.config.size.specified.height)
         .attr('fill', this.config['background-color'])
+    }
+
+    if (this.config.tableHeader) {
+      this._addTextTo(this.outerSvg, {
+        myClass: 'table-header',
+        textConfig: this.config.tableHeader,
+        containerWidth: this.config.size.specified.width,
+        containerHeight: this.config.tableHeaderHeight,
+        yOffSet: 0
+      })
+    }
+
+    if (this.config.tableFooter) {
+      this._addTextTo(this.outerSvg, {
+        myClass: 'table-footer',
+        textConfig: this.config.tableFooter,
+        containerWidth: this.config.size.specified.width,
+        containerHeight: this.config.tableFooterHeight,
+        yOffSet: this.config.gridHeight + this.config.tableHeaderHeight
+      })
     }
 
     // TODO move this to the draw promise chain
@@ -427,6 +447,42 @@ class Pictograph {
       instance.setPictographSizeInfo(size) // just used for relative label sizing
       instance.draw()
     })
+  }
+
+  // TODO Duplicated code from graphicCell
+  _addTextTo (parent, { myClass, textConfig, containerWidth, containerHeight, xOffSet = 0, yOffSet = 0 }) {
+    const xAnchor = (() => {
+      switch (true) {
+        case textConfig['horizontal-align'] === 'start': return textConfig.padding.left
+        case textConfig['horizontal-align'] === 'middle': return containerWidth / 2
+        case textConfig['horizontal-align'] === 'end': return containerWidth - textConfig.padding.right
+        default: throw new Error(`Invalid horizontal-align: ${textConfig['horizontal-align']}`)
+      }
+    })()
+
+    const yMidpoint = (() => {
+      switch (true) {
+        case textConfig['vertical-align'] === 'top': return 0 + textConfig.padding.top
+        case textConfig['vertical-align'] === 'center': return containerHeight / 2
+        case textConfig['vertical-align'] === 'bottom': return containerHeight - textConfig.padding.bottom
+        default: throw new Error(`Invalid vertical-align: ${textConfig['vertical-align']}`)
+      }
+    })()
+
+    // TODO this logic is repeated
+    const fontSize = textConfig['font-size']
+    const adjustedTextSize = (fontSize.indexOf('px') !== -1)
+      ? this.config.size.ratios.textSize * parseInt(fontSize.replace(/(px|em)/, ''))
+      : parseInt(fontSize)
+
+    return parent.append('svg:text')
+      .attr('class', `label ${myClass}`)
+      .attr('x', xOffSet + xAnchor)
+      .attr('y', yOffSet + yMidpoint)
+      .attr('text-anchor', textConfig['horizontal-align'])
+      .style('font-size', adjustedTextSize)
+      .style('dominant-baseline', textConfig['dominant-baseline'])
+      .text(textConfig.text)
   }
 
   // TODO pull from shared location
