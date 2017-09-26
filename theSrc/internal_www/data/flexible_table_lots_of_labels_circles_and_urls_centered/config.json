@@ -1,0 +1,145 @@
+{
+  "vertical-align": "center",
+  "horizontal-align": "center",
+  "table": {
+    "rowHeights": [
+      "proportion:=1/3",
+      "proportion:=1/3",
+      "proportion:=1/3"
+    ],
+    "rowGutterLength": 0,
+    "columnGutterLength": 0,
+    "colWidths": [
+      "flexible:label",
+      "flexible:graphic"
+    ],
+    "rows": [
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 0,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "Label 1 ",
+            "font-size": "18px",
+            "font-weight": "bold",
+            "horizontal-align": "center",
+            "font-family": "Verdana",
+            "font-color": "#00008B"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 2,
+            "numRows": 1,
+            "variableImage": "circle:lightblue",
+            "text-footer": {
+              "text": "1:0 footer",
+              "font-size": "8px",
+              "font-weight": "normal",
+              "font-family": "Verdana",
+              "font-color": "#00008B",
+              "horizontal-align": "right"
+            },
+            "floatingLabels": [
+              {
+                "position": "0.50:2",
+                "text": "0.50:2",
+                "padding-left": "12",
+                "font-size": "12px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "left",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0 0 0 0"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 0,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "Label 2 Label 2 ",
+            "font-size": "10px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Verdana",
+            "font-color": "#00008B"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 2,
+            "numRows": 1,
+            "variableImage": "circle:lightblue",
+            "text-header": {
+              "text": "1:1 header",
+              "font-size": "8px",
+              "font-weight": "normal",
+              "font-family": "Verdana",
+              "font-color": "#00008B",
+              "horizontal-align": "left"
+            },
+            "floatingLabels": [
+              {
+                "position": "1:1.75",
+                "text": "1:1.75",
+                "padding-top": "8",
+                "font-size": "12px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "left",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0 0 0 0"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 0,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "Label 3",
+            "font-size": "16px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Verdana",
+            "font-color": "#00008B"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 4,
+            "numRows": 1,
+            "variableImage": "url:/images/apple_grey.svg",
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0 0 0 0"
+          }
+        }
+      ]
+    ]
+  }
+}

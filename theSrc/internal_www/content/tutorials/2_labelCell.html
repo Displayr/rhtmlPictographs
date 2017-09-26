@@ -5,15 +5,15 @@
   <link href='/styles/internal_www.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and div.example elements -->
+
 
 <h1>Label Cell Usage Tutorial</h1>
 
 <section>
   <h2>Simplest Label Using shorthand "string syntax"</h2>
-  <p> In its absolute simplest for we specify a label cell simply as a string that starts with "label:". In this for the cell does not even need to be an object with a '{type: 'label', value: ...}</p>
+  <p> In its absolute simplest for we specify a label cell simply as a string that starts with "label:". In this example the cell definition does not even need to be an object with a '{type: 'label', value: ...}, a string is sufficient</p>
   <div class="row">
-    <pre class="example">{ "table": { "rows": [ [ "label:A label" ] ] } }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="100">{ "table": { "rows": [ [ "label:A label" ] ] } }</pre>
   </div>
 
   <h2>Simplest Label, Multiple Label, Object as Label</h2>
@@ -44,17 +44,17 @@
     <li>any other valid CSS property that is valid on SVG Text</li>
   </ul>
   <div class="row">
-    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": "A label" } ] ] } }</pre>
-    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": [ "Line 1", "Line 2" ] } ] ] } }</pre>
-    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "text": "A label", "font-color" : "red", "font-size": "20px", "font-family": "impact", "font-weight" : "100" } } ] ] } }</pre>
-    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": [{ "text": "label 1" }, { "text": "label 2" }] } ] ] } }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="100">{ "table": { "rows": [ [ { "type": "label", "value": "A label" } ] ] } }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="100">{ "table": { "rows": [ [ { "type": "label", "value": [ "Line 1", "Line 2" ] } ] ] } }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="100">{ "table": { "rows": [ [ { "type": "label", "value": { "text": "A label", "font-color" : "red", "font-size": "20px", "font-family": "impact", "font-weight" : "100" } } ] ] } }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="100">{ "table": { "rows": [ [ { "type": "label", "value": [{ "text": "label 1" }, { "text": "label 2" }] } ] ] } }</pre>
   </div>
 </section>
 
 <section>
   <h2>Multi Label, With Padding, With Different Fonts on Each Line</h2>
   <div class="row">
-    <pre class="example">{ "table": {
+    <pre class="example" data-show-config data-width="100" data-height="100">{ "table": {
       "rows": [ [ {
         "type": "label",
         "value": {
@@ -72,7 +72,7 @@
 <section>
   <h2>Setting a background color</h2>
   <div class="row">
-    <pre class="example">{ "table": { "rows": [ [ { "type": "label",
+    <pre class="example" data-show-config data-width="100" data-height="100">{ "table": { "rows": [ [ { "type": "label",
       "value": {
         "background-color" : "#dddddd",
         "labels": [ "row1", "row2" ]
@@ -86,11 +86,11 @@
   <p>The valid values for vertical-align are 'top', 'center', and 'bottom'</p>
 
   <div class="row">
-    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "top", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
-    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "padding-top": "15", "vertical-align": "top", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
-    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "center", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
-    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "padding-bottom": "15", "vertical-align": "bottom", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
-    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "bottom", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="100">{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "top", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="100">{ "table": { "rows": [ [ { "type": "label", "value": { "padding-top": "15", "vertical-align": "top", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="100">{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "center", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="100">{ "table": { "rows": [ [ { "type": "label", "value": { "padding-bottom": "15", "vertical-align": "bottom", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="100">{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "bottom", "labels": [ "row1", "row2" ] } } ] ] } }</pre>
   </div>
 </section>
 
@@ -101,17 +101,17 @@
   <p>When specifying left aligned labels, you will probably want to add "padding-left" as well, so that the label does not crowd the border</p>
   <p>When specifying right aligned labels, you will probably want to add "padding-right" as well, so that the label does not crowd the border</p>
 
-  <div class="row" data-ex-w="200">
-    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "left" } } ] ] } }</pre>
-    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "center" } } ] ] } }</pre>
-    <pre class="example">{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "right" } } ] ] } }</pre>
+  <div class="row">
+    <pre class="example" data-show-config data-width="200">{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "left" } } ] ] } }</pre>
+    <pre class="example" data-show-config data-width="200">{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "center" } } ] ] } }</pre>
+    <pre class="example" data-show-config data-width="200">{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "right" } } ] ] } }</pre>
   </div>
 </section>
 
 <section>
   <h2>Putting all the label alignments together</h2>
-  <div class="row" data-ex-w="400">
-    <pre class="example">{ "font-color": "lightblue", "font-family": "Arvo, serif", "table": { "rows": [ [ { "type": "label",
+  <div class="row">
+    <pre class="example" data-show-config data-width="400">{ "font-color": "lightblue", "font-family": "Arvo, serif", "table": { "rows": [ [ { "type": "label",
       "value": {
       "padding-top": "5",
       "padding-inner": "5",
@@ -129,8 +129,8 @@
 <section>
   <h2>Using small capital letters</h2>
   <p>The font-variant small-caps can be set, which renders all lower case letters as small upper case letters.</p>
-  <div class="row" data-ex-w="850">
-    <pre class="example">{ "font-color": "lightblue", "font-family": "Arvo, serif", "table": { "rows": [ [ { "type": "label",
+  <div class="row">
+    <pre class="example" data-show-config data-width="850">{ "font-color": "lightblue", "font-family": "Arvo, serif", "table": { "rows": [ [ { "type": "label",
       "value": {
         "padding-left" : 5,
         "padding-inner" : 5,

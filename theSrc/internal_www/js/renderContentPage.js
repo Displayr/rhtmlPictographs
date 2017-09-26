@@ -1,139 +1,197 @@
 
 import $ from 'jquery'
 import _ from 'lodash'
+/* global window */
 
-import Pictograph from '../../scripts/Pictograph'
+// TEMPLATE : you will need to import your widget here
+import WidgetClass from '../../scripts/Pictograph.js'
+
+const defaultConfig = {
+  width: 200,
+  height: 200
+}
 
 let exampleCounter = 0
 
-const makeFormHtml = () =>
-  `\
-<form class="resize-form" style="padding-top:10px">
-  <div style="display:block">
-    <label for="width-input">New Width:</label>
-    <input type="text" id="width-input" class="width-input" value="200"/>
-  </div>
-  <div style="display:block">
-    <label for="height-input">New Height:</label>
-    <input type="text" id="height-input" class="height-input" value="200"/>
-  </div>
-  <div style="display:block">
-    <button class="resize-button">Resize</button>
-  </div>
-</form>\
+// NB The window.stateUpdates is used by the visualTesting suite to check what stateCallbacks are made
+// It assumes there is only one widget on the page
+window.stateUpdates = []
+const stateChangedCallback = (newState) => {
+  window.stateUpdates.push(_.clone(newState))
+  console.log(`stateCallback called with state =${JSON.stringify(newState, {}, 2)}`)
+}
+
+const retrieveState = function (configName, stateName) {
+  return new Promise((resolve, reject) => {
+    $.ajax(`/data/${configName}/${stateName}.json`).done(resolve).error(reject)
+  })
+}
+
+const retrieveConfig = function (configName) {
+  return new Promise((resolve, reject) => {
+    $.ajax(`/data/${configName}/config.json`).done(resolve).error(reject)
+  })
+}
+
+const relativeResizersHtmlSnippet = `
+<div class="relative-resize-container">
+  <button class="relative-resize-button more-button">+25</button>
+  <button class="relative-resize-button less-button">-25</button>
+  <button class="relative-resize-button more-width-button">+25 W</button>
+  <button class="relative-resize-button less-width-button">-25 W</button>
+  <button class="relative-resize-button more-height-button">+25 H</button>
+  <button class="relative-resize-button less-height-button">-25 H</button>
+</div>
 `
 
-const getRelativeResizersHtml = () =>
-  // we are inside a pre so you cant newline these ...
-  `\
-<div style="text-align:center;width:100%">
-  <button class="relative-resize-button more-button">+25</button> <button class="relative-resize-button less-button">-25</button>
-  <button class="relative-resize-button more-width-button">+25 W</button> <button class="relative-resize-button less-width-button">-25 W</button> <button class="relative-resize-button more-height-button">+25 H</button> <button class="relative-resize-button less-height-button">-25 H</button>
-  <button class="relative-resize-button lot-more-width-button">+200 W</button> <button class="relative-resize-button lot-less-width-button">-200 W</button> <button class="relative-resize-button lot-more-height-button">+200 H</button> <button class="relative-resize-button lot-less-height-button">-200 H</button>
-</div>\
+const rerenderHtmlSnippet = `
+<div class="rerender-container">
+  <label for="rerender-config">New Config:</label>
+  <input type="text" name="rerender-config" id="rerender-config" class="rerender-config rerender-element"/>
+  <button class="rerender-button rerender-element">Rerender</button>
+</div>
 `
 
-const addExampleTo = function (rowConfig) {
+const addExampleTo = function () {
   const exampleNumber = `example-${exampleCounter++}`
 
   const element = $(this)
   element.addClass(exampleNumber)
 
-  const exampleConfig = _.defaults($(this).data(), rowConfig)
+  const dataAttributes = _.defaults($(this).data(), defaultConfig)
 
-  let graphicCellConfig = null
-  let configString = element.text()
-  if (configString.match(/^{/)) {
-    graphicCellConfig = JSON.parse(configString)
-    configString = JSON.stringify(graphicCellConfig, {}, 2)
+  let configPromise = null
+  if (_.has(dataAttributes, 'config')) {
+    configPromise = retrieveConfig(dataAttributes.config)
   } else {
-    graphicCellConfig = configString
+    const configString = element.text() || '{}'
+
+    if (configString.indexOf('{') === 0) {
+      try {
+        configPromise = JSON.parse(configString)
+      } catch (err) {
+        console.error(`Failed to JSON parse config string: ${configString}`)
+        configPromise = Promise.reject(err)
+      }
+    } else {
+      configPromise = configString
+    }
   }
 
-  element.empty()
+  let statePromise = null
+  if (_.has(dataAttributes, 'state')) {
+    statePromise = retrieveState(dataAttributes.config, dataAttributes.state)
+  } else {
+    statePromise = Promise.resolve({})
+  }
 
-  const configDiv = $('<div>')
-  const configPre = $('<pre>')
-    .attr('class', 'config')
-    .css('height', 'auto')
-    .html(configString)
+  Promise.all([configPromise, statePromise]).then(([config, state = {}]) => {
+    console.log('loading widget with config')
+    console.log(config)
 
-  const innerExampleDiv = $('<div>')
-    .attr('class', 'inner-example')
-    .css('width', `${exampleConfig.exW}`)
-    .css('height', `${exampleConfig.exH}`)
+    console.log('loading widget with state')
+    console.log(state)
 
-  const innerInnerExampleDiv = $('<div>')
+    element.empty()
+    let widgetInstance = null
 
-  element.append(configDiv.append(configPre))
+    if (_.has(dataAttributes, 'showConfig')) {
+      const configPre = $('<pre>')
+        .attr('class', 'config')
+        .css('height', 'auto')
+        .html(JSON.stringify(config, {}, 2))
 
-  const instance = new Pictograph(innerInnerExampleDiv, exampleConfig.exW, exampleConfig.exH)
-
-  if (exampleConfig.resizeControls) {
-    const relativeResizers = $(getRelativeResizersHtml())
-    element.append(relativeResizers)
-
-    const newResizeHandler = function (additionalWidth, additionalHeight) {
-      return function (event) {
-        event.preventDefault()
-        const newWidth = $(`.${exampleNumber} .inner-example`).width() + additionalWidth
-        const newHeight = $(`.${exampleNumber} .inner-example`).height() + additionalHeight
-
-        // @TODO inner-example could be named better
-        $(`.${exampleNumber} .inner-example`)
-          .css('width', newWidth)
-          .css('height', newHeight)
-
-        return instance.resize(newWidth, newHeight)
-      }
+      element.append(configPre)
     }
 
-    $(`.${exampleNumber} .more-button`).bind('click', newResizeHandler(25, 25))
-    $(`.${exampleNumber} .less-button`).bind('click', newResizeHandler(-25, -25))
-    $(`.${exampleNumber} .more-width-button`).bind('click', newResizeHandler(25, 0))
-    $(`.${exampleNumber} .less-width-button`).bind('click', newResizeHandler(-25, 0))
-    $(`.${exampleNumber} .more-height-button`).bind('click', newResizeHandler(0, 25))
-    $(`.${exampleNumber} .less-height-button`).bind('click', newResizeHandler(0, -25))
-    $(`.${exampleNumber} .lot-more-width-button`).bind('click', newResizeHandler(200, 0))
-    $(`.${exampleNumber} .lot-less-width-button`).bind('click', newResizeHandler(-200, 0))
-    $(`.${exampleNumber} .lot-more-height-button`).bind('click', newResizeHandler(0, 200))
-    $(`.${exampleNumber} .lot-less-height-button`).bind('click', newResizeHandler(0, -200))
-  }
+    // NB this will not work with multiple widgets on the page, however the
+    // only use case at present is via renderExample.html which always has a single widget on page
+    window.resizeHook = function (newWidth, newHeight) {
+      console.log(`resize to ${newWidth}x${newHeight}`)
 
-  element.append(innerExampleDiv.append(innerInnerExampleDiv))
-
-  instance.setConfig(_.cloneDeep(graphicCellConfig))
-  const instanceId = instance.config['table-id']
-  innerInnerExampleDiv.attr('class', `inner-inner-example ${instanceId}`)
-
-  instance.draw()
-
-  if (exampleConfig.resizeControls) {
-    const resizeForm = $(makeFormHtml())
-    element.append(resizeForm)
-
-    $(`.${exampleNumber} .resize-form`).bind('submit', function (event) {
-      event.preventDefault()
-      console.log('resize submit')
-
-      const width = $(`.${exampleNumber} .width-input`).val()
-      const height = $(`.${exampleNumber} .height-input`).val()
-
-      // @TODO inner-example could be named better
       $(`.${exampleNumber} .inner-example`)
-        .css('width', width)
-        .css('height', height)
+        .css('width', newWidth)
+        .css('height', newHeight)
 
-      instance.resize(width, height)
+      return widgetInstance.resize(newWidth, newHeight)
+    }
 
-      return false
-    })
-  }
-}
+    if (_.has(dataAttributes, 'resizeControls')) {
+      const resizeControls = $(relativeResizersHtmlSnippet)
+      element.append(resizeControls)
 
-const defaultConfig = {
-  exW: 100,
-  exH: 100
+      const newResizeHandler = function (additionalWidth, additionalHeight) {
+        return function (event) {
+          event.preventDefault()
+          const newWidth = $(`.${exampleNumber} .inner-example`).width() + additionalWidth
+          const newHeight = $(`.${exampleNumber} .inner-example`).height() + additionalHeight
+
+          $(`.${exampleNumber} .inner-example`)
+            .css('width', newWidth)
+            .css('height', newHeight)
+
+          return widgetInstance.resize(newWidth, newHeight)
+        }
+      }
+
+      $(`.${exampleNumber} .more-button`).bind('click', newResizeHandler(25, 25))
+      $(`.${exampleNumber} .less-button`).bind('click', newResizeHandler(-25, -25))
+      $(`.${exampleNumber} .more-width-button`).bind('click', newResizeHandler(25, 0))
+      $(`.${exampleNumber} .less-width-button`).bind('click', newResizeHandler(-25, 0))
+      $(`.${exampleNumber} .more-height-button`).bind('click', newResizeHandler(0, 25))
+      $(`.${exampleNumber} .less-height-button`).bind('click', newResizeHandler(0, -25))
+    }
+
+    if (_.has(dataAttributes, 'rerender')) {
+      const rerenderControls = $(rerenderHtmlSnippet)
+      element.append(rerenderControls)
+
+      const rerenderHandler = function (event) {
+        event.preventDefault()
+        const newConfigName = $(`.${exampleNumber} .rerender-config`).val()
+        console.log(`newConfig: ${newConfigName}`)
+
+        retrieveConfig(newConfigName).then((newConfig) => {
+          widgetInstance.setConfig(newConfig)
+          if (widgetInstance.setUserState) {
+            widgetInstance.setUserState(window.stateUpdates[window.stateUpdates.length - 1])
+          }
+          widgetInstance.draw()
+        }).catch((error) => {
+          console.error('Error in rerender:')
+          console.error(error)
+        })
+      }
+
+      $(`.${exampleNumber} .rerender-button`).bind('click', rerenderHandler)
+    }
+
+    const surroundingDiv = $('<div>')
+      .attr('class', 'inner-example')
+      .css('width', `${dataAttributes.width}`)
+      .css('height', `${dataAttributes.height}`)
+
+    if (_.has(dataAttributes, 'border')) {
+      surroundingDiv.addClass((dataAttributes.border) ? 'border' : 'no-border')
+    } else {
+      surroundingDiv.addClass('border-unset')
+    }
+
+    const widgetDiv = $('<div>')
+
+    surroundingDiv.append(widgetDiv)
+    element.append(surroundingDiv)
+
+    // TEMPLATE : you will need to instantiate your widget here
+    widgetInstance = new WidgetClass(widgetDiv, dataAttributes.width, dataAttributes.height, stateChangedCallback)
+    widgetInstance.setConfig(config)
+    if (widgetInstance.setUserState) {
+      widgetInstance.setUserState(state)
+    }
+    widgetInstance.draw()
+  }).catch((error) => {
+    console.log(error)
+  })
 }
 
 const addLinkToIndex = function () {
@@ -145,21 +203,15 @@ const addLinkToIndex = function () {
     .html('back to index')
 
   indexLinkContainer.append(indexLink)
-  $('body').prepend(indexLinkContainer)
-}
-
-const processRow = function () {
-  const row = $(this)
-
-  const rowConfig = _.defaults(row.data(), defaultConfig)
-
-  $(this).find('.example').each(function () {
-    addExampleTo.bind(this)(rowConfig)
-  })
+  return $('body').prepend(indexLinkContainer)
 }
 
 $(document).ready(function () {
   addLinkToIndex()
-  $('.row').each(processRow)
+  $('.example').each(addExampleTo)
   $('body').attr('loaded', '')
+
+  console.log('adding to window')
+  // NB "export" addExampleTo function so it can be used in renderExample.html
+  window.addExampleTo = addExampleTo
 })

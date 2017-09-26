@@ -5,7 +5,7 @@
   <link href='/styles/internal_www.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and div.example elements -->
+
 
 <h1>Multi Image Scaling and Layout</h1>
 
@@ -18,8 +18,8 @@
   <h3>Negative Example</h3>
   <p>The easiest way to demonstrate is using a negative example. In the two graphics below we are clipping "fromright". Graphic 1 doesn't really look right. Graphic 2 is what we would expect.</p>
   <p>The difference is that Graphic2 uses a layout that is consistent with the clip direction.</p>
-  <div class="row" data-ex-w="100" data-ex-h="66">
-    <pre class="example hide-config">
+  <div class="row">
+    <pre class="example" data-width="100" data-height="66">
 {
   "proportion": 0.789,
   "numImages": 6,
@@ -28,7 +28,7 @@
   "variableImage": "circle:fromright:lightblue"
 }
     </pre>
-    <pre class="example hide-config">
+    <pre class="example" data-width="100" data-height="66">
 {
   "proportion": 0.789,
   "numImages": 6,
@@ -49,18 +49,18 @@
     <li>If a "frombottom" clip direction is used, change the layout to "right,up", as in layout left to right, row by row starting at the bottom.</li>
   </ul>
   <p>This is demonstrated in the following 8 examples.</p>
-  <div class="row" data-ex-w="100" data-ex-h="66">
-    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numRows": 2, "variableImage": "circle:fromleft:lightblue" } </pre>
-    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numRows": 2, "variableImage": "circle:fromright:lightblue" } </pre>
-    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numRows": 2, "variableImage": "circle:fromtop:lightblue" } </pre>
-    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numRows": 2, "variableImage": "circle:frombottom:lightblue" } </pre>
+  <div class="row">
+    <pre class="example" data-show-config data-width="100" data-height="66">{ "proportion": 0.75, "numImages": 6, "numRows": 2, "variableImage": "circle:fromleft:lightblue" } </pre>
+    <pre class="example" data-show-config data-width="100" data-height="66">{ "proportion": 0.75, "numImages": 6, "numRows": 2, "variableImage": "circle:fromright:lightblue" } </pre>
+    <pre class="example" data-show-config data-width="100" data-height="66">{ "proportion": 0.75, "numImages": 6, "numRows": 2, "variableImage": "circle:fromtop:lightblue" } </pre>
+    <pre class="example" data-show-config data-width="100" data-height="66">{ "proportion": 0.75, "numImages": 6, "numRows": 2, "variableImage": "circle:frombottom:lightblue" } </pre>
   </div>
 
-  <div class="row" data-ex-w="66" data-ex-h="100">
-    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numCols": 2, "variableImage": "circle:fromleft:lightblue" } </pre>
-    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numCols": 2, "variableImage": "circle:fromright:lightblue" } </pre>
-    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numCols": 2, "variableImage": "circle:fromtop:lightblue" } </pre>
-    <pre class="example">{ "proportion": 0.75, "numImages": 6, "numCols": 2, "variableImage": "circle:frombottom:lightblue" } </pre>
+  <div class="row">
+    <pre class="example" data-show-config data-width="66" data-height="100">{ "proportion": 0.75, "numImages": 6, "numCols": 2, "variableImage": "circle:fromleft:lightblue" } </pre>
+    <pre class="example" data-show-config data-width="66" data-height="100">{ "proportion": 0.75, "numImages": 6, "numCols": 2, "variableImage": "circle:fromright:lightblue" } </pre>
+    <pre class="example" data-show-config data-width="66" data-height="100">{ "proportion": 0.75, "numImages": 6, "numCols": 2, "variableImage": "circle:fromtop:lightblue" } </pre>
+    <pre class="example" data-show-config data-width="66" data-height="100">{ "proportion": 0.75, "numImages": 6, "numCols": 2, "variableImage": "circle:frombottom:lightblue" } </pre>
   </div>
 </section>
 
@@ -77,17 +77,17 @@
     <li><e>up,right</e></li>
     <li><e>up,left</e></li>
   </ul>
-  <div class="row" data-ex-w="100" data-ex-h="66">
-    <pre class="example">{ "layout": "right,down", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
-    <pre class="example">{ "layout": "right,up", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
-    <pre class="example">{ "layout": "left,down", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
-    <pre class="example">{ "layout": "left,up", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+  <div class="row">
+    <pre class="example" data-show-config data-width="100" data-height="66">{ "layout": "right,down", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="66">{ "layout": "right,up", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="66">{ "layout": "left,down", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="66">{ "layout": "left,up", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
   </div>
-  <div class="row" data-ex-w="100" data-ex-h="66">
-    <pre class="example">{ "layout": "down,right", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
-    <pre class="example">{ "layout": "down,left", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
-    <pre class="example">{ "layout": "up,right", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
-    <pre class="example">{ "layout": "up,left", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+  <div class="row">
+    <pre class="example" data-show-config data-width="100" data-height="66">{ "layout": "down,right", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="66">{ "layout": "down,left", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="66">{ "layout": "up,right", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
+    <pre class="example" data-show-config data-width="100" data-height="66">{ "layout": "up,left", "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }</pre>
   </div>
 </section>
 

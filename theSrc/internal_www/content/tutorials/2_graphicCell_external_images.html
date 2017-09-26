@@ -5,7 +5,7 @@
   <link href='/styles/internal_www.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and .example elements -->
+
 
 <h1>Single Graphic Cell External Image Usage Tutorial</h1>
 <p>External images can be used in graphic cells.</p>
@@ -18,17 +18,17 @@
   <p>Consider placing that external image inside several different graphic cell dimensions:</p>
   It fits:
   <div class="row">
-    <pre class="example" data-ex-w="60" data-ex-h="90">url:/images/green_rectangle_600_900.jpg</pre>
+    <pre class="example" data-show-config data-width="60" data-height="90">url:/images/green_rectangle_600_900.jpg</pre>
   </div>
 
   It does not fit (image slot too wide):
   <div class="row">
-    <pre class="example" data-ex-w="90" data-ex-h="90">url:/images/green_rectangle_600_900.jpg</pre>
+    <pre class="example" data-show-config data-width="90" data-height="90">url:/images/green_rectangle_600_900.jpg</pre>
   </div>
 
   It does not fit (image slot too tall):
   <div class="row">
-    <pre class="example" data-ex-w="60" data-ex-h="120">url:/images/green_rectangle_600_900.jpg</pre>
+    <pre class="example" data-show-config data-width="60" data-height="120">url:/images/green_rectangle_600_900.jpg</pre>
   </div>
 
   <p>There are two ways to address this if you want the external image to completely fill the provided image slot:</p>
@@ -49,7 +49,7 @@
 
   It does not fit (image slot too wide):
   <div class="row">
-    <pre class="example" data-ex-w="90" data-ex-h="90">{
+    <pre class="example" data-show-config data-width="90" data-height="90">{
       "variableImage": {
         "type": "url",
         "url": "/images/green_rectangle_600_900.jpg",
@@ -60,7 +60,7 @@
 
   It does not fit (image slot too tall):
   <div class="row">
-    <pre class="example" data-ex-w="60" data-ex-h="120">{
+    <pre class="example" data-show-config data-width="60" data-height="120">{
       "variableImage": {
         "type": "url",
         "url": "/images/green_rectangle_600_900.jpg",
@@ -76,7 +76,7 @@
 
   It does not fit (image slot too wide):
   <div class="row">
-    <pre class="example" data-ex-w="90" data-ex-h="90">{
+    <pre class="example" data-show-config data-width="90" data-height="90">{
       "variableImage": {
         "type": "url",
         "url": "/images/green_rectangle_600_900.jpg",
@@ -87,7 +87,7 @@
 
   It does not fit (image slot too tall):
   <div class="row">
-    <pre class="example" data-ex-w="60" data-ex-h="120">{
+    <pre class="example" data-show-config data-width="60" data-height="120">{
       "variableImage": {
         "type": "url",
         "url": "/images/green_rectangle_600_900.jpg",
@@ -103,7 +103,7 @@
 
   It does not fit (image slot too wide): So shift it to the left
   <div class="row">
-    <pre class="example" data-ex-w="90" data-ex-h="90">{
+    <pre class="example" data-show-config data-width="90" data-height="90">{
       "variableImage": {
         "type": "url",
         "url": "/images/green_rectangle_600_900.jpg",
@@ -114,7 +114,7 @@
 
   It does not fit (image slot too wide): So shift it to the right
   <div class="row">
-    <pre class="example" data-ex-w="90" data-ex-h="90">{
+    <pre class="example" data-show-config data-width="90" data-height="90">{
       "variableImage": {
         "type": "url",
         "url": "/images/green_rectangle_600_900.jpg",
@@ -125,7 +125,7 @@
 
   It does not fit (image slot too tall): So shift it up
   <div class="row">
-    <pre class="example" data-ex-w="60" data-ex-h="120">{
+    <pre class="example" data-show-config data-width="60" data-height="120">{
       "variableImage": {
         "type": "url",
         "url": "/images/green_rectangle_600_900.jpg",
@@ -136,7 +136,7 @@
 
   It does not fit (image slot too tall): So shift it down
   <div class="row">
-    <pre class="example" data-ex-w="60" data-ex-h="120">{
+    <pre class="example" data-show-config data-width="60" data-height="120">{
       "variableImage": {
         "type": "url",
         "url": "/images/green_rectangle_600_900.jpg",

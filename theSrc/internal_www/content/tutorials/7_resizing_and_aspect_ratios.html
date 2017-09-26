@@ -5,7 +5,7 @@
   <link href='/styles/internal_www.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<!-- NB Important dev note: This file is used to auto generate r files in the examples directory. If you modify ensure you maintain the format of sections, containing h2, p, and div.example elements -->
+
 
 <h1>Resizing and Aspect Ratios</h1>
 
@@ -14,14 +14,14 @@
   <p>By default, pictographs are resizable. This can be changed by setting resizable: false ( resizable: "false" ) in the config.</p>
   <p>Note in the non-resizable examples below, the shape still moves around a bit when its container is changed, but it is not actually moved, In displayr it will not move around.</p>
 
-  <div class="row" data-ex-w="100" data-ex-h="100">
-    <pre class="example" data-resize-controls="true">{
+  <div class="row">
+    <pre class="example" data-show-config data-resize-controls data-width="100" data-height="100">{
       "table": {
       "rows": [ [ "circle:lightblue" ] ]
       } }
     </pre>
 
-    <pre class="example" data-resize-controls="true">{
+    <pre class="example" data-show-config data-resize-controls data-width="100" data-height="100">{
       "resizable": "false",
       "table": {
       "rows": [ [ "circle:lightblue" ] ]
@@ -38,16 +38,16 @@
   <p>To ignore the initial aspect ratio on resize, set preserveAspectRatio to none</p>
   <p>The examples below also show show how to alter the positioning by Changing Mid to Min or Max.</p>
 
-  <div class="row" data-ex-w="150" data-ex-h="100">
+  <div class="row">
 
-    <pre class="example" data-resize-controls="true">{
+    <pre class="example" data-show-config data-resize-controls data-width="150" data-height="100">{
       "preserveAspectRatio" : "none",
       "table": {
         "rows": [ [ "ellipse:lightblue" ] ]
       } }
     </pre>
 
-    <pre class="example" data-resize-controls="true">{
+    <pre class="example" data-show-config data-resize-controls data-width="150" data-height="100">{
       "preserveAspectRatio" : "xMidYMid",
       "table": {
         "rows": [ [ "ellipse:lightblue" ] ]
@@ -55,15 +55,15 @@
     </pre>
   </div>
 
-  <div class="row" data-ex-w="150" data-ex-h="100">
-    <pre class="example" data-resize-controls="true">{
+  <div class="row">
+    <pre class="example" data-show-config data-resize-controls data-width="150" data-height="100">{
       "preserveAspectRatio" : "xMidYMin",
       "table": {
         "rows": [ [ "ellipse:lightblue" ] ]
       } }
     </pre>
 
-    <pre class="example" data-resize-controls="true">{
+    <pre class="example" data-show-config data-resize-controls data-width="150" data-height="100">{
       "preserveAspectRatio" : "xMidYMax",
       "table": {
         "rows": [ [ "ellipse:lightblue" ] ]
@@ -71,15 +71,15 @@
     </pre>
   </div>
 
-  <div class="row" data-ex-w="150" data-ex-h="100">
-    <pre class="example" data-ex-w="100" data-ex-h="150" data-resize-controls="true">{
+  <div class="row">
+    <pre class="example" data-width="100" data-height="150" data-show-config data-resize-controls>{
       "preserveAspectRatio" : "xMinYMid",
       "table": {
         "rows": [ [ "ellipse:lightblue" ] ]
       } }
     </pre>
 
-    <pre class="example" data-ex-w="100" data-ex-h="150" data-resize-controls="true">{
+    <pre class="example" data-width="100" data-height="150" data-show-config data-resize-controls>{
       "preserveAspectRatio" : "xMaxYMid",
       "table": {
         "rows": [ [ "ellipse:lightblue" ] ]
