@@ -217,9 +217,9 @@ class PictographConfig {
         }
       } else {
         textConfig.padding = {
-          top: 0,
+          top: 1,
           right: 0,
-          bottom: 0,
+          bottom: 1,
           left: 0
         }
       }
@@ -282,9 +282,9 @@ class PictographConfig {
         }
       } else {
         textConfig.padding = {
-          top: 0,
+          top: 1,
           right: 0,
-          bottom: 0,
+          bottom: 1,
           left: 0
         }
       }
