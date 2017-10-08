@@ -196,6 +196,22 @@ Is the same as this table config:
 </section>
 
 <section>
+  <h2>Table Header vs Text Header / Table Footer vs Text Footer</h2>
+  <p>the placement of table-header and table-row is always fixed to the top and bottom of the container size, whereas graphic label header placement will depend on the dimensions of the graphic being used. So if you want to line up the header of arbitrary pictographs use table-header.</p>
+  <div class="row" data-ex-h="400" data-ex-w="400">
+    <pre class="example">{
+      "variableImage": "url:lightblue:/images/car_grey.svg",
+      "table-header": "table-header",
+      "table-footer": "table-footer",
+      "text-header": "text-header",
+      "text-overlay": "text-overlay",
+      "text-footer": "text-footer"
+      }
+    </pre>
+  </div>
+</section>
+
+<section>
   <h2>Use Text Presets</h2>
   <p>The strings "proportion" and "percentage" will auto generate text based on the proportion field.</p>
   <div class="row" data-ex-h="200" data-ex-w="200">
