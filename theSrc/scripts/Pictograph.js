@@ -290,26 +290,18 @@ class Pictograph {
             cellSizeData.dynamicMargins = _.cloneDeep(computedDynamicMargins)
             totalRangeAvailable -= cellSizeData.size
 
-            // console.log('cellSizeConstraints')
-            // console.log(JSON.stringify(cellSizeConstraints, {}, 2))
-            // console.log('combinedConstraints')
-            // console.log(JSON.stringify(combinedConstraints, {}, 2))
-            // console.log('cellSizeData')
-            // console.log(JSON.stringify(cellSizeData, {}, 2))
-            // console.log('computedDynamicMargins')
-            // console.log(JSON.stringify(computedDynamicMargins, {}, 2))
-
             // NB TODO It is assumed this runs after the "calc min of proportion spec" code above
             cellSizeConstraints.map((cellSizeContraint, dimensionIndex) => {
               if (this.config.gridInfo.sizes[fixedDimension][dimensionIndex].type === 'proportion' && this.config.gridInfo.sizes[fixedDimension][dimensionIndex].preference === 'min') {
                 const aspectRatioMultiplier = (flexibleDimension === 'row') ? cellSizeContraint.aspectRatio : (1.0 / cellSizeContraint.aspectRatio)
-                const optimalFixedDimensionSize = (cellSizeData.size - (computedDynamicMargins[flexibleSize].negative + computedDynamicMargins[flexibleSize].positive)) * aspectRatioMultiplier + computedDynamicMargins[fixedSize].negative + computedDynamicMargins[fixedSize].positive
-                const string = `min: ${this.config.gridInfo.sizes[fixedDimension][dimensionIndex].min.toFixed(2)}, optimalSize: ${optimalFixedDimensionSize.toFixed(2)}, max: ${this.config.gridInfo.sizes[fixedDimension][dimensionIndex].max.toFixed(2)}. Chosen: `
+                const flexibleMarginSize = computedDynamicMargins[flexibleSize].negative + computedDynamicMargins[flexibleSize].positive
+                const fixedMarginSize = computedDynamicMargins[fixedSize].negative + computedDynamicMargins[fixedSize].positive
+                const optimalFixedDimensionSize = (cellSizeData.size - (flexibleMarginSize)) * aspectRatioMultiplier + fixedMarginSize
+
                 this.config.gridInfo.sizes[fixedDimension][dimensionIndex].size = Math.min(
                   this.config.gridInfo.sizes[fixedDimension][dimensionIndex].max,
                   Math.max(this.config.gridInfo.sizes[fixedDimension][dimensionIndex].min, optimalFixedDimensionSize)
                 )
-                console.log(`${string}${this.config.gridInfo.sizes[fixedDimension][dimensionIndex].size.toFixed(2)}`)
               }
             })
           }

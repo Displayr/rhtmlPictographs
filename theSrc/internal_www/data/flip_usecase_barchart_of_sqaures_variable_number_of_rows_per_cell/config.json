@@ -1,29 +1,20 @@
-<!doctype html>
-<html>
-<head>
-    <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
-    <link href='/styles/internal_www.css' rel='stylesheet' type='text/css'>
-</head>
-<body>
-
-<div class="row">
-<pre class="example hide-config" data-ex-w="887" data-ex-h="372">{
-  "width": 887.99976,
-  "height": 372.99996,
+{
   "background-color": "transparent",
   "table": {
     "rowHeights": [
-      "proportion:0.125",
-      "proportion:0.125",
-      "proportion:0.125",
-      "proportion:0.125",
-      "proportion:0.125",
-      "proportion:0.125",
-      "proportion:0.125",
-      "proportion:0.125"
+      "proportion:=1/15",
+      "proportion:=1/15",
+      "proportion:=1/15",
+      "proportion:=1/15",
+      "proportion:=1/15",
+      "proportion:=2/15",
+      "proportion:=2/15",
+      "proportion:=2/15",
+      "proportion:=2/15",
+      "proportion:=2/15"
     ],
-    "rowGutterLength": 0,
-    "columnGutterLength": 0,
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
     "colWidths": [
       "flexible:label",
       "flexible:graphic"
@@ -34,10 +25,10 @@
           "type": "label",
           "value": {
             "padding-right": 5.000000,
-            "padding-top": 0.000000,
+            "padding-top": 1.000000,
             "padding-bottom": 0.000000,
-            "vertical-align": "center",
-            "text": "Coca Cola ",
+            "vertical-align": "top",
+            "text": "A",
             "font-size": "12.000000px",
             "font-weight": "normal",
             "horizontal-align": "right",
@@ -48,14 +39,57 @@
         {
           "type": "graphic",
           "value": {
-            "proportion": 0.570529,
-            "numImages": 7,
-            "variableImage": "square:#00441B:fromleft:",
-            "numRows": 1,
+            "proportion": 0.200000,
+            "numImages": 5,
+            "variableImage": "square:#E41A1C:fromleft:",
+            "numCols": 5,
             "floatingLabels": [
               {
-                "position": "0.50:4.19",
-                "text": "40",
+                "position": "0.50:1",
+                "padding-left": "4",
+                "text": "1",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "left",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "1.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 0.000000,
+            "vertical-align": "top",
+            "text": "B",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.400000,
+            "numImages": 5,
+            "variableImage": "square:#4A72A6:fromleft:",
+            "numCols": 5,
+            "floatingLabels": [
+              {
+                "position": "0.50:2",
+                "padding-left": "4",
+                "text": "2",
                 "font-size": "12.000000px",
                 "font-weight": "normal",
                 "font-family": "Arial",
@@ -77,172 +111,8 @@
             "padding-right": 5.000000,
             "padding-top": 0.000000,
             "padding-bottom": 0.000000,
-            "vertical-align": "center",
-            "text": "Diet Coke",
-            "font-size": "12.000000px",
-            "font-weight": "normal",
-            "horizontal-align": "right",
-            "font-family": "Arial",
-            "font-color": "#2C2C2C"
-          }
-        },
-        {
-          "type": "graphic",
-          "value": {
-            "proportion": 0.656371,
-            "numImages": 7,
-            "variableImage": "square:#00682A:fromleft:",
-            "numRows": 1,
-            "floatingLabels": [
-              {
-                "position": "0.50:4.79",
-                "text": "46",
-                "font-size": "12.000000px",
-                "font-weight": "normal",
-                "font-family": "Arial",
-                "font-color": "#2C2C2C",
-                "horizontal-align": "left",
-                "vertical-align": "center"
-              }
-            ],
-            "columnGutter": 0.000000,
-            "rowGutter": 0.000000,
-            "padding": "0.000000 0.000000 0.000000 0.000000"
-          }
-        }
-      ],
-      [
-        {
-          "type": "label",
-          "value": {
-            "padding-right": 5.000000,
-            "padding-top": 0.000000,
-            "padding-bottom": 0.000000,
-            "vertical-align": "center",
-            "text": "Coke Zero",
-            "font-size": "12.000000px",
-            "font-weight": "normal",
-            "horizontal-align": "right",
-            "font-family": "Arial",
-            "font-color": "#2C2C2C"
-          }
-        },
-        {
-          "type": "graphic",
-          "value": {
-            "proportion": 0.616159,
-            "numImages": 7,
-            "variableImage": "square:#1B843F:fromleft:",
-            "numRows": 1,
-            "floatingLabels": [
-              {
-                "position": "0.50:4.51",
-                "text": "43",
-                "font-size": "12.000000px",
-                "font-weight": "normal",
-                "font-family": "Arial",
-                "font-color": "#2C2C2C",
-                "horizontal-align": "left",
-                "vertical-align": "center"
-              }
-            ],
-            "columnGutter": 0.000000,
-            "rowGutter": 0.000000,
-            "padding": "0.000000 0.000000 0.000000 0.000000"
-          }
-        }
-      ],
-      [
-        {
-          "type": "label",
-          "value": {
-            "padding-right": 5.000000,
-            "padding-top": 0.000000,
-            "padding-bottom": 0.000000,
-            "vertical-align": "center",
-            "text": "Pepsi Light ",
-            "font-size": "12.000000px",
-            "font-weight": "normal",
-            "horizontal-align": "right",
-            "font-family": "Arial",
-            "font-color": "#2C2C2C"
-          }
-        },
-        {
-          "type": "graphic",
-          "value": {
-            "proportion": 0.774603,
-            "numImages": 7,
-            "variableImage": "square:#37A055:fromleft:",
-            "numRows": 1,
-            "floatingLabels": [
-              {
-                "position": "0.50:5.62",
-                "text": "54",
-                "font-size": "12.000000px",
-                "font-weight": "normal",
-                "font-family": "Arial",
-                "font-color": "#2C2C2C",
-                "horizontal-align": "left",
-                "vertical-align": "center"
-              }
-            ],
-            "columnGutter": 0.000000,
-            "rowGutter": 0.000000,
-            "padding": "0.000000 0.000000 0.000000 0.000000"
-          }
-        }
-      ],
-      [
-        {
-          "type": "label",
-          "value": {
-            "padding-right": 5.000000,
-            "padding-top": 0.000000,
-            "padding-bottom": 0.000000,
-            "vertical-align": "center",
-            "text": "Pepsi Max",
-            "font-size": "12.000000px",
-            "font-weight": "normal",
-            "horizontal-align": "right",
-            "font-family": "Arial",
-            "font-color": "#2C2C2C"
-          }
-        },
-        {
-          "type": "graphic",
-          "value": {
-            "proportion": 0.625649,
-            "numImages": 7,
-            "variableImage": "square:#5DB86A:fromleft:",
-            "numRows": 1,
-            "floatingLabels": [
-              {
-                "position": "0.50:4.58",
-                "text": "44",
-                "font-size": "12.000000px",
-                "font-weight": "normal",
-                "font-family": "Arial",
-                "font-color": "#2C2C2C",
-                "horizontal-align": "left",
-                "vertical-align": "center"
-              }
-            ],
-            "columnGutter": 0.000000,
-            "rowGutter": 0.000000,
-            "padding": "0.000000 0.000000 0.000000 0.000000"
-          }
-        }
-      ],
-      [
-        {
-          "type": "label",
-          "value": {
-            "padding-right": 5.000000,
-            "padding-top": 0.000000,
-            "padding-bottom": 0.000000,
-            "vertical-align": "center",
-            "text": "Pepsi ",
+            "vertical-align": "top",
+            "text": "C",
             "font-size": "12.000000px",
             "font-weight": "normal",
             "horizontal-align": "right",
@@ -254,13 +124,14 @@
           "type": "graphic",
           "value": {
             "proportion": 0.600000,
-            "numImages": 7,
-            "variableImage": "square:#88CD86:fromleft:",
-            "numRows": 1,
+            "numImages": 5,
+            "variableImage": "square:#48A462:fromleft:",
+            "numCols": 5,
             "floatingLabels": [
               {
-                "position": "0.50:4.40",
-                "text": "42",
+                "position": "0.50:3",
+                "padding-left": "4",
+                "text": "3",
                 "font-size": "12.000000px",
                 "font-weight": "normal",
                 "font-family": "Arial",
@@ -282,8 +153,8 @@
             "padding-right": 5.000000,
             "padding-top": 0.000000,
             "padding-bottom": 0.000000,
-            "vertical-align": "center",
-            "text": "NET Sugarred",
+            "vertical-align": "top",
+            "text": "D",
             "font-size": "12.000000px",
             "font-weight": "normal",
             "horizontal-align": "right",
@@ -294,14 +165,15 @@
         {
           "type": "graphic",
           "value": {
-            "proportion": 0.575355,
-            "numImages": 7,
-            "variableImage": "square:#ADDEA7:fromleft:",
-            "numRows": 1,
+            "proportion": 0.800000,
+            "numImages": 5,
+            "variableImage": "square:#7E6E85:fromleft:",
+            "numCols": 5,
             "floatingLabels": [
               {
-                "position": "0.50:4.23",
-                "text": "40",
+                "position": "0.50:4",
+                "padding-left": "4",
+                "text": "4",
                 "font-size": "12.000000px",
                 "font-weight": "normal",
                 "font-family": "Arial",
@@ -323,8 +195,8 @@
             "padding-right": 5.000000,
             "padding-top": 0.000000,
             "padding-bottom": 0.000000,
-            "vertical-align": "center",
-            "text": "NET Sugarless",
+            "vertical-align": "top",
+            "text": "E",
             "font-size": "12.000000px",
             "font-weight": "normal",
             "horizontal-align": "right",
@@ -335,14 +207,15 @@
         {
           "type": "graphic",
           "value": {
-            "proportion": 0.638221,
-            "numImages": 7,
-            "variableImage": "square:#CDEBC7:fromleft:",
-            "numRows": 1,
+            "proportion": 1.000000,
+            "numImages": 5,
+            "variableImage": "square:#D16948:fromleft:",
+            "numCols": 5,
             "floatingLabels": [
               {
-                "position": "0.50:4.67",
-                "text": "45",
+                "position": "0.50:5",
+                "padding-left": "4",
+                "text": "5",
                 "font-size": "12.000000px",
                 "font-weight": "normal",
                 "font-family": "Arial",
@@ -354,14 +227,219 @@
             "columnGutter": 0.000000,
             "rowGutter": 0.000000,
             "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 0.000000,
+            "vertical-align": "top",
+            "text": "F",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.600000,
+            "numImages": 10,
+            "variableImage": "square:#FFB716:fromleft:",
+            "numCols": 5,
+            "floatingLabels": [
+              {
+                "position": "0.50:5",
+                "padding-left": "4",
+                "text": "6",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "left",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 0.000000,
+            "vertical-align": "top",
+            "text": "G",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.700000,
+            "numImages": 10,
+            "variableImage": "square:#E1C62F:fromleft:",
+            "numCols": 5,
+            "floatingLabels": [
+              {
+                "position": "0.50:5",
+                "padding-left": "4",
+                "text": "7",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "left",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 0.000000,
+            "vertical-align": "top",
+            "text": "H",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.800000,
+            "numImages": 10,
+            "variableImage": "square:#B75F49:fromleft:",
+            "numCols": 5,
+            "floatingLabels": [
+              {
+                "position": "0.50:5",
+                "padding-left": "4",
+                "text": "8",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "left",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 0.000000,
+            "vertical-align": "top",
+            "text": "I",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.900000,
+            "numImages": 10,
+            "variableImage": "square:#EC83BA:fromleft:",
+            "numCols": 5,
+            "floatingLabels": [
+              {
+                "position": "0.50:5",
+                "padding-left": "4",
+                "text": "9",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "left",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 1.000000,
+            "vertical-align": "top",
+            "text": "J",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 1.000000,
+            "numImages": 10,
+            "variableImage": "square:#999999:fromleft:",
+            "numCols": 5,
+            "floatingLabels": [
+              {
+                "position": "0.50:5",
+                "padding-left": "4",
+                "text": "10",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "left",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "0.000000 0.000000 1.000000 0.000000"
           }
         }
       ]
     ]
   }
-}</pre>
-</div>
-
-<script src="/js/renderContentPage.js"></script>
-</body>
-</html>
+}

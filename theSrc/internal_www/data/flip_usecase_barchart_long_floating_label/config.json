@@ -1,16 +1,4 @@
-<!doctype html>
-<html>
-<head>
-    <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
-    <link href='/styles/internal_www.css' rel='stylesheet' type='text/css'>
-</head>
-<body>
-
-<section snapshot-name="flip_usecase_barchart_long_floating_labels_2">
-<div class="row">
-<pre class="example hide-config" data-ex-w="500" data-ex-h="500">{
-  "width": 491.999976,
-  "height": 505.000008,
+{
   "background-color": "transparent",
   "table": {
     "rowHeights": [
@@ -454,10 +442,4 @@
       ]
     ]
   }
-}</pre>
-</div>
-</section>
-
-<script src="/js/renderContentPage.js"></script>
-</body>
-</html>
+}

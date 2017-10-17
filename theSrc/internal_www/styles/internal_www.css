@@ -51,14 +51,17 @@ pre.config {
     /*border: 1px dashed dimgrey;*/
 }
 
-.no-border .inner-example {
-    border: none;
-}
-
 .inner-example {
-    border: 1px dashed dimgrey;
     margin-left: auto;
     margin-right: auto;
+}
+
+.inner-example.border, .inner-example.border-unset {
+    border: 1px dashed dimgrey;
+}
+
+.relative-resize-container {
+    display: flex;
 }
 
 .relative-resize-button {
