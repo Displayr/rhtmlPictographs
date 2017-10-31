@@ -1,0 +1,8 @@
+{
+  "widgetEntryPoint": "theSrc/scripts/rhtmlPictographs.js",
+  "widgetFactory": "theSrc/scripts/rhtmlPictographs.factory.js",
+  "widgetName": "rhtmlPictographs",
+  "internalWebSettings": {
+    "default_border": true
+  }
+}

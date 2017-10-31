@@ -40,7 +40,7 @@ pre.config {
     display: none;
 }
 
-.for-consideration .inner-example {
+.for-consideration .widget-container {
     border: 4px dashed red;
 }
 
@@ -51,12 +51,12 @@ pre.config {
     /*border: 1px dashed dimgrey;*/
 }
 
-.inner-example {
+.widget-container {
     margin-left: auto;
     margin-right: auto;
 }
 
-.inner-example.border, .inner-example.border-unset {
+.widget-container.border, .widget-container.border-unset {
     border: 1px dashed dimgrey;
 }
 
