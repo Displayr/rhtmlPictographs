@@ -3,6 +3,7 @@
   "widgetFactory": "theSrc/scripts/rhtmlPictographs.factory.js",
   "widgetName": "rhtmlPictographs",
   "internalWebSettings": {
+    "includeDimensionsOnWidgetDiv": true,
     "default_border": true
   }
 }

@@ -7,15 +7,11 @@
 <body>
 
 
-<h1>Fixed Vs Variable Sized Fonts</h1>
+<h1>Fixed Sized Fonts</h1>
 
 <section>
-  <h2>Font size is fixed by default, can be configured</h2>
-  <p>By default, if no font-size is specified, then fonts will be fixed size and will stay the same size when the pictograph is resized.</p>
-  <p>Any font that is specified in units of "px" will also stay the same size when the pictograph is resized.</p>
-  <p>Any font that is specified without a unit, will resize when the pictograph is resized.</p>
+  <h2>Font size is fixed to the specified pixel value in the config, as the widget resizes the images and other shapes will grow/shrink, but the font size remains the same</h2>
   <p>Other font units, such as 'em' should not be used as they are not explicitly supported. They might work, but dont do it.</p>
-
 
   <div class="row" data-width="100" data-height="100">
     <pre class="example" data-resize-controls="true">
@@ -24,22 +20,7 @@
   "table": {
     "rows": [
       [ "label:A", "label:A", "label:A", "label:A", "label:A" ],
-      [ { "type": "label", "value": { "text": "A", "font-size": "10" } } ],
       [ "label:A" ],
-      [ "label:A" ],
-      [ "label:A" ]
-    ]
-  }
-}
-    </pre>
-
-    <pre class="example" data-resize-controls="true">
-{
-  "font-size": "10",
-  "table": {
-    "rows": [
-      [ "label:A", "label:A", "label:A", "label:A", "label:A" ],
-      [ { "type": "label", "value": { "text": "A", "font-size": "10px" } } ],
       [ "label:A" ],
       [ "label:A" ],
       [ "label:A" ]

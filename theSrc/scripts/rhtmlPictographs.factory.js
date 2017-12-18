@@ -4,7 +4,7 @@ import Pictograph from './Pictograph'
 import DisplayError from './DisplayError'
 
 module.exports = function (element, width, height, stateChangedCallback) {
-  const instance = new Pictograph(element, width, height)
+  const instance = new Pictograph(element)
   return {
     renderValue (inputConfig, userState) {
       let config = null
@@ -24,7 +24,7 @@ module.exports = function (element, width, height, stateChangedCallback) {
     },
 
     resize (newWidth, newHeight) {
-      return instance.resize(newWidth, newHeight)
+      return instance.resize()
     }
   }
 }

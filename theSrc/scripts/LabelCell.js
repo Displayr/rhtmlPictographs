@@ -2,6 +2,7 @@ import _ from 'lodash'
 import BaseCell from './BaseCell'
 
 import labelUtils from './utils/labelUtils'
+import { ensureObjectHasValidFontSize } from './utils/fontSizeCleaner'
 
 class LabelCell extends BaseCell {
   setConfig (config) {
@@ -63,8 +64,7 @@ class LabelCell extends BaseCell {
       }
 
       // font-size must be present to compute dimensions
-      if (labelConfig['font-size'] == null) { labelConfig['font-size'] = BaseCell.getDefault('font-size') }
-
+      ensureObjectHasValidFontSize(labelConfig, BaseCell.getDefault('font-size'))
       _.forEach(labelConfig, (labelValue, labelKey) => {
         // TODO does text belong here
         if (['class', 'text', 'horizontal-align'].includes(labelKey)) { return }
@@ -118,7 +118,6 @@ class LabelCell extends BaseCell {
     let currentY = this.computeInitialVerticalOffset(this.config['vertical-align'])
 
     _.forEach(this.labels, (labelConfig) => {
-      const fontSize = this.getAdjustedTextSize(labelConfig['font-size'])
       const xOffset = this.computeHorizontalOffset(labelConfig['horizontal-align'])
 
       this._addTextTo({
@@ -127,18 +126,18 @@ class LabelCell extends BaseCell {
         myClass: labelConfig.class,
         textAnchor: labelConfig['horizontal-align'],
         x: xOffset,
-        y: currentY + (fontSize / 2),
-        fontSize: fontSize
+        y: currentY + (labelConfig['font-size'] / 2),
+        fontSize: labelConfig['font-size']
       })
 
-      currentY += fontSize + this.config['padding-inner']
+      currentY += labelConfig['font-size'] + this.config['padding-inner']
     })
   }
 
   computeAllocatedVerticalSpace () {
     let allocatedVerticalSpace = this.config['padding-inner'] * (this.labels.length - 1)
     _.forEach(this.labels, (labelConfig) => {
-      const labelFontSize = this.getAdjustedTextSize(labelConfig['font-size'])
+      const labelFontSize = labelConfig['font-size']
       allocatedVerticalSpace += labelFontSize
     })
 
@@ -180,11 +179,6 @@ class LabelCell extends BaseCell {
       .style('font-size', fontSize)
       .style('dominant-baseline', 'central')
       .text(text)
-  }
-
-  _resize () {
-    this.parentSvg.selectAll('*').remove()
-    return this._draw()
   }
 }
 

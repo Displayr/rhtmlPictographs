@@ -12,7 +12,7 @@ const makeDivForEstimation = (labelConfig) => {
   const defaults = {
     'font-family': 'Verdana,sans-serif',
     'font-weight': '900',
-    'font-size': '24px'
+    'font-size': '24'
   }
 
   function getAttribute (attribute) {
@@ -30,6 +30,11 @@ const makeDivForEstimation = (labelConfig) => {
   return `<div style="${styleComponents.join(';')}">${labelConfig.text}</div>`
 }
 
+const ensureFontSizeHasPx = (labelConfig) => {
+  labelConfig['font-size'] = `${labelConfig['font-size']}px`
+  return labelConfig
+}
+
 module.exports = {
   calculateLabelDimensions: function (incomingLabels, padding) {
     const labels = (_.isArray(incomingLabels))
@@ -37,7 +42,9 @@ module.exports = {
       : [_.cloneDeep(incomingLabels)]
 
     const uniqueId = `${Math.random()}`.replace('.', '')
-    const textDivsForEstimation = _(labels).map(makeDivForEstimation).value()
+    const textDivsForEstimation = _(labels)
+      .map(ensureFontSizeHasPx)
+      .map(makeDivForEstimation).value()
     const divWrapper = $(`<div id="${uniqueId}" style="display:inline-block">`)
 
     divWrapper.html(textDivsForEstimation)

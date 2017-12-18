@@ -6,6 +6,7 @@ import BaseCell from './BaseCell'
 import ImageFactory from './ImageFactory'
 import DisplayError from './DisplayError'
 import labelUtils from './utils/labelUtils'
+import { ensureObjectHasValidFontSize } from './utils/fontSizeCleaner'
 
 class GraphicCell extends BaseCell {
   static get validRootAttributes () {
@@ -403,8 +404,8 @@ class GraphicCell extends BaseCell {
     })()
 
     // font-size must be present to compute dimensions
-    if (textConfig['font-size'] == null) { textConfig['font-size'] = BaseCell.getDefault('font-size') }
-    ['font-family', 'font-weight', 'font-color'].forEach((cssAttribute) => {
+    ensureObjectHasValidFontSize(textConfig, BaseCell.getDefault('font-size'))
+    _(['font-family', 'font-weight', 'font-color']).each((cssAttribute) => {
       if (textConfig[cssAttribute] != null) { this.setCss(cssName, cssAttribute, textConfig[cssAttribute]) }
     })
 
@@ -551,8 +552,8 @@ class GraphicCell extends BaseCell {
     const padding = this.config.padding
 
     // need these first to calc graphicHeight
-    dim.headerHeight = Math.max(((this.config['text-header'] != null) ? this.getAdjustedTextSize(this.config['text-header']['font-size']) : 0), this.dynamicMargins.height.negative)
-    dim.footerHeight = Math.max(((this.config['text-footer'] != null) ? this.getAdjustedTextSize(this.config['text-footer']['font-size']) : 0), this.dynamicMargins.height.positive)
+    dim.headerHeight = Math.max(((this.config['text-header'] != null) ? this.config['text-header']['font-size'] : 0), this.dynamicMargins.height.negative)
+    dim.footerHeight = Math.max(((this.config['text-footer'] != null) ? this.config['text-footer']['font-size'] : 0), this.dynamicMargins.height.positive)
 
     const leftPadding = padding.left + this.dynamicMargins.width.negative
     const rightPadding = padding.right + this.dynamicMargins.width.positive
@@ -581,7 +582,7 @@ class GraphicCell extends BaseCell {
       .attr('x', xOffSet)
       .attr('y', yOffSet)
       .attr('text-anchor', textConfig['horizontal-align'])
-      .style('font-size', this.getAdjustedTextSize(textConfig['font-size']))
+      .style('font-size', textConfig['font-size'])
       .style('dominant-baseline', textConfig['dominant-baseline'])
       .text(textConfig.text)
   }
@@ -610,7 +611,7 @@ class GraphicCell extends BaseCell {
       .attr('x', xOffSet + xAnchor)
       .attr('y', yOffSet + yMidpoint)
       .attr('text-anchor', textConfig['horizontal-align'])
-      .style('font-size', this.getAdjustedTextSize(textConfig['font-size']))
+      .style('font-size', textConfig['font-size'])
       .style('dominant-baseline', textConfig['dominant-baseline'])
       .text(textConfig.text)
   }
@@ -625,11 +626,6 @@ class GraphicCell extends BaseCell {
       d3Data.push({ proportion: proportionForImageI, i })
     })
     return d3Data
-  }
-
-  _resize () {
-    this.parentSvg.selectAll('*').remove()
-    return this._draw()
   }
 }
 

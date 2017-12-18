@@ -4751,9 +4751,9 @@ restore-cursor@^1.0.1:
     exit-hook "^1.0.0"
     onetime "^1.0.0"
 
-rhtmlBuildUtils@Displayr/rhtmlBuildUtils#2.0.0:
-  version "2.0.0"
-  resolved "https://codeload.github.com/Displayr/rhtmlBuildUtils/tar.gz/eed903832e7cad377d89651dd27220e591d96b4c"
+rhtmlBuildUtils@Displayr/rhtmlBuildUtils#2.0.1:
+  version "2.0.1"
+  resolved "https://codeload.github.com/Displayr/rhtmlBuildUtils/tar.gz/1f82a695509d5777c62225987eee120cfddb5bb6"
   dependencies:
     app-root-dir "^1.0.2"
     babel-plugin-array-includes "^2.0.3"
@@ -4824,9 +4824,9 @@ rhtmlBuildUtils@Displayr/rhtmlBuildUtils#2.0.0:
     stream "0.0.2"
     yargs "^8.0.1"
 
-rhtmlBuildUtils@Displayr/rhtmlBuildUtils#2.0.1:
-  version "2.0.1"
-  resolved "https://codeload.github.com/Displayr/rhtmlBuildUtils/tar.gz/1f82a695509d5777c62225987eee120cfddb5bb6"
+rhtmlBuildUtils@Displayr/rhtmlBuildUtils#2.0.6:
+  version "2.0.6"
+  resolved "https://codeload.github.com/Displayr/rhtmlBuildUtils/tar.gz/150cbaddc8d25718905aac63013060c607f12fe7"
   dependencies:
     app-root-dir "^1.0.2"
     babel-plugin-array-includes "^2.0.3"

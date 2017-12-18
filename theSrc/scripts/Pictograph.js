@@ -5,11 +5,12 @@ import $ from 'jquery'
 import PictographConfig from './PictographConfig'
 
 class Pictograph {
-  constructor (el, width, height) {
-    this.config = new PictographConfig()
-    this.config.setWidth(width)
-    this.config.setHeight(height)
+  constructor (el) {
     this.rootElement = _.has(el, 'length') ? el[0] : el
+    const actualDimensions = this.getContainerDimensions()
+
+    this.config = new PictographConfig()
+    this.config.setDimensions(actualDimensions)
   }
 
   setConfig (userConfig) {
@@ -25,7 +26,6 @@ class Pictograph {
     return Promise.resolve()
       .then(this._computeFlexibleCellSizes.bind(this))
       .then(this._computeCellPlacement.bind(this))
-      .then(this._recomputeSizing.bind(this))
       .then(this._render.bind(this))
       .catch((error) => {
         console.error(`error in pictograph draw: ${error.message}`)
@@ -34,47 +34,27 @@ class Pictograph {
       })
   }
 
-  resize (specifiedWidth, specifiedHeight) {
+  resize () {
     if (this.config.resizable === false) { return }
 
-    if (this.config.gridInfo.flexible.row || this.config.gridInfo.flexible.column) {
-      this.config.resetSizing({ specifiedWidth, specifiedHeight })
-      this.config._processGridWidthSpec()
-      this.config._processGridHeightSpec()
+    const actualDimensions = this.getContainerDimensions()
+    this.config.setDimensions(actualDimensions)
 
-      this._removeAllContentFromRootElement()
-      this._addSvgToRootElement()
+    this._removeAllContentFromRootElement()
+    this._addSvgToRootElement()
+    // NB I want to do this on call to setDimensions (issue is initial call to setDimension occurs before config is abailable)
+    this.config._processGridWidthSpec()
+    this.config._processGridHeightSpec()
 
-      return Promise.resolve()
-        .then(this._computeFlexibleCellSizes.bind(this))
-        .then(this._computeCellPlacement.bind(this))
-        .then(this._render.bind(this))
-        .catch((error) => {
-          console.error(`error in pictograph resize: ${error.message}`)
-          console.error(error.stack)
-          throw error
-        })
-
-    // TODO deprecate this alternate form of resizing if the new method is proven stable
-    } else {
-      this._recomputeSizing({ specifiedWidth, specifiedHeight })
-      _(this.config.cells).flatten().each(cellData => {
-        cellData.instance.resize(this.config.size)
+    return Promise.resolve()
+      .then(this._computeFlexibleCellSizes.bind(this))
+      .then(this._computeCellPlacement.bind(this))
+      .then(this._render.bind(this))
+      .catch((error) => {
+        console.error(`error in pictograph resize: ${error.message}`)
+        console.error(error.stack)
+        throw error
       })
-    }
-  }
-
-  _recomputeSizing ({ specifiedWidth, specifiedHeight } = {}) {
-    // TODO can I use this.outerSvg here instead ?
-    const rootElement = $(`#${this.config.id}`)
-    const actualWidth = rootElement.width()
-    const actualHeight = rootElement.height()
-    return this.config.recomputeSizing({
-      actualWidth,
-      actualHeight,
-      specifiedWidth,
-      specifiedHeight
-    })
   }
 
   _getAllCellsInDimension (dimension, dimensionIndex) {
@@ -165,7 +145,7 @@ class Pictograph {
       const flexibleSize = (flexibleDimension === 'column') ? 'width' : 'height'
       const fixedSize = (flexibleDimension === 'column') ? 'height' : 'width'
 
-      let totalRangeAvailable = this.config.size.specified[flexibleSize] - ((this.config.gridInfo.dimensions[flexibleDimension] - 1) * this.config.size.gutter[flexibleDimension])
+      let totalRangeAvailable = this.config.size.container[flexibleSize] - ((this.config.gridInfo.dimensions[flexibleDimension] - 1) * this.config.size.gutter[flexibleDimension])
 
       const sumFixedCellSize = _(this.config.gridInfo.sizes[flexibleDimension])
         .filter(cellSizeData => !cellSizeData.flexible)
@@ -190,6 +170,9 @@ class Pictograph {
         const cellSizeData = this.config.gridInfo.sizes[flexibleDimension][flexibleIndex]
 
         return Promise.all(cellSizeConstraintPromises).then((cellSizeConstraints) => {
+          // console.log(`cell size constraints for ${flexibleDimension}(${flexibleIndex})`)
+          // console.log(JSON.stringify(cellSizeConstraints, {}, 2))
+
           const combinedConstraints = {
             width: {
               margins: {
@@ -347,7 +330,7 @@ class Pictograph {
       y: null
     }
 
-    const freeXSpace = Math.max(0, (this.config.size.specified.width - this.config.totalAllocatedHorizontalSpace))
+    const freeXSpace = Math.max(0, (this.config.size.container.width - this.config.totalAllocatedHorizontalSpace))
     if (this.config.alignment.horizontal === 'left') {
       offsets.x = 0
     } else if (this.config.alignment.horizontal === 'center') {
@@ -358,7 +341,7 @@ class Pictograph {
       throw new Error(`(should not get here) : Invalid horizontal alignment '${this.config.alignment.horizontal}'`)
     }
 
-    const freeYSpace = Math.max(0, (this.config.size.specified.height - this.config.totalAllocatedVerticalSpace))
+    const freeYSpace = Math.max(0, (this.config.size.container.height - this.config.totalAllocatedVerticalSpace))
     if (this.config.alignment.vertical === 'top') {
       offsets.y = this.config.tableHeaderHeight
     } else if (this.config.alignment.vertical === 'center') {
@@ -378,8 +361,8 @@ class Pictograph {
     if (this.config['background-color']) {
       this.outerSvg.append('svg:rect')
         .attr('class', 'background')
-        .attr('width', this.config.size.specified.width)
-        .attr('height', this.config.size.specified.height)
+        .attr('width', this.config.size.container.width)
+        .attr('height', this.config.size.container.height)
         .attr('fill', this.config['background-color'])
     }
 
@@ -387,7 +370,7 @@ class Pictograph {
       this._addTextTo(this.outerSvg, {
         myClass: 'table-header',
         textConfig: this.config.tableHeader,
-        containerWidth: this.config.size.specified.width,
+        containerWidth: this.config.size.container.width,
         containerHeight: this.config.tableHeaderHeight,
         yOffSet: 0
       })
@@ -397,7 +380,7 @@ class Pictograph {
       this._addTextTo(this.outerSvg, {
         myClass: 'table-footer',
         textConfig: this.config.tableFooter,
-        containerWidth: this.config.size.specified.width,
+        containerWidth: this.config.size.container.width,
         containerHeight: this.config.tableFooterHeight,
         yOffSet: this.config.gridHeight + this.config.tableHeaderHeight
       })
@@ -425,7 +408,6 @@ class Pictograph {
       .attr('class', 'table-cell')
       .attr('transform', d => `translate(${d.x},${d.y})`)
 
-    const {size} = this.config
     enteringCells.each(function (d) {
       const instance = d.instance
 
@@ -436,7 +418,6 @@ class Pictograph {
       instance.setWidth(d.width)
       instance.setHeight(d.height)
       instance.setDynamicMargins(d.dynamicMargins)
-      instance.setPictographSizeInfo(size) // just used for relative label sizing
       instance.draw()
     })
   }
@@ -461,18 +442,12 @@ class Pictograph {
       }
     })()
 
-    // TODO this logic is repeated
-    const fontSize = textConfig['font-size']
-    const adjustedTextSize = (fontSize.indexOf('px') !== -1)
-      ? this.config.size.ratios.textSize * parseInt(fontSize.replace(/(px|em)/, ''))
-      : parseInt(fontSize)
-
     return parent.append('svg:text')
       .attr('class', `label ${myClass}`)
       .attr('x', xOffSet + xAnchor)
       .attr('y', yOffSet + yMidpoint)
       .attr('text-anchor', textConfig['horizontal-align'])
-      .style('font-size', adjustedTextSize)
+      .style('font-size', textConfig['font-size'])
       .style('dominant-baseline', textConfig['dominant-baseline'])
       .text(textConfig.text)
   }
@@ -505,7 +480,7 @@ class Pictograph {
     if (this.config.resizable) {
       return $(this.rootElement).width('100%').height('100%')
     }
-    return $(this.rootElement).width(this.config.size.specified.width).height(this.config.size.specified.height)
+    return $(this.rootElement).width(this.config.size.container.width).height(this.config.size.container.height)
   }
 
   _addSvgToRootElement () {
@@ -522,13 +497,26 @@ class Pictograph {
     // NB JQuery insists on lowercasing attributes, so we must use JS directly
     // when setting viewBox and preserveAspectRatio ?!
     document.getElementsByClassName(`${this.config.id} rhtmlwidget-outer-svg`)[0]
-      .setAttribute('viewBox', `0 0 ${this.config.size.specified.width} ${this.config.size.specified.height}`)
+      .setAttribute('viewBox', `0 0 ${this.config.size.container.width} ${this.config.size.container.height}`)
     if (this.config.preserveAspectRatio != null) {
       document.getElementsByClassName(`${this.config.id} rhtmlwidget-outer-svg`)[0]
         .setAttribute('preserveAspectRatio', this.config.preserveAspectRatio)
     }
 
     return null
+  }
+
+  getContainerDimensions () {
+    try {
+      const jqueryRoot = $(this.rootElement)
+      return {
+        width: jqueryRoot.width(),
+        height: jqueryRoot.height()
+      }
+    } catch (err) {
+      console.error(`fail in getContainerDimensions: ${err}`)
+      return null
+    }
   }
 }
 
