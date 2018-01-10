@@ -428,7 +428,7 @@ class PictographConfig {
 
     // NB we use Math.floor here to avoid throwing error on small rounding diffs.
     if (Math.floor(this.totalAllocatedHorizontalSpace) > Math.floor(this.size.container.width)) {
-      throw new Error(`Cannot specify columnWidth/columnGutterLength where sum(rows+padding) exceeds table width: ${this.totalAllocatedHorizontalSpace} !< ${this.size.container.width}`)
+      throw new Error(`Cannot specify columnWidth/columnGutterLength where sum(columns+padding) exceeds table width: ${this.totalAllocatedHorizontalSpace} !< ${this.size.container.width}`)
     }
   }
 
@@ -573,7 +573,7 @@ class PictographConfig {
       output.max = null
       output.size = null
       output.flexible = true
-      output.type = 'graphic'
+      output.type = 'graphic' // TODO is this used?
     }
 
     if (input === 'flexible:label') {
@@ -582,7 +582,17 @@ class PictographConfig {
       output.max = null
       output.size = null
       output.flexible = true
-      output.type = 'label'
+      output.type = 'label' // TODO is this used?
+    }
+
+    if (input === 'fixedsize:graphic') {
+      // the graphic cell will compute the fixed size and the
+      // output.[min|max|size] will be filled in in Pictograph._computeCellSizes
+      match = true
+      output.min = null
+      output.max = null
+      output.size = null
+      output.flexible = false
     }
 
     if (!match) {

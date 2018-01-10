@@ -36,6 +36,7 @@ class BaseCell {
     }
     this.width = 1
     this.height = 1
+    this.dimensionContraintPromise = null
   }
 
   setParentSvg (parentSvg) {
@@ -85,6 +86,13 @@ class BaseCell {
   }
 
   getDimensionConstraints () {
+    if (_.isNull(this.dimensionContraintPromise)) {
+      this.dimensionContraintPromise = this._computeDimensionConstraints()
+    }
+    return this.dimensionContraintPromise
+  }
+
+  _computeDimensionConstraints () {
     return Promise.resolve({
       aspectRatio: null,
       width: {

@@ -31,7 +31,9 @@ class GraphicCell extends BaseCell {
       'text-header',
       'text-overlay',
       'variableImage',
-      'floatingLabels'
+      'floatingLabels',
+      'imageWidth',
+      'imageHeight'
     ]
   }
 
@@ -176,6 +178,7 @@ class GraphicCell extends BaseCell {
     return gridLayout
   }
 
+  // NB graphic cell constraints must be recomputed on each resize, so override the caching behaviour of baseCell
   getDimensionConstraints () {
     const numRows = this.gridLayout.rows()
     const numCols = this.gridLayout.cols()
@@ -313,23 +316,62 @@ class GraphicCell extends BaseCell {
     }
 
     return ImageFactory.calculateAspectRatio(this.config.variableImage).then((imageAspectRatio) => {
+      // NB rectangle and ellipse do not have a desired aspect ratio, so in these cases default to 1
+      if (_.isNull(imageAspectRatio)) { imageAspectRatio = 1 }
+      imageAspectRatio = parseFloat(imageAspectRatio)
+
       const rowGutterToImageRatio = this.gridLayout.rowGutter() / (1 - this.gridLayout.rowGutter())
       const columnGutterToImageRatio = this.gridLayout.columnGutter() / (1 - this.gridLayout.columnGutter())
+      const cellHeightInImageHeightUnits = numRows + (numRows - 1) * rowGutterToImageRatio
+      const cellWidthInImageWidthUnits = numCols + (numCols - 1) * columnGutterToImageRatio
 
-      const cellHeightInImageUnits = numRows + (numRows - 1) * rowGutterToImageRatio
-      const cellWidthInImageUnits = parseFloat(imageAspectRatio) * numCols + (numCols - 1) * parseFloat(imageAspectRatio) * columnGutterToImageRatio
+      // If the config specified one or more fixed dimensions, then honor those dimensions, otherwise just return the desired aspect ratio
+      let graphicCellConstraint = null
+      if (this.config.imageHeight || this.config.imageWidth) {
+        let cellDimensions = { width: null, height: null }
+        if (this.config.imageHeight) {
+          cellDimensions.height = cellHeightInImageHeightUnits * this.config.imageHeight
+        }
+        if (this.config.imageWidth) {
+          cellDimensions.width = cellWidthInImageWidthUnits * this.config.imageWidth
+        }
+        if (!this.config.imageHeight) {
+          const imageHeight = this.config.imageWidth / imageAspectRatio // do not write back to config, subsequent calcs will be affected
+          cellDimensions.height = imageHeight * cellHeightInImageHeightUnits
+        }
+        if (!this.config.imageWidth) {
+          const imageWidth = this.config.imageHeight * imageAspectRatio // do not write back to config, subsequent calcs will be affected
+          cellDimensions.width = imageWidth * cellWidthInImageWidthUnits
+        }
 
-      const graphicCellConstraint = {
-        aspectRatio: parseFloat(cellWidthInImageUnits / cellHeightInImageUnits),
-        width: {
-          min: null,
-          max: null,
-          margins: marginConstraints.width
-        },
-        height: {
-          min: null,
-          max: null,
-          margins: marginConstraints.height
+        graphicCellConstraint = {
+          aspectRatio: null,
+          width: {
+            min: cellDimensions.width,
+            max: cellDimensions.width,
+            size: cellDimensions.width,
+            margins: marginConstraints.width
+          },
+          height: {
+            min: cellDimensions.height,
+            max: cellDimensions.height,
+            size: cellDimensions.height,
+            margins: marginConstraints.height
+          }
+        }
+      } else {
+        graphicCellConstraint = {
+          aspectRatio: imageAspectRatio * cellWidthInImageWidthUnits / cellHeightInImageHeightUnits,
+          width: {
+            min: null,
+            max: null,
+            margins: marginConstraints.width
+          },
+          height: {
+            min: null,
+            max: null,
+            margins: marginConstraints.height
+          }
         }
       }
 

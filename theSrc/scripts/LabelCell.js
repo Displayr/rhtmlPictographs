@@ -73,7 +73,7 @@ class LabelCell extends BaseCell {
     })
   }
 
-  getDimensionConstraints () {
+  _computeDimensionConstraints () {
     const labelDimensions = labelUtils.calculateLabelDimensions(this.labels, {
       inner: this.config['padding-inner'],
       top: this.config['padding-top'],

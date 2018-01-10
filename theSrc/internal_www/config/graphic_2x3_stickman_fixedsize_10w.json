@@ -1,0 +1,23 @@
+{
+  "table": {
+    "colWidths": [ "fixedsize:graphic" ],
+    "rowHeights": [ "fixedsize:graphic" ],
+    "rows": [
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": "=4/6",
+            "numImages": 6,
+            "numRows": 2,
+            "imageWidth": 10,
+            "rowGutter": 0.2,
+            "columnGutter": 0.2,
+            "variableImage": "url:fromtop:lightblue:/images/stickman_grey.svg",
+            "baseImage": "url:/images/stickman_grey.svg"
+          }
+        }
+      ]
+    ]
+  }
+}
