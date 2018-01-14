@@ -435,10 +435,10 @@ class GraphicCell extends BaseCell {
       delete textConfig.padding
     }
 
-    this._verifyKeyIsPositiveInt(textConfig, 'padding-left', 1)
-    this._verifyKeyIsPositiveInt(textConfig, 'padding-right', 1)
-    this._verifyKeyIsPositiveInt(textConfig, 'padding-top', 1)
-    this._verifyKeyIsPositiveInt(textConfig, 'padding-bottom', 1)
+    this._verifyKeyIsInt(textConfig, 'padding-left', 0)
+    this._verifyKeyIsInt(textConfig, 'padding-right', 0)
+    this._verifyKeyIsInt(textConfig, 'padding-top', 0)
+    this._verifyKeyIsInt(textConfig, 'padding-bottom', 0)
 
     // NB vertical align is only used by floating labels
     if (textConfig['vertical-align'] == null) { textConfig['vertical-align'] = 'center' }
