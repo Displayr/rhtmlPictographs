@@ -97,9 +97,34 @@ class GraphicCell extends BaseCell {
     // need grid layout now to verify floating label specifications (floating labels cannot be out of bounds)
     this.gridLayout = this._initializeGridLayout()
 
-    if (this.config['text-header']) { this.config['text-header'] = this._processTextConfig(this.config['text-header'], 'text-header') }
     if (this.config['text-overlay']) { this.config['text-overlay'] = this._processTextConfig(this.config['text-overlay'], 'text-overlay') }
-    if (this.config['text-footer']) { this.config['text-footer'] = this._processTextConfig(this.config['text-footer'], 'text-footer') }
+
+    // we need to know footer and header size throughout the class, so compute once now and store
+    if (this.config['text-header']) {
+      this.config['text-header'] = this._processTextConfig(this.config['text-header'], 'text-header')
+      const { height } = labelUtils.calculateLabelDimensions(this.config['text-header'], {
+        top: this.config['text-header']['padding-top'],
+        right: this.config['text-header']['padding-right'],
+        bottom: this.config['text-header']['padding-bottom'],
+        left: this.config['text-header']['padding-left']
+      })
+      this.headerHeight = height
+    } else {
+      this.headerHeight = 0
+    }
+
+    if (this.config['text-footer']) {
+      this.config['text-footer'] = this._processTextConfig(this.config['text-footer'], 'text-footer')
+      const { height } = labelUtils.calculateLabelDimensions(this.config['text-footer'], {
+        top: this.config['text-footer']['padding-top'],
+        right: this.config['text-footer']['padding-right'],
+        bottom: this.config['text-footer']['padding-bottom'],
+        left: this.config['text-footer']['padding-left']
+      })
+      this.footerHeight = height
+    } else {
+      this.footerHeight = 0
+    }
 
     if (this.config.floatingLabels) {
       const floatingLabelsInput = this.config.floatingLabels
@@ -287,37 +312,18 @@ class GraphicCell extends BaseCell {
       }
     })
 
-    // NB TODO the headerHeight + footerHeight is a bit corny
-    let headerHeight = 0
     if (this.config['text-header'] != null) {
-      const { height } = labelUtils.calculateLabelDimensions(this.config['text-header'], {
-        top: this.config['text-header']['padding-top'],
-        right: this.config['text-header']['padding-right'],
-        bottom: this.config['text-header']['padding-bottom'],
-        left: this.config['text-header']['padding-left']
-      })
-
       marginConstraints.height.negative.push({
-        size: height,
+        size: this.headerHeight,
         overlapInUnitsOfGraphicSize: 0
       })
-      headerHeight = height
     }
 
-    let footerHeight = 0
     if (this.config['text-footer'] != null) {
-      const { height } = labelUtils.calculateLabelDimensions(this.config['text-footer'], {
-        top: this.config['text-footer']['padding-top'],
-        right: this.config['text-footer']['padding-right'],
-        bottom: this.config['text-footer']['padding-bottom'],
-        left: this.config['text-footer']['padding-left']
-      })
-
       marginConstraints.height.positive.push({
-        size: height,
+        size: this.footerHeight,
         overlapInUnitsOfGraphicSize: 0
       })
-      footerHeight = height
     }
 
     return ImageFactory.calculateAspectRatio(this.config.variableImage).then((imageAspectRatio) => {
@@ -358,9 +364,9 @@ class GraphicCell extends BaseCell {
             margins: marginConstraints.width
           },
           height: {
-            min: cellDimensions.height + headerHeight + footerHeight,
-            max: cellDimensions.height + headerHeight + footerHeight,
-            size: cellDimensions.height + headerHeight + footerHeight,
+            min: cellDimensions.height + this.headerHeight + this.footerHeight,
+            max: cellDimensions.height + this.headerHeight + this.footerHeight,
+            size: cellDimensions.height + this.headerHeight + this.footerHeight,
             margins: marginConstraints.height
           }
         }
@@ -599,8 +605,8 @@ class GraphicCell extends BaseCell {
     const padding = this.config.padding
 
     // need these first to calc graphicHeight
-    dim.headerHeight = Math.max(((this.config['text-header'] != null) ? this.config['text-header']['font-size'] : 0), this.dynamicMargins.height.negative)
-    dim.footerHeight = Math.max(((this.config['text-footer'] != null) ? this.config['text-footer']['font-size'] : 0), this.dynamicMargins.height.positive)
+    dim.headerHeight = Math.max(this.headerHeight, this.dynamicMargins.height.negative)
+    dim.footerHeight = Math.max(this.footerHeight, this.dynamicMargins.height.positive)
 
     const leftPadding = padding.left + this.dynamicMargins.width.negative
     const rightPadding = padding.right + this.dynamicMargins.width.positive
