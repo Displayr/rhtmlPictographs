@@ -287,6 +287,8 @@ class GraphicCell extends BaseCell {
       }
     })
 
+    // NB TODO the headerHeight + footerHeight is a bit corny
+    let headerHeight = 0
     if (this.config['text-header'] != null) {
       const { height } = labelUtils.calculateLabelDimensions(this.config['text-header'], {
         top: this.config['text-header']['padding-top'],
@@ -299,8 +301,10 @@ class GraphicCell extends BaseCell {
         size: height,
         overlapInUnitsOfGraphicSize: 0
       })
+      headerHeight = height
     }
 
+    let footerHeight = 0
     if (this.config['text-footer'] != null) {
       const { height } = labelUtils.calculateLabelDimensions(this.config['text-footer'], {
         top: this.config['text-footer']['padding-top'],
@@ -313,6 +317,7 @@ class GraphicCell extends BaseCell {
         size: height,
         overlapInUnitsOfGraphicSize: 0
       })
+      footerHeight = height
     }
 
     return ImageFactory.calculateAspectRatio(this.config.variableImage).then((imageAspectRatio) => {
@@ -353,9 +358,9 @@ class GraphicCell extends BaseCell {
             margins: marginConstraints.width
           },
           height: {
-            min: cellDimensions.height,
-            max: cellDimensions.height,
-            size: cellDimensions.height,
+            min: cellDimensions.height + headerHeight + footerHeight,
+            max: cellDimensions.height + headerHeight + footerHeight,
+            size: cellDimensions.height + headerHeight + footerHeight,
             margins: marginConstraints.height
           }
         }

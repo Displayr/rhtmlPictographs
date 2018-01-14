@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Arvo:400,700italic,700,400italic' rel='stylesheet' type='text/css'>
+    <link href='/styles/internal_www.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<p>It is possible to specify the size of an image slot in a single image or multi image graphic cell. The cell will then dynamically size to support the specified image width or image height.</p>
+<p>In order to create graphic cells with fixed size image slots, two additions to the config are necessary:</p>
+
+<ul>
+  <li>The rowHeights and colWidths must be set to "fixedsize:graphic"</li>
+  <li>The imageWidth, and/or the imageHeight must be specified in the graphic cell definition</li>
+</ul>
+
+Because you must specify the rowHeights/colWidths as "fixedsize:graphic", it is not possible to use the graphic cell shorthand; you must explicitly pass in a table.rows field containing the matrix of cells that you wish to render.
+
+<p>Specifying both imageWidth and imageHeight to a fixed size graphic cell will force each image to match the specified size</p>
+<div class="row">
+  <pre class="example" data-show-config="true" data-width="100" data-height="100" data-config='config.graphic_2x3_rectanges_fixedsize_10x20'>
+  </pre>
+</div>
+
+<p>When specifying just imageWidth, imageHeight will be computed based on aspect ratio of image. For shapes it will assume aspect ratio of 1</p>
+<div class="row">
+  <pre class="example" data-show-config="true" data-width="100" data-height="100" data-config='config.graphic_2x3_stickman_fixedsize_10w'>
+  </pre>
+</div>
+
+
+<p>When specifying just imageHeight, imageWidth will be computed based on aspect ratio of image. For shapes it will assume aspect ratio of 1</p>
+<div class="row">
+  <pre class="example" data-show-config="true" data-width="100" data-height="100" data-config='config.graphic_2x3_stickman_fixedsize_25h'>
+  </pre>
+</div>
+
+<p>Graphic cells with fixed image slots play well with both table footers and graphic cell text footers</p>
+<div class="row">
+    <pre class="example" data-show-config="true" data-width="300" data-height="300">{
+      "table-footer": "text",
+      "table": {
+        "colWidths": [ "fixedsize:graphic" ],
+        "rowHeights": [ "fixedsize:graphic" ],
+        "rows": [
+          [
+            {
+              "type": "graphic",
+              "value": {
+                "proportion": "=4/6",
+                "numImages": 6,
+                "numRows": 2,
+                "imageWidth": 10,
+                "imageHeight": 20,
+                "rowGutter": 0.2,
+                "columnGutter": 0.2,
+                "variableImage": "rect:fromtop:lightblue",
+                "baseImage": "rect:#CCCCCC"
+              }
+            }
+          ]
+        ]
+      }
+    }</pre>
+
+    <pre class="example" data-show-config="true" data-width="300" data-height="300">{
+      "table": {
+        "colWidths": [ "fixedsize:graphic" ],
+        "rowHeights": [ "fixedsize:graphic" ],
+        "rows": [
+          [
+            {
+              "type": "graphic",
+              "value": {
+                "text-footer": "text",
+                "proportion": "=4/6",
+                "numImages": 6,
+                "numRows": 2,
+                "imageWidth": 10,
+                "imageHeight": 20,
+                "rowGutter": 0.2,
+                "columnGutter": 0.2,
+                "variableImage": "rect:fromtop:lightblue",
+                "baseImage": "rect:#CCCCCC"
+              }
+            }
+          ]
+        ]
+      }
+    }</pre>
+</div>
+
+</body>
+
+<script src="/js/renderContentPage.js"></script>
+</body>
+</html>

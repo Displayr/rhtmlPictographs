@@ -320,6 +320,62 @@
     </pre>
   </div>
 </div>
+
+<div snapshot-name="graphic_cell_fixed_size_footer_interactions">
+  <div class="row">
+    <pre class="example" data-show-config="true" data-width="300" data-height="300">{
+      "table-footer": "text",
+      "table": {
+        "colWidths": [ "fixedsize:graphic" ],
+        "rowHeights": [ "fixedsize:graphic" ],
+        "rows": [
+          [
+            {
+              "type": "graphic",
+              "value": {
+                "proportion": "=4/6",
+                "numImages": 6,
+                "numRows": 2,
+                "imageWidth": 10,
+                "imageHeight": 20,
+                "rowGutter": 0.2,
+                "columnGutter": 0.2,
+                "variableImage": "rect:fromtop:lightblue",
+                "baseImage": "rect:#CCCCCC"
+              }
+            }
+          ]
+        ]
+      }
+    }</pre>
+
+    <pre class="example" data-show-config="true" data-width="300" data-height="300">{
+      "table": {
+        "colWidths": [ "fixedsize:graphic" ],
+        "rowHeights": [ "fixedsize:graphic" ],
+        "rows": [
+          [
+            {
+              "type": "graphic",
+              "value": {
+                "text-footer": "text",
+                "proportion": "=4/6",
+                "numImages": 6,
+                "numRows": 2,
+                "imageWidth": 10,
+                "imageHeight": 20,
+                "rowGutter": 0.2,
+                "columnGutter": 0.2,
+                "variableImage": "rect:fromtop:lightblue",
+                "baseImage": "rect:#CCCCCC"
+              }
+            }
+          ]
+        ]
+      }
+    }</pre>
+  </div>
+</div>
 </body>
 
 <script src="/js/renderContentPage.js"></script>
