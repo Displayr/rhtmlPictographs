@@ -25,12 +25,6 @@
 
 graphic <- function(settingsJsonString = '{}') {
 
-  DEFAULT_WIDGET_WIDTH <- 600
-  DEFAULT_WIDGET_HEIGHT <- 600
-
-  width <- DEFAULT_WIDGET_WIDTH
-  height <- DEFAULT_WIDGET_HEIGHT
-
   if (grepl('^\\{', settingsJsonString)) {
 
     parsedInput <- NULL
@@ -57,11 +51,7 @@ graphic <- function(settingsJsonString = '{}') {
   htmlwidgets::createWidget(
     name = 'rhtmlPictographs',
     settingsJsonString,
-    width = width,
-    height = height,
     sizingPolicy = htmlwidgets::sizingPolicy(
-      defaultWidth = DEFAULT_WIDGET_WIDTH,
-      defaultHeight = DEFAULT_WIDGET_HEIGHT,
       browser.fill = TRUE,
       viewer.fill = TRUE,
       padding = 0
