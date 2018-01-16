@@ -3,11 +3,15 @@ import _ from 'lodash'
 import d3 from 'd3'
 import $ from 'jquery'
 import PictographConfig from './PictographConfig'
+import * as log from 'loglevel'
+
+log.setLevel('debug')
 
 class Pictograph {
   constructor (el) {
     this.rootElement = _.has(el, 'length') ? el[0] : el
     const actualDimensions = this.getContainerDimensions()
+    log.debug('Pictograph() called. Container dimensions:', actualDimensions, 'element:', el)
 
     this.config = new PictographConfig()
     this.config.setDimensions(actualDimensions)
@@ -35,9 +39,11 @@ class Pictograph {
   }
 
   resize () {
+    const actualDimensions = this.getContainerDimensions()
+    log.debug('Pictograph.resize called. Container dimensions:', actualDimensions, `resizable:${this.config.resizable}`)
+
     if (this.config.resizable === false) { return }
 
-    const actualDimensions = this.getContainerDimensions()
     this.config.setDimensions(actualDimensions)
 
     this._removeAllContentFromRootElement()
