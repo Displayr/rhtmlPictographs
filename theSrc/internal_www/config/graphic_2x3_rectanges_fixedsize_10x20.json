@@ -1,0 +1,24 @@
+{
+  "table": {
+    "colWidths": [ "fixedsize:graphic" ],
+    "rowHeights": [ "fixedsize:graphic" ],
+    "rows": [
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": "=4/6",
+            "numImages": 6,
+            "numRows": 2,
+            "imageWidth": 10,
+            "imageHeight": 20,
+            "rowGutter": 0.2,
+            "columnGutter": 0.2,
+            "variableImage": "rect:fromtop:lightblue",
+            "baseImage": "rect:#CCCCCC"
+          }
+        }
+      ]
+    ]
+  }
+}

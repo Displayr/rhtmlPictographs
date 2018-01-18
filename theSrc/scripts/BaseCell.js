@@ -22,10 +22,8 @@ class BaseCell {
   }
 
   constructor () {
-    this.requiresResize = false
     this.myCssSelectorArray = []
     this.cssBucket = {}
-    this.pictographSizeInfo = {}
     this.dynamicMargins = {
       width: {
         positive: 0,
@@ -38,6 +36,7 @@ class BaseCell {
     }
     this.width = 1
     this.height = 1
+    this.dimensionContraintPromise = null
   }
 
   setParentSvg (parentSvg) {
@@ -52,10 +51,6 @@ class BaseCell {
     } else {
       throw new Error(`Invalid myCssSelector: ${myCssSelector}`)
     }
-  }
-
-  setPictographSizeInfo (pictographSizeInfo) {
-    this.pictographSizeInfo = pictographSizeInfo
   }
 
   setWidth (width) {
@@ -91,6 +86,13 @@ class BaseCell {
   }
 
   getDimensionConstraints () {
+    if (_.isNull(this.dimensionContraintPromise)) {
+      this.dimensionContraintPromise = this._computeDimensionConstraints()
+    }
+    return this.dimensionContraintPromise
+  }
+
+  _computeDimensionConstraints () {
     return Promise.resolve({
       aspectRatio: null,
       width: {
@@ -172,23 +174,6 @@ class BaseCell {
 
   _draw () {
     throw new Error('BaseCell._draw must be overridden by child')
-  }
-
-  _resize () {
-    throw new Error('BaseCell._resize must be overridden by child')
-  }
-
-  getAdjustedTextSize (textSizeInput) {
-    if (textSizeInput.indexOf('px') !== -1) {
-      this.requiresResize = true
-      return this.pictographSizeInfo.ratios.textSize * parseInt(textSizeInput.replace(/(px|em)/, ''))
-    }
-    return parseInt(textSizeInput)
-  }
-
-  resize (pictographSizeInfo) {
-    this.pictographSizeInfo = pictographSizeInfo
-    if (this.requiresResize) { this._resize() }
   }
 
   _generateDynamicCss () {

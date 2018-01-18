@@ -4,6 +4,7 @@ import GraphicCell from './GraphicCell'
 import LabelCell from './LabelCell'
 import EmptyCell from './EmptyCell'
 import ColorFactory from './ColorFactory'
+import { ensureObjectHasValidFontSize } from './utils/fontSizeCleaner'
 
 class PictographConfig {
   static initClass () {
@@ -12,20 +13,20 @@ class PictographConfig {
 
   static get validRootAttributes () {
     return [
+      'width', // TODO deprecate
+      'height', // TODO deprecate
       'background-color',
       'css',
       'font-color',
       'font-family',
       'font-size',
       'font-weight',
-      'height',
       'horizontal-align',
       'preserveAspectRatio',
       'resizable',
       'table',
       'table-id',
       'vertical-align',
-      'width',
       'table-header',
       'table-footer'
     ]
@@ -47,7 +48,7 @@ class PictographConfig {
     return {
       'font-family': 'Verdana,sans-serif',
       'font-weight': '900',
-      'font-size': '24px',
+      'font-size': '24',
       'font-color': 'black'
     }
   }
@@ -72,13 +73,7 @@ class PictographConfig {
 
   get tableHeaderHeight () {
     if (this.tableHeader) {
-      // TODO this logic is repeated
-      const fontSize = this.tableHeader['font-size']
-      const adjustedTextSize = (fontSize.indexOf('px') !== -1)
-        ? this.size.ratios.textSize * parseInt(fontSize.replace(/(px|em)/, ''))
-        : parseInt(fontSize)
-
-      return this.tableHeader.padding.top + this.tableHeader.padding.bottom + adjustedTextSize
+      return this.tableHeader.padding.top + this.tableHeader.padding.bottom + this.tableHeader['font-size']
     }
 
     return 0
@@ -86,13 +81,7 @@ class PictographConfig {
 
   get tableFooterHeight () {
     if (this.tableFooter) {
-      // TODO this logic is repeated
-      const fontSize = this.tableFooter['font-size']
-      const adjustedTextSize = (fontSize.indexOf('px') !== -1)
-        ? this.size.ratios.textSize * parseInt(fontSize.replace(/(px|em)/, ''))
-        : parseInt(fontSize)
-
-      return this.tableFooter.padding.top + this.tableFooter.padding.bottom + adjustedTextSize
+      return this.tableFooter.padding.top + this.tableFooter.padding.bottom + this.tableFooter['font-size']
     }
 
     return 0
@@ -109,16 +98,7 @@ class PictographConfig {
     }
 
     this.size = {
-      // TODO some of these may no longer be necessary
-      initial: {width: null, height: null}, // what was the first specified dimension
-      specified: {width: null, height: null}, // what are the current specified dimensions
-      viewBox: {width: null, height: null}, // what are the viewbox dimensions
-      actual: {width: null, height: null}, // what is the actual size (via jquery inspection)
-      ratios: {
-        textSize: 1,
-        containerDelta: {width: 1, height: 1}, // on each resize how did dimensions change
-        containerToViewBox: {width: 1, height: 1}  // the ratio between current actual, and the viewBox
-      },
+      container: {width: null, height: null}, // what is the actual size (via jquery inspection)
       gutter: {row: 0, column: 0}
     }
 
@@ -155,13 +135,10 @@ class PictographConfig {
     if (userConfigObject.table == null) {
       userConfigObject = this._transformGraphicCellConfigToPictographConfig(userConfigObject)
     }
-    if (userConfigObject.table.rows == null) { throw new Error('Must specify \'table.rows\'') }
+    if (userConfigObject.table.rows == null) { throw new Error("Must specify 'table.rows'") }
 
     this._throwOnInvalidAttributes(userConfigObject)
     this._userConfig = userConfigObject
-
-    if (this._userConfig.width) { this.setWidth(this._userConfig.width) }
-    if (this._userConfig.height) { this.setHeight(this._userConfig.height) }
 
     // TODO validate preserveAspectRatio
     this.preserveAspectRatio = this._userConfig.preserveAspectRatiox
@@ -245,8 +222,8 @@ class PictographConfig {
       })()
 
       // font-size must be present to compute dimensions
-      if (textConfig['font-size'] == null) { textConfig['font-size'] = BaseCell.getDefault('font-size') }
-      ['font-family', 'font-weight', 'font-color'].forEach((cssAttribute) => {
+      ensureObjectHasValidFontSize(textConfig, BaseCell.getDefault('font-size'))
+      _(['font-family', 'font-weight', 'font-color']).each((cssAttribute) => {
         if (textConfig[cssAttribute] != null) { cssCollector.setCss('table-header', cssAttribute, textConfig[cssAttribute]) }
       })
 
@@ -310,8 +287,8 @@ class PictographConfig {
       })()
 
       // font-size must be present to compute dimensions
-      if (textConfig['font-size'] == null) { textConfig['font-size'] = BaseCell.getDefault('font-size') }
-      ['font-family', 'font-weight', 'font-color'].forEach((cssAttribute) => {
+      ensureObjectHasValidFontSize(textConfig, BaseCell.getDefault('font-size'))
+      _(['font-family', 'font-weight', 'font-color']).each((cssAttribute) => {
         if (textConfig[cssAttribute] != null) { cssCollector.setCss('table-footer', cssAttribute, textConfig[cssAttribute]) }
       })
 
@@ -357,10 +334,10 @@ class PictographConfig {
       // NB font-size must be explicitly provided to child cells (via BaseCell defaults),
       // because it is required for calculating height offsets.
       // All other css values we can leave them implicitly set via CSS inheritance
-      // also font-size must be a string (containing a number), so cast it to string
+      // also font-size must be a string (containing a number), so cast it to string and remove any px/em/rem
 
       if (cssAttribute === 'font-size') {
-        return BaseCell.setDefault(cssAttribute, `${cssValue}`)
+        return BaseCell.setDefault(cssAttribute, `${cssValue}`.replace(/^(\d+).*$/, '$1'))
       }
 
       this.cssCollector.setCss('', cssAttribute, cssValue)
@@ -414,7 +391,7 @@ class PictographConfig {
     const tableConfig = userConfigObject.table
 
     this.size.gutter.column = this._extractInt({input: tableConfig, key: 'columnGutterLength', defaultValue: 0})
-    const totalWidthAvailable = this.size.specified.width - ((this.gridInfo.dimensions.column - 1) * this.size.gutter.column)
+    const totalWidthAvailable = this.size.container.width - ((this.gridInfo.dimensions.column - 1) * this.size.gutter.column)
     if (tableConfig.colWidths) {
       if (!_.isArray(tableConfig.colWidths)) {
         throw new Error('colWidths must be array')
@@ -449,9 +426,9 @@ class PictographConfig {
     }
     this.gridInfo.flexible.column = (_.findIndex(this.gridInfo.sizes.column, {flexible: true}) !== -1)
 
-    // NB we use Math.floor here to avoid throwing error on rounding diff. e.g., exceeds table width: 372.99996000000004 !< 372.99996
-    if (Math.floor(this.totalAllocatedHorizontalSpace) > Math.floor(this.size.specified.width)) {
-      throw new Error(`Cannot specify columnWidth/columnGutterLength where sum(rows+padding) exceeds table width: ${this.totalAllocatedHorizontalSpace} !< ${this.size.specified.width}`)
+    // NB we use Math.floor here to avoid throwing error on small rounding diffs.
+    if (Math.floor(this.totalAllocatedHorizontalSpace) > Math.floor(this.size.container.width)) {
+      throw new Error(`Cannot specify columnWidth/columnGutterLength where sum(columns+padding) exceeds table width: ${this.totalAllocatedHorizontalSpace} !< ${this.size.container.width}`)
     }
   }
 
@@ -459,7 +436,7 @@ class PictographConfig {
     const tableConfig = userConfigObject.table
 
     this.size.gutter.row = this._extractInt({input: tableConfig, key: 'rowGutterLength', defaultValue: 0})
-    const totalHeightAvailable = this.size.specified.height -
+    const totalHeightAvailable = this.size.container.height -
       ((this.gridInfo.dimensions.row - 1) * this.size.gutter.row) -
       this.tableHeaderHeight -
       this.tableFooterHeight
@@ -499,8 +476,8 @@ class PictographConfig {
     this.gridInfo.flexible.row = (_.findIndex(this.gridInfo.sizes.row, {flexible: true}) !== -1)
 
     // NB we use Math.floor here to avoid throwing error on rounding diff. e.g., exceeds table height: 372.99996000000004 !< 372.99996
-    if (Math.floor(this.totalAllocatedVerticalSpace) > Math.floor(this.size.specified.height)) {
-      throw new Error(`Cannot specify rowHeights/rowGutterLength where sum(rows+padding) exceeds table height: ${this.totalAllocatedVerticalSpace} !< ${this.size.specified.height}`)
+    if (Math.floor(this.totalAllocatedVerticalSpace) > Math.floor(this.size.container.height)) {
+      throw new Error(`Cannot specify rowHeights/rowGutterLength where sum(rows+padding) exceeds table height: ${this.totalAllocatedVerticalSpace} !< ${this.size.container.height}`)
     }
   }
 
@@ -596,7 +573,7 @@ class PictographConfig {
       output.max = null
       output.size = null
       output.flexible = true
-      output.type = 'graphic'
+      output.type = 'graphic' // TODO is this used?
     }
 
     if (input === 'flexible:label') {
@@ -605,7 +582,17 @@ class PictographConfig {
       output.max = null
       output.size = null
       output.flexible = true
-      output.type = 'label'
+      output.type = 'label' // TODO is this used?
+    }
+
+    if (input === 'fixedsize:graphic') {
+      // the graphic cell will compute the fixed size and the
+      // output.[min|max|size] will be filled in in Pictograph._computeCellSizes
+      match = true
+      output.min = null
+      output.max = null
+      output.size = null
+      output.flexible = false
     }
 
     if (!match) {
@@ -637,48 +624,22 @@ class PictographConfig {
     return cellInstance
   }
 
+  setDimensions (dimensions) {
+    this.recomputeSizing({ actualWidth: dimensions.width, actualHeight: dimensions.height })
+  }
+
   setWidth (newValue) {
-    if (!this.size.initial.width) { this.size.initial.width = newValue }
-    if (!this.size.viewBox.width) { this.size.viewBox.width = newValue }
-    this.size.specified.width = newValue
+    this.recomputeSizing({ actualWidth: newValue })
   }
 
   setHeight (newValue) {
-    if (!this.size.initial.height) { this.size.initial.height = newValue }
-    if (!this.size.viewBox.height) { this.size.viewBox.height = newValue }
-    this.size.specified.height = newValue
+    this.recomputeSizing({ actualHeight: newValue })
   }
 
-  recomputeSizing ({specifiedWidth, specifiedHeight, actualWidth, actualHeight}) {
+  recomputeSizing ({actualWidth, actualHeight}) {
     const size = this.size
-    const ratios = size.ratios
-
-    ratios.containerToViewBox.width = (actualWidth * 1.0) / size.viewBox.width
-    ratios.containerToViewBox.height = (actualHeight * 1.0) / size.viewBox.height
-    ratios.containerDelta.width = (actualWidth * 1.0) / size.actual.width
-    ratios.containerDelta.height = (actualHeight * 1.0) / size.actual.height
-    ratios.textSize = 1.0 / Math.min(ratios.containerToViewBox.width, ratios.containerToViewBox.height)
-
-    if (actualWidth) { size.actual.width = actualWidth }
-    if (actualHeight) { size.actual.height = actualHeight }
-    if (specifiedWidth) { size.specified.width = specifiedWidth }
-    if (specifiedHeight) { size.specified.height = specifiedHeight }
-  }
-
-  resetSizing ({specifiedWidth, specifiedHeight, actualWidth, actualHeight}) {
-    const size = this.size
-    const ratios = size.ratios
-
-    ratios.containerToViewBox.width = 1
-    ratios.containerToViewBox.height = 1
-    ratios.containerDelta.width = 1
-    ratios.containerDelta.height = 1
-    ratios.textSize = 1
-
-    if (actualWidth) { size.actual.width = actualWidth }
-    if (actualHeight) { size.actual.height = actualHeight }
-    if (specifiedWidth) { size.specified.width = specifiedWidth }
-    if (specifiedHeight) { size.specified.height = specifiedHeight }
+    if (actualWidth) { size.container.width = parseFloat(actualWidth) }
+    if (actualHeight) { size.container.height = parseFloat(actualHeight) }
   }
 
   _throwOnInvalidAttributes (userInput) {

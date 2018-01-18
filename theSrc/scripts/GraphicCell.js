@@ -6,6 +6,7 @@ import BaseCell from './BaseCell'
 import ImageFactory from './ImageFactory'
 import DisplayError from './DisplayError'
 import labelUtils from './utils/labelUtils'
+import { ensureObjectHasValidFontSize } from './utils/fontSizeCleaner'
 
 class GraphicCell extends BaseCell {
   static get validRootAttributes () {
@@ -30,7 +31,9 @@ class GraphicCell extends BaseCell {
       'text-header',
       'text-overlay',
       'variableImage',
-      'floatingLabels'
+      'floatingLabels',
+      'imageWidth',
+      'imageHeight'
     ]
   }
 
@@ -94,9 +97,34 @@ class GraphicCell extends BaseCell {
     // need grid layout now to verify floating label specifications (floating labels cannot be out of bounds)
     this.gridLayout = this._initializeGridLayout()
 
-    if (this.config['text-header']) { this.config['text-header'] = this._processTextConfig(this.config['text-header'], 'text-header') }
     if (this.config['text-overlay']) { this.config['text-overlay'] = this._processTextConfig(this.config['text-overlay'], 'text-overlay') }
-    if (this.config['text-footer']) { this.config['text-footer'] = this._processTextConfig(this.config['text-footer'], 'text-footer') }
+
+    // we need to know footer and header size throughout the class, so compute once now and store
+    if (this.config['text-header']) {
+      this.config['text-header'] = this._processTextConfig(this.config['text-header'], 'text-header')
+      const { height } = labelUtils.calculateLabelDimensions(this.config['text-header'], {
+        top: this.config['text-header']['padding-top'],
+        right: this.config['text-header']['padding-right'],
+        bottom: this.config['text-header']['padding-bottom'],
+        left: this.config['text-header']['padding-left']
+      })
+      this.headerHeight = height
+    } else {
+      this.headerHeight = 0
+    }
+
+    if (this.config['text-footer']) {
+      this.config['text-footer'] = this._processTextConfig(this.config['text-footer'], 'text-footer')
+      const { height } = labelUtils.calculateLabelDimensions(this.config['text-footer'], {
+        top: this.config['text-footer']['padding-top'],
+        right: this.config['text-footer']['padding-right'],
+        bottom: this.config['text-footer']['padding-bottom'],
+        left: this.config['text-footer']['padding-left']
+      })
+      this.footerHeight = height
+    } else {
+      this.footerHeight = 0
+    }
 
     if (this.config.floatingLabels) {
       const floatingLabelsInput = this.config.floatingLabels
@@ -175,6 +203,7 @@ class GraphicCell extends BaseCell {
     return gridLayout
   }
 
+  // NB graphic cell constraints must be recomputed on each resize, so override the caching behaviour of baseCell
   getDimensionConstraints () {
     const numRows = this.gridLayout.rows()
     const numCols = this.gridLayout.cols()
@@ -284,51 +313,76 @@ class GraphicCell extends BaseCell {
     })
 
     if (this.config['text-header'] != null) {
-      const { height } = labelUtils.calculateLabelDimensions(this.config['text-header'], {
-        top: this.config['text-header']['padding-top'],
-        right: this.config['text-header']['padding-right'],
-        bottom: this.config['text-header']['padding-bottom'],
-        left: this.config['text-header']['padding-left']
-      })
-
       marginConstraints.height.negative.push({
-        size: height,
+        size: this.headerHeight,
         overlapInUnitsOfGraphicSize: 0
       })
     }
 
     if (this.config['text-footer'] != null) {
-      const { height } = labelUtils.calculateLabelDimensions(this.config['text-footer'], {
-        top: this.config['text-footer']['padding-top'],
-        right: this.config['text-footer']['padding-right'],
-        bottom: this.config['text-footer']['padding-bottom'],
-        left: this.config['text-footer']['padding-left']
-      })
-
       marginConstraints.height.positive.push({
-        size: height,
+        size: this.footerHeight,
         overlapInUnitsOfGraphicSize: 0
       })
     }
 
     return ImageFactory.calculateAspectRatio(this.config.variableImage).then((imageAspectRatio) => {
+      // NB rectangle and ellipse do not have a desired aspect ratio, so in these cases default to 1
+      if (_.isNull(imageAspectRatio)) { imageAspectRatio = 1 }
+      imageAspectRatio = parseFloat(imageAspectRatio)
+
       const rowGutterToImageRatio = this.gridLayout.rowGutter() / (1 - this.gridLayout.rowGutter())
       const columnGutterToImageRatio = this.gridLayout.columnGutter() / (1 - this.gridLayout.columnGutter())
+      const cellHeightInImageHeightUnits = numRows + (numRows - 1) * rowGutterToImageRatio
+      const cellWidthInImageWidthUnits = numCols + (numCols - 1) * columnGutterToImageRatio
 
-      const cellHeightInImageUnits = numRows + (numRows - 1) * rowGutterToImageRatio
-      const cellWidthInImageUnits = parseFloat(imageAspectRatio) * numCols + (numCols - 1) * parseFloat(imageAspectRatio) * columnGutterToImageRatio
+      // If the config specified one or more fixed dimensions, then honor those dimensions, otherwise just return the desired aspect ratio
+      let graphicCellConstraint = null
+      if (this.config.imageHeight || this.config.imageWidth) {
+        let cellDimensions = { width: null, height: null }
+        if (this.config.imageHeight) {
+          cellDimensions.height = cellHeightInImageHeightUnits * this.config.imageHeight
+        }
+        if (this.config.imageWidth) {
+          cellDimensions.width = cellWidthInImageWidthUnits * this.config.imageWidth
+        }
+        if (!this.config.imageHeight) {
+          const imageHeight = this.config.imageWidth / imageAspectRatio // do not write back to config, subsequent calcs will be affected
+          cellDimensions.height = imageHeight * cellHeightInImageHeightUnits
+        }
+        if (!this.config.imageWidth) {
+          const imageWidth = this.config.imageHeight * imageAspectRatio // do not write back to config, subsequent calcs will be affected
+          cellDimensions.width = imageWidth * cellWidthInImageWidthUnits
+        }
 
-      const graphicCellConstraint = {
-        aspectRatio: parseFloat(cellWidthInImageUnits / cellHeightInImageUnits),
-        width: {
-          min: null,
-          max: null,
-          margins: marginConstraints.width
-        },
-        height: {
-          min: null,
-          max: null,
-          margins: marginConstraints.height
+        graphicCellConstraint = {
+          aspectRatio: null,
+          width: {
+            min: cellDimensions.width,
+            max: cellDimensions.width,
+            size: cellDimensions.width,
+            margins: marginConstraints.width
+          },
+          height: {
+            min: cellDimensions.height + this.headerHeight + this.footerHeight,
+            max: cellDimensions.height + this.headerHeight + this.footerHeight,
+            size: cellDimensions.height + this.headerHeight + this.footerHeight,
+            margins: marginConstraints.height
+          }
+        }
+      } else {
+        graphicCellConstraint = {
+          aspectRatio: imageAspectRatio * cellWidthInImageWidthUnits / cellHeightInImageHeightUnits,
+          width: {
+            min: null,
+            max: null,
+            margins: marginConstraints.width
+          },
+          height: {
+            min: null,
+            max: null,
+            margins: marginConstraints.height
+          }
         }
       }
 
@@ -381,10 +435,10 @@ class GraphicCell extends BaseCell {
       delete textConfig.padding
     }
 
-    this._verifyKeyIsPositiveInt(textConfig, 'padding-left', 1)
-    this._verifyKeyIsPositiveInt(textConfig, 'padding-right', 1)
-    this._verifyKeyIsPositiveInt(textConfig, 'padding-top', 1)
-    this._verifyKeyIsPositiveInt(textConfig, 'padding-bottom', 1)
+    this._verifyKeyIsInt(textConfig, 'padding-left', 0)
+    this._verifyKeyIsInt(textConfig, 'padding-right', 0)
+    this._verifyKeyIsInt(textConfig, 'padding-top', 0)
+    this._verifyKeyIsInt(textConfig, 'padding-bottom', 0)
 
     // NB vertical align is only used by floating labels
     if (textConfig['vertical-align'] == null) { textConfig['vertical-align'] = 'center' }
@@ -403,8 +457,8 @@ class GraphicCell extends BaseCell {
     })()
 
     // font-size must be present to compute dimensions
-    if (textConfig['font-size'] == null) { textConfig['font-size'] = BaseCell.getDefault('font-size') }
-    ['font-family', 'font-weight', 'font-color'].forEach((cssAttribute) => {
+    ensureObjectHasValidFontSize(textConfig, BaseCell.getDefault('font-size'))
+    _(['font-family', 'font-weight', 'font-color']).each((cssAttribute) => {
       if (textConfig[cssAttribute] != null) { this.setCss(cssName, cssAttribute, textConfig[cssAttribute]) }
     })
 
@@ -551,8 +605,8 @@ class GraphicCell extends BaseCell {
     const padding = this.config.padding
 
     // need these first to calc graphicHeight
-    dim.headerHeight = Math.max(((this.config['text-header'] != null) ? this.getAdjustedTextSize(this.config['text-header']['font-size']) : 0), this.dynamicMargins.height.negative)
-    dim.footerHeight = Math.max(((this.config['text-footer'] != null) ? this.getAdjustedTextSize(this.config['text-footer']['font-size']) : 0), this.dynamicMargins.height.positive)
+    dim.headerHeight = Math.max(this.headerHeight, this.dynamicMargins.height.negative)
+    dim.footerHeight = Math.max(this.footerHeight, this.dynamicMargins.height.positive)
 
     const leftPadding = padding.left + this.dynamicMargins.width.negative
     const rightPadding = padding.right + this.dynamicMargins.width.positive
@@ -581,7 +635,7 @@ class GraphicCell extends BaseCell {
       .attr('x', xOffSet)
       .attr('y', yOffSet)
       .attr('text-anchor', textConfig['horizontal-align'])
-      .style('font-size', this.getAdjustedTextSize(textConfig['font-size']))
+      .style('font-size', textConfig['font-size'])
       .style('dominant-baseline', textConfig['dominant-baseline'])
       .text(textConfig.text)
   }
@@ -610,7 +664,7 @@ class GraphicCell extends BaseCell {
       .attr('x', xOffSet + xAnchor)
       .attr('y', yOffSet + yMidpoint)
       .attr('text-anchor', textConfig['horizontal-align'])
-      .style('font-size', this.getAdjustedTextSize(textConfig['font-size']))
+      .style('font-size', textConfig['font-size'])
       .style('dominant-baseline', textConfig['dominant-baseline'])
       .text(textConfig.text)
   }
@@ -625,11 +679,6 @@ class GraphicCell extends BaseCell {
       d3Data.push({ proportion: proportionForImageI, i })
     })
     return d3Data
-  }
-
-  _resize () {
-    this.parentSvg.selectAll('*').remove()
-    return this._draw()
   }
 }
 
