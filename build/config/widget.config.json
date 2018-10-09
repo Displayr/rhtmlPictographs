@@ -4,6 +4,9 @@
   "widgetName": "rhtmlPictographs",
   "internalWebSettings": {
     "includeDimensionsOnWidgetDiv": true,
-    "default_border": true
-  }
+    "default_border": true,
+    "isReadySelector": "div[rhtmlPictographs-status=ready]",
+    "singleWidgetSnapshotSelector": "svg.rhtmlwidget-outer-svg"
+  },
+  "visualRegressionSuite": {}
 }

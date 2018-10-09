@@ -10,6 +10,7 @@ log.setLevel('debug')
 class Pictograph {
   constructor (el) {
     this.rootElement = _.has(el, 'length') ? el[0] : el
+    d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'loading')
     const actualDimensions = this.getContainerDimensions()
     log.debug('Pictograph() called. Container dimensions:', actualDimensions, 'element:', el)
 
@@ -475,6 +476,8 @@ class Pictograph {
       instance.setDynamicMargins(d.dynamicMargins)
       instance.draw()
     })
+
+    d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'ready')
   }
 
   // TODO Duplicated code from graphicCell
