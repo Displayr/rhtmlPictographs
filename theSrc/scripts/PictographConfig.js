@@ -228,6 +228,8 @@ class PictographConfig {
       })
 
       this.tableHeader = textConfig
+    } else {
+      this.tableHeader = null
     }
   }
 
@@ -293,6 +295,8 @@ class PictographConfig {
       })
 
       this.tableFooter = textConfig
+    } else {
+      this.tableFooter = null
     }
   }
 
