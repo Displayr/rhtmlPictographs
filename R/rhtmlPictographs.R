@@ -24,30 +24,6 @@
 #'
 
 graphic <- function(settingsJsonString = '{}') {
-
-  if (grepl('^\\{', settingsJsonString)) {
-
-    parsedInput <- NULL
-    parsedInput = tryCatch({
-      jsonlite::fromJSON(settingsJsonString)
-    }, warning = function(w) {
-      print("warning while parsing JSON:")
-      print(w)
-    }, error = function(e) {
-      print("error while parsing JSON:")
-      print(e)
-      stop(e)
-    }, finally = {})
-
-    if('width' %in% names(parsedInput)) {
-      width <- as.numeric(unlist(parsedInput['width']))
-    }
-
-    if('height' %in% names(parsedInput)) {
-      height <- as.numeric(unlist(parsedInput['height']))
-    }
-  }
-
   htmlwidgets::createWidget(
     name = 'rhtmlPictographs',
     settingsJsonString,
