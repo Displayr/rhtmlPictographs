@@ -1,0 +1,246 @@
+{
+  "font-size": "7px",
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [
+      "proportion:0.1",
+      "proportion:0.1",
+      "proportion:0.1",
+      "proportion:0.1",
+      "proportion:0.1",
+      "proportion:0.1",
+      "proportion:0.1",
+      "proportion:0.1",
+      "proportion:0.1",
+      "proportion:0.1"
+    ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "colWidths": [
+      "flexible:label",
+      "flexible:graphic"
+    ],
+    "rows": [
+      [
+        {
+          "type": "label",
+          "value": {
+            "text": "1",
+            "horizontal-align": "right",
+            "vertical-align": "center",
+            "padding-right": 5
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 1,
+            "numImages": 100,
+            "variableImage": "url:#5C9AD3:fromleft:/images/stickman_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "text": "2",
+            "horizontal-align": "right",
+            "vertical-align": "center",
+            "padding-right": 5
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 1,
+            "numImages": 100,
+            "variableImage": "url:#ED7D31:fromleft:/images/stickman_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "text": "3",
+            "horizontal-align": "right",
+            "vertical-align": "center",
+            "padding-right": 5
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 1,
+            "numImages": 100,
+            "variableImage": "url:#A5A5A5:fromleft:/images/stickman_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "text": "4",
+            "horizontal-align": "right",
+            "vertical-align": "center",
+            "padding-right": 5
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 1,
+            "numImages": 100,
+            "variableImage": "url:#FFC000:fromleft:/images/stickman_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "text": "5",
+            "horizontal-align": "right",
+            "vertical-align": "center",
+            "padding-right": 5
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 1,
+            "numImages": 100,
+            "variableImage": "url:#4473C5:fromleft:/images/stickman_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "text": "6",
+            "horizontal-align": "right",
+            "vertical-align": "center",
+            "padding-right": 5
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 1,
+            "numImages": 100,
+            "variableImage": "url:#70AD46:fromleft:/images/stickman_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "text": "7",
+            "horizontal-align": "right",
+            "vertical-align": "center",
+            "padding-right": 5
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 1,
+            "numImages": 100,
+            "variableImage": "url:#70AD46:fromleft:/images/stickman_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "text": "8",
+            "horizontal-align": "right",
+            "vertical-align": "center",
+            "padding-right": 5
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 1,
+            "numImages": 100,
+            "variableImage": "url:#70AD46:fromleft:/images/stickman_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "text": "9",
+            "horizontal-align": "right",
+            "vertical-align": "center",
+            "padding-right": 5
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 1,
+            "numImages": 100,
+            "variableImage": "url:#255F91:fromleft:/images/stickman_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "text": "10",
+            "horizontal-align": "right",
+            "vertical-align": "center",
+            "padding-right": 5
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 1,
+            "numImages": 100,
+            "variableImage": "url:#9E480D:fromleft:/images/stickman_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0
+          }
+        }
+      ]
+    ]
+  }
+}
