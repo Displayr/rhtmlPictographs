@@ -77,55 +77,6 @@ class ImageFactory {
     }
   }
 
-  static addBaseImageTo (d3Node, config, width, height, dataAttributes) {
-    config = ImageFactory.parseConfig(config)
-    // VIS-121 - Prevent base svgs from peeking out over the variable images (only for basic shapes)
-    if (_.includes(ImageFactory.basicShapes, config.type) && this.isInternetExplorer()) {
-      config.baseShapeScale = 0.98
-    }
-    return ImageFactory.addImageTo(d3Node, config, width, height, dataAttributes)
-  }
-
-  static addVarImageTo (d3Node, config, width, height, dataAttributes) {
-    config = ImageFactory.parseConfig(config)
-    return ImageFactory.addImageTo(d3Node, config, width, height, dataAttributes)
-  }
-
-  static addImageTo (d3Node, config, width, height, dataAttributes) {
-    const imageInstance = ImageFactory.createInstance(d3Node, config, width, height, dataAttributes)
-
-    return Promise.resolve()
-      .then(imageInstance.calculateImageDimensions.bind(imageInstance))
-      .then((imageDimensions) => {
-        if (config.clip) {
-          const newClipId = ClipFactory.addClipPath(config.clip, d3Node, imageDimensions)
-          return newClipId
-        } else {
-          return null
-        }
-      })
-      .then((clipId) => {
-        const imageHandle = imageInstance.appendToSvg()
-        if (clipId) {
-          imageHandle.attr('clip-path', `url(#${clipId})`)
-        }
-      })
-  }
-
-  static calculateAspectRatio (config) {
-    config = ImageFactory.parseConfig(config)
-    const instance = ImageFactory.createInstance(null, config, null, null, null)
-    return instance.calculateDesiredAspectRatio()
-  }
-
-  static createInstance (d3Node, config, width, height, dataAttributes) {
-    if (!_.has(ImageFactory.types, config.type)) {
-      throw new Error(`Invalid image type '${config.type}'`)
-    }
-
-    return new this.types[config.type](d3Node, config, width, height, dataAttributes)
-  }
-
   static parseConfig (newConfig) {
     let config = {}
 
@@ -135,7 +86,7 @@ class ImageFactory {
       }
       config = newConfig
     } else {
-      config = this.parseConfigString(newConfig)
+      config = ImageFactory.parseConfigString(newConfig)
     }
 
     if (config.color && config.url) {
@@ -147,7 +98,7 @@ class ImageFactory {
     }
 
     if (_.has(config, 'preserveAspectRatio')) {
-      this.validateAspectRatioString(config.preserveAspectRatio)
+      ImageFactory.validateAspectRatioString(config.preserveAspectRatio)
     }
 
     return config
@@ -236,6 +187,59 @@ class ImageFactory {
     }
 
     return false
+  }
+
+  constructor ({ definitionManager }) {
+    this.definitionManager = definitionManager
+  }
+
+  addBaseImageTo (d3Node, config, width, height, dataAttributes) {
+    config = ImageFactory.parseConfig(config)
+    // VIS-121 - Prevent base svgs from peeking out over the variable images (only for basic shapes)
+    if (_.includes(ImageFactory.basicShapes, config.type) && ImageFactory.isInternetExplorer()) {
+      config.baseShapeScale = 0.98
+    }
+    return this.addImageTo(d3Node, config, width, height, dataAttributes)
+  }
+
+  addVarImageTo (d3Node, config, width, height, dataAttributes) {
+    config = ImageFactory.parseConfig(config)
+    return this.addImageTo(d3Node, config, width, height, dataAttributes)
+  }
+
+  addImageTo (d3Node, config, width, height, dataAttributes) {
+    const imageInstance = this.createInstance(d3Node, config, width, height, dataAttributes)
+
+    return Promise.resolve()
+      .then(imageInstance.calculateImageDimensions.bind(imageInstance))
+      .then((imageDimensions) => {
+        if (config.clip) {
+          const newClipId = ClipFactory.addClipPath(config.clip, d3Node, imageDimensions)
+          return newClipId
+        } else {
+          return null
+        }
+      })
+      .then((clipId) => {
+        const imageHandle = imageInstance.appendToSvg()
+        if (clipId) {
+          imageHandle.attr('clip-path', `url(#${clipId})`)
+        }
+      })
+  }
+
+  calculateAspectRatio (config) {
+    config = ImageFactory.parseConfig(config)
+    const instance = this.createInstance(null, config, null, null, null)
+    return instance.calculateDesiredAspectRatio()
+  }
+
+  createInstance (d3Node, config, width, height, dataAttributes) {
+    if (!_.has(ImageFactory.types, config.type)) {
+      throw new Error(`Invalid image type '${config.type}'`)
+    }
+
+    return new ImageFactory.types[config.type](d3Node, config, width, height, dataAttributes, this.definitionManager)
   }
 }
 

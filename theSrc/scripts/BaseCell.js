@@ -39,6 +39,10 @@ class BaseCell {
     this.dimensionContraintPromise = null
   }
 
+  setImageFactory (imageFactory) {
+    this.imageFactory = imageFactory
+  }
+
   setParentSvg (parentSvg) {
     this.parentSvg = parentSvg
   }
@@ -118,7 +122,7 @@ class BaseCell {
 
   draw () {
     this._draw()
-    return this._generateDynamicCss()
+    this._generateDynamicCss()
   }
 
   setCss (cssLocation, cssAttr, cssValue) {
@@ -146,7 +150,7 @@ class BaseCell {
     const validCssLocationKeyArray = ensurePartsAreSupportedCss(cssLocationKeyArray)
 
     const transformedInstructions = this._transformCssInstructions(validCssLocationKeyArray, cssAttr, cssValue)
-    return _.forEach(transformedInstructions, (instruction) => {
+    _.forEach(transformedInstructions, (instruction) => {
       const cssSelector = instruction.location.join(' ')
       if (!_.has(this.cssBucket, cssSelector)) { this.cssBucket[cssSelector] = {} }
       this.cssBucket[cssSelector][instruction.attribute] = instruction.value
@@ -177,16 +181,18 @@ class BaseCell {
   }
 
   _generateDynamicCss () {
-    const cssBlocks = _.map(this.cssBucket, function (cssDefinition, cssSelector) {
-      const cssDefinitionString = _.map(cssDefinition, (cssValue, cssAttr) => `${cssAttr}: ${cssValue};`).join('\n')
-      return `${cssSelector} { ${cssDefinitionString} }`
-    })
+    if (_.keys(this.cssBucket).length > 0) {
+      const cssBlocks = _.map(this.cssBucket, function (cssDefinition, cssSelector) {
+        const cssDefinitionString = _.map(cssDefinition, (cssValue, cssAttr) => `${cssAttr}: ${cssValue};`).join('\n')
+        return `${cssSelector} { ${cssDefinitionString} }`
+      })
 
-    const style = $('<style>')
-      .attr('type', 'text/css')
-      .html(cssBlocks.join('\n'))
+      const style = $('<style>')
+        .attr('type', 'text/css')
+        .html(cssBlocks.join('\n'))
 
-    return $('head').append(style)
+      $('head').append(style)
+    }
   }
 
   _verifyKeyIsFloat (input, key, defaultValue, message) {

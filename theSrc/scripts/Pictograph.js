@@ -4,15 +4,17 @@ import d3 from 'd3'
 import $ from 'jquery'
 import PictographConfig from './PictographConfig'
 import * as log from 'loglevel'
+import SvgDefinitionManager from './SvgDefinitionManager'
+import ImageFactory from './ImageFactory'
 
-log.setLevel('debug')
+log.setLevel('error')
 
 class Pictograph {
   constructor (el) {
     this.rootElement = _.has(el, 'length') ? el[0] : el
     d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'loading')
     const actualDimensions = this.getContainerDimensions()
-    log.debug('Pictograph() called. Container dimensions:', actualDimensions, 'element:', el)
+    log.info('Pictograph() called. Container dimensions:', actualDimensions, 'element:', el)
 
     this.config = new PictographConfig()
     this.config.setDimensions(actualDimensions)
@@ -27,6 +29,8 @@ class Pictograph {
     this._removeAllContentFromRootElement()
     this._manipulateRootElementSize()
     this._addSvgToRootElement()
+    this.imageFactory = new ImageFactory({ definitionManager: new SvgDefinitionManager({ parentSvg: this.outerSvg }) })
+    _(this.config.cells).flatten().each(({instance}) => instance.setImageFactory(this.imageFactory))
 
     return Promise.resolve()
       .then(this._computeCellSizes.bind(this))
@@ -41,7 +45,7 @@ class Pictograph {
 
   resize () {
     const actualDimensions = this.getContainerDimensions()
-    log.debug('Pictograph.resize called. Container dimensions:', actualDimensions, `resizable:${this.config.resizable}`)
+    log.info('Pictograph.resize called. Container dimensions:', actualDimensions, `resizable:${this.config.resizable}`)
 
     if (this.config.resizable === false) { return }
 
@@ -466,6 +470,7 @@ class Pictograph {
 
     enteringCells.each(function (d) {
       const instance = d.instance
+      log.debug(`rendering entering cell`, instance)
 
       d3.select(this).classed(`table-cell-${d.row}-${d.column}`, true)
       d3.select(this).classed(d.type, true)

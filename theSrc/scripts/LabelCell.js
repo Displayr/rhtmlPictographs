@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import BaseCell from './BaseCell'
-
 import labelUtils from './utils/labelUtils'
 import { ensureObjectHasValidFontSize } from './utils/fontSizeCleaner'
 
@@ -156,7 +155,7 @@ class LabelCell extends BaseCell {
   computeInitialVerticalOffset (verticalAlign) {
     let freeVertSpace = this.height - this.config['padding-top'] - this.config['padding-bottom'] - this.allocatedVerticalSpace
     if (freeVertSpace < 0) {
-      console.error('Label is using too much vertical space')
+      console.warn('Label is using too much vertical space')
       freeVertSpace = 0
     }
 
