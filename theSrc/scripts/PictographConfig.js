@@ -431,8 +431,8 @@ class PictographConfig {
     this.gridInfo.flexible.column = (_.findIndex(this.gridInfo.sizes.column, {flexible: true}) !== -1)
 
     // NB we use Math.floor here to avoid throwing error on small rounding diffs.
-    if (Math.floor(this.totalAllocatedHorizontalSpace) > Math.floor(this.size.container.width)) {
-      throw new Error(`Cannot specify columnWidth/columnGutterLength where sum(columns+padding) exceeds table width: ${this.totalAllocatedHorizontalSpace} !< ${this.size.container.width}`)
+    if (Math.ceil(this.totalAllocatedHorizontalSpace) > Math.ceil(this.size.container.width)) {
+      throw new Error(`Cannot specify columnWidth/columnGutterLength where sum(columns+padding) exceeds table width: ${Math.ceil(this.totalAllocatedHorizontalSpace)} > ${Math.ceil(this.size.container.width)}`)
     }
   }
 
