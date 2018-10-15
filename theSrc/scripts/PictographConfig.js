@@ -451,7 +451,7 @@ class PictographConfig {
       }
 
       if (tableConfig.rowHeights.length !== this.gridInfo.dimensions.row) {
-        throw new Error('rowHeights length must match num rows specified')
+        throw new Error(`rowHeights length (${tableConfig.rowHeights.length}) must match num rows specified (${this.gridInfo.dimensions.row})`)
       }
 
       this.gridInfo.sizes.row = tableConfig.rowHeights.map((candidate) => {

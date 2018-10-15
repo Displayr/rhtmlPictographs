@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import crypto from 'crypto'
+import * as log from 'loglevel'
 
 /*
   Considerations:
@@ -16,17 +17,47 @@ class CacheService {
   constructor () {
     this.cache = {}
     this.expiryHandles = {}
+    this.hitRates = {}
+    this.reportingSettings = {
+      quitAfter: 60000,
+      reportEvery: 20000
+    }
+
+    this.initialiseReporting()
+  }
+
+  initialiseReporting () {
+    if (this.reportingSettings.reportEvery > 0) {
+      this.reportingIntervalHandle = setInterval(() => {
+        log.debug('Cache report', this.hitRates)
+      }, this.reportingSettings.reportEvery)
+      setTimeout(() => {
+        clearInterval(this.reportingIntervalHandle)
+      }, this.reportingSettings.quitAfter)
+    }
   }
 
   _genHash (input) {
     return crypto.createHash('md5').update(input).digest('hex')
   }
 
+  _recordHit (key) {
+    if (!_.has(this.hitRates, key)) { this.hitRates[key] = {hit: 0, miss: 0} }
+    this.hitRates[key]['hit']++
+  }
+
+  _recordMiss (key) {
+    if (!_.has(this.hitRates, key)) { this.hitRates[key] = {hit: 0, miss: 0} }
+    this.hitRates[key]['miss']++
+  }
+
   get (inputKey) {
     const key = this._genHash(inputKey)
     if (_.has(this.cache, key)) {
+      this._recordHit(inputKey)
       return this.cache[key]
     }
+    this._recordMiss(inputKey)
     return null
   }
 

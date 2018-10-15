@@ -2,12 +2,13 @@ import ColorFactory from '../ColorFactory'
 import _ from 'lodash'
 
 class BaseImageType {
-  constructor (d3Node, config, containerWidth, containerHeight, dataAttributes) {
+  constructor (d3Node, config, containerWidth, containerHeight, dataAttributes, definitionManager) {
     this.d3Node = d3Node
     this.config = config
     this.containerWidth = containerWidth
     this.containerHeight = containerHeight
     this.dataAttributes = dataAttributes
+    this.definitionManager = definitionManager
 
     this.colorFactory = ColorFactory
 

@@ -5,6 +5,8 @@ import CacheService from '../CacheService'
 import RecolorSvg from '../RecolorSvg'
 import geometryUtils from '../utils/geometryUtils'
 
+const cacheExpiryTimeMilliseconds = 240000
+
 class RecoloredExternalSvg extends BaseImageType {
   calculateDesiredAspectRatio () {
     return new Promise((resolve, reject) => {
@@ -31,11 +33,10 @@ class RecoloredExternalSvg extends BaseImageType {
   calculateImageDimensions () {
     return new Promise((resolve, reject) => {
       const onDownloadSuccess = (xmlString) => {
-        const data = $.parseXML(xmlString)
-        this.svg = $(data).find('svg')
+        this.svg = this.getParsedSvgContentFromXmlString(xmlString)
 
         const containerAspectRatio = this.containerWidth / this.containerHeight
-        let imageAspectRatio = this._extractAspectRatioFromSvg()
+        let imageAspectRatio = this._getSvgAspectRatio()
         if (!imageAspectRatio) {
           console.error(`WARN: recolor SVG from ${this.config.url} : Cannot compute aspect ratio : unexpected SVG format (no viewbox , no width & height).`)
           imageAspectRatio = containerAspectRatio
@@ -57,6 +58,15 @@ class RecoloredExternalSvg extends BaseImageType {
         .done(onDownloadSuccess)
         .fail(onDownloadFailure)
     })
+  }
+
+  _getSvgAspectRatio () {
+    const cacheKey = `svg-aspectratio-${this.config.url}`
+    if (!CacheService.get(cacheKey)) {
+      const aspectRatio = this._extractAspectRatioFromSvg()
+      CacheService.put(cacheKey, aspectRatio, cacheExpiryTimeMilliseconds)
+    }
+    return CacheService.get(cacheKey)
   }
 
   // TODO test !!!
@@ -86,6 +96,14 @@ class RecoloredExternalSvg extends BaseImageType {
   }
 
   appendToSvg () {
+    const cleanedSvgString = this.getRecoloredString()
+    const cacheKey = this.getRecoloredStringCacheKey()
+    const definitionId = this.definitionManager.addDefinition(cacheKey, cleanedSvgString)
+    this.imageHandle = this.d3Node.append('use').attr('xlink:href', `#${definitionId}`)
+    return this.imageHandle
+  }
+
+  getRecolorArgs () {
     const recolorArgs = {
       svg: this.svg,
       x: (this.containerWidth * (1 - this.ratio)) / 2,
@@ -98,17 +116,49 @@ class RecoloredExternalSvg extends BaseImageType {
     if (_.has(this.config, 'preserveAspectRatio')) {
       recolorArgs.preserveAspectRatio = this.config.preserveAspectRatio
     }
-    const cleanedSvgString = RecolorSvg.recolor(recolorArgs)
+    return recolorArgs
+  }
 
-    this.imageHandle = this.d3Node.append('g').html(cleanedSvgString)
-    return this.imageHandle
+  getRecoloredStringCacheKey () {
+    const recolorArgs = this.getRecolorArgs()
+    return [
+      'recoloredsvg',
+      this.config.url,
+      recolorArgs.color,
+      recolorArgs.x,
+      recolorArgs.y,
+      recolorArgs.width,
+      recolorArgs.height,
+      (recolorArgs.preserveAspectRatio) ? recolorArgs.preserveAspectRatio : ''
+    ].join('-')
+  }
+
+  getRecoloredString () {
+    const recolorArgs = this.getRecolorArgs()
+    const cacheKey = this.getRecoloredStringCacheKey()
+
+    if (!CacheService.get(cacheKey)) {
+      const cleanedSvgString = RecolorSvg.recolor(recolorArgs)
+      CacheService.put(cacheKey, cleanedSvgString, cacheExpiryTimeMilliseconds)
+    }
+    return CacheService.get(cacheKey)
   }
 
   getOrDownload () {
     const cacheKey = `content-${this.config.url}`
     if (!CacheService.get(cacheKey)) {
       const contentDownloadJqueryPromise = $.ajax({ url: this.config.url, dataType: 'text' })
-      CacheService.put(cacheKey, contentDownloadJqueryPromise, 10000)
+      CacheService.put(cacheKey, contentDownloadJqueryPromise, cacheExpiryTimeMilliseconds)
+    }
+    return CacheService.get(cacheKey)
+  }
+
+  getParsedSvgContentFromXmlString (xmlString) {
+    const cacheKey = `parsed-svg-${this.config.url}`
+    if (!CacheService.get(cacheKey)) {
+      const data = $.parseXML(xmlString)
+      const svg = $(data).find('svg')
+      CacheService.put(cacheKey, svg, cacheExpiryTimeMilliseconds)
     }
     return CacheService.get(cacheKey)
   }

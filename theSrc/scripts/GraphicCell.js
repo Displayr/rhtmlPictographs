@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import d3 from 'd3'
+import * as log from 'loglevel'
 
 import GraphicCellGrid from './GraphicCellGrid'
 import BaseCell from './BaseCell'
@@ -326,7 +327,7 @@ class GraphicCell extends BaseCell {
       })
     }
 
-    return ImageFactory.calculateAspectRatio(this.config.variableImage).then((imageAspectRatio) => {
+    return this.imageFactory.calculateAspectRatio(this.config.variableImage).then((imageAspectRatio) => {
       // NB rectangle and ellipse do not have a desired aspect ratio, so in these cases default to 1
       if (_.isNull(imageAspectRatio)) { imageAspectRatio = 1 }
       imageAspectRatio = parseFloat(imageAspectRatio)
@@ -466,11 +467,13 @@ class GraphicCell extends BaseCell {
   }
 
   _draw () {
+    // NB the order of append operations matters as SVG is a last on top rendering model; there is no z-index
     this._computeDimensions()
     const d3Data = this._generateDataArray(this.config.proportion, this.config.numImages)
-    const enteringLeafNodeData = this.gridLayout.compute(d3Data)
 
-    // NB the order of append operations matters as SVG is a last on top rendering model
+    const unoptimisedEnteringLeafNodeData = this.gridLayout.compute(d3Data)
+    const enteringLeafNodeData = unoptimisedEnteringLeafNodeData.filter(imageInfo => this.config.baseImage || imageInfo.proportion > 0)
+    log.debug(`graphic cell node count`, { raw: unoptimisedEnteringLeafNodeData.length, optimised: enteringLeafNodeData.length })
 
     this.parentSvg.append('svg:rect')
       .attr('width', this.width)
@@ -539,25 +542,29 @@ class GraphicCell extends BaseCell {
     let baseImageCompletePromise = Promise.resolve()
     if (this.config.baseImage != null) {
       const baseImageConfig = this.config.baseImage
+      const imageFactory = this.imageFactory
       const baseImageRenderPromises = []
       enteringLeafNodes.each(function (dataAttributes) {
         const d3Node = d3.select(this)
         baseImageRenderPromises.push(
-          ImageFactory.addBaseImageTo(d3Node, baseImageConfig, imageWidth, imageHeight, dataAttributes)
+          imageFactory.addBaseImageTo(d3Node, baseImageConfig, imageWidth, imageHeight, dataAttributes)
         )
       })
       baseImageCompletePromise = Promise.all(baseImageRenderPromises).catch(imageErrorHandler)
     }
 
+    // TODO this should be tied to base image promise unconditioanlly (ie. swap lines below)
+    // let variableImageCompletePromise = baseImageCompletePromise
     let variableImageCompletePromise = Promise.resolve()
     if (this.config.variableImage != null) {
       const variableImageConfig = this.config.variableImage
+      const imageFactory = this.imageFactory
       variableImageCompletePromise = baseImageCompletePromise.then(function () {
         const variableImageRenderPromises = []
         enteringLeafNodes.each(function (dataAttributes) {
           const d3Node = d3.select(this)
           variableImageRenderPromises.push(
-            ImageFactory.addVarImageTo(d3Node, variableImageConfig, imageWidth, imageHeight, dataAttributes)
+            imageFactory.addVarImageTo(d3Node, variableImageConfig, imageWidth, imageHeight, dataAttributes)
           )
         })
         return Promise.all(variableImageRenderPromises).catch(imageErrorHandler)
