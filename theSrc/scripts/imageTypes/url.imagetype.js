@@ -4,6 +4,8 @@ import BaseImageType from './base.imagetype'
 import CacheService from '../CacheService'
 import geometryUtils from '../utils/geometryUtils'
 
+const cacheExpiryTimeMilliseconds = 10000
+
 class UrlType extends BaseImageType {
   _getImageWidthAndHeight () {
     const cacheKey = `dimensions-${this.config.url}`
@@ -30,7 +32,7 @@ class UrlType extends BaseImageType {
         }
       })
 
-      CacheService.put(cacheKey, imageDimensionsPromise, 10000)
+      CacheService.put(cacheKey, imageDimensionsPromise, cacheExpiryTimeMilliseconds)
     }
 
     return CacheService.get(cacheKey)

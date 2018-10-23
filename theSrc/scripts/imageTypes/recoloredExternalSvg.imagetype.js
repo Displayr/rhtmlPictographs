@@ -5,7 +5,7 @@ import CacheService from '../CacheService'
 import RecolorSvg from '../RecolorSvg'
 import geometryUtils from '../utils/geometryUtils'
 
-const cacheExpiryTimeMilliseconds = 240000
+const cacheExpiryTimeMilliseconds = 10000
 
 class RecoloredExternalSvg extends BaseImageType {
   calculateDesiredAspectRatio () {
