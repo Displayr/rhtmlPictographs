@@ -1,26 +1,30 @@
 import _ from 'lodash'
 import crypto from 'crypto'
 import * as log from 'loglevel'
+import lruCache from 'lru-cache'
 
 /*
   Considerations:
-  * when expiry is passed into put() we set a timeout to clear the cache. This prevents unbounded memory growth,
-  but there is a chance that timeouts will mess with automation scripts, so consider this timeout in that scenario.
-  * the timeouts can be set very low. Even at 0 all image requests for a Pictograph will share the same promise,
-  because all calls to getOrDownload take place before the JS "next tick". The main benefit of setting
-  higher is to aid during redraws etc.
-  * url - and even data uri strings! - are is included in the inputKey, so this module
+  * what is cached by pictograph:
+      * svg downloads - store string content of SVG
+      * parsed svg downloads - store the parsed representation of the SVG
+      * computed aspect ratios for downloaded svgs
+      * recolored svg content for downloaded and recolored svgs
+  * urls - and even data uri strings! - are is included in the inputKey, so this module
   generates a hash to avoid long string lookups
 */
 
+const maxNumberOfCacheEntries = 100
+const cacheReporting = false
+
 class CacheService {
   constructor () {
-    this.cache = {}
+    this.cache = lruCache(maxNumberOfCacheEntries)
     this.expiryHandles = {}
     this.hitRates = {}
     this.reportingSettings = {
       quitAfter: 60000,
-      reportEvery: -1 // -1 === disabled
+      reportEvery: (cacheReporting) ? 20000 : -1 // -1 === disabled
     }
 
     this.initialiseReporting()
@@ -53,28 +57,21 @@ class CacheService {
 
   get (inputKey) {
     const key = this._genHash(inputKey)
-    if (_.has(this.cache, key)) {
+    if (this.cache.has(key)) {
       this._recordHit(inputKey)
-      return this.cache[key]
+      return this.cache.get(key)
     }
     this._recordMiss(inputKey)
     return null
   }
 
-  put (inputKey, value, expiry) {
+  put (inputKey, value) {
     const key = this._genHash(inputKey)
-    this.cache[key] = value
+    this.cache.set(key, value)
 
     if (_.has(this.expiryHandles, key)) {
       clearTimeout(this.expiryHandles[key])
       delete this.expiryHandles[key]
-    }
-
-    if (expiry) {
-      this.expiryHandles[key] = setTimeout(() => {
-        delete this.cache[key]
-        delete this.expiryHandles[key]
-      }, expiry)
     }
   }
 }
