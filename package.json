@@ -18,6 +18,7 @@
     "es6-promise": "^3.2.1",
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
-    "loglevel": "^1.6.1"
+    "loglevel": "^1.6.1",
+    "lru-cache": "^4.1.3"
   }
 }
