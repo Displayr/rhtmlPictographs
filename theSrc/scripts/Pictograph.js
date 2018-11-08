@@ -53,6 +53,9 @@ class Pictograph {
 
     this._removeAllContentFromRootElement()
     this._addSvgToRootElement()
+    this.imageFactory = new ImageFactory({ definitionManager: new SvgDefinitionManager({ parentSvg: this.outerSvg }) })
+    _(this.config.cells).flatten().each(({instance}) => instance.setImageFactory(this.imageFactory))
+
     // NB I want to do this on call to setDimensions (issue is initial call to setDimension occurs before config is abailable)
     this.config._processGridWidthSpec()
     this.config._processGridHeightSpec()
