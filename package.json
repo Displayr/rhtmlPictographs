@@ -10,7 +10,7 @@
   "devDependencies": {
     "gulp": "3.9.1",
     "husky": "^0.13.3",
-    "rhtmlBuildUtils": "Displayr/rhtmlBuildUtils#3.0.2"
+    "rhtmlBuildUtils": "Displayr/rhtmlBuildUtils#3.0.5"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
