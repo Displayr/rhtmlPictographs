@@ -55,9 +55,9 @@ class PictographConfig {
 
   get totalAllocatedHorizontalSpace () {
     return _(this.gridInfo.sizes.column)
-        .filter(columnSizeData => columnSizeData.size)
-        .map('size')
-        .sum() + (this.gridInfo.dimensions.column - 1) * this.size.gutter.column
+      .filter(columnSizeData => columnSizeData.size)
+      .map('size')
+      .sum() + (this.gridInfo.dimensions.column - 1) * this.size.gutter.column
   }
 
   get totalAllocatedVerticalSpace () {
@@ -98,16 +98,16 @@ class PictographConfig {
     }
 
     this.size = {
-      container: {width: null, height: null}, // what is the actual size (via jquery inspection)
-      gutter: {row: 0, column: 0}
+      container: { width: null, height: null }, // what is the actual size (via jquery inspection)
+      gutter: { row: 0, column: 0 }
     }
 
     this.gridInfo = {
-      dimensions: {row: null, column: null},
-      flexible: {row: false, column: false},
-      sizes: {row: [], column: []},
+      dimensions: { row: null, column: null },
+      flexible: { row: false, column: false },
+      sizes: { row: [], column: [] },
       // TODO constraints should be cached
-      constraints: {row: [], column: []}
+      constraints: { row: [], column: [] }
     }
 
     this.lines = {
@@ -131,7 +131,7 @@ class PictographConfig {
   }
 
   processUserConfig (userConfig) {
-    let userConfigObject = (_.isString(userConfig)) ? {variableImage: userConfig} : userConfig
+    let userConfigObject = (_.isString(userConfig)) ? { variableImage: userConfig } : userConfig
     if (userConfigObject.table == null) {
       userConfigObject = this._transformGraphicCellConfigToPictographConfig(userConfigObject)
     }
@@ -169,7 +169,7 @@ class PictographConfig {
   _processTableHeader (userConfigObject = this._userConfig, cssCollector = this.cssCollector) {
     // TODO extract this duplicated code (from graphicCell) in to library
     if (_.has(userConfigObject, 'table-header')) {
-      const textConfig = _.isString(userConfigObject['table-header']) ? {text: userConfigObject['table-header']} : userConfigObject['table-header']
+      const textConfig = _.isString(userConfigObject['table-header']) ? { text: userConfigObject['table-header'] } : userConfigObject['table-header']
 
       if (textConfig.text == null) { throw new Error(`Invalid table-header config: must have text field`) }
 
@@ -236,7 +236,7 @@ class PictographConfig {
   _processTableFooter (userConfigObject = this._userConfig, cssCollector = this.cssCollector) {
     // TODO extract this duplicated code (from graphicCell) in to library
     if (_.has(userConfigObject, 'table-footer')) {
-      const textConfig = _.isString(userConfigObject['table-footer']) ? {text: userConfigObject['table-footer']} : userConfigObject['table-footer']
+      const textConfig = _.isString(userConfigObject['table-footer']) ? { text: userConfigObject['table-footer'] } : userConfigObject['table-footer']
 
       if (textConfig.text == null) { throw new Error(`Invalid table-footer config: must have text field`) }
 
@@ -368,7 +368,7 @@ class PictographConfig {
       }
 
       if (this.gridInfo.dimensions.column !== row.length) {
-        _.range(this.gridInfo.dimensions.column - row.length).forEach(() => { row.push({type: 'empty'}) })
+        _.range(this.gridInfo.dimensions.column - row.length).forEach(() => { row.push({ type: 'empty' }) })
       }
 
       return row.map((cellDefinition, columnIndex) => {
@@ -394,7 +394,7 @@ class PictographConfig {
   _processGridWidthSpec (userConfigObject = this._userConfig) {
     const tableConfig = userConfigObject.table
 
-    this.size.gutter.column = this._extractInt({input: tableConfig, key: 'columnGutterLength', defaultValue: 0})
+    this.size.gutter.column = this._extractInt({ input: tableConfig, key: 'columnGutterLength', defaultValue: 0 })
     const totalWidthAvailable = this.size.container.width - ((this.gridInfo.dimensions.column - 1) * this.size.gutter.column)
     if (tableConfig.colWidths) {
       if (!_.isArray(tableConfig.colWidths)) {
@@ -428,7 +428,7 @@ class PictographConfig {
         }
       })
     }
-    this.gridInfo.flexible.column = (_.findIndex(this.gridInfo.sizes.column, {flexible: true}) !== -1)
+    this.gridInfo.flexible.column = (_.findIndex(this.gridInfo.sizes.column, { flexible: true }) !== -1)
 
     // NB we use Math.floor here to avoid throwing error on small rounding diffs.
     if (Math.ceil(this.totalAllocatedHorizontalSpace) > Math.ceil(this.size.container.width)) {
@@ -439,7 +439,7 @@ class PictographConfig {
   _processGridHeightSpec (userConfigObject = this._userConfig) {
     const tableConfig = userConfigObject.table
 
-    this.size.gutter.row = this._extractInt({input: tableConfig, key: 'rowGutterLength', defaultValue: 0})
+    this.size.gutter.row = this._extractInt({ input: tableConfig, key: 'rowGutterLength', defaultValue: 0 })
     const totalHeightAvailable = this.size.container.height -
       ((this.gridInfo.dimensions.row - 1) * this.size.gutter.row) -
       this.tableHeaderHeight -
@@ -477,7 +477,7 @@ class PictographConfig {
         }
       })
     }
-    this.gridInfo.flexible.row = (_.findIndex(this.gridInfo.sizes.row, {flexible: true}) !== -1)
+    this.gridInfo.flexible.row = (_.findIndex(this.gridInfo.sizes.row, { flexible: true }) !== -1)
 
     // NB we use Math.floor here to avoid throwing error on rounding diff. e.g., exceeds table height: 372.99996000000004 !< 372.99996
     if (Math.floor(this.totalAllocatedVerticalSpace) > Math.floor(this.size.container.height)) {
@@ -640,7 +640,7 @@ class PictographConfig {
     this.recomputeSizing({ actualHeight: newValue })
   }
 
-  recomputeSizing ({actualWidth, actualHeight}) {
+  recomputeSizing ({ actualWidth, actualHeight }) {
     const size = this.size
     if (actualWidth) { size.container.width = parseFloat(actualWidth) }
     if (actualHeight) { size.container.height = parseFloat(actualHeight) }
@@ -666,7 +666,7 @@ class PictographConfig {
     const pictographConfig = _.pick(config, PictographConfig.validRootAttributes)
     const graphicCellConfig = _.pick(config, GraphicCell.validRootAttributes)
 
-    pictographConfig.table = {rows: [[{type: 'graphic', value: graphicCellConfig}]]}
+    pictographConfig.table = { rows: [[{ type: 'graphic', value: graphicCellConfig }]] }
 
     return pictographConfig
   }
@@ -681,18 +681,18 @@ class PictographConfig {
 
     return {
       type: 'graphic',
-      value: {variableImage: stringDefinition}
+      value: { variableImage: stringDefinition }
     }
   }
 
-  _extractInt ({input, key, defaultValue, message = 'Must be integer'}) {
+  _extractInt ({ input, key, defaultValue, message = 'Must be integer' }) {
     if (!_.isUndefined(defaultValue)) {
       if (!_.has(input, key)) {
         return defaultValue
       }
     }
 
-    return this._verifyInt({input: input[key], message: `invalid '${key}': ${input[key]}. ${message}.`})
+    return this._verifyInt({ input: input[key], message: `invalid '${key}': ${input[key]}. ${message}.` })
   }
 
   _verifyKeyIsInt (input, key, defaultValue, message = 'Must be integer') {
@@ -713,7 +713,7 @@ class PictographConfig {
     })
   }
 
-  _verifyInt ({input, message = 'Must be integer'}) {
+  _verifyInt ({ input, message = 'Must be integer' }) {
     const result = parseInt(input)
     if (_.isNaN(result)) {
       throw new Error(message)
@@ -721,7 +721,7 @@ class PictographConfig {
     return result
   }
 
-  _verifyFloat ({input, message = 'Must be integer'}) {
+  _verifyFloat ({ input, message = 'Must be integer' }) {
     const result = parseFloat(input)
     if (_.isNaN(result)) {
       throw new Error(message)

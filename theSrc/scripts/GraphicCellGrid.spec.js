@@ -562,10 +562,10 @@ ${JSON.stringify(t.expected)}
           this.l = (new GraphicCellGrid()).rowGutter(0.5).columnGutter(0)
           this.actual = this.l.compute(getNodes(4)).map(justXY)
           this.expected = [
-            {x: 0, y: 0},
-            {x: 0.5, y: 0},
-            {x: 0, y: twoThird},
-            {x: 0.5, y: twoThird}
+            { x: 0, y: 0 },
+            { x: 0.5, y: 0 },
+            { x: 0, y: twoThird },
+            { x: 0.5, y: twoThird }
           ]
         })
 
@@ -584,10 +584,10 @@ ${JSON.stringify(t.expected)}
           this.l = (new GraphicCellGrid()).rowGutter(oneThird).columnGutter(oneThird).containerWidth(5).containerHeight(5)
           this.actual = this.l.compute(getNodes(4)).map(justXY)
           this.expected = [
-            {x: 0, y: 0},
-            {x: 3, y: 0},
-            {x: 0, y: 3},
-            {x: 3, y: 3}
+            { x: 0, y: 0 },
+            { x: 3, y: 0 },
+            { x: 0, y: 3 },
+            { x: 3, y: 3 }
           ]
         })
 

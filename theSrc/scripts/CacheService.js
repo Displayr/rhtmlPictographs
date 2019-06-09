@@ -46,12 +46,12 @@ class CacheService {
   }
 
   _recordHit (key) {
-    if (!_.has(this.hitRates, key)) { this.hitRates[key] = {hit: 0, miss: 0} }
+    if (!_.has(this.hitRates, key)) { this.hitRates[key] = { hit: 0, miss: 0 } }
     this.hitRates[key]['hit']++
   }
 
   _recordMiss (key) {
-    if (!_.has(this.hitRates, key)) { this.hitRates[key] = {hit: 0, miss: 0} }
+    if (!_.has(this.hitRates, key)) { this.hitRates[key] = { hit: 0, miss: 0 } }
     this.hitRates[key]['miss']++
   }
 
