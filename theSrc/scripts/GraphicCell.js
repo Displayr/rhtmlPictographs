@@ -164,7 +164,7 @@ class GraphicCell extends BaseCell {
         const className = `floating-label-${labelConfig.position}`.replace(/[.:]/g, '-')
         const newFloatingLabelConfig = this._processTextConfig(_.omit(labelConfig, 'position'), className)
         newFloatingLabelConfig.className = className
-        newFloatingLabelConfig.position = {row: row, col: col}
+        newFloatingLabelConfig.position = { row: row, col: col }
         this.config.floatingLabels.push(newFloatingLabelConfig)
       })
     } else {
@@ -509,11 +509,11 @@ class GraphicCell extends BaseCell {
       .data(enteringLeafNodeData)
       .enter()
       .append('g')
-        .attr('class', function (d) {
-          const cssLocation = `node-index-${d.i} node-xy-${d.rowOrder}-${d.colOrder}`
-          return `node ${cssLocation}`
-        })
-        .attr('transform', d => `translate(${d.x},${d.y})`)
+      .attr('class', function (d) {
+        const cssLocation = `node-index-${d.i} node-xy-${d.rowOrder}-${d.colOrder}`
+        return `node ${cssLocation}`
+      })
+      .attr('transform', d => `translate(${d.x},${d.y})`)
 
     const imageWidth = this.gridLayout.nodeWidth()
     const imageHeight = this.gridLayout.nodeHeight()

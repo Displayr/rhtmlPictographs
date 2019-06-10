@@ -3,8 +3,8 @@ const $ = require('jquery')
 
 // NB Our method for caclulating label dimensions is pretty good but is not exact
 const labelSizeCorrection = {
-  width: {relative: 1.02, fixed: 0},
-  height: {relative: 1.02, fixed: 0}
+  width: { relative: 1.02, fixed: 0 },
+  height: { relative: 1.02, fixed: 0 }
 }
 
 const makeDivForEstimation = (labelConfig) => {

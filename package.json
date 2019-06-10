@@ -8,9 +8,9 @@
     "test": "gulp testSpecs && gulp testVisual"
   },
   "devDependencies": {
-    "gulp": "3.9.1",
+    "gulp": "^4.0.2",
     "husky": "^0.13.3",
-    "rhtmlBuildUtils": "Displayr/rhtmlBuildUtils#3.0.5"
+    "rhtmlBuildUtils": "github:Displayr/rhtmlBuildUtils#4.0.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
