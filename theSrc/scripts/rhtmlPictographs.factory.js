@@ -17,14 +17,14 @@ module.exports = function (element, width, height, stateChangedCallback) {
 
       try {
         instance.setConfig(config)
-        return instance.draw()
+        instance.draw()
       } catch (err) {
         _showError(err, element)
       }
     },
 
     resize (newWidth, newHeight) {
-      return instance.resize()
+      instance.resize()
     }
   }
 }
