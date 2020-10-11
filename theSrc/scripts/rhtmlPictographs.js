@@ -1,6 +1,5 @@
 /* global HTMLWidgets */
-
-import 'babel-polyfill'
+import 'idempotent-babel-polyfill'
 import widgetFactory from './rhtmlPictographs.factory'
 
 HTMLWidgets.widget({
