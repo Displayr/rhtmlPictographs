@@ -36,6 +36,7 @@ graphic <- function(settingsJsonString = '{}') {
   )
   # Adding this attribute allows the widget to be used without being embedded in an iframe
   # See DS-3019 and the related epic of RS-6897
-  attr(g, "can-run-in-root-dom") <- TRUE
-  g
+  p <- print(g)
+  attr(p, "can-run-in-root-dom") <- TRUE
+  p
 }
