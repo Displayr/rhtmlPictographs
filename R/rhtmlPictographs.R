@@ -35,8 +35,7 @@ graphic <- function(settingsJsonString = '{}') {
     package = 'rhtmlPictographs'
   )
   # Adding this attribute allows the widget to be used without being embedded in an iframe
-  # See DS-3019 and the related epic of RS-6897
-  p <- print(g)
-  attr(p, "can-run-in-root-dom") <- TRUE
-  p
+  # See DS-3109 and the related epic of RS-6897
+  attr(g, "can-run-in-root-dom") <- TRUE
+  g
 }
