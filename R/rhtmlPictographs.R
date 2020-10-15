@@ -24,7 +24,7 @@
 #'
 
 graphic <- function(settingsJsonString = '{}') {
-  htmlwidgets::createWidget(
+  g <- htmlwidgets::createWidget(
     name = 'rhtmlPictographs',
     settingsJsonString,
     sizingPolicy = htmlwidgets::sizingPolicy(
@@ -34,4 +34,8 @@ graphic <- function(settingsJsonString = '{}') {
     ),
     package = 'rhtmlPictographs'
   )
+  # Adding this attribute allows the widget to be used without being embedded in an iframe
+  # See DS-3109 and the related epic of RS-6897
+  attr(g, "can-run-in-root-dom") <- TRUE
+  g
 }
