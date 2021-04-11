@@ -11,12 +11,12 @@ describe('ColorFactory class', function () {
       ranOnce = true
       ColorFactory.processNewConfig({
         palettes: {
-          test: ['red', 'blue', 'green']
+          test: ['red', 'blue', 'green'],
         },
         aliases: {
           primary: 'brown',
-          secondary: 'yellow'
-        }
+          secondary: 'yellow',
+        },
       })
     }
   })
@@ -38,7 +38,7 @@ describe('ColorFactory class', function () {
   })
 
   it('allows new aliases to be added', function () {
-    ColorFactory.processNewConfig({ aliases: { anotheralias: 'blue'
+    ColorFactory.processNewConfig({ aliases: { anotheralias: 'blue',
     } })
     expect(ColorFactory.getColor('anotheralias')).toEqual('blue')
     expect(ColorFactory.getColor('primary')).toEqual('brown')

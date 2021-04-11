@@ -8,7 +8,7 @@ const threeFifths = 0.6000000000000001
 function justXY (node) {
   return {
     x: node.x,
-    y: node.y
+    y: node.y,
   }
 }
 
@@ -51,7 +51,7 @@ describe('graphic cell grid:', function () {
           'down,left',
           'up',
           'up,right',
-          'up,left'
+          'up,left',
         ])
       })
       describe('direction keyword syntax:', function () {
@@ -71,7 +71,7 @@ describe('graphic cell grid:', function () {
           'down,left': 'down,left',
           up: 'up,right',
           'up,right': 'up,right',
-          'up,left': 'up,left'
+          'up,left': 'up,left',
         }
 
         _.forEach(_.keys(validOptions), function (input) {
@@ -191,7 +191,7 @@ describe('graphic cell grid:', function () {
           { row: 0.5, col: 0.5, expected: { getX: 50, getY: 50, topLeft: { x: 50, y: 50 } } },
           { row: 1, col: 1, expected: { getX: 100, getY: 100, topLeft: { x: 100, y: 100 } } },
           { row: 1.5, col: 1.5, expected: { getX: 150, getY: 150, topLeft: { x: 150, y: 150 } } },
-          { row: 2, col: 2, expected: { getX: 200, getY: 200, topLeft: { x: 200, y: 200 } } }
+          { row: 2, col: 2, expected: { getX: 200, getY: 200, topLeft: { x: 200, y: 200 } } },
         ]
 
         const gridFactory = () => {
@@ -211,7 +211,7 @@ describe('graphic cell grid:', function () {
           { row: 0.5, col: 0.5, expected: { getX: 150, getY: 150, topLeft: { x: 50, y: 50 } } },
           { row: 1, col: 1, expected: { getX: 100, getY: 100, topLeft: { x: 0, y: 0 } } },
           { row: 1.5, col: 1.5, expected: { getX: 50, getY: 50, topLeft: { x: -50, y: -50 } } },
-          { row: 2, col: 2, expected: { getX: 0, getY: 0, topLeft: { x: -100, y: -100 } } }
+          { row: 2, col: 2, expected: { getX: 0, getY: 0, topLeft: { x: -100, y: -100 } } },
         ]
 
         const gridFactory = () => {
@@ -225,7 +225,7 @@ describe('graphic cell grid:', function () {
 
       describe('layout : 1x1 grid 100x100 right to left and bottom to top with gutter 0.1x0.1', function () {
         const tests = [
-          { row: 0, col: 0, expected: { getX: 100, getY: 100, topLeft: { x: 0, y: 0 } } }
+          { row: 0, col: 0, expected: { getX: 100, getY: 100, topLeft: { x: 0, y: 0 } } },
         ]
 
         const gridFactory = () => {
@@ -242,7 +242,7 @@ describe('graphic cell grid:', function () {
           { row: 0, col: 0, expected: { getX: 0, getY: 0, topLeft: { x: 0, y: 0 } } },
           { row: 1, col: 1, expected: { getX: 110, getY: 110, topLeft: { x: 110, y: 110 } } },
           { row: 1.99999, col: 1.99999, expected: { getX: 210, getY: 210, topLeft: { x: 210, y: 210 } } },
-          { row: 2, col: 2, expected: { getX: 220, getY: 220, topLeft: { x: 220, y: 220 } } }
+          { row: 2, col: 2, expected: { getX: 220, getY: 220, topLeft: { x: 220, y: 220 } } },
         ]
 
         const gridFactory = () => {
@@ -258,7 +258,7 @@ describe('graphic cell grid:', function () {
         const tests = [
           { row: 0, col: 0, expected: { getX: 210, getY: 210, topLeft: { x: 110, y: 110 } } },
           { row: 1, col: 1, expected: { getX: 100, getY: 100, topLeft: { x: 0, y: 0 } } },
-          { row: 1.99999, col: 1.99999, expected: { getX: 0, getY: 0 } }
+          { row: 1.99999, col: 1.99999, expected: { getX: 0, getY: 0 } },
         ]
 
         const gridFactory = () => {
@@ -325,15 +325,15 @@ describe('graphic cell grid:', function () {
           specifyRows: 2,
           specifyCols: 2,
           nodeLength: 4,
-          expected: '2x2'
+          expected: '2x2',
         },
         {
           name: 'should throw error if all specified and rows x cols != nodes.length',
           specifyRows: 2,
           specifyCols: 6,
           nodeLength: 4,
-          throw: true
-        }
+          throw: true,
+        },
       ]
 
       _(tests).each((t) => {
@@ -361,7 +361,7 @@ describe('graphic cell grid:', function () {
         { totalSize: 65, numElements: 6, gutterAllocation: 1 / 11, expected: { nodeSize: 10, gutterSize: 1 } },
         { totalSize: 10, numElements: 2, gutterAllocation: 1 / 3, expected: { nodeSize: 4, gutterSize: 2 } },
         { totalSize: 9, numElements: 2, gutterAllocation: 1 / 2, expected: { nodeSize: 3, gutterSize: 3 } },
-        { totalSize: 11, numElements: 2, gutterAllocation: 9 / 10, expected: { nodeSize: 1, gutterSize: 9 } }
+        { totalSize: 11, numElements: 2, gutterAllocation: 9 / 10, expected: { nodeSize: 1, gutterSize: 9 } },
       ]
 
       _(tests).each((t) => {
@@ -383,7 +383,7 @@ describe('graphic cell grid:', function () {
         { x: 0, y: 0 },
         { x: 0.5, y: 0 },
         { x: 0, y: 0.5 },
-        { x: 0.5, y: 0.5 }
+        { x: 0.5, y: 0.5 },
       ]
       compareAndReportDifferences(expected, actual)
     })
@@ -391,13 +391,12 @@ describe('graphic cell grid:', function () {
     it('1 data point is at the top left', function () {
       const actual = getDimensionsForANodeCollectionOfLength(1)
       const expected = [
-        { x: 0, y: 0 }
+        { x: 0, y: 0 },
       ]
       compareAndReportDifferences(expected, actual)
     })
 
     describe('equally distributes 5 nodes within a 1x1 space', function () {
-
       const l = (new GraphicCellGrid())
       const actual = getDimensionsForANodeCollectionOfLength(5, l)
       const expected = [
@@ -405,7 +404,7 @@ describe('graphic cell grid:', function () {
         { x: oneThird, y: 0 },
         { x: twoThird, y: 0 },
         { x: 0, y: 0.5 },
-        { x: oneThird, y: 0.5 }
+        { x: oneThird, y: 0.5 },
       ]
 
       it('has correct layout', function () {
@@ -426,7 +425,7 @@ describe('graphic cell grid:', function () {
         { x: 100, y: 0 },
         { x: 200, y: 0 },
         { x: 0, y: 250 },
-        { x: 100, y: 250 }
+        { x: 100, y: 250 },
       ]
       compareAndReportDifferences(expected, actual)
 
@@ -441,7 +440,7 @@ describe('graphic cell grid:', function () {
         { x: 0.5, y: 0 },
         { x: 0, y: oneThird },
         { x: 0.5, y: oneThird },
-        { x: 0, y: twoThird }
+        { x: 0, y: twoThird },
       ]
       compareAndReportDifferences(expected, actual)
     })
@@ -453,7 +452,7 @@ describe('graphic cell grid:', function () {
         { x: 0.5, y: 0 },
         { x: 0, y: oneThird },
         { x: 0.5, y: oneThird },
-        { x: 0, y: twoThird }
+        { x: 0, y: twoThird },
       ]
       compareAndReportDifferences(expected, actual)
     })
@@ -465,7 +464,7 @@ describe('graphic cell grid:', function () {
         { x: 0.2, y: 0 },
         { x: 0.4, y: 0 },
         { x: threeFifths, y: 0 },
-        { x: 0.8, y: 0 }
+        { x: 0.8, y: 0 },
       ]
       compareAndReportDifferences(expected, actual)
     })
@@ -479,7 +478,7 @@ describe('graphic cell grid:', function () {
         { x: oneThird, y: 0 },
         { x: twoThird, y: 0 },
         { x: 0, y: 0.5 },
-        { x: oneThird, y: 0.5 }
+        { x: oneThird, y: 0.5 },
       ]
       compareAndReportDifferences(expectedOne, actualOne)
 
@@ -488,7 +487,7 @@ describe('graphic cell grid:', function () {
         { x: 0, y: 0 },
         { x: 0.5, y: 0 },
         { x: 0, y: 0.5 },
-        { x: 0.5, y: 0.5 }
+        { x: 0.5, y: 0.5 },
       ]
       compareAndReportDifferences(expectedTwo, actualTwo)
     })
@@ -501,7 +500,7 @@ describe('graphic cell grid:', function () {
         { x: 0.5, y: 0 },
         { x: 0, y: oneThird },
         { x: 0.5, y: oneThird },
-        { x: 0, y: twoThird }
+        { x: 0, y: twoThird },
       ]
       compareAndReportDifferences(expectedOne, actualOne)
 
@@ -513,7 +512,7 @@ describe('graphic cell grid:', function () {
         { x: 0.5, y: 0.25 },
         { x: 0, y: 0.5 },
         { x: 0.5, y: 0.5 },
-        { x: 0, y: 0.75 }
+        { x: 0, y: 0.75 },
       ]
       compareAndReportDifferences(expectedTwo, actualTwo)
     })
@@ -526,7 +525,7 @@ describe('graphic cell grid:', function () {
           { x: 0, y: 0 },
           { x: 10, y: 0 },
           { x: 0, y: 19 / 2 },
-          { x: 10, y: 19 / 2 }
+          { x: 10, y: 19 / 2 },
         ]
 
         it('computes x and y correctly', function () {
@@ -546,7 +545,7 @@ describe('graphic cell grid:', function () {
           { x: 0, y: 0 },
           { x: 0.5, y: 0 },
           { x: 0, y: twoThird },
-          { x: 0.5, y: twoThird }
+          { x: 0.5, y: twoThird },
         ]
 
         it('computes x and y correctly', function () {
@@ -566,7 +565,7 @@ describe('graphic cell grid:', function () {
           { x: 0, y: 0 },
           { x: 3, y: 0 },
           { x: 0, y: 3 },
-          { x: 3, y: 3 }
+          { x: 3, y: 3 },
         ]
 
         it('computes x and y correctly', function () {
@@ -590,7 +589,7 @@ describe('graphic cell grid:', function () {
         'down,right': '00:00 10:10 01:01 11:11 02:02',
         'down,left': '02:00 12:10 01:01 11:11 00:02',
         'up,right': '10:00 00:10 11:01 01:11 12:02',
-        'up,left': '12:00 02:10 11:01 01:11 10:02'
+        'up,left': '12:00 02:10 11:01 01:11 10:02',
       }
 
       function nodeString (nodes) {

@@ -27,12 +27,12 @@ class BaseCell {
     this.dynamicMargins = {
       width: {
         positive: 0,
-        negative: 0
+        negative: 0,
       },
       height: {
         positive: 0,
-        negative: 0
-      }
+        negative: 0,
+      },
     }
     this.width = 1
     this.height = 1
@@ -71,12 +71,12 @@ class BaseCell {
     this.dynamicMargins = _.defaultsDeep({}, dynamicMargins, {
       width: {
         positive: 0,
-        negative: 0
+        negative: 0,
       },
       height: {
         positive: 0,
-        negative: 0
-      }
+        negative: 0,
+      },
     })
 
     this._verifyKeyIsInt(this.dynamicMargins.width, 'negative')
@@ -105,8 +105,8 @@ class BaseCell {
         margins: {
           // NB arrays of { size, overlapInUnitsOfGraphicSize }
           negative: [],
-          positive: []
-        }
+          positive: [],
+        },
       },
       height: {
         min: null,
@@ -114,9 +114,9 @@ class BaseCell {
         margins: {
           // NB arrays of { size, overlapInUnitsOfGraphicSize }
           negative: [],
-          positive: []
-        }
-      }
+          positive: [],
+        },
+      },
     })
   }
 

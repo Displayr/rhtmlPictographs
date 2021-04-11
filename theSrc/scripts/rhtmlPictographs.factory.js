@@ -25,7 +25,7 @@ module.exports = function (element, width, height, stateChangedCallback) {
 
     resize (newWidth, newHeight) {
       instance.resize()
-    }
+    },
   }
 }
 

@@ -18,7 +18,7 @@ class ImageFactory {
       rect: RectangleType,
       ellipse: EllipseType,
       data: UrlType,
-      recoloredExternalSvg: RecoloredExternalSvg
+      recoloredExternalSvg: RecoloredExternalSvg,
     }
   }
 
@@ -37,7 +37,7 @@ class ImageFactory {
       scale: 'scale',
       radialclip: { clip: 'radial' },
       radial: { clip: 'radial' },
-      pie: { clip: 'radial' }
+      pie: { clip: 'radial' },
     }
   }
 
@@ -61,7 +61,7 @@ class ImageFactory {
       'xMaxYMid',
       'xMinYMax',
       'xMidYMax',
-      'xMaxYMax'
+      'xMaxYMax',
     ]
 
     const validMeetOrSlice = ['meet', 'slice']

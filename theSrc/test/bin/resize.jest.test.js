@@ -28,13 +28,13 @@ describe('resize', () => {
       browser,
       configName: 'data.test_plan.two_blue_squares',
       width: 300,
-      height: 100
+      height: 100,
     })
 
     await testSnapshots({ page, testName: '1A_basic_initial' })
 
     const sizesToSnapshot = [
-      { width: 600, height: 200 }
+      { width: 600, height: 200 },
     ]
 
     for (const size of sizesToSnapshot) {
@@ -55,7 +55,7 @@ describe('resize', () => {
       browser,
       configName: 'data.test_plan.flexible_table_lots_of_labels_circles_and_urls_top_left_oriented',
       width: 200,
-      height: 600
+      height: 600,
     })
 
     await testSnapshots({ page, testName: '2A_with_title_initial' })
@@ -65,7 +65,7 @@ describe('resize', () => {
       { width: 600, height: 600 },
       { width: 800, height: 600 },
       { width: 800, height: 400 },
-      { width: 800, height: 200 }
+      { width: 800, height: 200 },
     ]
 
     for (const size of sizesToSnapshot) {
@@ -86,7 +86,7 @@ describe('resize', () => {
       browser,
       configName: 'data.test_plan.flexible_table_lots_of_labels_circles_and_urls_centered',
       width: 200,
-      height: 600
+      height: 600,
     })
 
     await testSnapshots({ page, testName: '3A_with_title_initial' })
@@ -96,7 +96,7 @@ describe('resize', () => {
       { width: 600, height: 600 },
       { width: 800, height: 600 },
       { width: 800, height: 400 },
-      { width: 800, height: 200 }
+      { width: 800, height: 200 },
     ]
 
     for (const size of sizesToSnapshot) {
@@ -117,7 +117,7 @@ describe('resize', () => {
       browser,
       configName: 'data.flip_usecases.flip_usecase_barchart_of_squares_variable_number_of_rows_per_cell',
       width: 200,
-      height: 600
+      height: 600,
     })
 
     await testSnapshots({ page, testName: '4A_with_title_initial' })
@@ -127,7 +127,7 @@ describe('resize', () => {
       { width: 600, height: 600 },
       { width: 800, height: 600 },
       { width: 800, height: 400 },
-      { width: 800, height: 200 }
+      { width: 800, height: 200 },
     ]
 
     for (const size of sizesToSnapshot) {

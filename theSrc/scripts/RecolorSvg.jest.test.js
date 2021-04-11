@@ -2,7 +2,6 @@ const jQuery = require('jquery')
 const RecolorSvg = require('./RecolorSvg')
 
 describe('RecolorSvg:', function () {
-
   const generateSvgString = function (args) {
     const boilerplate = '<?xml version="1.0" encoding="iso-8859-1" ?> <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG Tiny 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">'
 
@@ -11,7 +10,7 @@ describe('RecolorSvg:', function () {
       args.width ? `width="${args.width}"` : '',
       args.height ? `height="${args.height}"` : '',
       args.viewBox ? `viewBox="${args.viewBox}"` : '',
-      'xmlns="http://www.w3.org/2000/svg" version="1.1" baseProfile="tiny" xmlns:xlink="http://www.w3.org/1999/xlink">'
+      'xmlns="http://www.w3.org/2000/svg" version="1.1" baseProfile="tiny" xmlns:xlink="http://www.w3.org/1999/xlink">',
     ].filter(s => s.length > 0).join(' ')
 
     const svgCloseTag = '</svg>'
@@ -28,7 +27,7 @@ describe('RecolorSvg:', function () {
       x: newX,
       y: newY,
       width: newWidth,
-      height: newHeight
+      height: newHeight,
     })
     return jQuery(jQuery.parseXML(newSvgString)).find('svg')
   }
@@ -37,7 +36,7 @@ describe('RecolorSvg:', function () {
     const svgString = generateSvgString({
       width: '512px',
       height: '512px',
-      content: '<circle id="circle" cx="0" cy="0" r="512" fill="blue" class="circle"/>'
+      content: '<circle id="circle" cx="0" cy="0" r="512" fill="blue" class="circle"/>',
     })
 
     const newSvgObject = build(svgString, 'color', 10, 10, 100, 100)
@@ -94,7 +93,7 @@ describe('RecolorSvg:', function () {
       { i: "style='foo:bar; fill:blue'", o: "style='foo:bar; fill:red'" },
       { i: 'style="fill:blue; foo:bar"', o: 'style="fill:red; foo:bar"' },
       { i: 'style="fill:blue ; foo:bar"', o: 'style="fill:red; foo:bar"' },
-      { i: 'style="fill:none ; foo:bar"', o: 'style="fill:none ; foo:bar"' }
+      { i: 'style="fill:none ; foo:bar"', o: 'style="fill:none ; foo:bar"' },
     ]
 
     testcases.forEach((testcase) => {

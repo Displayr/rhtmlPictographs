@@ -110,7 +110,7 @@ class RecoloredExternalSvg extends BaseImageType {
       y: (this.containerHeight * (1 - this.ratio)) / 2,
       width: this.containerWidth * this.ratio,
       height: this.containerHeight * this.ratio,
-      color: this.color
+      color: this.color,
     }
 
     if (_.has(this.config, 'preserveAspectRatio')) {
@@ -129,7 +129,7 @@ class RecoloredExternalSvg extends BaseImageType {
       recolorArgs.y,
       recolorArgs.width,
       recolorArgs.height,
-      (recolorArgs.preserveAspectRatio) ? recolorArgs.preserveAspectRatio : ''
+      (recolorArgs.preserveAspectRatio) ? recolorArgs.preserveAspectRatio : '',
     ].join('-')
   }
 

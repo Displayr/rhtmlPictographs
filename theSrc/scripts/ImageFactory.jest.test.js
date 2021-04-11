@@ -99,7 +99,7 @@ describe('ImageFactory class:', function () {
 
         ' : invalid',
         'dogs : invalid',
-        'xMinYMin dogs : invalid'
+        'xMinYMin dogs : invalid',
       ]
 
       _(tests).each((testDefinitionString) => {
@@ -109,7 +109,7 @@ describe('ImageFactory class:', function () {
             ImageFactory.parseConfig({
               type: 'url',
               url: '/foo.svg',
-              preserveAspectRatio: testString
+              preserveAspectRatio: testString,
             })
           })
 

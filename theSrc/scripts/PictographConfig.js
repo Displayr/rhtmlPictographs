@@ -28,7 +28,7 @@ class PictographConfig {
       'table-id',
       'vertical-align',
       'table-header',
-      'table-footer'
+      'table-footer',
     ]
   }
 
@@ -40,7 +40,7 @@ class PictographConfig {
       'lines',
       'rowGutterLength',
       'rowHeights',
-      'rows'
+      'rows',
     ]
   }
 
@@ -49,7 +49,7 @@ class PictographConfig {
       'font-family': 'Verdana,sans-serif',
       'font-weight': '900',
       'font-size': '24',
-      'font-color': 'black'
+      'font-color': 'black',
     }
   }
 
@@ -94,12 +94,12 @@ class PictographConfig {
 
     this.alignment = {
       horizontal: 'center', // left|center|right
-      vertical: 'center' // top|center|bottom
+      vertical: 'center', // top|center|bottom
     }
 
     this.size = {
       container: { width: null, height: null }, // what is the actual size (via jquery inspection)
-      gutter: { row: 0, column: 0 }
+      gutter: { row: 0, column: 0 },
     }
 
     this.gridInfo = {
@@ -107,7 +107,7 @@ class PictographConfig {
       flexible: { row: false, column: false },
       sizes: { row: [], column: [] },
       // TODO constraints should be cached
-      constraints: { row: [], column: [] }
+      constraints: { row: [], column: [] },
     }
 
     this.lines = {
@@ -118,8 +118,8 @@ class PictographConfig {
         top: 0,
         right: 0,
         bottom: 0,
-        left: 0
-      }
+        left: 0,
+      },
     }
 
     this.resizable = null // boolean
@@ -190,14 +190,14 @@ class PictographConfig {
           top: this._verifyInt({ input: paddingTop.replace(/(px|em)/, ''), message: 'invalid table-header padding' }),
           right: this._verifyInt({ input: paddingRight.replace(/(px|em)/, ''), message: 'invalid table-header padding' }),
           bottom: this._verifyInt({ input: paddingBottom.replace(/(px|em)/, ''), message: 'invalid table-header padding' }),
-          left: this._verifyInt({ input: paddingLeft.replace(/(px|em)/, ''), message: 'invalid table-header padding' })
+          left: this._verifyInt({ input: paddingLeft.replace(/(px|em)/, ''), message: 'invalid table-header padding' }),
         }
       } else {
         textConfig.padding = {
           top: 1,
           right: 0,
           bottom: 1,
-          left: 0
+          left: 0,
         }
       }
 
@@ -257,14 +257,14 @@ class PictographConfig {
           top: this._verifyInt({ input: paddingTop.replace(/(px|em)/, ''), message: 'invalid table-footer padding' }),
           right: this._verifyInt({ input: paddingRight.replace(/(px|em)/, ''), message: 'invalid table-footer padding' }),
           bottom: this._verifyInt({ input: paddingBottom.replace(/(px|em)/, ''), message: 'invalid table-footer padding' }),
-          left: this._verifyInt({ input: paddingLeft.replace(/(px|em)/, ''), message: 'invalid table-footer padding' })
+          left: this._verifyInt({ input: paddingLeft.replace(/(px|em)/, ''), message: 'invalid table-footer padding' }),
         }
       } else {
         textConfig.padding = {
           top: 1,
           right: 0,
           bottom: 1,
-          left: 0
+          left: 0,
         }
       }
 
@@ -385,7 +385,7 @@ class PictographConfig {
           width: null,
           height: null,
           row: rowIndex,
-          column: columnIndex
+          column: columnIndex,
         }
       })
     })
@@ -418,13 +418,13 @@ class PictographConfig {
           dynamicMargins: {
             width: {
               positive: 0,
-              negative: 0
+              negative: 0,
             },
             height: {
               positive: 0,
-              negative: 0
-            }
-          }
+              negative: 0,
+            },
+          },
         }
       })
     }
@@ -467,13 +467,13 @@ class PictographConfig {
           dynamicMargins: {
             width: {
               positive: 0,
-              negative: 0
+              negative: 0,
             },
             height: {
               positive: 0,
-              negative: 0
-            }
-          }
+              negative: 0,
+            },
+          },
         }
       })
     }
@@ -492,7 +492,7 @@ class PictographConfig {
     this.lines.horizontal = (tableConfig.lines.horizontal || []).sort().map((lineValue) => {
       const linePlacement = this._verifyFloat({
         input: lineValue,
-        message: `Invalid horizontal line value '${lineValue}: must be float`
+        message: `Invalid horizontal line value '${lineValue}: must be float`,
       })
 
       if (linePlacement > this.gridInfo.dimensions.row || linePlacement < 0) {
@@ -504,7 +504,7 @@ class PictographConfig {
     this.lines.vertical = (tableConfig.lines.vertical || []).sort().map((lineValue) => {
       const linePlacement = this._verifyFloat({
         input: lineValue,
-        message: `Invalid vertical line value '${lineValue}: must be float`
+        message: `Invalid vertical line value '${lineValue}: must be float`,
       })
 
       if (linePlacement > this.gridInfo.dimensions.column || linePlacement < 0) {
@@ -519,7 +519,7 @@ class PictographConfig {
         input: tableConfig.lines,
         key: `padding-${paddingAttr}`,
         defaultValue: 0,
-        message: `Invalid line padding-${paddingAttr} '${tableConfig.lines[`padding-${paddingAttr}`]}': must be Integer`
+        message: `Invalid line padding-${paddingAttr} '${tableConfig.lines[`padding-${paddingAttr}`]}': must be Integer`,
       })
     })
 
@@ -533,13 +533,13 @@ class PictographConfig {
       dynamicMargins: {
         width: {
           positive: 0,
-          negative: 0
+          negative: 0,
         },
         height: {
           positive: 0,
-          negative: 0
-        }
-      }
+          negative: 0,
+        },
+      },
     }
 
     let match = false
@@ -620,7 +620,7 @@ class PictographConfig {
 
     cellInstance.setCssSelector([
       this.id,
-      `table-cell-${rowIndex}-${columnIndex}`
+      `table-cell-${rowIndex}-${columnIndex}`,
     ])
 
     cellInstance.setConfig(cellDefinition.value)
@@ -675,13 +675,13 @@ class PictographConfig {
     if (stringDefinition.startsWith('label:')) {
       return {
         type: 'label',
-        value: stringDefinition.replace(/^label:/, '')
+        value: stringDefinition.replace(/^label:/, ''),
       }
     }
 
     return {
       type: 'graphic',
-      value: { variableImage: stringDefinition }
+      value: { variableImage: stringDefinition },
     }
   }
 
@@ -709,7 +709,7 @@ class PictographConfig {
 
     input[key] = _.verifyInt({
       input: input[key],
-      message: `invalid '${key}': ${input[key]}. ${message}.`
+      message: `invalid '${key}': ${input[key]}. ${message}.`,
     })
   }
 

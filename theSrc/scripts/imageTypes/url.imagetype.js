@@ -26,7 +26,7 @@ class UrlType extends BaseImageType {
           tmpImg.remove()
           return resolve({
             imageWidth: imageWidth,
-            imageHeight: imageHeight
+            imageHeight: imageHeight,
           })
         }
       })

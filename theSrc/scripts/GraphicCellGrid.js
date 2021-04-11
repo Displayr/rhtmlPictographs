@@ -15,7 +15,7 @@ class GraphicCellGrid {
       'down,left',
       'up',
       'up,right',
-      'up,left'
+      'up,left',
     ]
   }
 
@@ -88,7 +88,7 @@ class GraphicCellGrid {
   _calcNodeSize () {
     this.scale = {
       x: this._computeScale(this.containerWidth(), this._cols(), this.columnGutter()),
-      y: this._computeScale(this.containerHeight(), this._rows(), this.rowGutter())
+      y: this._computeScale(this.containerHeight(), this._rows(), this.rowGutter()),
     }
   }
 
@@ -120,7 +120,7 @@ class GraphicCellGrid {
 
     return {
       x: this.getX(adjustedColumnNumber(colNumber)),
-      y: this.getY(adjustedRowNumber(rowNumber))
+      y: this.getY(adjustedRowNumber(rowNumber)),
     }
   }
 
@@ -194,7 +194,7 @@ class GraphicCellGrid {
       row: 0,
       col: 0,
       rowOrder: 0,
-      colOrder: 0
+      colOrder: 0,
     }
 
     const advanceRow = function (increment = 1) {

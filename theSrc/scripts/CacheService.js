@@ -24,7 +24,7 @@ class CacheService {
     this.hitRates = {}
     this.reportingSettings = {
       quitAfter: 60000,
-      reportEvery: (cacheReporting) ? 20000 : -1 // -1 === disabled
+      reportEvery: (cacheReporting) ? 20000 : -1, // -1 === disabled
     }
 
     this.initialiseReporting()

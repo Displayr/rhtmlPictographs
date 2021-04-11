@@ -16,5 +16,5 @@ module.exports = {
     results.aspectRatio = imageAspectRatio
 
     return results
-  }
+  },
 }

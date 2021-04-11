@@ -20,8 +20,8 @@ class ColorFactory {
         d310: _.range(0, 10).map(d3.scale.category10()),
         d320: _.range(0, 20).map(d3.scale.category20()),
         d320b: _.range(0, 20).map(d3.scale.category20b()),
-        d320c: _.range(0, 20).map(d3.scale.category20c())
-      }
+        d320c: _.range(0, 20).map(d3.scale.category20c()),
+      },
     })
   }
 
@@ -34,7 +34,7 @@ class ColorFactory {
 
         this.palettes[newPaletteName] = {
           colors: newPaletteColors,
-          index: 0
+          index: 0,
         }
       })
     }

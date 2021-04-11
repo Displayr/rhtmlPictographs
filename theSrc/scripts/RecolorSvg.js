@@ -11,7 +11,7 @@ class RecolorSvg {
     const regexes = [
       new RegExp(/((?:fill|stroke)=")([^"]+)(")/g),
       new RegExp(/((?:fill|stroke)=')([^']+)(')/g),
-      new RegExp(/((?:fill|stroke):)([^;'"]+)([;"'])/g)
+      new RegExp(/((?:fill|stroke):)([^;'"]+)([;"'])/g),
     ]
 
     const reducer = (newString, regex) => newString.replace(regex, replacer)

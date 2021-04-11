@@ -17,7 +17,7 @@ class BaseImageType {
       width: this.containerWidth,
       height: this.containerHeight,
       x: 0,
-      y: 0
+      y: 0,
     }
   }
 

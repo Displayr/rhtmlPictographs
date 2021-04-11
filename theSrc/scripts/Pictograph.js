@@ -130,7 +130,7 @@ class Pictograph {
         x2: pictographOffsets.x + this.config.totalAllocatedHorizontalSpace - this.config.lines.padding['right'],
         y1: pictographOffsets.y + y,
         y2: pictographOffsets.y + y,
-        style: this.config.lines.style || 'stroke:black;stroke-width:2'
+        style: this.config.lines.style || 'stroke:black;stroke-width:2',
       }
     })
 
@@ -143,7 +143,7 @@ class Pictograph {
         x2: pictographOffsets.x + x,
         y1: pictographOffsets.y + this.config.lines.padding['top'],
         y2: pictographOffsets.y + this.config.totalAllocatedVerticalSpace - this.config.lines.padding['bottom'],
-        style: this.config.lines.style || 'stroke:black;stroke-width:2'
+        style: this.config.lines.style || 'stroke:black;stroke-width:2',
       }
     })
 
@@ -163,7 +163,7 @@ class Pictograph {
     const completionPromises = _.flatten([
       this._computeSizeOfFixedVectors({ vectorType: 'row' }),
       this._computeSizeOfFixedVectors({ vectorType: 'column' }),
-      this._computeSizeOfFlexibleVectors()
+      this._computeSizeOfFlexibleVectors(),
     ])
 
     return Promise.all(completionPromises)
@@ -237,26 +237,26 @@ class Pictograph {
           width: {
             margins: {
               positive: [],
-              negative: []
-            }
+              negative: [],
+            },
           },
           height: {
             margins: {
               positive: [],
-              negative: []
-            }
-          }
+              negative: [],
+            },
+          },
         }
 
         const computedDynamicMargins = {
           width: {
             positive: [],
-            negative: []
+            negative: [],
           },
           height: {
             positive: [],
-            negative: []
-          }
+            negative: [],
+          },
         }
 
         const combineArraysOfTwoObjectsUsingPathExpression = (objToBeManipulated, objToBeSampled, expression) => {
@@ -270,7 +270,7 @@ class Pictograph {
             'width.margins.positive',
             'width.margins.negative',
             'height.margins.positive',
-            'height.margins.negative'
+            'height.margins.negative',
           ]
 
           _(expressions).each(expression => combineArraysOfTwoObjectsUsingPathExpression(combinedConstraints, cellSizeConstraint, expression))
@@ -355,7 +355,7 @@ class Pictograph {
   }
 
   _computeCellPlacement () {
-    const numberOfGuttersAtIndex = (index) => { return index }
+    const numberOfGuttersAtIndex = index => index
     const pictographOffsets = this._computePictographOffsets()
 
     this.config.cells.forEach((row, rowIndex) => {
@@ -366,12 +366,12 @@ class Pictograph {
         cell.dynamicMargins = {
           width: {
             positive: Math.max(rowDynamicMargins.width.positive, columnDynamicMargins.width.positive),
-            negative: Math.max(rowDynamicMargins.width.negative, columnDynamicMargins.width.negative)
+            negative: Math.max(rowDynamicMargins.width.negative, columnDynamicMargins.width.negative),
           },
           height: {
             positive: Math.max(rowDynamicMargins.height.positive, columnDynamicMargins.height.positive),
-            negative: Math.max(rowDynamicMargins.height.negative, columnDynamicMargins.height.negative)
-          }
+            negative: Math.max(rowDynamicMargins.height.negative, columnDynamicMargins.height.negative),
+          },
         }
 
         cell.x = pictographOffsets.x + _.sum(_(this.config.gridInfo.sizes.column).slice(0, columnIndex).map('size').value()) + (numberOfGuttersAtIndex(columnIndex) * this.config.size.gutter.column)
@@ -386,7 +386,7 @@ class Pictograph {
   _computePictographOffsets () {
     let offsets = {
       x: null,
-      y: null
+      y: null,
     }
 
     const freeXSpace = Math.max(0, (this.config.size.container.width - this.config.totalAllocatedHorizontalSpace))
@@ -431,7 +431,7 @@ class Pictograph {
         textConfig: this.config.tableHeader,
         containerWidth: this.config.size.container.width,
         containerHeight: this.config.tableHeaderHeight,
-        yOffSet: 0
+        yOffSet: 0,
       })
     }
 
@@ -445,7 +445,7 @@ class Pictograph {
         containerHeight: this.config.tableFooterHeight,
         // TODO NB this 2 * is unintuitive
         // yOffSet: - 2 * pictographOffsets.y + this.config.gridHeight + this.config.tableHeaderHeight
-        yOffSet: this.config.size.container.height - this.config.tableFooterHeight
+        yOffSet: this.config.size.container.height - this.config.tableFooterHeight,
       })
     }
 
@@ -577,7 +577,7 @@ class Pictograph {
       const jqueryRoot = $(this.rootElement)
       return {
         width: jqueryRoot.width(),
-        height: jqueryRoot.height()
+        height: jqueryRoot.height(),
       }
     } catch (err) {
       console.error(`fail in getContainerDimensions: ${err}`)
