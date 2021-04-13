@@ -1,0 +1,9 @@
+version: 1
+title: Graphic Cell - Multi Image - Grid Text
+type: single_page_one_example_per_config
+groupname: multi_image
+width: 200
+height: 150
+rowSize: 4
+config:
+  - '{ "variableImage": "circle:lightblue", "numImages": "2", "text-header": "header", "text-overlay": "overlay", "text-footer": "footer" }'

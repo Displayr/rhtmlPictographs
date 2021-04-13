@@ -1,0 +1,17 @@
+version: 1
+title: Graphic Cell - Multi Image - Grid Layout
+type: single_page_one_example_per_config
+groupname: multi_image
+width: 200
+height: 150
+rowSize: 4
+data: '{ "proportion": "=15/24", "numImages": 6, "numRows": 2, "variableImage": "circle:radial:lightblue" }'
+config:
+  - '{ "layout": "right,down" }'
+  - '{ "layout": "right,up" }'
+  - '{ "layout": "left,down" }'
+  - '{ "layout": "left,up" }'
+  - '{ "layout": "down,right" }'
+  - '{ "layout": "down,left" }'
+  - '{ "layout": "up,right" }'
+  - '{ "layout": "up,left" }'

@@ -1,0 +1,13 @@
+version: 1
+title: Circle Scaling
+type: single_page_one_example_per_config
+width: 150
+height: 100
+rowSize: 6
+config:
+  - '{ "variableImage": "circle:fromleft", "numImages": 2, "proportion": "0.66" }'
+  - '{ "variableImage": "circle:fromright", "numImages": 2, "proportion": "0.66" }'
+  - '{ "variableImage": "circle:frombottom", "numImages": 2, "proportion": "0.66" }'
+  - '{ "variableImage": "circle:fromtop", "numImages": 2, "proportion": "0.66" }'
+  - '{ "variableImage": "circle:scale", "numImages": 2, "proportion": "0.66" }'
+  - '{ "variableImage": "circle:radial", "numImages": 2, "proportion": "0.66" }'

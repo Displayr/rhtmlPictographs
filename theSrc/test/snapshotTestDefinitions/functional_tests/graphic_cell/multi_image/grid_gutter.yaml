@@ -1,0 +1,19 @@
+version: 1
+title: Graphic Cell - Multi Image - Grid Gutter
+type: single_page_one_example_per_config
+groupname: multi_image
+width: 200
+height: 150
+rowSize: 3
+data: '{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "4" }'
+config:
+  - '{  "rowGutter": "0.1", "columnGutter": "0" }'
+  - '{  "rowGutter": "0.5", "columnGutter": "0" }'
+  - '{  "rowGutter": "0.9", "columnGutter": "0" }'
+
+  - '{  "rowGutter": "0", "columnGutter": "0.1" }'
+  - '{  "rowGutter": "0", "columnGutter": "0.5" }'
+  - '{  "rowGutter": "0", "columnGutter": "0.9" }'
+
+  - '{}'
+  - '{ "rowGutter": "0", "columnGutter":"0" }'

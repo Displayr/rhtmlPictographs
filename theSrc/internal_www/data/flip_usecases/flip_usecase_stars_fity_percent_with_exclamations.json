@@ -1,0 +1,11 @@
+{
+  "font-size": "10",
+  "proportion": 0.5,
+  "numImages": 5,
+  "numRows": 1,
+  "variableImage": "url:fromleft:red:/images/star_filled.svg",
+  "baseImage": "url:red:/images/star_unfilled.svg",
+  "text-overlay": "!!",
+  "background-color": "transparent",
+  "resizable": "false"
+}

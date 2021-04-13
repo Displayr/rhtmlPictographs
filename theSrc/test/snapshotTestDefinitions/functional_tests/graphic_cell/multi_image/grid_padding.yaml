@@ -1,0 +1,12 @@
+version: 1
+title: Graphic Cell - Multi Image - Grid Padding
+type: single_page_one_example_per_config
+groupname: multi_image
+width: 200
+height: 150
+rowSize: 3
+data: '{ "image-background-color": "#dddddd", "variableImage": "circle:lightblue", "numImages": "4" }'
+config:
+ - '{}'
+ - '{ "padding": "15 15 15 15" }'
+ - '{ "padding": "15 0 15 0" }'

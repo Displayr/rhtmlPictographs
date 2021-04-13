@@ -1,0 +1,42 @@
+version: 1
+title: Label Cell - Basics
+type: multi_widget_single_page
+width: 100
+height: 100
+rowSize: 5
+widgets:
+# basic
+    - config: '{ "table": { "rows": [ [ "label:A label" ] ] } }'
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": "A label" } ] ] } }'
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": [ "Line 1", "Line 2" ] } ] ] } }'
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "text": "A label", "font-color" : "red", "font-size": "20px", "font-family": "impact", "font-weight" : "100" } } ] ] } }'
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": [{ "text": "label 1" }, { "text": "label 2" }] } ] ] } }'
+
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "padding-top": 10, "padding-inner": 18, "labels": [ "Line 1", { "text": "Line 2", "font-size": "14px", "font-color": "red" } ] } } ] ] } }'
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "background-color" : "#dddddd", "labels": [ "row1", "row2" ] } } ] ] } }'
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "labels": [ "filler" ] } } ] ] } }'
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "labels": [ "filler" ] } } ] ] } }'
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "labels": [ "filler" ] } } ] ] } }'
+
+# positioning
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "top", "labels": [ "row1", "row2" ] } } ] ] } }'
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "padding-top": "15", "vertical-align": "top", "labels": [ "row1", "row2" ] } } ] ] } }'
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "center", "labels": [ "row1", "row2" ] } } ] ] } }'
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "padding-bottom": "15", "vertical-align": "bottom", "labels": [ "row1", "row2" ] } } ] ] } }'
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "vertical-align": "bottom", "labels": [ "row1", "row2" ] } } ] ] } }'
+
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "left" } } ] ] } }'
+      width: 200
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "center" } } ] ] } }'
+      width: 200
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "text" : "A label", "horizontal-align": "right" } } ] ] } }'
+      width: 200
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "labels": [ "filler" ] } } ] ] } }'
+    - config: '{ "table": { "rows": [ [ { "type": "label", "value": { "labels": [ "filler" ] } } ] ] } }'
+
+# alignment
+    - config: '{ "font-color": "lightblue", "font-family": "Arvo, serif", "table": { "rows": [ [ { "type": "label", "value": { "padding-top": "5", "padding-inner": "5", "padding-left": "15", "padding-right": "15", "labels": [ { "text" : "Left Aligned", "horizontal-align": "left" }, { "text" : "Center Aligned", "horizontal-align": "center" }, { "text" : "Right Aligned", "horizontal-align": "right" } ] } } ] ] } }'
+      width: 400
+# smallcapos
+    - config: '{ "font-color": "lightblue", "font-family": "Arvo, serif", "table": { "rows": [ [ { "type": "label", "value": { "padding-left" : 5, "padding-inner" : 5, "labels": [ { "horizontal-align": "left", "text" : "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz", "font-variant": "small-caps" }, { "horizontal-align": "left", "text" : "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz", "font-variant": "normal"  } ] } } ] ] } }'
+      width: 850

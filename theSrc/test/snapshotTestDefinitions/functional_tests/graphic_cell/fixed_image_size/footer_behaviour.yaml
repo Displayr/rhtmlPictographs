@@ -1,0 +1,10 @@
+version: 1
+title: Table footer will be drawn at bottom of table container (left), graphic cell text footer will be drawn immediately below fixed size graphic cell
+groupname: functional_test_fixed_image_size
+type: single_page_one_example_per_config
+rowSize: 2
+width: 300
+height: 300
+config:
+  - '{ "table-footer": { "text": "table footer", "font-size": "14px" }, "table": { "colWidths": [ "fixedsize:graphic" ], "rowHeights": [ "fixedsize:graphic" ], "rows": [ [ { "type": "graphic", "value": { "proportion": "=4/6", "numImages": 6, "numRows": 2, "imageWidth": 10, "imageHeight": 20, "rowGutter": 0.2, "columnGutter": 0.2, "variableImage": "rect:fromtop:lightblue", "baseImage": "rect:#CCCCCC" } } ] ] } }'
+  - '{ "table": { "colWidths": [ "fixedsize:graphic" ], "rowHeights": [ "fixedsize:graphic" ], "rows": [ [ { "type": "graphic", "value": { "text-footer": { "text": "graphic cell text footer", "font-size": "14px" }, "proportion": "=4/6", "numImages": 6, "numRows": 2, "imageWidth": 10, "imageHeight": 20, "rowGutter": 0.2, "columnGutter": 0.2, "variableImage": "rect:fromtop:lightblue", "baseImage": "rect:#CCCCCC" } } ] ] } }'

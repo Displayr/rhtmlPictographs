@@ -1,0 +1,25 @@
+version: 1
+title: When specifying just imageHeight, imageWidth will be computed based on aspect ratio of image. For shapes it will assume aspect ratio of 1
+groupname: functional_test_fixed_image_size
+type: single_page_one_example_per_config
+rowSize: 5
+width: 100
+height: 100
+config:
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_top
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_center
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_bottom
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_center|config.halign_left
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_center|config.halign_right
+
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_top|config.tablefooter_10px
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_center|config.tablefooter_10px
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_bottom|config.tablefooter_10px
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_center|config.halign_left|config.tablefooter_10px
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_center|config.halign_right|config.tablefooter_10px
+
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_top|config.tablefooter_10px|config.tableheader_10px
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_center|config.tablefooter_10px|config.tableheader_10px
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_bottom|config.tablefooter_10px|config.tableheader_10px
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_center|config.halign_left|config.tablefooter_10px|config.tableheader_10px
+  - data.test_plan.graphic_2x3_stickman_fixedsize_25h|config.valign_center|config.halign_right|config.tablefooter_10px|config.tableheader_10px

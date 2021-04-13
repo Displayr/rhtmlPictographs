@@ -1,0 +1,9 @@
+version: 1
+title: Background Color
+type: single_page_one_example_per_config
+width: 200
+height: 200
+rowSize: 2
+config:
+  - '{ "variableImage": "circle:lightblue", "numImages": 2, "background-color":"green" }'
+  - '{ "padding": "10 10 10 10", "variableImage": "circle:lightblue", "numImages": 2, "background-color":"green" }'

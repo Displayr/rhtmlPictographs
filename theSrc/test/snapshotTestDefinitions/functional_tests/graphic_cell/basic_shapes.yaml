@@ -1,0 +1,22 @@
+version: 1
+title: Basic Shapes
+type: single_page_one_example_per_config
+width: 200
+height: 200
+rowSize: 3
+config:
+  - '{ "variableImage": "circle:blue", "numImages": 2 }'
+  - '{ "variableImage": "circle:green", "numImages": 2 }'
+  - '{ "variableImage": "circle:red", "numImages": 2 }'
+
+  - '{ "variableImage": "ellipse:blue", "numImages": 2 }'
+  - '{ "variableImage": "ellipse:green", "numImages": 2 }'
+  - '{ "variableImage": "ellipse:red", "numImages": 2 }'
+
+  - '{ "variableImage": "square:blue", "numImages": 2 }'
+  - '{ "variableImage": "square:green", "numImages": 2 }'
+  - '{ "variableImage": "square:red", "numImages": 2 }'
+
+  - '{ "variableImage": "rect:blue", "numImages": 2 }'
+  - '{ "variableImage": "rect:green", "numImages": 2 }'
+  - '{ "variableImage": "rect:red", "numImages": 2 }'

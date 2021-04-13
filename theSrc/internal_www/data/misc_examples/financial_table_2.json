@@ -1,0 +1,19 @@
+{
+  "font-family": "Arvo",
+  "font-size": "30px",
+  "background-color": "#dddddd",
+  "table": {
+    "colWidths": [ 275, 125, 125, 125, 125, 125],
+    "rowHeights": [ 60, 60, 60, 60 ],
+    "lines": {
+      "horizontal": [ 0, 1, 4 ],
+      "vertical": [ 0, 1, 6 ]
+    },
+    "rows": [
+      [ "label:Year", "label:2015", "label:2014", "label:2013", "label:2012", "label:2011" ],
+      [ "label:Price / share", "label:4.90", "label:4.92", "label:5.72", "label:4.27", "label:3.34" ],
+      [ "label:Earnings / share", "label:11.9", { "type": "label", "value": { "text": "(-15.60)", "font-color": "red" } }, "label:7.3", "label:13.9", "label:18.4" ],
+      [ "label:P/E ratio", "label:0.41", { "type": "label", "value": { "text": "(-0.32)", "font-color": "red" } }, "label:0.78", "label:0.31", "label:0.18" ]
+    ]
+  }
+}

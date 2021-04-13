@@ -1,0 +1,28 @@
+version: 1
+title: SVG Recoloring
+type: single_page_one_example_per_config
+width: 200
+height: 150
+rowSize: 5
+comments:
+  - location: 6
+    status: yellow
+    description: recoloring this SVG alters its aspect ratio
+  - location: 8
+    status: yellow
+    description: recoloring this SVG alters its aspect ratio
+  - location: 9
+    status: yellow
+    description: recoloring this SVG alters its aspect ratio
+config:
+  - '{ "variableImage": "url:/images/blue_circle_512.svg", "numImages": 2 }'
+  - '{ "variableImage": "url:/images/soyuz_rocket.svg", "numImages": 2 }'
+  - '{ "variableImage": "url:/images/dollar_sign_green.svg", "numImages": 2 }'
+  - '{ "variableImage": "url:/images/rocket_black.svg", "numImages": 2 }'
+  - '{ "variableImage": "url:/images/stickman_green.svg", "numImages": 2 }'
+
+  - '{ "variableImage": "url:red:/images/blue_circle_512.svg", "numImages": 2 }'
+  - '{ "variableImage": "url:red:/images/soyuz_rocket.svg", "numImages": 2 }'
+  - '{ "variableImage": "url:red:/images/dollar_sign_green.svg", "numImages": 2 }'
+  - '{ "variableImage": "url:red:/images/rocket_black.svg", "numImages": 2 }'
+  - '{ "variableImage": "url:red:/images/stickman_green.svg", "numImages": 2 }'

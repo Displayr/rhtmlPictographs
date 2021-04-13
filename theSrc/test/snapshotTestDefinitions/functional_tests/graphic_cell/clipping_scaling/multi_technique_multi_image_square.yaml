@@ -1,0 +1,16 @@
+version: 1
+title: Multi Image w/ Different fill techniques
+type: multi_widget_single_page
+groupname: functional_test_clipping_scaling
+width: 100
+height: 200
+rowSize: 10
+widgets:
+  - config: '{ "numImages": 2, "numRows": 2, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:fromleft", "proportion": "=15/16" }'
+  - config: '{ "numImages": 2, "numRows": 2, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:fromright", "proportion": "=15/16" }'
+  - config: '{ "numImages": 2, "numRows": 2, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:frombottom", "proportion": "=15/16" }'
+  - config: '{ "numImages": 2, "numRows": 2, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:fromtop", "proportion": "=15/16" }'
+  - config: '{ "numImages": 2, "numRows": 2, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:scale", "proportion": "=15/16" }'
+  - config: '{ "numImages": 2, "numRows": 2, "background-color": "#dddddd", "baseImage": "square:lightblue", "variableImage": "square:scale", "proportion": "=15/16" }'
+    width: 200
+    height: 100

@@ -1,0 +1,27 @@
+type: multi_widget_multi_page
+comments:
+  - location: flexible_picto_bar_chart_1
+    status: red
+    comment: label is out of bound
+  - location: flexible_picto_bar_chart_2
+    status: red
+    comment: label is out of bound
+configs:
+  - config: data.misc_examples.circle_infographic
+    width: 1100
+    height: 500
+  - config: data.misc_examples.financial_table_1
+    width: 900
+    height: 240
+  - config: data.misc_examples.financial_table_2
+    width: 900
+    height: 240
+  - config: data.misc_examples.flexible_picto_bar_chart_1
+    width: 500
+    height: 450
+  - config: data.misc_examples.flexible_picto_bar_chart_2
+    width: 750
+    height: 400
+  - config: data.misc_examples.super_power_showdown
+    width: 700
+    height: 900

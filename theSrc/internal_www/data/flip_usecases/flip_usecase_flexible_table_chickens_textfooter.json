@@ -1,0 +1,329 @@
+{
+  "width": 453,
+  "height": 369,
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [
+      "proportion:0.125",
+      "proportion:0.125",
+      "proportion:0.125",
+      "proportion:0.125",
+      "proportion:0.125",
+      "proportion:0.125",
+      "proportion:0.125",
+      "proportion:0.125"
+    ],
+    "rowGutterLength": 0,
+    "columnGutterLength": 0,
+    "colWidths": [
+      "flexible:label",
+      "flexible:graphic"
+    ],
+    "rows": [
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 0.000000,
+            "vertical-align": "center",
+            "text": "Coca Cola ",
+            "font-size": "10.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Verdana",
+            "font-color": "#00008B"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.665618,
+            "numImages": 12,
+            "variableImage": "url:#00008B:fromleft:/images/chicken_grey.svg",
+            "baseImage": "url:#ED7D31:/images/chicken_grey.svg",
+            "numRows": 1,
+            "text-footer": {
+              "text": "40",
+              "font-size": "8.000000px",
+              "font-weight": "normal",
+              "font-family": "Verdana",
+              "font-color": "#00008B",
+              "horizontal-align": "right"
+            },
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 0.000000,
+            "vertical-align": "center",
+            "text": "Diet Coke",
+            "font-size": "10.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Verdana",
+            "font-color": "#00008B"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.765766,
+            "numImages": 12,
+            "variableImage": "url:#00008B:fromleft:/images/chicken_grey.svg",
+            "baseImage": "url:#ED7D31:/images/chicken_grey.svg",
+            "numRows": 1,
+            "text-footer": {
+              "text": "46",
+              "font-size": "8.000000px",
+              "font-weight": "normal",
+              "font-family": "Verdana",
+              "font-color": "#00008B",
+              "horizontal-align": "right"
+            },
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 0.000000,
+            "vertical-align": "center",
+            "text": "Coke Zero",
+            "font-size": "10.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Verdana",
+            "font-color": "#00008B"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.718852,
+            "numImages": 12,
+            "variableImage": "url:#00008B:fromleft:/images/chicken_grey.svg",
+            "baseImage": "url:#ED7D31:/images/chicken_grey.svg",
+            "numRows": 1,
+            "text-footer": {
+              "text": "44",
+              "font-size": "8.000000px",
+              "font-weight": "normal",
+              "font-family": "Verdana",
+              "font-color": "#00008B",
+              "horizontal-align": "right"
+            },
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 0.000000,
+            "vertical-align": "center",
+            "text": "Pepsi Light ",
+            "font-size": "10.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Verdana",
+            "font-color": "#00008B"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.903704,
+            "numImages": 12,
+            "variableImage": "url:#00008B:fromleft:/images/chicken_grey.svg",
+            "baseImage": "url:#ED7D31:/images/chicken_grey.svg",
+            "numRows": 1,
+            "text-footer": {
+              "text": "54",
+              "font-size": "8.000000px",
+              "font-weight": "normal",
+              "font-family": "Verdana",
+              "font-color": "#00008B",
+              "horizontal-align": "right"
+            },
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 0.000000,
+            "vertical-align": "center",
+            "text": "Pepsi Max",
+            "font-size": "10.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Verdana",
+            "font-color": "#00008B"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.729924,
+            "numImages": 12,
+            "variableImage": "url:#00008B:fromleft:/images/chicken_grey.svg",
+            "baseImage": "url:#ED7D31:/images/chicken_grey.svg",
+            "numRows": 1,
+            "text-footer": {
+              "text": "44",
+              "font-size": "8.000000px",
+              "font-weight": "normal",
+              "font-family": "Verdana",
+              "font-color": "#00008B",
+              "horizontal-align": "right"
+            },
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 0.000000,
+            "vertical-align": "center",
+            "text": "Pepsi ",
+            "font-size": "10.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Verdana",
+            "font-color": "#00008B"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.700000,
+            "numImages": 12,
+            "variableImage": "url:#00008B:fromleft:/images/chicken_grey.svg",
+            "baseImage": "url:#ED7D31:/images/chicken_grey.svg",
+            "numRows": 1,
+            "text-footer": {
+              "text": "42",
+              "font-size": "8.000000px",
+              "font-weight": "normal",
+              "font-family": "Verdana",
+              "font-color": "#00008B",
+              "horizontal-align": "right"
+            },
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 0.000000,
+            "vertical-align": "center",
+            "text": "NET Sugarred",
+            "font-size": "10.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Verdana",
+            "font-color": "#00008B"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.671248,
+            "numImages": 12,
+            "variableImage": "url:#00008B:fromleft:/images/chicken_grey.svg",
+            "baseImage": "url:#ED7D31:/images/chicken_grey.svg",
+            "numRows": 1,
+            "text-footer": {
+              "text": "40",
+              "font-size": "8.000000px",
+              "font-weight": "normal",
+              "font-family": "Verdana",
+              "font-color": "#00008B",
+              "horizontal-align": "right"
+            },
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5.000000,
+            "padding-top": 0.000000,
+            "padding-bottom": 0.000000,
+            "vertical-align": "center",
+            "text": "NET Sugarless",
+            "font-size": "10.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Verdana",
+            "font-color": "#00008B"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.744592,
+            "numImages": 12,
+            "variableImage": "url:#00008B:fromleft:/images/chicken_grey.svg",
+            "baseImage": "url:#ED7D31:/images/chicken_grey.svg",
+            "numRows": 1,
+            "text-footer": {
+              "text": "45",
+              "font-size": "8.000000px",
+              "font-weight": "normal",
+              "font-family": "Verdana",
+              "font-color": "#00008B",
+              "horizontal-align": "right"
+            },
+            "columnGutter": 0.000000,
+            "rowGutter": 0.000000,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ]
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+version: 1
+type: single_page_one_example_per_config
+use_config_as_title: true
+width: 100
+height: 62
+rowSize: 2
+config:
+  - '{ "proportion": "=0.5 + 1/32", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:scale:lightblue", "background-color": "#dddddd" }'

@@ -1,0 +1,143 @@
+{
+  "width": 450.000024,
+  "height": 131.620798582398,
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [
+      38.4483194329593,
+      32,
+      57.1724791494389
+    ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "colWidths": [
+      131,
+      317.000024
+    ],
+    "rows": [
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 1,
+            "padding-bottom": 0,
+            "vertical-align": "top",
+            "labels": [
+              {
+                "text": "DEAD",
+                "font-size": "20.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C"
+              },
+              {
+                "text": "9,079",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C"
+              }
+            ]
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.9079,
+            "numImages": 20,
+            "variableImage": "url:#E41A1C:fromleft:/images/car_grey.svg",
+            "numCols": 10,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "1.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "top",
+            "labels": [
+              {
+                "text": "INJURED",
+                "font-size": "20.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C"
+              },
+              {
+                "text": "2,628",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C"
+              }
+            ]
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.5256,
+            "numImages": 10,
+            "variableImage": "url:#377EB8:fromleft:/images/car_grey.svg",
+            "numCols": 10,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 0,
+            "padding-bottom": 1,
+            "vertical-align": "top",
+            "labels": [
+              {
+                "text": "MISSING",
+                "font-size": "20.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C"
+              },
+              {
+                "text": "12,664",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C"
+              }
+            ]
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.844267,
+            "numImages": 30,
+            "variableImage": "url:#4DAF4A:fromleft:/images/car_grey.svg",
+            "numCols": 10,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 1.000000 0.000000"
+          }
+        }
+      ]
+    ]
+  }
+}

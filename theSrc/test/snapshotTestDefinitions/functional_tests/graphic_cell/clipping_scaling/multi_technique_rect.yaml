@@ -1,0 +1,17 @@
+version: 1
+title: Rectangle w/ Different fill techniques
+type: multi_widget_single_page
+groupname: functional_test_clipping_scaling
+width: 200
+height: 100
+rowSize: 10
+widgets:
+  - config: '{ "numImages": 1, "background-color": "#dddddd", "baseImage": "rect:lightblue", "variableImage": "rect:radial", "proportion": "=7/8" }'
+  - config: '{ "numImages": 1, "background-color": "#dddddd", "baseImage": "rect:lightblue", "variableImage": "rect:fromleft", "proportion": "=7/8" }'
+  - config: '{ "numImages": 1, "background-color": "#dddddd", "baseImage": "rect:lightblue", "variableImage": "rect:scale", "proportion": "=7/8" }'
+  - config: '{ "numImages": 1, "background-color": "#dddddd", "baseImage": "rect:lightblue", "variableImage": "rect:scale", "proportion": "=7/8" }'
+    width: 100
+    height: 200
+  - config: '{ "numImages": 1, "background-color": "#dddddd", "baseImage": "rect:lightblue", "variableImage": "rect:frombottom", "proportion": "=7/8" }'
+    width: 100
+    height: 200

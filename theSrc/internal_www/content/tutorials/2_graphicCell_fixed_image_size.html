@@ -18,20 +18,20 @@ Because you must specify the rowHeights/colWidths as "fixedsize:graphic", it is 
 
 <p>Specifying both imageWidth and imageHeight to a fixed size graphic cell will force each image to match the specified size</p>
 <div class="row">
-  <pre class="example" data-show-config="true" data-width="100" data-height="100" data-config='config.graphic_2x3_rectanges_fixedsize_10x20'>
+  <pre class="example" data-show-config="true" data-width="100" data-height="100" data-config='data.test_plan.graphic_2x3_rectangles_fixedsize_10x20'>
   </pre>
 </div>
 
 <p>When specifying just imageWidth, imageHeight will be computed based on aspect ratio of image. For shapes it will assume aspect ratio of 1</p>
 <div class="row">
-  <pre class="example" data-show-config="true" data-width="100" data-height="100" data-config='config.graphic_2x3_stickman_fixedsize_10w'>
+  <pre class="example" data-show-config="true" data-width="100" data-height="100" data-config='data.test_plan.graphic_2x3_stickman_fixedsize_10w'>
   </pre>
 </div>
 
 
 <p>When specifying just imageHeight, imageWidth will be computed based on aspect ratio of image. For shapes it will assume aspect ratio of 1</p>
 <div class="row">
-  <pre class="example" data-show-config="true" data-width="100" data-height="100" data-config='config.graphic_2x3_stickman_fixedsize_25h'>
+  <pre class="example" data-show-config="true" data-width="100" data-height="100" data-config='data.test_plan.graphic_2x3_stickman_fixedsize_25h'>
   </pre>
 </div>
 
@@ -88,6 +88,381 @@ Because you must specify the rowHeights/colWidths as "fixedsize:graphic", it is 
         ]
       }
     }</pre>
+</div>
+
+<h2>Here is a copy of the regression suite for fixed image size, until I figure out what to do with it</h2>
+
+
+<p>Specifying both imageWidth and imageHeight to a fixed size graphic cell will force each image to match the specified size</p>
+<div snapshot-name="graphic_cell_fixed_size_image_and_height_specified">
+  <div class="row">
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "top" }'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "center" }'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "bottom" }'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "left" }'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "right" }'>
+    </pre>
+  </div>
+
+  <div class="row">
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "top" }|
+      config.tablefooter_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "center" }|
+      config.tablefooter_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "bottom" }|
+      config.tablefooter_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "left" }|
+      config.tablefooter_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "right" }|
+      config.tablefooter_10px'>
+    </pre>
+  </div>
+
+  <div class="row">
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "top" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "center" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "bottom" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "left" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_rectangles_fixedsize_10x20|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "right" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+  </div>
+</div>
+
+<p>When specifying just imageWidth, imageHeight will be computed based on aspect ratio of image. For shapes it will assume aspect ratio of 1</p>
+<div snapshot-name="graphic_cell_fixed_size_only_width_specified">
+  <div class="row">
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "top" }'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "center" }'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "bottom" }'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "left" }'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "right" }'>
+    </pre>
+  </div>
+
+  <div class="row">
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "top" }|
+      config.tablefooter_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "center" }|
+      config.tablefooter_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "bottom" }|
+      config.tablefooter_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "left" }|
+      config.tablefooter_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "right" }|
+      config.tablefooter_10px'>
+    </pre>
+  </div>
+
+  <div class="row">
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "top" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "center" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "bottom" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "left" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_10w|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "right" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+  </div>
+</div>
+
+<p>When specifying just imageHeight, imageWidth will be computed based on aspect ratio of image. For shapes it will assume aspect ratio of 1</p>
+<div snapshot-name="graphic_cell_fixed_size_only_height_specified">
+  <div class="row">
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "top" }'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "center" }'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "bottom" }'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "left" }'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "right" }'>
+    </pre>
+  </div>
+
+  <div class="row">
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "top" }|
+      config.tablefooter_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "center" }|
+      config.tablefooter_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "bottom" }|
+      config.tablefooter_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "left" }|
+      config.tablefooter_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "right" }|
+      config.tablefooter_10px'>
+    </pre>
+  </div>
+
+  <div class="row">
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "top" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "center" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "bottom" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "left" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+
+    <pre class="example" data-width="100" data-height="100" data-config='
+      data.test_plan.graphic_2x3_stickman_fixedsize_25h|
+      { "vertical-align": "center" }|
+      { "horizontal-align": "right" }|
+      config.tablefooter_10px|
+      config.tableheader_10px'>
+    </pre>
+  </div>
+</div>
+
+<p>Table footer will be drawn at bottom of table container (left), graphic cell text footer will be drawn immediately below fixed size graphic cell</p>
+<div snapshot-name="graphic_cell_fixed_size_footer_interactions">
+  <div class="row">
+    <pre class="example" data-width="300" data-height="300">{
+      "table-footer": { "text": "table footer", "font-size": "14px" },
+      "table": {
+        "colWidths": [ "fixedsize:graphic" ],
+        "rowHeights": [ "fixedsize:graphic" ],
+        "rows": [
+          [
+            {
+              "type": "graphic",
+              "value": {
+                "proportion": "=4/6",
+                "numImages": 6,
+                "numRows": 2,
+                "imageWidth": 10,
+                "imageHeight": 20,
+                "rowGutter": 0.2,
+                "columnGutter": 0.2,
+                "variableImage": "rect:fromtop:lightblue",
+                "baseImage": "rect:#CCCCCC"
+              }
+            }
+          ]
+        ]
+      }
+    }</pre>
+
+    <pre class="example" data-width="300" data-height="300">{
+      "table": {
+        "colWidths": [ "fixedsize:graphic" ],
+        "rowHeights": [ "fixedsize:graphic" ],
+        "rows": [
+          [
+            {
+              "type": "graphic",
+              "value": {
+                "text-footer": { "text": "graphic cell text footer", "font-size": "14px" },
+                "proportion": "=4/6",
+                "numImages": 6,
+                "numRows": 2,
+                "imageWidth": 10,
+                "imageHeight": 20,
+                "rowGutter": 0.2,
+                "columnGutter": 0.2,
+                "variableImage": "rect:fromtop:lightblue",
+                "baseImage": "rect:#CCCCCC"
+              }
+            }
+          ]
+        ]
+      }
+    }</pre>
+  </div>
 </div>
 
 </body>
