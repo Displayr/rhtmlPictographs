@@ -1,0 +1,19 @@
+version: 1
+title: Floating Label Positioning and Gutter Placement
+type: multi_widget_single_page
+groupname: floating_labels
+width: 200
+height: 100
+rowSize: 3
+widgets:
+  - config: '{ "font-size": "8", "numImages": 3, "numRows": 1, "padding": "75 100 75 100", "columnGutter": 0, "rowGutter": 0, "variableImage": "ellipse:lightblue", "floatingLabels": [ { "position": "0:0", "text": "0:0" }, { "position": "0:1", "text": "0:1" }, { "position": "0:2", "text": "0:2" }, { "position": "0:3", "text": "0:3" }, { "position": "0.5:0.5", "text": "0.5:0.5" }, { "position": "0.5:1.5", "text": "0.5:1.5" }, { "position": "0.5:2.5", "text": "0.5:2.5" }, { "position": "1:0", "text": "1:0" }, { "position": "1:1", "text": "1:1" }, { "position": "1:2", "text": "1:2" }, { "position": "1:3", "text": "1:3" } ] }'
+    width: 400
+    height: 200
+
+  - config: '{ "floatingLabels": [ { "position": "0.5:0.5", "font-size": "16px", "text": "NL", "font-color": "orange", "font-weight": "900", "font-family":"Avro" }, { "position": "1:0", "horizontal-align": "left",   "vertical-align": "top", "text": "tl" }, { "position": "2:0.5", "horizontal-align": "center", "vertical-align": "top", "text": "tc" }, { "position": "3:1", "horizontal-align": "right",  "vertical-align": "top", "text": "tr" }, { "position": "4.5:0", "horizontal-align": "left",   "vertical-align": "center", "text": "cl" }, { "position": "5.5:0.5", "horizontal-align": "center", "vertical-align": "center", "text": "cc" }, { "position": "6.5:1", "horizontal-align": "right",  "vertical-align": "center", "text": "cr" }, { "position": "8:0", "horizontal-align": "left",   "vertical-align": "bottom", "text": "bl" }, { "position": "9:0.5", "horizontal-align": "center", "vertical-align": "bottom", "text": "bc" }, { "position": "10:1", "horizontal-align": "right",  "vertical-align": "bottom", "text": "br" } ], "proportion": "0.95", "numImages": 10, "numCols": "1", "variableImage": "circle:fromleft:lightblue", "font-size": "12", "font-color": "brown", "rowGutter": "0.01", "columnGutter":"0" }'
+    width: 50
+    height: 400
+
+  - config: '{ "debugBorder": "yes", "font-size": "8", "numImages": 6, "numRows": 2, "padding": "10 10 10 10", "columnGutter": 0.5, "rowGutter": 0.5, "variableImage": "ellipse:lightblue", "floatingLabels": [ { "position": "0.99:0.99", "text": "0.99:0.99", "horizontal-align": "right" }, { "position": "0.99:g1.5", "text": "0.99:g1.5" }, { "position": "1:g1.5", "text": "1:g1.5" }, { "position": "1:1", "text": "1:1", "horizontal-align": "left" }, { "position": "g1.5:1", "text": "g1.5:1" }, { "position": "g1.5:0.99", "text": "g1.5:0.99" }, { "position": "0.99:g2.5", "text": "0.99:g2.5" }, { "position": "1:g2.5", "text": "1:g2.5" }, { "position": "0.99:g2.5", "text": "0.99:g2.5" }, { "position": "1:g2.5", "text": "1:g2.5" } ] }'
+    width: 400
+    height: 200

@@ -34,7 +34,7 @@ class GraphicCell extends BaseCell {
       'variableImage',
       'floatingLabels',
       'imageWidth',
-      'imageHeight'
+      'imageHeight',
     ]
   }
 
@@ -77,7 +77,7 @@ class GraphicCell extends BaseCell {
         top: parseInt(paddingTop.replace(/(px|em)/, '')),
         right: parseInt(paddingRight.replace(/(px|em)/, '')),
         bottom: parseInt(paddingBottom.replace(/(px|em)/, '')),
-        left: parseInt(paddingLeft.replace(/(px|em)/, ''))
+        left: parseInt(paddingLeft.replace(/(px|em)/, '')),
       }
       _.forEach(this.config.padding, (value, paddingKey) => {
         if (_.isNaN(this.config.padding[paddingKey])) {
@@ -107,7 +107,7 @@ class GraphicCell extends BaseCell {
         top: this.config['text-header']['padding-top'],
         right: this.config['text-header']['padding-right'],
         bottom: this.config['text-header']['padding-bottom'],
-        left: this.config['text-header']['padding-left']
+        left: this.config['text-header']['padding-left'],
       })
       this.headerHeight = height
     } else {
@@ -120,7 +120,7 @@ class GraphicCell extends BaseCell {
         top: this.config['text-footer']['padding-top'],
         right: this.config['text-footer']['padding-right'],
         bottom: this.config['text-footer']['padding-bottom'],
-        left: this.config['text-footer']['padding-left']
+        left: this.config['text-footer']['padding-left'],
       })
       this.footerHeight = height
     } else {
@@ -212,12 +212,12 @@ class GraphicCell extends BaseCell {
     const marginConstraints = {
       width: {
         negative: [],
-        positive: []
+        positive: [],
       },
       height: {
         negative: [],
-        positive: []
-      }
+        positive: [],
+      },
     }
 
     const convertPaddingConfig = (incomingConfig) => {
@@ -225,7 +225,7 @@ class GraphicCell extends BaseCell {
         top: incomingConfig['padding-top'] || 0,
         right: incomingConfig['padding-right'] || 0,
         bottom: incomingConfig['padding-bottom'] || 0,
-        left: incomingConfig['padding-left'] || 0
+        left: incomingConfig['padding-left'] || 0,
       }
     }
 
@@ -259,26 +259,26 @@ class GraphicCell extends BaseCell {
           marginConstraints.width.positive.push({
             text: floatingLabelConfig.text, // debug only. helps a lot
             size: width,
-            overlapInUnitsOfGraphicSize: directionAdjustedWidthOverlap((numCols - position.col.position) / numCols)
+            overlapInUnitsOfGraphicSize: directionAdjustedWidthOverlap((numCols - position.col.position) / numCols),
           })
           break
         case 'middle':
           marginConstraints.width.positive.push({
             text: floatingLabelConfig.text, // debug only. helps a lot
             size: width / 2.0,
-            overlapInUnitsOfGraphicSize: directionAdjustedWidthOverlap((numCols - position.col.position) / numCols)
+            overlapInUnitsOfGraphicSize: directionAdjustedWidthOverlap((numCols - position.col.position) / numCols),
           })
           marginConstraints.width.negative.push({
             text: floatingLabelConfig.text, // debug only. helps a lot
             size: width / 2.0,
-            overlapInUnitsOfGraphicSize: directionAdjustedWidthOverlap(position.col.position / numCols)
+            overlapInUnitsOfGraphicSize: directionAdjustedWidthOverlap(position.col.position / numCols),
           })
           break
         case 'end':
           marginConstraints.width.negative.push({
             text: floatingLabelConfig.text, // debug only. helps a lot
             size: width,
-            overlapInUnitsOfGraphicSize: directionAdjustedWidthOverlap(position.col.position / numCols)
+            overlapInUnitsOfGraphicSize: directionAdjustedWidthOverlap(position.col.position / numCols),
           })
           break
       }
@@ -288,26 +288,26 @@ class GraphicCell extends BaseCell {
           marginConstraints.height.negative.push({
             text: floatingLabelConfig.text, // debug only. helps a lot
             size: height,
-            overlapInUnitsOfGraphicSize: directionAdjustedHeightOverlap(position.row.position / numRows)
+            overlapInUnitsOfGraphicSize: directionAdjustedHeightOverlap(position.row.position / numRows),
           })
           break
         case 'center':
           marginConstraints.height.positive.push({
             text: floatingLabelConfig.text, // debug only. helps a lot
             size: height / 2.0,
-            overlapInUnitsOfGraphicSize: directionAdjustedHeightOverlap((numRows - position.row.position) / numRows)
+            overlapInUnitsOfGraphicSize: directionAdjustedHeightOverlap((numRows - position.row.position) / numRows),
           })
           marginConstraints.height.negative.push({
             text: floatingLabelConfig.text, // debug only. helps a lot
             size: height / 2.0,
-            overlapInUnitsOfGraphicSize: directionAdjustedHeightOverlap(position.row.position / numRows)
+            overlapInUnitsOfGraphicSize: directionAdjustedHeightOverlap(position.row.position / numRows),
           })
           break
         case 'bottom':
           marginConstraints.height.positive.push({
             text: floatingLabelConfig.text, // debug only. helps a lot
             size: height,
-            overlapInUnitsOfGraphicSize: directionAdjustedHeightOverlap((numRows - position.row.position) / numRows)
+            overlapInUnitsOfGraphicSize: directionAdjustedHeightOverlap((numRows - position.row.position) / numRows),
           })
           break
       }
@@ -316,14 +316,14 @@ class GraphicCell extends BaseCell {
     if (this.config['text-header'] != null) {
       marginConstraints.height.negative.push({
         size: this.headerHeight,
-        overlapInUnitsOfGraphicSize: 0
+        overlapInUnitsOfGraphicSize: 0,
       })
     }
 
     if (this.config['text-footer'] != null) {
       marginConstraints.height.positive.push({
         size: this.footerHeight,
-        overlapInUnitsOfGraphicSize: 0
+        overlapInUnitsOfGraphicSize: 0,
       })
     }
 
@@ -362,14 +362,14 @@ class GraphicCell extends BaseCell {
             min: cellDimensions.width,
             max: cellDimensions.width,
             size: cellDimensions.width,
-            margins: marginConstraints.width
+            margins: marginConstraints.width,
           },
           height: {
             min: cellDimensions.height + this.headerHeight + this.footerHeight,
             max: cellDimensions.height + this.headerHeight + this.footerHeight,
             size: cellDimensions.height + this.headerHeight + this.footerHeight,
-            margins: marginConstraints.height
-          }
+            margins: marginConstraints.height,
+          },
         }
       } else {
         graphicCellConstraint = {
@@ -377,13 +377,13 @@ class GraphicCell extends BaseCell {
           width: {
             min: null,
             max: null,
-            margins: marginConstraints.width
+            margins: marginConstraints.width,
           },
           height: {
             min: null,
             max: null,
-            margins: marginConstraints.height
-          }
+            margins: marginConstraints.height,
+          },
         }
       }
 
@@ -487,7 +487,7 @@ class GraphicCell extends BaseCell {
         textConfig: this.config['text-header'],
         containerWidth: this.dimensions.headerWidth,
         containerHeight: this.dimensions.headerHeight,
-        yOffSet: this.dimensions.headerYOffset
+        yOffSet: this.dimensions.headerYOffset,
       })
     }
 
@@ -501,7 +501,7 @@ class GraphicCell extends BaseCell {
         textConfig: this.config['text-footer'],
         containerWidth: this.dimensions.footerWidth,
         containerHeight: this.dimensions.footerHeight,
-        yOffSet: this.dimensions.footerYOffset
+        yOffSet: this.dimensions.footerYOffset,
       })
     }
 
@@ -582,7 +582,7 @@ class GraphicCell extends BaseCell {
           myClass: 'text-overlay',
           textConfig: this.config['text-overlay'],
           containerWidth: this.gridLayout.nodeWidth(),
-          containerHeight: imageHeight
+          containerHeight: imageHeight,
         })
       }
 
@@ -600,7 +600,7 @@ class GraphicCell extends BaseCell {
           myClass: floatingLabelConfig.className,
           textConfig: floatingLabelConfig,
           xOffSet: floatingLabelConfig['padding-left'] + x,
-          yOffSet: floatingLabelConfig['padding-top'] + y
+          yOffSet: floatingLabelConfig['padding-top'] + y,
         })
       })
     })

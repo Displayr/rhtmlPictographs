@@ -1,0 +1,57 @@
+{
+  "font-size": "8px",
+  "width": 300,
+  "height": 200,
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [ "flexible:label", "flexible:graphic" ],
+    "colWidths": [ "proportion:0.33333", "proportion:0.33333", "proportion:0.33333" ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "rows": [
+      [
+        "label:label 1",
+        "label:label 2 is longer",
+        "label:label 3"
+      ],
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromtop:lightblue",
+            "proportion": "=1/3",
+            "numRows": 3,
+            "columnGutter": 0,
+            "rowGutter": 0.2
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromtop:lightblue",
+            "proportion": "=3/3",
+            "numRows": 3,
+            "columnGutter": 0,
+            "rowGutter": 0.2
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "baseImage": "square:grey",
+            "variableImage": "square:fromtop:lightblue",
+            "proportion": "=2/3",
+            "numRows": 3,
+            "columnGutter": 0,
+            "rowGutter": 0.2
+          }
+        }
+      ]
+    ]
+  }
+}

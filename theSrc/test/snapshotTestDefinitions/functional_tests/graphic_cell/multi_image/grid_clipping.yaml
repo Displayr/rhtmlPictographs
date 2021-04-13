@@ -1,0 +1,18 @@
+version: 1
+title: Graphic Cell - Multi Image - Grid Clipping
+type: single_page_one_example_per_config
+groupname: multi_image
+width: 200
+height: 150
+rowSize: 4
+data: '{ "proportion": 0.75, "numImages": 6 }'
+config:
+  - '{ "numRows": 2, "variableImage": "circle:fromleft:lightblue" }'
+  - '{ "numRows": 2, "variableImage": "circle:fromright:lightblue" }'
+  - '{ "numRows": 2, "variableImage": "circle:fromtop:lightblue" }'
+  - '{ "numRows": 2, "variableImage": "circle:frombottom:lightblue" }'
+
+  - '{ "numCols": 2, "variableImage": "circle:fromleft:lightblue" }'
+  - '{ "numCols": 2, "variableImage": "circle:fromright:lightblue" }'
+  - '{ "numCols": 2, "variableImage": "circle:fromtop:lightblue" }'
+  - '{ "numCols": 2, "variableImage": "circle:frombottom:lightblue" }'

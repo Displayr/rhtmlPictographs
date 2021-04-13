@@ -1,0 +1,34 @@
+version: 1
+title: URL Aspect Ratios
+type: multi_widget_single_page
+groupname: aspect_ratios
+rowSize: 4
+widgets:
+#<section snapshot-name="url_aspect_ratios_scaling">
+    - config: '{  "debugBorder": "true", "proportion": "=1/3", "baseImage": "url:/images/blue_circle_512.svg", "variableImage": "url:scale:/images/green_circle_512.svg", "background-color": "#dddddd" }'
+      width: 100
+      height: 200
+    - config: '{  "debugBorder": "true", "proportion": "=1/3", "baseImage": "url:/images/blue_circle_512.svg", "variableImage": "url:scale:/images/green_circle_512.svg", "background-color": "#dddddd" }'
+      width: 200
+      height: 200
+    - config: '{  "debugBorder": "true", "proportion": "=1/3", "baseImage": "url:/images/blue_circle_512.svg", "variableImage": "url:scale:/images/green_circle_512.svg", "background-color": "#dddddd" }'
+      width: 200
+      height: 100
+    - config: '{  "debugBorder": "true", "proportion": "=1/3", "baseImage": "url:/images/blue_circle_512.svg", "variableImage": "url:scale:/images/green_circle_512.svg", "background-color": "#dddddd" }'
+      width: 600
+      height: 100
+
+#<section snapshot-name="url_aspect_ratios_clipping">
+    - config: '{  "debugBorder": "true", "proportion": "=1/3", "baseImage": "url:/images/blue_circle_512.svg", "variableImage": "url:fromleft:/images/green_circle_512.svg", "background-color": "#dddddd" }'
+      width: 100
+      height: 200
+    - config: '{  "debugBorder": "true", "proportion": "=1/3", "baseImage": "url:/images/blue_circle_512.svg", "variableImage": "url:fromleft:/images/green_circle_512.svg", "background-color": "#dddddd" }'
+      width: 200
+      height: 200
+    - config: '{  "debugBorder": "true", "proportion": "=1/3", "baseImage": "url:/images/blue_circle_512.svg", "variableImage": "url:fromleft:/images/green_circle_512.svg", "background-color": "#dddddd" }'
+      width: 200
+      height: 100
+    - config: '{  "debugBorder": "true", "proportion": "=1/3", "baseImage": "url:/images/blue_circle_512.svg", "variableImage": "url:fromleft:/images/green_circle_512.svg", "background-color": "#dddddd" }'
+      width: 600
+      height: 100
+

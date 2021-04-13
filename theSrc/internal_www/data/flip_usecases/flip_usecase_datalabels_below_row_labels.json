@@ -1,0 +1,267 @@
+{
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [
+      50.000004,
+      49.000004,
+      49.000004,
+      49.000004,
+      49.000004,
+      50.000004
+    ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "colWidths": [
+      185,
+      490.00004
+    ],
+    "rows": [
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 1,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "labels": [
+              {
+                "text": "Coca Cola ",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Century Gothic",
+                "font-color": "#5B9BD5"
+              },
+              {
+                "text": "$82,810.08",
+                "font-size": "20.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Century Gothic",
+                "font-color": "#5B9BD5"
+              }
+            ]
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.828101,
+            "numImages": 10,
+            "variableImage": "url:#5B9BD5:fromleft:/images/money_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "1.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "labels": [
+              {
+                "text": "Diet Coke",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Century Gothic",
+                "font-color": "#ED7D31"
+              },
+              {
+                "text": "$81,290.32",
+                "font-size": "20.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Century Gothic",
+                "font-color": "#ED7D31"
+              }
+            ]
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.812903,
+            "numImages": 10,
+            "variableImage": "url:#ED7D31:fromleft:/images/money_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "labels": [
+              {
+                "text": "Coke Zero",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Century Gothic",
+                "font-color": "#A5A5A5"
+              },
+              {
+                "text": "$78,500.00",
+                "font-size": "20.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Century Gothic",
+                "font-color": "#A5A5A5"
+              }
+            ]
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.785,
+            "numImages": 10,
+            "variableImage": "url:#A5A5A5:fromleft:/images/money_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "labels": [
+              {
+                "text": "Pepsi Light ",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Century Gothic",
+                "font-color": "#1EC000"
+              },
+              {
+                "text": "$64,285.71",
+                "font-size": "20.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Century Gothic",
+                "font-color": "#1EC000"
+              }
+            ]
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.642857,
+            "numImages": 10,
+            "variableImage": "url:#1EC000:fromleft:/images/money_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "labels": [
+              {
+                "text": "Pepsi Max",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Century Gothic",
+                "font-color": "#4472C4"
+              },
+              {
+                "text": "$91,562.50",
+                "font-size": "20.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Century Gothic",
+                "font-color": "#4472C4"
+              }
+            ]
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.915625,
+            "numImages": 10,
+            "variableImage": "url:#4472C4:fromleft:/images/money_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 0,
+            "padding-bottom": 1,
+            "vertical-align": "center",
+            "labels": [
+              {
+                "text": "NET",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Century Gothic",
+                "font-color": "#70AD47"
+              },
+              {
+                "text": "$82,919.58",
+                "font-size": "20.000000px",
+                "font-weight": "normal",
+                "horizontal-align": "right",
+                "font-family": "Century Gothic",
+                "font-color": "#70AD47"
+              }
+            ]
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.829196,
+            "numImages": 10,
+            "variableImage": "url:#70AD47:fromleft:/images/money_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 1.000000 0.000000"
+          }
+        }
+      ]
+    ]
+  }
+}

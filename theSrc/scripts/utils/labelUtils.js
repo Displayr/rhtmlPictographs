@@ -4,7 +4,7 @@ const $ = require('jquery')
 // NB Our method for caclulating label dimensions is pretty good but is not exact
 const labelSizeCorrection = {
   width: { relative: 1.02, fixed: 0 },
-  height: { relative: 1.02, fixed: 0 }
+  height: { relative: 1.02, fixed: 0 },
 }
 
 const makeDivForEstimation = (labelConfig) => {
@@ -12,7 +12,7 @@ const makeDivForEstimation = (labelConfig) => {
   const defaults = {
     'font-family': 'Verdana,sans-serif',
     'font-weight': '900',
-    'font-size': '24'
+    'font-size': '24',
   }
 
   function getAttribute (attribute) {
@@ -25,7 +25,7 @@ const makeDivForEstimation = (labelConfig) => {
   const styleComponents = [
     `font-size:${getAttribute('font-size')}`,
     `font-family:${getAttribute('font-family')}`,
-    `font-weight:${getAttribute('font-weight')}`
+    `font-weight:${getAttribute('font-weight')}`,
   ]
   return `<div style="${styleComponents.join(';')}">${labelConfig.text}</div>`
 }
@@ -63,7 +63,7 @@ module.exports = {
 
     return {
       width: width * labelSizeCorrection.width.relative + labelSizeCorrection.width.fixed,
-      height: height * labelSizeCorrection.height.relative + labelSizeCorrection.height.fixed
+      height: height * labelSizeCorrection.height.relative + labelSizeCorrection.height.fixed,
     }
-  }
+  },
 }

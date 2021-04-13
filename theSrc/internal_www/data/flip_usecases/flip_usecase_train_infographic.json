@@ -1,0 +1,57 @@
+{
+  "font-size": "12px",
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [ 50, 50, 50 ],
+    "colWidths": [ 120, 180 ],
+    "rowGutterLength": 5,
+    "columnGutterLength": 5,
+    "rows": [
+      [
+        {
+          "type": "label",
+          "value": { "text": "First", "horizontal-align": "right", "vertical-align": "center" }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.3,
+            "numImages": 5.0,
+            "variableImage": "url:fromleft:green:/images/train_grey.svg",
+            "numRows": 1
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": { "text": "Second", "horizontal-align": "right", "vertical-align": "center" }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.5,
+            "numImages": 5.0,
+            "variableImage": "url:fromleft:orange:/images/train_grey.svg",
+            "numRows": 1
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": { "text": "Third", "horizontal-align": "right", "vertical-align": "center" }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.7,
+            "numImages": 5.0,
+            "variableImage": "url:fromleft:red:/images/train_grey.svg",
+            "numRows": 1
+          }
+        }
+      ]
+    ]
+  }
+}

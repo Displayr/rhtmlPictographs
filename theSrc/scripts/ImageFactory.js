@@ -1,13 +1,13 @@
-import _ from 'lodash'
+const _ = require('lodash')
 
-import CircleType from './imageTypes/circle.imagetype'
-import EllipseType from './imageTypes/ellipse.imagetype'
-import SquareType from './imageTypes/square.imagetype'
-import RectangleType from './imageTypes/rectangle.imagetype'
-import RecoloredExternalSvg from './imageTypes/recoloredExternalSvg.imagetype'
-import UrlType from './imageTypes/url.imagetype'
+const CircleType = require('./imageTypes/circle.imagetype')
+const EllipseType = require('./imageTypes/ellipse.imagetype')
+const SquareType = require('./imageTypes/square.imagetype')
+const RectangleType = require('./imageTypes/rectangle.imagetype')
+const RecoloredExternalSvg = require('./imageTypes/recoloredExternalSvg.imagetype')
+const UrlType = require('./imageTypes/url.imagetype')
 
-import ClipFactory from './ClipFactory'
+const ClipFactory = require('./ClipFactory')
 
 class ImageFactory {
   static get types () {
@@ -18,7 +18,7 @@ class ImageFactory {
       rect: RectangleType,
       ellipse: EllipseType,
       data: UrlType,
-      recoloredExternalSvg: RecoloredExternalSvg
+      recoloredExternalSvg: RecoloredExternalSvg,
     }
   }
 
@@ -37,7 +37,7 @@ class ImageFactory {
       scale: 'scale',
       radialclip: { clip: 'radial' },
       radial: { clip: 'radial' },
-      pie: { clip: 'radial' }
+      pie: { clip: 'radial' },
     }
   }
 
@@ -61,7 +61,7 @@ class ImageFactory {
       'xMaxYMid',
       'xMinYMax',
       'xMidYMax',
-      'xMaxYMax'
+      'xMaxYMax',
     ]
 
     const validMeetOrSlice = ['meet', 'slice']

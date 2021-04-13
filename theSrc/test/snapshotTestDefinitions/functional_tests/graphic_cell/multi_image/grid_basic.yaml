@@ -1,0 +1,13 @@
+version: 1
+title: Graphic Cell - Multi Image - Grid Basic
+type: single_page_one_example_per_config
+groupname: multi_image
+width: 200
+height: 150
+rowSize: 4
+data: '{ "variableImage": "circle:lightblue", "numImages": "3" }'
+config:
+ - '{}'
+ - '{ "numRows": "3" }'
+ - '{ "numRows": "1" }'
+ - '{ "numCols": "3" }'

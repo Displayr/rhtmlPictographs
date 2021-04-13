@@ -1,0 +1,23 @@
+{
+  "proportion": 0.4,
+  "numImages": 10,
+  "numCols": 10,
+  "text-footer": {
+    "text": "40%",
+    "font-size": "12.000000px",
+    "font-weight": "normal",
+    "font-family": "Arial",
+    "font-color": "#2C2C2C",
+    "horizontal-align": "center"
+  },
+  "variableImage": "url:fromtop:#008080:/images/tree_grey.svg",
+  "baseImage": "url:#CCCCCC:/images/tree_grey.svg",
+  "width": 500,
+  "height": 72.2064220183486,
+  "background-color": "transparent",
+  "columnGutter": 0,
+  "rowGutter": 0.05,
+  "padding": "0 0 0 0",
+  "preserveAspectRatio": "xMidYMid",
+  "resizable": "true"
+}

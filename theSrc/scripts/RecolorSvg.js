@@ -1,5 +1,5 @@
-import $ from 'jquery'
-import _ from 'lodash'
+const $ = require('jquery')
+const _ = require('lodash')
 
 class RecolorSvg {
   static fillReplacer (inputString, replacementValue) {
@@ -11,7 +11,7 @@ class RecolorSvg {
     const regexes = [
       new RegExp(/((?:fill|stroke)=")([^"]+)(")/g),
       new RegExp(/((?:fill|stroke)=')([^']+)(')/g),
-      new RegExp(/((?:fill|stroke):)([^;'"]+)([;"'])/g)
+      new RegExp(/((?:fill|stroke):)([^;'"]+)([;"'])/g),
     ]
 
     const reducer = (newString, regex) => newString.replace(regex, replacer)

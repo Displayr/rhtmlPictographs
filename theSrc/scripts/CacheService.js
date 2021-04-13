@@ -1,7 +1,7 @@
-import _ from 'lodash'
-import crypto from 'crypto'
-import * as log from 'loglevel'
-import lruCache from 'lru-cache'
+const _ = require('lodash')
+const crypto = require('crypto')
+const log = require('loglevel')
+const lruCache = require('lru-cache')
 
 /*
   Considerations:
@@ -24,7 +24,7 @@ class CacheService {
     this.hitRates = {}
     this.reportingSettings = {
       quitAfter: 60000,
-      reportEvery: (cacheReporting) ? 20000 : -1 // -1 === disabled
+      reportEvery: (cacheReporting) ? 20000 : -1, // -1 === disabled
     }
 
     this.initialiseReporting()

@@ -1,4 +1,4 @@
-import BaseImageType from './base.imagetype'
+const BaseImageType = require('./base.imagetype')
 
 class EllipseType extends BaseImageType {
   calculateImageDimensions () {

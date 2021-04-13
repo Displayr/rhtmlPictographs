@@ -1,0 +1,25 @@
+version: 1
+title: Clipping Scaling - Circle In Rectangle (not square) - This set of examples provides a tool to verify that the clipping fromleft scaling technique is handled correctly in a variety of situations.
+type: single_page_one_example_per_config
+groupname: functional_test_clipping_scaling
+width: 150
+height: 62
+rowSize: 4
+data: '{ "debugBorder": "true", "columnGutter": "0", "numImages": 2, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "circle:fromleft:lightblue", "background-color": "#dddddd" }'
+config:
+  - '{ "proportion": "=0.5 + 1/32" }'
+  - '{ "proportion": "=0.5 + 2/32" }'
+  - '{ "proportion": "=0.5 + 3/32" }'
+  - '{ "proportion": "=0.5 + 4/32" }'
+  - '{ "proportion": "=0.5 + 5/32" }'
+  - '{ "proportion": "=0.5 + 6/32" }'
+  - '{ "proportion": "=0.5 + 7/32" }'
+  - '{ "proportion": "=0.5 + 8/32" }'
+  - '{ "proportion": "=0.5 + 9/32" }'
+  - '{ "proportion": "=0.5 + 10/32" }'
+  - '{ "proportion": "=0.5 + 11/32" }'
+  - '{ "proportion": "=0.5 + 12/32" }'
+  - '{ "proportion": "=0.5 + 13/32" }'
+  - '{ "proportion": "=0.5 + 14/32" }'
+  - '{ "proportion": "=0.5 + 15/32" }'
+  - '{ "proportion": "=0.5 + 16/32" }'

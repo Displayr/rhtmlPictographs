@@ -1,8 +1,7 @@
-import _ from 'lodash'
-
-import BaseImageType from './base.imagetype'
-import CacheService from '../CacheService'
-import geometryUtils from '../utils/geometryUtils'
+const _ = require('lodash')
+const BaseImageType = require('./base.imagetype')
+const CacheService = require('../CacheService')
+const geometryUtils = require('../utils/geometryUtils')
 
 const cacheExpiryTimeMilliseconds = 10000
 
@@ -27,7 +26,7 @@ class UrlType extends BaseImageType {
           tmpImg.remove()
           return resolve({
             imageWidth: imageWidth,
-            imageHeight: imageHeight
+            imageHeight: imageHeight,
           })
         }
       })

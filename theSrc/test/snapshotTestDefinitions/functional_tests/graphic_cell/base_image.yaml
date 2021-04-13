@@ -1,0 +1,10 @@
+version: 1
+title: Base Image
+type: single_page_one_example_per_config
+width: 200
+height: 150
+rowSize: 3
+config:
+  - '{ "variableImage": "rect:fromleft:lightblue", "numImages": 2, "proportion": "0.75", "baseImage": "rect:green" }'
+  - '{ "variableImage": "rect:fromleft:lightblue", "numImages": 2, "proportion": "0.75", "baseImage": "circle:green" }'
+  - '{ "variableImage": "rect:fromleft:lightblue", "numImages": 2, "proportion": "0.75", "baseImage": "circle:green", "background-color": "pink" }'

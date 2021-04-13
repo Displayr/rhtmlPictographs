@@ -78,7 +78,7 @@ class LabelCell extends BaseCell {
       top: this.config['padding-top'],
       right: this.config['padding-right'],
       bottom: this.config['padding-bottom'],
-      left: this.config['padding-left']
+      left: this.config['padding-left'],
     })
 
     this.dimensionConstraints = {
@@ -88,17 +88,17 @@ class LabelCell extends BaseCell {
         max: null,
         margins: {
           negative: [],
-          positive: []
-        }
+          positive: [],
+        },
       },
       height: {
         min: labelDimensions.height,
         max: null,
         margins: {
           negative: [],
-          positive: []
-        }
-      }
+          positive: [],
+        },
+      },
     }
 
     return Promise.resolve(this.dimensionConstraints)
@@ -126,7 +126,7 @@ class LabelCell extends BaseCell {
         textAnchor: labelConfig['horizontal-align'],
         x: xOffset,
         y: currentY + (labelConfig['font-size'] / 2),
-        fontSize: labelConfig['font-size']
+        fontSize: labelConfig['font-size'],
       })
 
       currentY += labelConfig['font-size'] + this.config['padding-inner']

@@ -7,5 +7,5 @@ module.exports = {
       return
     }
     obj['font-size'] = parseFloat(obj['font-size'].replace(/^(\d+).*$/, '$1'))
-  }
+  },
 }

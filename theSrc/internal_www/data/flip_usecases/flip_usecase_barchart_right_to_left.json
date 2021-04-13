@@ -1,0 +1,393 @@
+{
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [
+      42.0394265232975,
+      41.0394265232975,
+      41.0394265232975,
+      41.0394265232975,
+      41.0394265232975,
+      41.0394265232975,
+      41.0394265232975,
+      41.0394265232975,
+      42.0394265232975
+    ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "colWidths": [
+      458,
+      113
+    ],
+    "rows": [
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.448522,
+            "numImages": 30,
+            "variableImage": "url:#5B9BD5:fromright:/images/stickman_grey.svg",
+            "numRows": 1,
+            "floatingLabels": [
+              {
+                "position": "0.50:13.66",
+                "text": "13.46% of population",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "right",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "1.000000 0.000000 0.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 1,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "18 to 24",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "left",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ],
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.397554,
+            "numImages": 30,
+            "variableImage": "url:#ED7D31:fromright:/images/stickman_grey.svg",
+            "numRows": 1,
+            "floatingLabels": [
+              {
+                "position": "0.50:12.13",
+                "text": "11.93% of population",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "right",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "25 to 29",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "left",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ],
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.336391,
+            "numImages": 30,
+            "variableImage": "url:#A5A5A5:fromright:/images/stickman_grey.svg",
+            "numRows": 1,
+            "floatingLabels": [
+              {
+                "position": "0.50:10.29",
+                "text": "10.09% of population",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "right",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "30 to 34",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "left",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ],
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.366972,
+            "numImages": 30,
+            "variableImage": "url:#1EC000:fromright:/images/stickman_grey.svg",
+            "numRows": 1,
+            "floatingLabels": [
+              {
+                "position": "0.50:11.21",
+                "text": "11.01% of population",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "right",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "35 to 39",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "left",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ],
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.356779,
+            "numImages": 30,
+            "variableImage": "url:#4472C4:fromright:/images/stickman_grey.svg",
+            "numRows": 1,
+            "floatingLabels": [
+              {
+                "position": "0.50:10.90",
+                "text": "10.70% of population",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "right",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "40 to 44",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "left",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ],
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.275229,
+            "numImages": 30,
+            "variableImage": "url:#70AD47:fromright:/images/stickman_grey.svg",
+            "numRows": 1,
+            "floatingLabels": [
+              {
+                "position": "0.50:8.46",
+                "text": "8.26% of population",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "right",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "45 to 49",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "left",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ],
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.407747,
+            "numImages": 30,
+            "variableImage": "url:#255E91:fromright:/images/stickman_grey.svg",
+            "numRows": 1,
+            "floatingLabels": [
+              {
+                "position": "0.50:12.43",
+                "text": "12.23% of population",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "right",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "50 to 54",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "left",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ],
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.519878,
+            "numImages": 30,
+            "variableImage": "url:#9E480E:fromright:/images/stickman_grey.svg",
+            "numRows": 1,
+            "floatingLabels": [
+              {
+                "position": "0.50:15.80",
+                "text": "15.60% of population",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "right",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "55 to 64",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "left",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ],
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.224261,
+            "numImages": 30,
+            "variableImage": "url:#636363:fromright:/images/stickman_grey.svg",
+            "numRows": 1,
+            "floatingLabels": [
+              {
+                "position": "0.50:6.93",
+                "text": "6.73% of population",
+                "font-size": "12.000000px",
+                "font-weight": "normal",
+                "font-family": "Arial",
+                "font-color": "#2C2C2C",
+                "horizontal-align": "right",
+                "vertical-align": "center"
+              }
+            ],
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 1.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 0,
+            "padding-bottom": 1,
+            "vertical-align": "center",
+            "text": "65 or more",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "left",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ]
+    ]
+  }
+}

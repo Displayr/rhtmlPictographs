@@ -1,0 +1,46 @@
+type: multi_widget_multi_page
+groupname: flip_usecases
+configs:
+  - config: data.flip_usecases.flip_usecase_barchart_long_floating_label
+    height: 500
+    width: 500
+  - config: data.flip_usecases.flip_usecase_barchart_baseimage
+    height: 422
+    width: 580
+  - config: data.flip_usecases.flip_usecase_barchart_of_squares_variable_number_of_rows_per_cell
+    height: 530
+    width: 677
+  - config: data.flip_usecases.flip_usecase_barchart_right_to_left
+    width: 573
+    height: 388
+  - config: data.flip_usecases.flip_usecase_barchart_varying_rows
+    width: 451
+    height: 132
+  - config: data.flip_usecases.flip_usecase_barchart_column_padding
+    width: 340
+    height: 178
+  - config: data.flip_usecases.flip_usecase_datalabels
+    width: 500
+    height: 73
+  - config: data.flip_usecases.flip_usecase_flexible_table_chickens_textfooter
+    width: 453
+    height: 369
+  - config: data.flip_usecases.flip_usecase_datalabels_below_row_labels
+    width: 677
+    height: 307
+  - config: data.flip_usecases.flip_usecase_layout_cols
+    width: 120
+    height: 385
+  - config: data.flip_usecases.flip_usecase_layout_rows
+    width: 340
+    height: 270
+  - config: data.flip_usecases.flip_usecase_small_proportion
+    width: 50
+    height: 150
+  - config: data.flip_usecases.flip_usecase_train_infographic
+    width: 305
+    height: 220
+  - config: data.flip_usecases.flip_usecase_stars_fity_percent_with_exclamations
+    width: 200
+    height: 100
+

@@ -1,0 +1,63 @@
+version: 1
+title: URL Preserve Aspect Ratios - See notes in file to interpret
+type: multi_widget_single_page
+groupname: aspect_ratios
+rowSize: 7
+widgets:
+
+# had to split the file in 2 because of HTTP 431 URL too long Grrrr !!
+
+# Legend For each row
+# * 1 - perfect size</li>-->
+# * 2 - imperfect size: too tall</li>-->
+# * 3 - use <span class="code">xMidYMid slice</span> to fill container</li>-->
+# * 4 - use <span class="code">xMidYMin meet</span> to push image up</li>-->
+# * 5 - use <span class="code">xMidYMax meet</span> to push image down</li>-->
+# * 6 - use <span class="code">xMinYMid meet</span> to push image left</li>-->
+# * 7 - use <span class="code">xMaxYMid meet</span> to push image right</li>-->
+
+# <p>Clip From Bottom</p>
+  - config: '{ "text-footer": { "text": "1", "font-size": "50px" }, "proportion": "0.33", "variableImage": "url:frombottom:/images/green_rectangle_600_900.jpg", "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 50
+    height: 126
+  - config: '{ "text-footer": { "text": "2", "font-size": "50px" }, "proportion": "0.33", "variableImage": "url:frombottom:/images/green_rectangle_600_900.jpg", "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 50
+    height: 176
+  - config: '{ "text-footer": { "text": "3", "font-size": "50px" }, "proportion": "0.33", "variableImage": { "clip": "frombottom", "preserveAspectRatio": "xMidYMid slice", "type": "url", "url": "/images/green_rectangle_600_900.jpg" }, "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 50
+    height: 176
+  - config: '{ "text-footer": { "text": "4", "font-size": "50px" }, "proportion": "0.33", "variableImage": { "clip": "frombottom", "preserveAspectRatio": "xMidYMin meet", "type": "url", "url": "/images/green_rectangle_600_900.jpg" }, "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 50
+    height: 176
+  - config: '{ "text-footer": { "text": "5", "font-size": "50px" }, "proportion": "0.33", "variableImage": { "clip": "frombottom", "preserveAspectRatio": "xMidYMax meet", "type": "url", "url": "/images/green_rectangle_600_900.jpg" }, "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 50
+    height: 176
+  - config: '{ "text-footer": { "text": "6", "font-size": "50px" }, "proportion": "0.33", "variableImage": { "clip": "frombottom", "preserveAspectRatio": "xMinYMid meet", "type": "url", "url": "/images/green_rectangle_600_900.jpg" }, "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 100
+    height: 100
+  - config: '{ "text-footer": { "text": "7", "font-size": "50px" }, "proportion": "0.33", "variableImage": { "clip": "frombottom", "preserveAspectRatio": "xMaxYMid meet", "type": "url", "url": "/images/green_rectangle_600_900.jpg" }, "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 100
+    height: 100
+
+# <p>Clip From Right</p>
+  - config: '{ "text-footer": { "text": "1", "font-size": "50px" }, "proportion": "0.33", "variableImage": "url:fromright:/images/green_rectangle_600_900.jpg", "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 50
+    height: 126
+  - config: '{ "text-footer": { "text": "2", "font-size": "50px" }, "proportion": "0.33", "variableImage": "url:fromright:/images/green_rectangle_600_900.jpg", "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 50
+    height: 176
+  - config: '{ "text-footer": { "text": "3", "font-size": "50px" }, "proportion": "0.33", "variableImage": { "clip": "fromright", "preserveAspectRatio": "xMidYMid slice", "type": "url", "url": "/images/green_rectangle_600_900.jpg" }, "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 50
+    height: 176
+  - config: '{ "text-footer": { "text": "4", "font-size": "50px" }, "proportion": "0.33", "variableImage": { "clip": "fromright", "preserveAspectRatio": "xMidYMin meet", "type": "url", "url": "/images/green_rectangle_600_900.jpg" }, "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 50
+    height: 176
+  - config: '{ "text-footer": { "text": "5", "font-size": "50px" }, "proportion": "0.33", "variableImage": { "clip": "fromright", "preserveAspectRatio": "xMidYMax meet", "type": "url", "url": "/images/green_rectangle_600_900.jpg" }, "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 50
+    height: 176
+  - config: '{ "text-footer": { "text": "6", "font-size": "50px" }, "proportion": "0.33", "variableImage": { "clip": "fromright", "preserveAspectRatio": "xMinYMid meet", "type": "url", "url": "/images/green_rectangle_600_900.jpg" }, "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 100
+    height: 100
+  - config: '{ "text-footer": { "text": "7", "font-size": "50px" }, "proportion": "0.33", "variableImage": { "clip": "fromright", "preserveAspectRatio": "xMaxYMid meet", "type": "url", "url": "/images/green_rectangle_600_900.jpg" }, "background-color": "yellow", "image-background-color": "pink", "resizable": "false" }'
+    width: 100
+    height: 100

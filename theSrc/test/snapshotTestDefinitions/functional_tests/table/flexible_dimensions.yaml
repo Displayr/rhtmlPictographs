@@ -1,0 +1,22 @@
+type: multi_widget_multi_page
+groupname: table_with_flexible_dimensions
+configs:
+  - config: data.test_plan.table_flexible_dimensions_lots_of_labels
+    height: 500
+    width: 500
+  - config: data.test_plan.table_flexible_dimensions_green_3x3
+    title: green squares width constrained
+    width: 200
+    height: 400
+  - config: data.test_plan.table_flexible_dimensions_green_3x3
+    title: green squares height constrained
+    width: 400
+    height: 200
+  - config: data.test_plan.table_flexible_dimensions_blue_grey_squares_3x3
+    title: blue and grey squares height constrained
+    width: 300
+    height: 200
+  - config: data.test_plan.table_flexible_dimensions_blue_grey_squares_3x3
+    title: blue and grey squares width constrained
+    width: 200
+    height: 300

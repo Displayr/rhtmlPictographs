@@ -1,0 +1,56 @@
+{
+  "font-size": "8px",
+  "width": 200,
+  "height": 400,
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [ "proportion:0.33333", "proportion:0.33333", "proportion:0.33333" ],
+    "colWidths": [ "flexible:label", "flexible:graphic" ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "rows": [
+      [
+        "label:label 1",
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "variableImage": "url:fromleft:/images/green_rectangle_600_900.jpg",
+            "proportion": "=1/3",
+            "numRows": 1,
+            "columnGutter": 0.2,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        "label:label 2 is longer",
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "variableImage": "url:fromleft:/images/green_rectangle_600_900.jpg",
+            "proportion": "=3/3",
+            "numRows": 1,
+            "columnGutter": 0.2,
+            "rowGutter": 0
+          }
+        }
+      ],
+      [
+        "label:label 3",
+        {
+          "type": "graphic",
+          "value": {
+            "numImages": 3,
+            "variableImage": "url:fromleft:/images/green_rectangle_600_900.jpg",
+            "proportion": "=2/3",
+            "numRows": 1,
+            "columnGutter": 0.2,
+            "rowGutter": 0
+          }
+        }
+      ]
+    ]
+  }
+}

@@ -1,0 +1,292 @@
+{
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [
+      69.2041587901701,
+      68.2041587901701,
+      68.2041587901701,
+      68.2041587901701,
+      68.2041587901701,
+      69.2041587901701
+    ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "colWidths": [
+      134.6,
+      360.8,
+      80.6
+    ],
+    "rows": [
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 1,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "Coca Cola ",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.828101,
+            "numImages": 10,
+            "variableImage": "url:fromleft:/images/dizzy_drunk_color.png",
+            "baseImage": "url:/images/dizzy_drunk_light_grey.png",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "1.000000 0.000000 0.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 1,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "$82,810",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "Diet Coke",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.812903,
+            "numImages": 10,
+            "variableImage": "url:fromleft:/images/dizzy_drunk_color.png",
+            "baseImage": "url:/images/dizzy_drunk_light_grey.png",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "$81,290",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "Coke Zero",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.785,
+            "numImages": 10,
+            "variableImage": "url:fromleft:/images/dizzy_drunk_color.png",
+            "baseImage": "url:/images/dizzy_drunk_light_grey.png",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "$78,500",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "Pepsi Light ",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.642857,
+            "numImages": 10,
+            "variableImage": "url:fromleft:/images/dizzy_drunk_color.png",
+            "baseImage": "url:/images/dizzy_drunk_light_grey.png",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "$64,286",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "Pepsi Max",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.915625,
+            "numImages": 10,
+            "variableImage": "url:fromleft:/images/dizzy_drunk_color.png",
+            "baseImage": "url:/images/dizzy_drunk_light_grey.png",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "$91,562",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 5,
+            "padding-top": 0,
+            "padding-bottom": 1,
+            "vertical-align": "center",
+            "text": "Pepsi ",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.867708,
+            "numImages": 10,
+            "variableImage": "url:fromleft:/images/dizzy_drunk_color.png",
+            "baseImage": "url:/images/dizzy_drunk_light_grey.png",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 1.000000 0.000000"
+          }
+        },
+        {
+          "type": "label",
+          "value": {
+            "padding-left": 5,
+            "padding-top": 0,
+            "padding-bottom": 1,
+            "vertical-align": "center",
+            "text": "$86,771",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "center",
+            "font-family": "Arial",
+            "font-color": "#2C2C2C"
+          }
+        }
+      ]
+    ]
+  }
+}

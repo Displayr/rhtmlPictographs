@@ -1,0 +1,29 @@
+version: 1
+title: Radial Scaling - (Single Image) External Recolored SVG Image in Rectangle With Different Aspect Ratio
+type: single_page_one_example_per_config
+groupname: radial_scaling
+width: 200
+height: 62
+rowSize: 4
+data: '{ "debugBorder": "true", "columnGutter": "0", "numImages": 1, "text-footer": { "text": "percentage", "font-size": "12" }, "variableImage": "url:radial:red:/images/blue_circle_512.svg", "background-color": "#dddddd" }'
+config:
+  - '{ "proportion": "=1/16" }'
+  - '{ "proportion": "=2/16" }'
+  - '{ "proportion": "=3/16" }'
+  - '{ "proportion": "=4/16" }'
+
+  - '{ "proportion": "=5/16" }'
+  - '{ "proportion": "=6/16" }'
+  - '{ "proportion": "=7/16" }'
+  - '{ "proportion": "=8/16" }'
+
+  - '{ "proportion": "=9/16" }'
+  - '{ "proportion": "=10/16" }'
+  - '{ "proportion": "=11/16" }'
+  - '{ "proportion": "=12/16" }'
+
+  - '{ "proportion": "=13/16" }'
+  - '{ "proportion": "=14/16" }'
+  - '{ "proportion": "=15/16" }'
+  - '{ "proportion": "=16/16" }'
+

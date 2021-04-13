@@ -1,0 +1,22 @@
+{
+  "proportion": 0.8,
+  "numImages": 100,
+  "numCols": 6,
+  "text-footer": {
+    "text": "80 apples",
+    "font-size": "12.000000px",
+    "font-weight": "normal",
+    "font-family": "Arial",
+    "font-color": "#2C2C2C",
+    "horizontal-align": "center"
+  },
+  "variableImage": "url:fromtop:#408080:/images/apple_grey.svg",
+  "width": 120,
+  "height": 384.615384615385,
+  "background-color": "transparent",
+  "columnGutter": 0,
+  "rowGutter": 0,
+  "padding": "0 0 0 0",
+  "preserveAspectRatio": "none",
+  "resizable": "false"
+}
