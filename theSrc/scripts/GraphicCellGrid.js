@@ -1,5 +1,5 @@
 
-import _ from 'lodash'
+const _ = require('lodash')
 
 class GraphicCellGrid {
   static validInputDirections () {

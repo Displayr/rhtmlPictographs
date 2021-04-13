@@ -1,5 +1,5 @@
-import ColorFactory from '../ColorFactory'
-import _ from 'lodash'
+const ColorFactory = require('../ColorFactory')
+const _ = require('lodash')
 
 class BaseImageType {
   constructor (d3Node, config, containerWidth, containerHeight, dataAttributes, definitionManager) {

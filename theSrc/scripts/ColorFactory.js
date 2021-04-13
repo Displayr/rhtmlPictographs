@@ -1,6 +1,6 @@
 
-import d3 from 'd3'
-import _ from 'lodash'
+const d3 = require('d3')
+const _ = require('lodash')
 
 // I am a singleton, all my methods and variables are static
 // NB @TODO if we have two active Pictographs at same time this becomes an issue

@@ -1,5 +1,5 @@
-import GraphicCellGrid from './GraphicCellGrid'
-import _ from 'lodash'
+const GraphicCellGrid = require('./GraphicCellGrid')
+const _ = require('lodash')
 
 const oneThird = 0.3333333333333333
 const twoThird = 0.6666666666666666
@@ -12,15 +12,6 @@ function justXY (node) {
   }
 }
 
-function genErrorString (expected, actual) {
-  return `
-EXPECTED:
-${JSON.stringify(expected, {}, 2)}
-ACTUAL:
-${JSON.stringify(actual, {}, 2)}
-`
-}
-
 function getNodes (nodeCount) {
   return _.range(nodeCount).map(() => { return {} })
 }
@@ -31,7 +22,7 @@ function getDimensionsForANodeCollectionOfLength (nodeCount, l = (new GraphicCel
 }
 
 function compareAndReportDifferences (expected, actual) {
-  expect(actual, genErrorString(expected, actual)).to.deep.equal(expected)
+  expect(actual).toEqual(expected)
 }
 
 function makeArray (length, referenceElement = {}) {
@@ -42,13 +33,13 @@ describe('graphic cell grid:', function () {
   describe('initialization and configuration:', function () {
     it('initial sizes', function () {
       const l = new GraphicCellGrid()
-      expect(l.containerWidth(), 'incorrect width').to.deep.equal(1)
-      expect(l.containerHeight(), 'incorrect height').to.deep.equal(1)
+      expect(l.containerWidth()).toEqual(1)
+      expect(l.containerHeight()).toEqual(1)
     })
 
     describe('layout ordering', function () {
       it('provides list of valid values', function () {
-        expect(GraphicCellGrid.validInputDirections()).to.deep.equal([
+        expect(GraphicCellGrid.validInputDirections()).toEqual([
           'right',
           'right,down',
           'right,up',
@@ -65,7 +56,7 @@ describe('graphic cell grid:', function () {
       })
       describe('direction keyword syntax:', function () {
         it('defaults to "right,down"', function () {
-          expect((new GraphicCellGrid()).direction()).to.equal('right,down')
+          expect((new GraphicCellGrid()).direction()).toEqual('right,down')
         })
 
         const validOptions = {
@@ -85,9 +76,9 @@ describe('graphic cell grid:', function () {
 
         _.forEach(_.keys(validOptions), function (input) {
           it(`parses '${input}' into '${validOptions[input]}'`, function () {
-            expect((new GraphicCellGrid()).direction(input).direction()).to.equal(validOptions[input])
-            expect((new GraphicCellGrid()).direction(input).primaryDirection()).to.equal(validOptions[input].split(',')[0])
-            expect((new GraphicCellGrid()).direction(input).secondaryDirection()).to.equal(validOptions[input].split(',')[1])
+            expect((new GraphicCellGrid()).direction(input).direction()).toEqual(validOptions[input])
+            expect((new GraphicCellGrid()).direction(input).primaryDirection()).toEqual(validOptions[input].split(',')[0])
+            expect((new GraphicCellGrid()).direction(input).secondaryDirection()).toEqual(validOptions[input].split(',')[1])
           })
         })
 
@@ -95,21 +86,21 @@ describe('graphic cell grid:', function () {
           const thrower = function () {
             (new GraphicCellGrid()).direction('foo')
           }
-          expect(thrower).to.throw(/foo/)
+          expect(thrower).toThrow(/foo/)
         })
 
         it('rejects invalid value right,foo', function () {
           const thrower = function () {
             (new GraphicCellGrid()).direction('right,foo')
           }
-          expect(thrower).to.throw(/foo/)
+          expect(thrower).toThrow(/foo/)
         })
 
         it('rejects invalid value foo,right', function () {
           const thrower = function () {
             (new GraphicCellGrid()).direction('foo,right')
           }
-          expect(thrower).to.throw(/foo/)
+          expect(thrower).toThrow(/foo/)
         })
       })
     })
@@ -117,89 +108,82 @@ describe('graphic cell grid:', function () {
 
   describe('unit tests on internals:', function () {
     describe('_getRangeFromDomain():', function () {
-      beforeEach(function () {
-        this.l = new GraphicCellGrid()
-        this.getRange = ({ position, nodeSize, gutterSize }) => {
-          return this.l._getRangeFromDomain(position, nodeSize, gutterSize)
-        }
-      })
+      let getRange = ({ position, nodeSize, gutterSize }) => {
+        return (new GraphicCellGrid())._getRangeFromDomain(position, nodeSize, gutterSize)
+      }
 
       it('should include gutter size when a whole negative integer (-2) is used', function () {
         const args = { position: -1, nodeSize: 100, gutterSize: 10 }
-        expect(this.getRange(args)).to.equal(args.position * args.nodeSize - args.gutterSize)
+        expect(getRange(args)).toEqual(args.position * args.nodeSize - args.gutterSize)
       })
 
       it('should include gutter size when a whole negative integer (-1) is used', function () {
         const args = { position: -2, nodeSize: 100, gutterSize: 10 }
-        expect(this.getRange(args)).to.equal(args.position * args.nodeSize - 2 * args.gutterSize)
+        expect(getRange(args)).toEqual(args.position * args.nodeSize - 2 * args.gutterSize)
       })
 
       it('should return -1/2 of node size for position -0.5', function () {
         const args = { position: -0.5, nodeSize: 100, gutterSize: 10 }
-        expect(this.getRange(args)).to.equal(args.position * args.nodeSize)
+        expect(getRange(args)).toEqual(args.position * args.nodeSize)
       })
 
       it('should return 0 for position 0', function () {
         const args = { position: 0, nodeSize: 100, gutterSize: 10 }
-        expect(this.getRange(args)).to.equal(0)
+        expect(getRange(args)).toEqual(0)
       })
 
       it('should return 1/2 of node size for position 0.5', function () {
         const args = { position: 0.5, nodeSize: 100, gutterSize: 10 }
-        expect(this.getRange(args)).to.equal(args.position * args.nodeSize)
+        expect(getRange(args)).toEqual(args.position * args.nodeSize)
       })
 
       it('should not include the gutter length when provided a number just less than a whole', function () {
         const args = { position: 0.99, nodeSize: 100, gutterSize: 10 }
-        expect(this.getRange(args)).to.equal(args.position * args.nodeSize)
+        expect(getRange(args)).toEqual(args.position * args.nodeSize)
       })
 
       it('should include the gutter length when provided a whole number', function () {
         const args = { position: 1, nodeSize: 100, gutterSize: 10 }
-        expect(this.getRange(args)).to.equal(args.nodeSize + args.gutterSize)
+        expect(getRange(args)).toEqual(args.nodeSize + args.gutterSize)
       })
 
       it('should include one gutter length when provided a whole number between 1 and 2', function () {
         const args = { position: 1.5, nodeSize: 100, gutterSize: 10 }
-        expect(this.getRange(args)).to.equal(args.position * args.nodeSize + args.gutterSize)
+        expect(getRange(args)).toEqual(args.position * args.nodeSize + args.gutterSize)
       })
 
       it('should include two gutter length when provided a position of 2', function () {
         const args = { position: 2, nodeSize: 100, gutterSize: 10 }
-        expect(this.getRange(args)).to.equal(args.position * args.nodeSize + 2 * args.gutterSize)
+        expect(getRange(args)).toEqual(args.position * args.nodeSize + 2 * args.gutterSize)
       })
     })
 
     // NB getX uses _getRangeFromDomain, so these tests only exercise the 'additional' behaviour provided by getX (which is handling right to left layouts)
     describe('getX()/getY() and getTopLeftCoordOfImageSlot()', function () {
-      const makeTest = ({ row, col, expected = {} }) => {
+      const makeTest = ({ row, col, expected = {}, gridFactory }) => {
+        const grid = gridFactory()
         if (_.has(expected, 'getX')) {
           it(`getX(${col}) == ${expected.getX}:`, function () {
-            expect(this.grid.getX(col)).to.be.closeTo(expected.getX, 0.01)
+            expect(grid.getX(col)).toBeCloseTo(expected.getX, 2)
           })
         }
 
         if (_.has(expected, 'getY')) {
           it(`getY(${row}) == ${expected.getY}:`, function () {
-            expect(this.grid.getY(col)).to.be.closeTo(expected.getY, 0.01)
+            expect(grid.getY(col)).toBeCloseTo(expected.getY, 2)
           })
         }
 
         if (_.has(expected, 'topLeft')) {
           it(`topLeft(${row}, ${col}) == ${expected.topLeft}:`, function () {
-            const topLeft = this.grid.getTopLeftCoordOfImageSlot(row, col)
-            expect(topLeft.x, 'bad top left x').to.be.closeTo(expected.topLeft.x, 0.01)
-            expect(topLeft.y, 'bad top left y').to.be.closeTo(expected.topLeft.y, 0.01)
+            const topLeft = grid.getTopLeftCoordOfImageSlot(row, col)
+            expect(topLeft.x).toBeCloseTo(expected.topLeft.x, 2)
+            expect(topLeft.y).toBeCloseTo(expected.topLeft.y, 2)
           })
         }
       }
 
       describe('layout : 2x2 grid 200x200 left to right and top to bottom', function () {
-        beforeEach(function () {
-          this.grid = new GraphicCellGrid().containerWidth(200).containerHeight(200).rows(2).direction('right,down')
-          this.grid.compute(makeArray(4))
-        })
-
         const tests = [
           { row: -1.5, col: -1.5, expected: { getX: -150, getY: -150, topLeft: { x: -150, y: -150 } } },
           { row: -0.5, col: -0.5, expected: { getX: -50, getY: -50, topLeft: { x: -50, y: -50 } } },
@@ -210,15 +194,16 @@ describe('graphic cell grid:', function () {
           { row: 2, col: 2, expected: { getX: 200, getY: 200, topLeft: { x: 200, y: 200 } } }
         ]
 
-        _(tests).each(makeTest)
+        const gridFactory = () => {
+          const grid = new GraphicCellGrid().containerWidth(200).containerHeight(200).rows(2).direction('right,down')
+          grid.compute(makeArray(4))
+          return grid
+        }
+
+        _(tests).each(testParams => makeTest({ ...testParams, gridFactory }))
       })
 
       describe('layout : 2x2 grid 200x200 right to left and bottom to top', function () {
-        beforeEach(function () {
-          this.grid = new GraphicCellGrid().containerWidth(200).containerHeight(200).rows(2).direction('left,up')
-          this.grid.compute(makeArray(4))
-        })
-
         const tests = [
           { row: -1.5, col: -1.5, expected: { getX: 350, getY: 350, topLeft: { x: 250, y: 250 } } },
           { row: -0.5, col: -0.5, expected: { getX: 250, getY: 250, topLeft: { x: 150, y: 150 } } },
@@ -229,28 +214,30 @@ describe('graphic cell grid:', function () {
           { row: 2, col: 2, expected: { getX: 0, getY: 0, topLeft: { x: -100, y: -100 } } }
         ]
 
-        _(tests).each(makeTest)
+        const gridFactory = () => {
+          const grid = new GraphicCellGrid().containerWidth(200).containerHeight(200).rows(2).direction('left,up')
+          grid.compute(makeArray(4))
+          return grid
+        }
+
+        _(tests).each(testParams => makeTest({ ...testParams, gridFactory }))
       })
 
       describe('layout : 1x1 grid 100x100 right to left and bottom to top with gutter 0.1x0.1', function () {
-        beforeEach(function () {
-          this.grid = new GraphicCellGrid().containerWidth(100).containerHeight(100).rows(1).rowGutter(0.1).columnGutter(0.1).direction('left,up')
-          this.grid.compute(makeArray(1))
-        })
-
         const tests = [
           { row: 0, col: 0, expected: { getX: 100, getY: 100, topLeft: { x: 0, y: 0 } } }
         ]
 
-        _(tests).each(makeTest)
+        const gridFactory = () => {
+          const grid = new GraphicCellGrid().containerWidth(100).containerHeight(100).rows(1).rowGutter(0.1).columnGutter(0.1).direction('left,up')
+          grid.compute(makeArray(1))
+          return grid
+        }
+
+        _(tests).each(testParams => makeTest({ ...testParams, gridFactory }))
       })
 
       describe('layout : 2x2 grid 210x210 left to right and top to bottom with gutter 1/11x1/11', function () {
-        beforeEach(function () {
-          this.grid = new GraphicCellGrid().containerWidth(210).containerHeight(210).rows(2).rowGutter(1 / 11).columnGutter(1 / 11).direction('right,down')
-          this.grid.compute(makeArray(4))
-        })
-
         const tests = [
           { row: 0, col: 0, expected: { getX: 0, getY: 0, topLeft: { x: 0, y: 0 } } },
           { row: 1, col: 1, expected: { getX: 110, getY: 110, topLeft: { x: 110, y: 110 } } },
@@ -258,61 +245,65 @@ describe('graphic cell grid:', function () {
           { row: 2, col: 2, expected: { getX: 220, getY: 220, topLeft: { x: 220, y: 220 } } }
         ]
 
-        _(tests).each(makeTest)
+        const gridFactory = () => {
+          const grid = new GraphicCellGrid().containerWidth(210).containerHeight(210).rows(2).rowGutter(1 / 11).columnGutter(1 / 11).direction('right,down')
+          grid.compute(makeArray(4))
+          return grid
+        }
+
+        _(tests).each(testParams => makeTest({ ...testParams, gridFactory }))
       })
 
       describe('layout : 2x2 grid 210x210 right to left and bottom to top with gutter 1/11x1/11', function () {
-        beforeEach(function () {
-          this.grid = new GraphicCellGrid().containerWidth(210).containerHeight(210).rows(2).rowGutter(1 / 11).columnGutter(1 / 11).direction('left,up')
-          this.grid.compute(makeArray(4))
-        })
-
         const tests = [
           { row: 0, col: 0, expected: { getX: 210, getY: 210, topLeft: { x: 110, y: 110 } } },
           { row: 1, col: 1, expected: { getX: 100, getY: 100, topLeft: { x: 0, y: 0 } } },
           { row: 1.99999, col: 1.99999, expected: { getX: 0, getY: 0 } }
         ]
 
-        _(tests).each(makeTest)
+        const gridFactory = () => {
+          const grid = new GraphicCellGrid().containerWidth(210).containerHeight(210).rows(2).rowGutter(1 / 11).columnGutter(1 / 11).direction('left,up')
+          grid.compute(makeArray(4))
+          return grid
+        }
+
+        _(tests).each(testParams => makeTest({ ...testParams, gridFactory }))
       })
     })
 
     describe('_getGutterRangeFromDomain():', function () {
-      beforeEach(function () {
-        this.l = new GraphicCellGrid()
-        this.getRange = ({ position, nodeSize, gutterSize }) => {
-          return this.l._getGutterRangeFromDomain(position, nodeSize, gutterSize)
-        }
-      })
+      let getRange = ({ position, nodeSize, gutterSize }) => {
+        return (new GraphicCellGrid())._getGutterRangeFromDomain(position, nodeSize, gutterSize)
+      }
 
       it('throws error on gutter less than 1 (-1) ', function () {
         const args = { position: -1, nodeSize: 100, gutterSize: 10 }
-        expect(() => this.getRange(args)).to.throw()
+        expect(() => getRange(args)).toThrow()
       })
 
       it('throws error on gutter less than 1 (0.99)', function () {
         const args = { position: 0.99, nodeSize: 100, gutterSize: 10 }
-        expect(() => this.getRange(args)).to.throw()
+        expect(() => getRange(args)).toThrow()
       })
 
       it('computes correctly on left edge of gutter', function () {
         const args = { position: 1, nodeSize: 100, gutterSize: 10 }
-        expect(this.getRange(args)).to.equal(args.position * args.nodeSize)
+        expect(getRange(args)).toEqual(args.position * args.nodeSize)
       })
 
       it('computes correctly in middle of gutter', function () {
         const args = { position: 1.5, nodeSize: 100, gutterSize: 10 }
-        expect(this.getRange(args)).to.equal(1 * args.nodeSize + 0.5 * args.gutterSize)
+        expect(getRange(args)).toEqual(1 * args.nodeSize + 0.5 * args.gutterSize)
       })
 
       it('computes correctly on right edge of gutter', function () {
         const args = { position: 1.99, nodeSize: 100, gutterSize: 10 }
-        expect(this.getRange(args)).to.equal(1 * args.nodeSize + 0.99 * args.gutterSize)
+        expect(getRange(args)).toEqual(1 * args.nodeSize + 0.99 * args.gutterSize)
       })
 
       it('computes correctly on left edge of next gutter', function () {
         const args = { position: 2, nodeSize: 100, gutterSize: 10 }
-        expect(this.getRange(args)).to.equal(2 * args.nodeSize + 1 * args.gutterSize)
+        expect(getRange(args)).toEqual(2 * args.nodeSize + 1 * args.gutterSize)
       })
     })
 
@@ -354,10 +345,10 @@ describe('graphic cell grid:', function () {
           if (_.has(t, 'specifyCols')) { l.cols(t.specifyCols) }
 
           if (t.throw) {
-            expect(() => l._calcGridDimensions()).to.throw()
+            expect(() => l._calcGridDimensions()).toThrow()
           } else {
             l._calcGridDimensions()
-            expect(`${l.numRows}x${l.numCols}`).to.equal(t.expected)
+            expect(`${l.numRows}x${l.numCols}`).toEqual(t.expected)
           }
         })
       })
@@ -378,14 +369,8 @@ describe('graphic cell grid:', function () {
         it(t.name || defaultName, function () {
           const l = new GraphicCellGrid()
           const actual = l._computeScale(t.totalSize, t.numElements, t.gutterAllocation)
-          const errorMessage = `
-ACTUAL
-${JSON.stringify(actual)}
-EXPECTED
-${JSON.stringify(t.expected)}
-`
-          expect(actual.nodeSize, `nodeSize error: ${errorMessage}`).to.be.closeTo(t.expected.nodeSize, 0.0001)
-          expect(actual.gutterSize, `gutterSize error: ${errorMessage}`).to.be.closeTo(t.expected.gutterSize, 0.0001)
+          expect(actual.nodeSize).toBeCloseTo(t.expected.nodeSize, 4)
+          expect(actual.gutterSize).toBeCloseTo(t.expected.gutterSize, 4)
         })
       })
     })
@@ -412,25 +397,24 @@ ${JSON.stringify(t.expected)}
     })
 
     describe('equally distributes 5 nodes within a 1x1 space', function () {
-      beforeEach(function () {
-        this.l = (new GraphicCellGrid())
-        this.actual = getDimensionsForANodeCollectionOfLength(5, this.l)
-        this.expected = [
-          { x: 0, y: 0 },
-          { x: oneThird, y: 0 },
-          { x: twoThird, y: 0 },
-          { x: 0, y: 0.5 },
-          { x: oneThird, y: 0.5 }
-        ]
-      })
+
+      const l = (new GraphicCellGrid())
+      const actual = getDimensionsForANodeCollectionOfLength(5, l)
+      const expected = [
+        { x: 0, y: 0 },
+        { x: oneThird, y: 0 },
+        { x: twoThird, y: 0 },
+        { x: 0, y: 0.5 },
+        { x: oneThird, y: 0.5 }
+      ]
 
       it('has correct layout', function () {
-        compareAndReportDifferences(this.expected, this.actual)
+        compareAndReportDifferences(expected, actual)
       })
 
       it('has correct dimensions', function () {
-        expect(this.l.numRows, 'num rows incorrect').to.equal(2)
-        expect(this.l.numCols, 'num cols incorrect').to.equal(3)
+        expect(l.numRows).toEqual(2)
+        expect(l.numCols).toEqual(3)
       })
     })
 
@@ -446,8 +430,8 @@ ${JSON.stringify(t.expected)}
       ]
       compareAndReportDifferences(expected, actual)
 
-      expect(l.containerWidth(), 'incorrect width').to.deep.equal(300)
-      expect(l.containerHeight(), 'incorrect height').to.deep.equal(500)
+      expect(l.containerWidth()).toEqual(300)
+      expect(l.containerHeight()).toEqual(500)
     })
 
     it('fixed amount of cols', function () {
@@ -536,68 +520,62 @@ ${JSON.stringify(t.expected)}
 
     describe('gutter sizes are accounted for in layout:', function () {
       describe('gutter size 0.1 means "gutter size is 10% of total space"', function () {
-        beforeEach(function () {
-          this.l = (new GraphicCellGrid()).rowGutter(0).columnGutter(0.1).containerWidth(19).containerHeight(19)
-          this.actual = this.l.compute(getNodes(4)).map(justXY)
-          this.expected = [
-            { x: 0, y: 0 },
-            { x: 10, y: 0 },
-            { x: 0, y: 19 / 2 },
-            { x: 10, y: 19 / 2 }
-          ]
-        })
+        const l = (new GraphicCellGrid()).rowGutter(0).columnGutter(0.1).containerWidth(19).containerHeight(19)
+        const actual = l.compute(getNodes(4)).map(justXY)
+        const expected = [
+          { x: 0, y: 0 },
+          { x: 10, y: 0 },
+          { x: 0, y: 19 / 2 },
+          { x: 10, y: 19 / 2 }
+        ]
 
         it('computes x and y correctly', function () {
-          compareAndReportDifferences(this.expected, this.actual)
+          compareAndReportDifferences(expected, actual)
         })
 
         it('computes node size correctly', function () {
-          expect(this.l.nodeWidth(), 'incorrect nodeWidth').to.deep.equal(9)
-          expect(this.l.nodeHeight(), 'incorrect nodeHeight').to.deep.equal(9.5)
+          expect(l.nodeWidth()).toEqual(9)
+          expect(l.nodeHeight()).toEqual(9.5)
         })
       })
 
       describe('gutter size 0.5 means "gutter is same size as nodes"', function () {
-        beforeEach(function () {
-          this.l = (new GraphicCellGrid()).rowGutter(0.5).columnGutter(0)
-          this.actual = this.l.compute(getNodes(4)).map(justXY)
-          this.expected = [
-            { x: 0, y: 0 },
-            { x: 0.5, y: 0 },
-            { x: 0, y: twoThird },
-            { x: 0.5, y: twoThird }
-          ]
-        })
+        const l = (new GraphicCellGrid()).rowGutter(0.5).columnGutter(0)
+        const actual = l.compute(getNodes(4)).map(justXY)
+        const expected = [
+          { x: 0, y: 0 },
+          { x: 0.5, y: 0 },
+          { x: 0, y: twoThird },
+          { x: 0.5, y: twoThird }
+        ]
 
         it('computes x and y correctly', function () {
-          compareAndReportDifferences(this.expected, this.actual)
+          compareAndReportDifferences(expected, actual)
         })
 
         it('computes node size correctly', function () {
-          expect(this.l.nodeWidth(), 'incorrect nodeWidth').to.deep.equal(0.5)
-          expect(this.l.nodeHeight(), 'incorrect nodeHeight').to.deep.equal(oneThird)
+          expect(l.nodeWidth()).toEqual(0.5)
+          expect(l.nodeHeight()).toEqual(oneThird)
         })
       })
 
       describe('gutter size 0.3333 means "gutter is 1/3 to the 2/3 size of node"', function () {
-        beforeEach(function () {
-          this.l = (new GraphicCellGrid()).rowGutter(oneThird).columnGutter(oneThird).containerWidth(5).containerHeight(5)
-          this.actual = this.l.compute(getNodes(4)).map(justXY)
-          this.expected = [
-            { x: 0, y: 0 },
-            { x: 3, y: 0 },
-            { x: 0, y: 3 },
-            { x: 3, y: 3 }
-          ]
-        })
+        const l = (new GraphicCellGrid()).rowGutter(oneThird).columnGutter(oneThird).containerWidth(5).containerHeight(5)
+        const actual = l.compute(getNodes(4)).map(justXY)
+        const expected = [
+          { x: 0, y: 0 },
+          { x: 3, y: 0 },
+          { x: 0, y: 3 },
+          { x: 3, y: 3 }
+        ]
 
         it('computes x and y correctly', function () {
-          compareAndReportDifferences(this.expected, this.actual)
+          compareAndReportDifferences(expected, actual)
         })
 
         it('computes node size correctly', function () {
-          expect(this.l.nodeWidth(), 'incorrect nodeWidth').to.deep.equal(2)
-          expect(this.l.nodeHeight(), 'incorrect nodeHeight').to.deep.equal(2)
+          expect(l.nodeWidth()).toEqual(2)
+          expect(l.nodeHeight()).toEqual(2)
         })
       })
     })
@@ -629,11 +607,8 @@ ${JSON.stringify(t.expected)}
 
           const actual = nodeString(l.compute(nodes))
           const expected = layoutExpectations[directionKeyword]
-          const errorString = `
-  EXPECTED: ${expected}
-  ACTUAL:   ${actual}
-  `
-          expect(expected, errorString).to.equal(actual)
+
+          expect(expected).toEqual(actual)
         })
       })
     })

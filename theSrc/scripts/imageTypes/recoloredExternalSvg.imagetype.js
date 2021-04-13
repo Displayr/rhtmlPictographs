@@ -1,9 +1,9 @@
-import _ from 'lodash'
-import $ from 'jquery'
-import BaseImageType from './base.imagetype'
-import CacheService from '../CacheService'
-import RecolorSvg from '../RecolorSvg'
-import geometryUtils from '../utils/geometryUtils'
+const _ = require('lodash')
+const $ = require('jquery')
+const BaseImageType = require('./base.imagetype')
+const CacheService = require('../CacheService')
+const RecolorSvg = require('../RecolorSvg')
+const geometryUtils = require('../utils/geometryUtils')
 
 const cacheExpiryTimeMilliseconds = 10000
 
