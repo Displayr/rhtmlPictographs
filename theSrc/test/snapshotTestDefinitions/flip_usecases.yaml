@@ -7,7 +7,7 @@ configs:
   - config: data.flip_usecases.flip_usecase_barchart_baseimage
     height: 422
     width: 580
-  - config: data.flip_usecases.flip_usecase_barchart_of_sqaures_variable_number_of_rows_per_cell
+  - config: data.flip_usecases.flip_usecase_barchart_of_squares_variable_number_of_rows_per_cell
     height: 530
     width: 677
   - config: data.flip_usecases.flip_usecase_barchart_right_to_left
