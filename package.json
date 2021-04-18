@@ -1,7 +1,7 @@
 {
   "private": true,
   "engines": {
-    "node": ">=6.9.5"
+    "node": ">=12"
   },
   "scripts": {
     "prepush": "node ./bin/prepush",
