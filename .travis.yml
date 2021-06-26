@@ -5,10 +5,11 @@ sudo: required
 dist: xenial
 addons:
   chrome: stable
-  artifacts:
-    debug: false
-    paths:
-      - theSrc/test/snapshots/travis
+# disabled S3 snapshot uploads until VIS-922 is complete    
+#  artifacts:
+#    debug: false
+#    paths:
+#      - theSrc/test/snapshots/travis
 before_install:
   - sudo apt-get update
 before_script:
