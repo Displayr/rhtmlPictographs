@@ -12,6 +12,9 @@ class UrlType extends BaseImageType {
       const imageDimensionsPromise = new Promise((resolve, reject) => {
         const tmpImg = document.createElement('img')
         tmpImg.setAttribute('src', this.config.url)
+        tmpImg.style.visibility = 'hidden'
+
+        document.body.appendChild(tmpImg)
 
         tmpImg.onerror = () => {
           tmpImg.remove()
