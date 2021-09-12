@@ -58,12 +58,12 @@ class BaseCell {
   }
 
   setWidth (width) {
-    this.width = width
+    this.width = Math.max(width, 5)
     this._verifyKeyIsPositiveInt(this, 'width')
   }
 
   setHeight (height) {
-    this.height = Math.max(height, 1)
+    this.height = Math.max(height, 5)
     this._verifyKeyIsPositiveInt(this, 'height')
   }
 
