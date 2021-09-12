@@ -63,7 +63,7 @@ class BaseCell {
   }
 
   setHeight (height) {
-    this.height = height
+    this.height = Math.max(height, 1)
     this._verifyKeyIsPositiveInt(this, 'height')
   }
 

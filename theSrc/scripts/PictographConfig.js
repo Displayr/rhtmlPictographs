@@ -481,7 +481,7 @@ class PictographConfig {
 
     // NB we use Math.floor here to avoid throwing error on rounding diff. e.g., exceeds table height: 372.99996000000004 !< 372.99996
     if (Math.floor(this.totalAllocatedVerticalSpace) > Math.floor(this.size.container.height)) {
-      throw new Error(`Cannot specify rowHeights/rowGutterLength where sum(rows+padding) exceeds table height: ${this.totalAllocatedVerticalSpace} !< ${this.size.container.height}`)
+      console.warn(`Cannot specify rowHeights/rowGutterLength where sum(rows+padding) exceeds table height: ${this.totalAllocatedVerticalSpace} !< ${this.size.container.height}`)
     }
   }
 
