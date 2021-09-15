@@ -5,6 +5,7 @@ import LabelCell from './LabelCell'
 import EmptyCell from './EmptyCell'
 import ColorFactory from './ColorFactory'
 import { ensureObjectHasValidFontSize } from './utils/fontSizeCleaner'
+import InsufficientContainerSizeError from './InsufficientContainerSizeError'
 
 class PictographConfig {
   static initClass () {
@@ -432,7 +433,7 @@ class PictographConfig {
 
     // NB we use Math.floor here to avoid throwing error on small rounding diffs.
     if (Math.ceil(this.totalAllocatedHorizontalSpace) > Math.ceil(this.size.container.width)) {
-      throw new Error(`Cannot specify columnWidth/columnGutterLength where sum(columns+padding) exceeds table width: ${Math.ceil(this.totalAllocatedHorizontalSpace)} > ${Math.ceil(this.size.container.width)}`)
+      throw new InsufficientContainerSizeError(`Cannot specify columnWidth/columnGutterLength where sum(columns+padding) exceeds table width: ${Math.ceil(this.totalAllocatedHorizontalSpace)} > ${Math.ceil(this.size.container.width)}`)
     }
   }
 
@@ -481,7 +482,7 @@ class PictographConfig {
 
     // NB we use Math.floor here to avoid throwing error on rounding diff. e.g., exceeds table height: 372.99996000000004 !< 372.99996
     if (Math.floor(this.totalAllocatedVerticalSpace) > Math.floor(this.size.container.height)) {
-      console.warn(`Cannot specify rowHeights/rowGutterLength where sum(rows+padding) exceeds table height: ${this.totalAllocatedVerticalSpace} !< ${this.size.container.height}`)
+      throw new InsufficientContainerSizeError(`Cannot specify rowHeights/rowGutterLength where sum(rows+padding) exceeds table height: ${this.totalAllocatedVerticalSpace} !< ${this.size.container.height}`)
     }
   }
 

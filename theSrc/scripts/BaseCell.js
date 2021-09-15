@@ -1,5 +1,6 @@
 import $ from 'jquery'
 import _ from 'lodash'
+import InsufficientContainerSizeError from './InsufficientContainerSizeError'
 
 // TODO refactor this global leak problem
 // TODO I want to pull all the CssCollector bits into a seperate module and have BaseCell Extend that class
@@ -58,13 +59,19 @@ class BaseCell {
   }
 
   setWidth (width) {
-    this.width = Math.max(width, 5)
-    this._verifyKeyIsPositiveInt(this, 'width')
+    const integerWidth = parseInt(width)
+    if (integerWidth < 1) {
+      throw new InsufficientContainerSizeError('Insufficient output width')
+    }
+    this.width = integerWidth
   }
 
   setHeight (height) {
-    this.height = Math.max(height, 5)
-    this._verifyKeyIsPositiveInt(this, 'height')
+    const integerHeight = parseInt(height)
+    if (integerHeight < 1) {
+      throw new InsufficientContainerSizeError('Insufficient output height')
+    }
+    this.height = integerHeight
   }
 
   setDynamicMargins (dynamicMargins) {

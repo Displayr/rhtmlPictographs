@@ -2,6 +2,7 @@ import _ from 'lodash'
 
 import Pictograph from './Pictograph'
 import DisplayError from './DisplayError'
+import InsufficientContainerSizeError from './InsufficientContainerSizeError'
 
 module.exports = function (element, width, height, stateChangedCallback) {
   const instance = new Pictograph(element)
@@ -19,7 +20,11 @@ module.exports = function (element, width, height, stateChangedCallback) {
         instance.setConfig(config)
         instance.draw()
       } catch (err) {
-        _showError(err, element)
+        if (err.type === InsufficientContainerSizeError.type) {
+          console.log(err.message)
+        } else {
+          _showError(err, element)
+        }
       }
     },
 
