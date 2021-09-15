@@ -1,9 +1,9 @@
 const INSUFFICIENT_CONTAINER_SIZE_ERROR = 'INSUFFICIENT_CONTAINER_SIZE_ERROR'
 
 class InsufficientContainerSizeError extends Error {
-  constructor () {
+  constructor (message) {
     super()
-    this.message = INSUFFICIENT_CONTAINER_SIZE_ERROR
+    this.message = message
     this.type = INSUFFICIENT_CONTAINER_SIZE_ERROR
   }
 }
