@@ -37,11 +37,13 @@ class Pictograph {
       .then(this._computeCellPlacement.bind(this))
       .then(this._render.bind(this))
       .catch((error) => {
-        if (error.type !== InsufficientContainerSizeError.type) {
+        if (error.type === InsufficientContainerSizeError.type) {
+          console.log(error.message)
+        } else {
           console.error(`error in pictograph draw: ${error.message}`)
           console.error(error.stack)
+          throw error
         }
-        throw error
       })
   }
 
