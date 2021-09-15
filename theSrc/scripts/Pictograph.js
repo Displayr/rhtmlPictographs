@@ -69,9 +69,13 @@ class Pictograph {
       .then(this._computeCellPlacement.bind(this))
       .then(this._render.bind(this))
       .catch((error) => {
-        console.error(`error in pictograph resize: ${error.message}`)
-        console.error(error.stack)
-        throw error
+        if (error.type === InsufficientContainerSizeError.type) {
+          console.log(error.message)
+        } else {
+          console.error(`error in pictograph resize: ${error.message}`)
+          console.error(error.stack)
+          throw error
+        }
       })
   }
 
