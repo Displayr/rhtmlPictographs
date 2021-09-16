@@ -1,0 +1,36 @@
+{
+  "font-size": "12px",
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [ "fixedsize:graphic" ],
+    "colWidths": [ "fixedsize:graphic" ],
+    "rows": [
+      [
+        {
+          "type": "graphic",
+          "value":{
+            "proportion": 0.0585626911314985,
+            "padding": "0.000000 0.000000 0.000000 0.000000",
+            "numImages": 1,
+            "imageWidth": 50,
+            "numRows": 1,
+            "rowGutter": 0,
+            "columnGutter": 0,
+            "variableImage": "url:fromleft:#3E7DCC:https://displayrcors.displayr.com/images/user_grey.svg",
+            "baseImage": "url:#E5E8EE:https://displayrcors.displayr.com/images/user_grey.svg"
+          }
+        }
+      ]
+    ]
+  },
+  "table-footer": {
+    "padding": "1.000000 1.000000 1.000000 1.000000",
+    "text": "6",
+    "font-size": "27.000000px",
+    "font-family": "Arial",
+    "font-color": "#808080",
+    "font-weight": "normal",
+    "horizontal-align": "center",
+    "vertical-align": "bottom"
+  }
+}

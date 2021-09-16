@@ -1,4 +1,3 @@
-
 import _ from 'lodash'
 import d3 from 'd3'
 import $ from 'jquery'
@@ -6,6 +5,7 @@ import PictographConfig from './PictographConfig'
 import * as log from 'loglevel'
 import SvgDefinitionManager from './SvgDefinitionManager'
 import ImageFactory from './ImageFactory'
+import InsufficientContainerSizeError from './InsufficientContainerSizeError'
 
 log.setLevel('error')
 
@@ -37,9 +37,14 @@ class Pictograph {
       .then(this._computeCellPlacement.bind(this))
       .then(this._render.bind(this))
       .catch((error) => {
-        console.error(`error in pictograph draw: ${error.message}`)
-        console.error(error.stack)
-        throw error
+        if (error.type === InsufficientContainerSizeError.type) {
+          console.log(error.message)
+          d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'ready')
+        } else {
+          console.error(`error in pictograph draw: ${error.message}`)
+          console.error(error.stack)
+          throw error
+        }
       })
   }
 
@@ -65,9 +70,14 @@ class Pictograph {
       .then(this._computeCellPlacement.bind(this))
       .then(this._render.bind(this))
       .catch((error) => {
-        console.error(`error in pictograph resize: ${error.message}`)
-        console.error(error.stack)
-        throw error
+        if (error.type === InsufficientContainerSizeError.type) {
+          console.log(error.message)
+          d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'ready')
+        } else {
+          console.error(`error in pictograph resize: ${error.message}`)
+          console.error(error.stack)
+          throw error
+        }
       })
   }
 

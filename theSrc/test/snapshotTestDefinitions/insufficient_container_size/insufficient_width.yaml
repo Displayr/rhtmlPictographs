@@ -1,0 +1,8 @@
+type: multi_widget_single_page
+width: 10
+height: 675
+widgets:
+  - config: data.flip_usecases.flip_usecase_barchart_baseimage
+assert_log:
+  - type: log
+    match: columnWidth
