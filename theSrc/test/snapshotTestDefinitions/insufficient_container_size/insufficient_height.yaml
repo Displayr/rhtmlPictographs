@@ -1,0 +1,8 @@
+type: multi_widget_single_page
+width: 1100
+height: 20
+widgets:
+  - config: data.flip_usecases.flip_usecase_single_icon
+assert_log:
+  - type: log
+    match: rowHeights

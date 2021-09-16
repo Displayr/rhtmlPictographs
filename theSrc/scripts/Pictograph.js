@@ -39,6 +39,7 @@ class Pictograph {
       .catch((error) => {
         if (error.type === InsufficientContainerSizeError.type) {
           console.log(error.message)
+          d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'ready')
         } else {
           console.error(`error in pictograph draw: ${error.message}`)
           console.error(error.stack)
@@ -71,6 +72,7 @@ class Pictograph {
       .catch((error) => {
         if (error.type === InsufficientContainerSizeError.type) {
           console.log(error.message)
+          d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'ready')
         } else {
           console.error(`error in pictograph resize: ${error.message}`)
           console.error(error.stack)

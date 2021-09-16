@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import d3 from 'd3'
 
 import Pictograph from './Pictograph'
 import DisplayError from './DisplayError'
@@ -22,6 +23,7 @@ module.exports = function (element, width, height, stateChangedCallback) {
       } catch (err) {
         if (err.type === InsufficientContainerSizeError.type) {
           console.log(err.message)
+          d3.select(instance.rootElement).attr(`rhtmlPictographs-status`, 'ready')
         } else {
           _showError(err, element)
         }
