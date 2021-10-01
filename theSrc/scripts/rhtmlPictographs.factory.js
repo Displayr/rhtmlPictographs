@@ -7,8 +7,10 @@ import InsufficientContainerSizeError from './InsufficientContainerSizeError'
 
 module.exports = function (element, width, height, stateChangedCallback) {
   const instance = new Pictograph(element)
+  let isRenderValueCalled = false // temporary flag for VIS-1004
   return {
     renderValue (inputConfig, userState) {
+      isRenderValueCalled = true
       let config = null
       try {
         config = _parseConfig(inputConfig)
@@ -31,6 +33,9 @@ module.exports = function (element, width, height, stateChangedCallback) {
     },
 
     resize (newWidth, newHeight) {
+      if (!isRenderValueCalled) {
+        throw new Error('VIS-1004: resize called before renderValue!')
+      }
       instance.resize()
     },
   }
