@@ -8,7 +8,7 @@ const config = {
   internalWebSettings: {
     includeDimensionsOnWidgetDiv: true,
     default_border: true,
-    isReadySelector: 'div[rhtmlPictographs-status=ready]',
+    isReadySelector: 'div[rhtmlwidget-status=ready]',
     singleWidgetSnapshotSelector: 'svg.rhtmlwidget-outer-svg',
   },
   snapshotTesting: {

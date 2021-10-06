@@ -25,7 +25,7 @@ module.exports = function (element, width, height, stateChangedCallback) {
       } catch (err) {
         if (err.type === InsufficientContainerSizeError.type) {
           console.log(err.message)
-          d3.select(instance.rootElement).attr(`rhtmlPictographs-status`, 'ready')
+          d3.select(instance.rootElement).attr(`rhtmlwidget-status`, 'ready')
         } else {
           _showError(err, element)
         }
