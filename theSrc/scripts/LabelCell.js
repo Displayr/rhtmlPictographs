@@ -1,7 +1,7 @@
-import _ from 'lodash'
-import BaseCell from './BaseCell'
-import labelUtils from './utils/labelUtils'
-import { ensureObjectHasValidFontSize } from './utils/fontSizeCleaner'
+const _ = require('lodash')
+const BaseCell = require('./BaseCell')
+const labelUtils = require('./utils/labelUtils')
+const { ensureObjectHasValidFontSize } = require('./utils/fontSizeCleaner')
 
 class LabelCell extends BaseCell {
   setConfig (config) {

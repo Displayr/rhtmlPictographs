@@ -1,11 +1,11 @@
-import _ from 'lodash'
-import BaseCell from './BaseCell'
-import GraphicCell from './GraphicCell'
-import LabelCell from './LabelCell'
-import EmptyCell from './EmptyCell'
-import ColorFactory from './ColorFactory'
-import { ensureObjectHasValidFontSize } from './utils/fontSizeCleaner'
-import InsufficientContainerSizeError from './InsufficientContainerSizeError'
+const _ = require('lodash')
+const BaseCell = require('./BaseCell')
+const GraphicCell = require('./GraphicCell')
+const LabelCell = require('./LabelCell')
+const EmptyCell = require('./EmptyCell')
+const ColorFactory = require('./ColorFactory')
+const { ensureObjectHasValidFontSize } = require('./utils/fontSizeCleaner')
+const InsufficientContainerSizeError = require('./InsufficientContainerSizeError')
 
 class PictographConfig {
   static initClass () {
