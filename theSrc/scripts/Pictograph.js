@@ -51,6 +51,9 @@ class Pictograph {
   }
 
   resize () {
+    // VIS-895: somehow resize is being called even when pictograph is no longer attached to the document.
+    if (!this.rootElement.isConnected) { return }
+
     const actualDimensions = this.getContainerDimensions()
     log.info('Pictograph.resize called. Container dimensions:', actualDimensions, `resizable:${this.config.resizable}`)
 
