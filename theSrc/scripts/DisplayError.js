@@ -1,5 +1,5 @@
-import _ from 'lodash'
-import $ from 'jquery'
+const _ = require('lodash')
+const $ = require('jquery')
 
 class DisplayError {
   constructor (el, error) {

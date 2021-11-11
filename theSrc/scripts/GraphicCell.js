@@ -1,13 +1,12 @@
-import _ from 'lodash'
-import d3 from 'd3'
-import * as log from 'loglevel'
-
-import GraphicCellGrid from './GraphicCellGrid'
-import BaseCell from './BaseCell'
-import ImageFactory from './ImageFactory'
-import DisplayError from './DisplayError'
-import labelUtils from './utils/labelUtils'
-import { ensureObjectHasValidFontSize } from './utils/fontSizeCleaner'
+const _ = require('lodash')
+const d3 = require('d3')
+const log = require('loglevel')
+const GraphicCellGrid = require('./GraphicCellGrid')
+const BaseCell = require('./BaseCell')
+const ImageFactory = require('./ImageFactory')
+const DisplayError = require('./DisplayError')
+const labelUtils = require('./utils/labelUtils')
+const { ensureObjectHasValidFontSize } = require('./utils/fontSizeCleaner')
 
 class GraphicCell extends BaseCell {
   static get validRootAttributes () {

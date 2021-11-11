@@ -1,11 +1,11 @@
-import _ from 'lodash'
-import d3 from 'd3'
-import $ from 'jquery'
-import PictographConfig from './PictographConfig'
-import * as log from 'loglevel'
-import SvgDefinitionManager from './SvgDefinitionManager'
-import ImageFactory from './ImageFactory'
-import InsufficientContainerSizeError from './InsufficientContainerSizeError'
+const _ = require('lodash')
+const d3 = require('d3')
+const $ = require('jquery')
+const PictographConfig = require('./PictographConfig')
+const log = require('loglevel')
+const SvgDefinitionManager = require('./SvgDefinitionManager')
+const ImageFactory = require('./ImageFactory')
+const InsufficientContainerSizeError = require('./InsufficientContainerSizeError')
 
 log.setLevel('error')
 
@@ -51,6 +51,9 @@ class Pictograph {
   }
 
   resize () {
+    // VIS-895: somehow resize is being called even when pictograph is no longer attached to the document.
+    if (!this.rootElement.isConnected) { return }
+
     const actualDimensions = this.getContainerDimensions()
     log.info('Pictograph.resize called. Container dimensions:', actualDimensions, `resizable:${this.config.resizable}`)
 

@@ -1,5 +1,5 @@
-import _ from 'lodash'
-import crypto from 'crypto'
+const _ = require('lodash')
+const crypto = require('crypto')
 
 class SvgDefinitionManager {
   constructor ({ parentSvg }) {

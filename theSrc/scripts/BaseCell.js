@@ -1,6 +1,6 @@
-import $ from 'jquery'
-import _ from 'lodash'
-import InsufficientContainerSizeError from './InsufficientContainerSizeError'
+const _ = require('lodash')
+const $ = require('jquery')
+const InsufficientContainerSizeError = require('./InsufficientContainerSizeError')
 
 // TODO refactor this global leak problem
 // TODO I want to pull all the CssCollector bits into a seperate module and have BaseCell Extend that class
