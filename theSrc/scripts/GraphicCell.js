@@ -6,7 +6,7 @@ const BaseCell = require('./BaseCell')
 const ImageFactory = require('./ImageFactory')
 const DisplayError = require('./DisplayError')
 const labelUtils = require('./utils/labelUtils')
-const { ensureObjectHasValidFontSize } = require('./utils/fontSizeCleaner')
+const { ensureObjectHasValidFontSize, fontSizeWithPixelSuffix } = require('./utils/fontSizeUtils')
 
 class GraphicCell extends BaseCell {
   static get validRootAttributes () {
@@ -641,7 +641,7 @@ class GraphicCell extends BaseCell {
       .attr('x', xOffSet)
       .attr('y', yOffSet)
       .attr('text-anchor', textConfig['horizontal-align'])
-      .style('font-size', textConfig['font-size'])
+      .style('font-size', fontSizeWithPixelSuffix(textConfig['font-size']))
       .style('dominant-baseline', textConfig['dominant-baseline'])
       .text(textConfig.text)
   }
@@ -670,7 +670,7 @@ class GraphicCell extends BaseCell {
       .attr('x', xOffSet + xAnchor)
       .attr('y', yOffSet + yMidpoint)
       .attr('text-anchor', textConfig['horizontal-align'])
-      .style('font-size', textConfig['font-size'])
+      .style('font-size', fontSizeWithPixelSuffix(textConfig['font-size']))
       .style('dominant-baseline', textConfig['dominant-baseline'])
       .text(textConfig.text)
   }

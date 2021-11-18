@@ -6,6 +6,7 @@ const log = require('loglevel')
 const SvgDefinitionManager = require('./SvgDefinitionManager')
 const ImageFactory = require('./ImageFactory')
 const InsufficientContainerSizeError = require('./InsufficientContainerSizeError')
+const { fontSizeWithPixelSuffix } = require('./utils/fontSizeUtils')
 
 log.setLevel('error')
 
@@ -530,7 +531,7 @@ class Pictograph {
       .attr('x', xOffSet + xAnchor)
       .attr('y', yOffSet + yMidpoint)
       .attr('text-anchor', textConfig['horizontal-align'])
-      .style('font-size', textConfig['font-size'])
+      .style('font-size', fontSizeWithPixelSuffix(textConfig['font-size']))
       .style('dominant-baseline', textConfig['dominant-baseline'])
       .text(textConfig.text)
   }

@@ -4,7 +4,7 @@ const GraphicCell = require('./GraphicCell')
 const LabelCell = require('./LabelCell')
 const EmptyCell = require('./EmptyCell')
 const ColorFactory = require('./ColorFactory')
-const { ensureObjectHasValidFontSize } = require('./utils/fontSizeCleaner')
+const { ensureObjectHasValidFontSize } = require('./utils/fontSizeUtils')
 const InsufficientContainerSizeError = require('./InsufficientContainerSizeError')
 
 class PictographConfig {

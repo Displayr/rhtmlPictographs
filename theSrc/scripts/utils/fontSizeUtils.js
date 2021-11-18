@@ -8,4 +8,7 @@ module.exports = {
     }
     obj['font-size'] = parseFloat(obj['font-size'].replace(/^(\d+).*$/, '$1'))
   },
+  fontSizeWithPixelSuffix: function (fontSize) {
+    return fontSize + 'px'
+  },
 }
