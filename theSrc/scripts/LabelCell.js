@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const BaseCell = require('./BaseCell')
 const labelUtils = require('./utils/labelUtils')
-const { ensureObjectHasValidFontSize } = require('./utils/fontSizeCleaner')
+const { ensureObjectHasValidFontSize, fontSizeWithPixelSuffix } = require('./utils/fontSizeUtils')
 
 class LabelCell extends BaseCell {
   setConfig (config) {
@@ -175,7 +175,7 @@ class LabelCell extends BaseCell {
       .attr('x', x)
       .attr('y', y)
       .attr('text-anchor', textAnchor)
-      .style('font-size', fontSize)
+      .style('font-size', fontSizeWithPixelSuffix(fontSize))
       .style('dominant-baseline', 'central')
       .text(text)
   }
