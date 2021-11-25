@@ -1,9 +1,8 @@
-import _ from 'lodash'
-import d3 from 'd3'
-
-import Pictograph from './Pictograph'
-import DisplayError from './DisplayError'
-import InsufficientContainerSizeError from './InsufficientContainerSizeError'
+const _ = require('lodash')
+const d3 = require('d3')
+const Pictograph = require('./Pictograph')
+const DisplayError = require('./DisplayError')
+const InsufficientContainerSizeError = require('./InsufficientContainerSizeError')
 
 module.exports = function (element, width, height, stateChangedCallback) {
   const instance = new Pictograph(element)
@@ -34,9 +33,7 @@ module.exports = function (element, width, height, stateChangedCallback) {
     },
 
     resize (newWidth, newHeight) {
-      if (!isRenderValueCalled) {
-        throw new Error('VIS-1004: resize called before renderValue!')
-      }
+      if (!isRenderValueCalled) { return }
       instance.resize()
     },
   }
