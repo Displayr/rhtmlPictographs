@@ -349,6 +349,15 @@ class Pictograph {
 
           const minOfMaxSizes = Math.min.apply(null, _(cellSizeConstraints).map(`${flexibleSize}.max`).value())
           cellSizeData.size = Math.min(minOfMaxSizes, totalRangeAvailable)
+
+          // VIS-562: recompute dynamic margins now that we know the correct size
+          computedDynamicMargins[flexibleSize].negative = _(combinedConstraints[flexibleSize].margins.negative).map(({ size, overlapInUnitsOfGraphicSize }) => {
+            return Math.max(0, size - overlapInUnitsOfGraphicSize * cellSizeData.size)
+          }).max() || 0
+          computedDynamicMargins[flexibleSize].positive = _(combinedConstraints[flexibleSize].margins.positive).map(({ size, overlapInUnitsOfGraphicSize }) => {
+            return Math.max(0, size - overlapInUnitsOfGraphicSize * cellSizeData.size)
+          }).max() || 0
+
           cellSizeData.dynamicMargins = _.cloneDeep(computedDynamicMargins)
           totalRangeAvailable -= cellSizeData.size
 

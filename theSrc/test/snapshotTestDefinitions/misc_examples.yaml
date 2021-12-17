@@ -25,3 +25,6 @@ configs:
   - config: data.misc_examples.super_power_showdown
     width: 700
     height: 900
+  - config: data.misc_examples.VIS-562
+    width: 576
+    height: 512
