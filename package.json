@@ -5,6 +5,7 @@
     "node": ">=12"
   },
   "scripts": {
+    "build": "gulp build",
     "prepush": "node ./bin/prepush",
     "preinstall": "([ \"$CI\" != true ] && npx npm-force-resolutions) || true",
     "test": "npm run localTest",

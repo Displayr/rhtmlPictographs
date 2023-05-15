@@ -3,6 +3,7 @@ const d3 = require('d3')
 const Pictograph = require('./Pictograph')
 const DisplayError = require('./DisplayError')
 const InsufficientContainerSizeError = require('./InsufficientContainerSizeError')
+const UserError = require('./UserError')
 
 module.exports = function (element, width, height, stateChangedCallback) {
   const instance = new Pictograph(element)
@@ -22,7 +23,7 @@ module.exports = function (element, width, height, stateChangedCallback) {
         instance.setConfig(config)
         instance.draw()
       } catch (err) {
-        if (err.type === InsufficientContainerSizeError.type) {
+        if (err.type === InsufficientContainerSizeError.type || err.type === UserError.type) {
           console.log(err.message)
           d3.select(instance.rootElement).attr(`rhtmlwidget-status`, 'ready')
           d3.select(instance.rootElement).attr(`rhtmlPictographs-status`, 'ready') // to be removed once regression testing code checks for rhtmlwidget-status

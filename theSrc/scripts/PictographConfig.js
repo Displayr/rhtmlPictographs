@@ -6,6 +6,7 @@ const EmptyCell = require('./EmptyCell')
 const ColorFactory = require('./ColorFactory')
 const { ensureObjectHasValidFontSize } = require('./utils/fontSizeUtils')
 const InsufficientContainerSizeError = require('./InsufficientContainerSizeError')
+const UserError = require('./UserError')
 
 class PictographConfig {
   static initClass () {
@@ -479,6 +480,11 @@ class PictographConfig {
       })
     }
     this.gridInfo.flexible.row = (_.findIndex(this.gridInfo.sizes.row, { flexible: true }) !== -1)
+
+    const maxGutterHeight = Math.floor(this.size.container.height / (this.gridInfo.dimensions.row - 1))
+    if (this.size.gutter.row > maxGutterHeight) {
+        throw new UserError(`Container height is ${this.size.container.height} so the space between bars cannot be greater than ${maxGutterHeight}`)
+    }
 
     // NB we use Math.floor here to avoid throwing error on rounding diff. e.g., exceeds table height: 372.99996000000004 !< 372.99996
     if (Math.floor(this.totalAllocatedVerticalSpace) > Math.floor(this.size.container.height)) {

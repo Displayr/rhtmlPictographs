@@ -6,6 +6,7 @@ const log = require('loglevel')
 const SvgDefinitionManager = require('./SvgDefinitionManager')
 const ImageFactory = require('./ImageFactory')
 const InsufficientContainerSizeError = require('./InsufficientContainerSizeError')
+const UserError = require('./UserError')
 const { fontSizeWithPixelSuffix } = require('./utils/fontSizeUtils')
 
 log.setLevel('error')
@@ -39,7 +40,7 @@ class Pictograph {
       .then(this._computeCellPlacement.bind(this))
       .then(this._render.bind(this))
       .catch((error) => {
-        if (error.type === InsufficientContainerSizeError.type) {
+        if (error.type === InsufficientContainerSizeError.type || error.type === UserError.type) {
           console.log(error.message)
           d3.select(this.rootElement).attr(`rhtmlwidget-status`, 'ready')
           d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'ready') // to be removed once regression testing code checks for rhtmlwidget-status
@@ -76,7 +77,7 @@ class Pictograph {
       .then(this._computeCellPlacement.bind(this))
       .then(this._render.bind(this))
       .catch((error) => {
-        if (error.type === InsufficientContainerSizeError.type) {
+        if (error.type === InsufficientContainerSizeError.type || error.type === UserError.type) {
           console.log(error.message)
           d3.select(this.rootElement).attr(`rhtmlwidget-status`, 'ready')
           d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'ready') // to be removed once regression testing code checks for rhtmlwidget-status
