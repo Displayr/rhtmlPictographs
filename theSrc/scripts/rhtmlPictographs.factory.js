@@ -23,10 +23,14 @@ module.exports = function (element, width, height, stateChangedCallback) {
         instance.setConfig(config)
         instance.draw()
       } catch (err) {
-        if (err.type === InsufficientContainerSizeError.type || err.type === UserError.type) {
+        if (err.type === UserError.type) {
+          // Show error on widget since we can't do warnings in R htmlwidgets but don't rethrow error
+          const errorHandler = new DisplayError(element, err)
+          errorHandler.draw()
+          d3.select(instance.rootElement).attr(`rhtmlwidget-status`, 'ready')
+        } else if (err.type === InsufficientContainerSizeError.type) {
           console.log(err.message)
           d3.select(instance.rootElement).attr(`rhtmlwidget-status`, 'ready')
-          d3.select(instance.rootElement).attr(`rhtmlPictographs-status`, 'ready') // to be removed once regression testing code checks for rhtmlwidget-status
         } else {
           _showError(err, element)
         }
