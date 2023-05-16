@@ -43,7 +43,6 @@ class Pictograph {
         if (error.type === InsufficientContainerSizeError.type || error.type === UserError.type) {
           console.log(error.message)
           d3.select(this.rootElement).attr(`rhtmlwidget-status`, 'ready')
-          d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'ready') // to be removed once regression testing code checks for rhtmlwidget-status
         } else {
           console.error(`error in pictograph draw: ${error.message}`)
           console.error(error.stack)
@@ -80,7 +79,6 @@ class Pictograph {
         if (error.type === InsufficientContainerSizeError.type || error.type === UserError.type) {
           console.log(error.message)
           d3.select(this.rootElement).attr(`rhtmlwidget-status`, 'ready')
-          d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'ready') // to be removed once regression testing code checks for rhtmlwidget-status
         } else {
           console.error(`error in pictograph resize: ${error.message}`)
           console.error(error.stack)
