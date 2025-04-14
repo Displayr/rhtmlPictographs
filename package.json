@@ -18,7 +18,7 @@
     "deleteDiffs": "find theSrc/test/snapshots -iname '__diff_output__' | xargs rm -rf"
   },
   "devDependencies": {
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.0",
     "husky": "^0.13.3",
     "npm-force-resolutions": "0.0.10",
     "rhtmlBuildUtils": "github:Displayr/rhtmlBuildUtils#7.2.3"
