@@ -4,6 +4,8 @@
 #'
 #' The usage documentation is maintained as a self hosted tutorial. For instructions on how to run and view this tutorial see the project readme : https://github.com/Displayr/rhtmlPictographs
 #'
+#' @param settingsJsonString A JSON that contains the settings
+#'
 #' @examples
 #'
 #' # red circle
@@ -21,8 +23,6 @@
 #' @import htmlwidgets
 #'
 #' @export
-#'
-
 graphic <- function(settingsJsonString = '{}') {
   g <- htmlwidgets::createWidget(
     name = 'rhtmlPictographs',
