@@ -9,6 +9,9 @@ https://github.com/Displayr/rhtmlPictographs
 \usage{
 graphic(settingsJsonString = "{}")
 }
+\arguments{
+\item{settingsJsonString}{A JSON that contains the settings}
+}
 \description{
 A HTMLWidget that can generate single image graphics, mutli image graphics, or a table of single/multi image graphics. See scenarios and examples below for different use cases.
 
