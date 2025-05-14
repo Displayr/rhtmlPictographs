@@ -6,13 +6,13 @@
 #'
 #' @examples
 #'
-#' red circle
+#' # red circle
 #' rhtmlPictographs::graphic('circle:red')
 #'
-#' single horizontally cropped image - minimal settings
+#' # single horizontally cropped image - minimal settings
 #' rhtmlPictographs::graphic('{"variableImage":"circle:horizontal:blue","percentage":"0.4","width":400,"height":400}')
 #'
-#' for a list of up to date examples see here : https://github.com/Displayr/rhtmlPictographs/tree/master/examples
+#' # for a list of up to date examples see here : https://github.com/Displayr/rhtmlPictographs/tree/master/examples
 #'
 #' @author Kyle Zeeuwen <kyle.zeeuwen@gmail.com>
 #'
