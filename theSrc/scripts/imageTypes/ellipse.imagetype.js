@@ -9,7 +9,7 @@ class EllipseType extends BaseImageType {
     return Promise.resolve(null)
   }
 
-  appendToSvg () {
+  appendToSvg (clipId) {
     this.imageHandle = this.d3Node.append('svg:ellipse')
       .classed('ellipse', true)
       .attr('cx', this.containerWidth / 2)
@@ -19,7 +19,9 @@ class EllipseType extends BaseImageType {
       .style('fill', this.color)
       .style('opacity', this.opacity)
 
-    return this.imageHandle
+    this.addClipId(clipId)
+
+    return Promise.resolve()
   }
 }
 

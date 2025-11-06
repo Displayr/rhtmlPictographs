@@ -81,7 +81,7 @@ class UrlType extends BaseImageType {
     })
   }
 
-  appendToSvg () {
+  appendToSvg (clipId) {
     this.imageHandle = this.d3Node.append('svg:image')
       .attr('x', (this.containerWidth * (1 - this.ratio)) / 2)
       .attr('y', (this.containerHeight * (1 - this.ratio)) / 2)
@@ -93,7 +93,10 @@ class UrlType extends BaseImageType {
     if (_.has(this.config, 'preserveAspectRatio')) {
       this.imageHandle.attr('preserveAspectRatio', this.config.preserveAspectRatio)
     }
-    return this.imageHandle
+
+    this.addClipId(clipId)
+
+    return new Promise((resolve) => { this.imageHandle.on('load', () => resolve(), { once: true }) })
   }
 }
 

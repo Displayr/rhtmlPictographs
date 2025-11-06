@@ -16,7 +16,7 @@ class SquareType extends BaseImageType {
     return this.imageDimensions
   }
 
-  appendToSvg () {
+  appendToSvg (clipId) {
     const length = this.imageDimensions.length
     this.imageHandle = this.d3Node.append('svg:rect')
       .classed('square', true)
@@ -27,7 +27,9 @@ class SquareType extends BaseImageType {
       .style('fill', this.color)
       .style('opacity', this.opacity)
 
-    return this.imageHandle
+    this.addClipId(clipId)
+
+    return Promise.resolve()
   }
 }
 

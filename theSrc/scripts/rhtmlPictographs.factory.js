@@ -25,7 +25,6 @@ module.exports = function (element, width, height, stateChangedCallback) {
         if (err.type === InsufficientContainerSizeError.type) {
           console.log(err.message)
           d3.select(instance.rootElement).attr(`rhtmlwidget-status`, 'ready')
-          d3.select(instance.rootElement).attr(`rhtmlPictographs-status`, 'ready') // to be removed once regression testing code checks for rhtmlwidget-status
         } else {
           _showError(err, element)
         }

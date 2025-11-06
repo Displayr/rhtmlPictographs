@@ -128,8 +128,9 @@ class BaseCell {
   }
 
   draw () {
-    this._draw()
-    this._generateDynamicCss()
+    return Promise.resolve()
+      .then(() => this._draw())
+      .then(() => this._generateDynamicCss())
   }
 
   setCss (cssLocation, cssAttr, cssValue) {
