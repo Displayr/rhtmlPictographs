@@ -494,6 +494,8 @@ class Pictograph {
       .attr('class', 'table-cell')
       .attr('transform', d => `translate(${d.x},${d.y})`)
 
+    const cellDrawingPromises = []
+
     enteringCells.each(function (d) {
       const instance = d.instance
       log.debug(`rendering entering cell`, instance)
@@ -505,10 +507,11 @@ class Pictograph {
       instance.setWidth(d.width)
       instance.setHeight(d.height)
       instance.setDynamicMargins(d.dynamicMargins)
-      instance.draw()
+
+      cellDrawingPromises.push(instance.draw())
     })
 
-    d3.select(this.rootElement).attr(`rhtmlwidget-status`, 'ready')
+    Promise.all(cellDrawingPromises).then(() => d3.select(this.rootElement).attr(`rhtmlwidget-status`, 'ready'))
   }
 
   // TODO Duplicated code from graphicCell

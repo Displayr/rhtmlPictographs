@@ -9,7 +9,7 @@ class RectangleType extends BaseImageType {
     return Promise.resolve(null)
   }
 
-  appendToSvg () {
+  appendToSvg (clipId) {
     this.imageHandle = this.d3Node.append('svg:rect')
       .classed('rect', true)
       .attr('x', (this.containerWidth * this.baseShapeHiding * (1 - this.ratio)) / 2)
@@ -19,7 +19,9 @@ class RectangleType extends BaseImageType {
       .style('fill', this.color)
       .style('opacity', this.opacity)
 
-    return this.imageHandle
+    this.addClipId(clipId)
+
+    return Promise.resolve()
   }
 }
 
