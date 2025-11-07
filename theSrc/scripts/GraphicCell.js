@@ -538,30 +538,37 @@ class GraphicCell extends BaseCell {
       throw error // NB This is thrown because displayr wants the error too
     }
 
-    const imageRenderPromises = []
+    let baseImageCompletePromise = Promise.resolve()
     if (this.config.baseImage != null) {
       const baseImageConfig = this.config.baseImage
       const imageFactory = this.imageFactory
+      const baseImageRenderPromises = []
       enteringLeafNodes.each(function (dataAttributes) {
         const d3Node = d3.select(this)
-        imageRenderPromises.push(
+        baseImageRenderPromises.push(
           imageFactory.addBaseImageTo(d3Node, baseImageConfig, imageWidth, imageHeight, dataAttributes)
         )
       })
+      baseImageCompletePromise = Promise.all(baseImageRenderPromises).catch(imageErrorHandler)
     }
 
+    // TODO this should be tied to base image promise unconditioanlly (ie. swap lines below)
+    // let variableImageCompletePromise = baseImageCompletePromise
+    let variableImageCompletePromise = Promise.resolve()
     if (this.config.variableImage != null) {
       const variableImageConfig = this.config.variableImage
       const imageFactory = this.imageFactory
-      enteringLeafNodes.each(function (dataAttributes) {
-        const d3Node = d3.select(this)
-        imageRenderPromises.push(
-          imageFactory.addVarImageTo(d3Node, variableImageConfig, imageWidth, imageHeight, dataAttributes)
-        )
+      variableImageCompletePromise = baseImageCompletePromise.then(function () {
+        const variableImageRenderPromises = []
+        enteringLeafNodes.each(function (dataAttributes) {
+          const d3Node = d3.select(this)
+          variableImageRenderPromises.push(
+            imageFactory.addVarImageTo(d3Node, variableImageConfig, imageWidth, imageHeight, dataAttributes)
+          )
+        })
+        return Promise.all(variableImageRenderPromises).catch(imageErrorHandler)
       })
     }
-
-    const variableImageCompletePromise = Promise.all(imageRenderPromises).catch(imageErrorHandler)
 
     return variableImageCompletePromise.then(() => {
       if (this.config.tooltip) {

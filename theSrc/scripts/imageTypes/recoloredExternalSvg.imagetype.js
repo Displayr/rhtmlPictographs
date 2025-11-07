@@ -95,15 +95,12 @@ class RecoloredExternalSvg extends BaseImageType {
     return null
   }
 
-  appendToSvg (clipId) {
+  appendToSvg () {
     const cleanedSvgString = this.getRecoloredString()
     const cacheKey = this.getRecoloredStringCacheKey()
     const definitionId = this.definitionManager.addDefinition(cacheKey, cleanedSvgString)
     this.imageHandle = this.d3Node.append('use').attr('xlink:href', `#${definitionId}`)
-
-    this.addClipId(clipId)
-
-    return new Promise((resolve) => { this.imageHandle.on('load', () => resolve(), { once: true }) })
+    return this.imageHandle
   }
 
   getRecolorArgs () {

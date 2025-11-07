@@ -14,6 +14,7 @@ class Pictograph {
   constructor (el) {
     this.rootElement = _.has(el, 'length') ? el[0] : el
     d3.select(this.rootElement).attr(`rhtmlwidget-status`, 'loading')
+    d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'loading') // to be removed once regression testing code checks for rhtmlwidget-status
     const actualDimensions = this.getContainerDimensions()
     log.info('Pictograph() called. Container dimensions:', actualDimensions, 'element:', el)
 
@@ -41,6 +42,7 @@ class Pictograph {
         if (error.type === InsufficientContainerSizeError.type) {
           console.log(error.message)
           d3.select(this.rootElement).attr(`rhtmlwidget-status`, 'ready')
+          d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'ready') // to be removed once regression testing code checks for rhtmlwidget-status
         } else {
           console.error(`error in pictograph draw: ${error.message}`)
           console.error(error.stack)
@@ -77,6 +79,7 @@ class Pictograph {
         if (error.type === InsufficientContainerSizeError.type) {
           console.log(error.message)
           d3.select(this.rootElement).attr(`rhtmlwidget-status`, 'ready')
+          d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'ready') // to be removed once regression testing code checks for rhtmlwidget-status
         } else {
           console.error(`error in pictograph resize: ${error.message}`)
           console.error(error.stack)
@@ -494,8 +497,6 @@ class Pictograph {
       .attr('class', 'table-cell')
       .attr('transform', d => `translate(${d.x},${d.y})`)
 
-    const cellDrawingPromises = []
-
     enteringCells.each(function (d) {
       const instance = d.instance
       log.debug(`rendering entering cell`, instance)
@@ -507,11 +508,11 @@ class Pictograph {
       instance.setWidth(d.width)
       instance.setHeight(d.height)
       instance.setDynamicMargins(d.dynamicMargins)
-
-      cellDrawingPromises.push(instance.draw())
+      instance.draw()
     })
 
-    Promise.all(cellDrawingPromises).then(() => d3.select(this.rootElement).attr(`rhtmlwidget-status`, 'ready'))
+    d3.select(this.rootElement).attr(`rhtmlwidget-status`, 'ready')
+    d3.select(this.rootElement).attr(`rhtmlPictographs-status`, 'ready') // to be removed once regression testing code checks for rhtmlwidget-status
   }
 
   // TODO Duplicated code from graphicCell
