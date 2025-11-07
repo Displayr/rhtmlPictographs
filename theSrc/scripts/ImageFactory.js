@@ -220,7 +220,12 @@ class ImageFactory {
           return null
         }
       })
-      .then((clipId) => imageInstance.appendToSvg(clipId))
+      .then((clipId) => {
+        const imageHandle = imageInstance.appendToSvg()
+        if (clipId) {
+          imageHandle.attr('clip-path', `url(#${clipId})`)
+        }
+      })
   }
 
   calculateAspectRatio (config) {
