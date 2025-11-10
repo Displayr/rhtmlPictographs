@@ -96,12 +96,7 @@ class UrlType extends BaseImageType {
 
     this.addClipId(clipId)
 
-    return new Promise((resolve) => {
-      this.imageHandle.on('load', () => {
-        console.log(this.config.url + ' loaded')
-        resolve()
-      }, { once: true })
-    })
+    return new Promise((resolve) => this.imageHandle.on('load', () => resolve(), { once: true }))
   }
 }
 
