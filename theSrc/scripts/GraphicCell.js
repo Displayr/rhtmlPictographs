@@ -562,7 +562,10 @@ class GraphicCell extends BaseCell {
       })
     }
 
-    const imageCompletePromise = Promise.all(baseImageRenderPromises).all(variableImageRenderPromises).catch(imageErrorHandler)
+    const imageCompletePromise = Promise.all(baseImageRenderPromises)
+      .catch(imageErrorHandler)
+      .then(() => Promise.all(variableImageRenderPromises))
+      .catch(imageErrorHandler)
 
     return imageCompletePromise.then(() => {
       if (this.config.tooltip) {
