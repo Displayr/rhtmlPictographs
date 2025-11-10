@@ -64,6 +64,12 @@ class BaseImageType {
   get baseShapeHiding () {
     return (this.config.baseShapeScale != null) ? this.config.baseShapeScale : 1
   }
+
+  addClipId (clipId) {
+    if (clipId) {
+      this.imageHandle.attr('clip-path', `url(#${clipId})`)
+    }
+  }
 }
 
 module.exports = BaseImageType
