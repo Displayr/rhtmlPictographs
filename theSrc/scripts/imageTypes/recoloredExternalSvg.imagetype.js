@@ -103,7 +103,7 @@ class RecoloredExternalSvg extends BaseImageType {
 
     this.addClipId(clipId)
 
-    return new Promise((resolve) => { this.imageHandle.on('load', () => resolve(), { once: true }) })
+    return Promise.resolve()
   }
 
   getRecolorArgs () {
