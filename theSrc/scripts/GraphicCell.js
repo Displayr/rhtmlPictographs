@@ -552,9 +552,7 @@ class GraphicCell extends BaseCell {
       baseImageCompletePromise = Promise.all(baseImageRenderPromises).catch(imageErrorHandler)
     }
 
-    // TODO this should be tied to base image promise unconditioanlly (ie. swap lines below)
-    // let variableImageCompletePromise = baseImageCompletePromise
-    let variableImageCompletePromise = Promise.resolve()
+    let variableImageCompletePromise = baseImageCompletePromise
     if (this.config.variableImage != null) {
       const variableImageConfig = this.config.variableImage
       const imageFactory = this.imageFactory

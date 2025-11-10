@@ -16,7 +16,7 @@ class CircleType extends BaseImageType {
     return Promise.resolve(1)
   }
 
-  appendToSvg () {
+  appendToSvg (clipId) {
     this.imageHandle = this.d3Node.append('svg:circle')
       .classed('circle', true)
       .attr('cx', this.containerWidth / 2)
@@ -25,7 +25,9 @@ class CircleType extends BaseImageType {
       .style('fill', this.color)
       .style('opacity', this.opacity)
 
-    return this.imageHandle
+    this.addClipId(clipId)
+
+    return Promise.resolve()
   }
 }
 
