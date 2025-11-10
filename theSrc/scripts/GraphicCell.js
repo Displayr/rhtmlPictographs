@@ -538,32 +538,33 @@ class GraphicCell extends BaseCell {
       throw error // NB This is thrown because displayr wants the error too
     }
 
-    const imageRenderPromises = []
+    const baseImageRenderPromises = []
     if (this.config.baseImage != null) {
       const baseImageConfig = this.config.baseImage
       const imageFactory = this.imageFactory
       enteringLeafNodes.each(function (dataAttributes) {
         const d3Node = d3.select(this)
-        imageRenderPromises.push(
+        baseImageRenderPromises.push(
           imageFactory.addBaseImageTo(d3Node, baseImageConfig, imageWidth, imageHeight, dataAttributes)
         )
       })
     }
 
+    const variableImageRenderPromises = []
     if (this.config.variableImage != null) {
       const variableImageConfig = this.config.variableImage
       const imageFactory = this.imageFactory
       enteringLeafNodes.each(function (dataAttributes) {
         const d3Node = d3.select(this)
-        imageRenderPromises.push(
+        variableImageRenderPromises.push(
           imageFactory.addVarImageTo(d3Node, variableImageConfig, imageWidth, imageHeight, dataAttributes)
         )
       })
     }
 
-    const variableImageCompletePromise = Promise.all(imageRenderPromises).catch(imageErrorHandler)
+    const imageCompletePromise = Promise.all(baseImageRenderPromises).all(variableImageRenderPromises).catch(imageErrorHandler)
 
-    return variableImageCompletePromise.then(() => {
+    return imageCompletePromise.then(() => {
       if (this.config.tooltip) {
         enteringLeafNodes.append('svg:title')
           .text(this.config.tooltip)
