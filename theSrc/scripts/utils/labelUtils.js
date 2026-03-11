@@ -45,7 +45,7 @@ module.exports = {
     const textDivsForEstimation = _(labels)
       .map(ensureFontSizeHasPx)
       .map(makeDivForEstimation).value()
-    const divWrapper = $(`<div id="${uniqueId}" style="display:inline-block;position:fixed;visibility:hidden">`)
+    const divWrapper = $(`<div id="${uniqueId}" style="position:fixed;visibility:hidden;width:max-content">`)
 
     divWrapper.html(textDivsForEstimation)
     $(document.body).append(divWrapper)
