@@ -1,5 +1,4 @@
 const _ = require('lodash')
-const $ = require('jquery')
 
 // NB Our method for caclulating label dimensions is pretty good but is not exact
 const labelSizeCorrection = {
@@ -22,12 +21,14 @@ const makeDivForEstimation = (labelConfig) => {
     return defaults[attribute]
   }
 
-  const styleComponents = [
-    `font-size:${getAttribute('font-size')}`,
-    `font-family:${getAttribute('font-family')}`,
-    `font-weight:${getAttribute('font-weight')}`,
-  ]
-  return `<div style="${styleComponents.join(';')}">${labelConfig.text}</div>`
+  // Build the measurement div with DOM APIs and set the label via textContent
+  // so untrusted label text is never parsed as HTML (RS-22478).
+  const div = document.createElement('div')
+  div.style.fontSize = getAttribute('font-size')
+  div.style.fontFamily = getAttribute('font-family')
+  div.style.fontWeight = getAttribute('font-weight')
+  div.textContent = labelConfig.text
+  return div
 }
 
 const ensureFontSizeHasPx = (labelConfig) => {
@@ -41,15 +42,16 @@ module.exports = {
       ? _.cloneDeep(incomingLabels)
       : [_.cloneDeep(incomingLabels)]
 
-    const uniqueId = `${Math.random()}`.replace('.', '')
-    const textDivsForEstimation = _(labels)
+    const labelDivsForEstimation = _(labels)
       .map(ensureFontSizeHasPx)
       .map(makeDivForEstimation).value()
-    const divWrapper = $(`<div id="${uniqueId}" style="position:fixed;visibility:hidden;width:max-content">`)
-
-    divWrapper.html(textDivsForEstimation)
-    $(document.body).append(divWrapper)
-    const { width: textWidth, height: textHeight } = document.getElementById(uniqueId).getBoundingClientRect()
+    const divWrapper = document.createElement('div')
+    divWrapper.style.position = 'fixed'
+    divWrapper.style.visibility = 'hidden'
+    divWrapper.style.width = 'max-content'
+    labelDivsForEstimation.forEach((div) => divWrapper.appendChild(div))
+    document.body.appendChild(divWrapper)
+    const { width: textWidth, height: textHeight } = divWrapper.getBoundingClientRect()
     divWrapper.remove()
 
     const height = textHeight +
