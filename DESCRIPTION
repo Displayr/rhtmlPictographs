@@ -8,6 +8,8 @@ Description: An R HTMLWidget that can generate single image graphics, mutli
     image graphics, or a table of single/multi image graphics
 Imports:
     htmlwidgets
+Suggests:
+    testthat
 License: GPL-3
 LazyData: TRUE
 RoxygenNote: 7.3.2
