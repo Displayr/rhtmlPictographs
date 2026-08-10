@@ -23,6 +23,7 @@ test_that("Passes through a supplied settings JSON string unchanged", {
 test_that("Accepts a non-JSON / malformed string without erroring, and stores it verbatim", {
     settings <- "not json"
 
-    expect_error(g <- rhtmlPictographs::graphic(settings), NA)
+    expect_error(rhtmlPictographs::graphic(settings), NA)
+    g <- rhtmlPictographs::graphic(settings)
     expect_equal(g$x, settings)
 })

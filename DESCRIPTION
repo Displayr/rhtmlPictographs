@@ -9,7 +9,7 @@ Description: An R HTMLWidget that can generate single image graphics, mutli
 Imports:
     htmlwidgets
 Suggests:
-    testthat
+    testthat (>= 3.0.0)
 License: GPL-3
 LazyData: TRUE
 RoxygenNote: 7.3.2
