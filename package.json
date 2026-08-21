@@ -24,7 +24,7 @@
     "gulp": "^4.0.2",
     "husky": "^0.13.3",
     "jest-environment-jsdom": "^29.7.0",
-    "rhtmlBuildUtils": "github:Displayr/rhtmlBuildUtils#8.0.1"
+    "rhtmlBuildUtils": "github:Displayr/rhtmlBuildUtils#9.0.0"
   },
   "dependencies": {
     "blueimp-md5": "^2.19.0",
