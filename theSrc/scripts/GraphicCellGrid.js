@@ -1,4 +1,3 @@
-
 const _ = require('lodash')
 
 class GraphicCellGrid {
@@ -22,6 +21,7 @@ class GraphicCellGrid {
   static get validHorizontalDirections () {
     return ['right', 'left']
   }
+
   static get validVerticalDirections () {
     return ['up', 'down']
   }
@@ -35,6 +35,7 @@ class GraphicCellGrid {
   static get _defaultHorizontalDirection () {
     return 'right'
   }
+
   static get _defaultVerticalDirection () {
     return 'down'
   }

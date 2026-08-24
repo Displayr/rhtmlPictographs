@@ -78,7 +78,7 @@ class ImageFactory {
   }
 
   static parseConfig (newConfig) {
-    let config = {}
+    let config
 
     if (!_.isString(newConfig)) {
       if (!(newConfig.type in ImageFactory.types)) {
@@ -110,7 +110,7 @@ class ImageFactory {
       throw new Error("Invalid image creation configString '' : empty string")
     }
 
-    let configParts = []
+    let configParts
 
     const httpRegex = new RegExp('^(.*?):?(https?://.*)$')
     const matchesHttp = configString.match(httpRegex)

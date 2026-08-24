@@ -29,9 +29,9 @@ in `Suggests` in the `DESCRIPTION` file (some of which may be proprietary and un
 The `JS tests` workflow runs on every push. The nix build (`Build rhtmlPictographs`) only builds the
 R package and deliberately does not run any jest suite, so this workflow is what exercises them:
 
-* `Lint, unit specs and compile` runs `gulp lint`, `gulp testSpecs` (the `*.jest.test.js` files under
+* `Lint, unit specs and compile` runs `rhtml lint`, `rhtml testSpecs` (the `*.jest.test.js` files under
   `theSrc/scripts`) and a bundle compile. No browser needed.
-* `Visual regression tests` runs `gulp testVisual`, which drives the served example pages through
+* `Visual regression tests` runs `rhtml testVisual`, which drives the served example pages through
   puppeteer and also runs the interaction suites in `theSrc/test/bin`.
 
 Locally, `npm run unitTest` runs the unit specs and `npm test` runs the visual suite against your own

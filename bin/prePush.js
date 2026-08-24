@@ -6,7 +6,7 @@ Promise.resolve()
 
 function eslint () {
   console.log('>> Running "lint"')
-  return spawnCommand('gulp', ['lint'], { stdio: 'inherit' })
+  return spawnCommand('rhtml', ['lint'], { stdio: 'inherit' })
 }
 
 function spawnCommand (command, args = [], options = {}) {

@@ -2,17 +2,17 @@
   "name": "rhtmlPictographs",
   "private": true,
   "engines": {
-    "node": ">=18"
+    "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "scripts": {
     "prepush": "node ./bin/prepush",
-    "build": "gulp core compileWidgetEntryPoint",
-    "lint": "gulp lint",
-    "serve": "gulp serve",
-    "unitTest": "gulp testSpecs",
+    "build": "rhtml core compileWidgetEntryPoint",
+    "lint": "rhtml lint",
+    "serve": "rhtml serve",
+    "unitTest": "rhtml testSpecs",
     "test": "npm run localTest",
-    "localTest": "gulp testSpecs && gulp testVisual --env=local --branch=`git rev-parse --abbrev-ref HEAD`",
-    "travisTest": "gulp testSpecs && gulp testVisual --env=travis --branch=$BRANCH",
+    "localTest": "rhtml testSpecs && rhtml testVisual --env=local --branch=`git rev-parse --abbrev-ref HEAD`",
+    "travisTest": "rhtml testSpecs && rhtml testVisual --env=travis --branch=$BRANCH",
     "gatherDiffs": "rm -rf .tmp/diffs; mkdir -p .tmp/diffs/; BRANCH=`git rev-parse --abbrev-ref HEAD` && for I in `find theSrc/test/snapshots/local/$BRANCH -type d -name __diff_output__`; do cp $I/* .tmp/diffs/ 2> /dev/null; done; true",
     "gatherMasterDiffs": "rm -rf .tmp/diffs; mkdir -p .tmp/diffs/; for I in `find theSrc/test/snapshots/local/master -type d -name __diff_output__`; do cp $I/* .tmp/diffs/ 2> /dev/null; done; true",
     "macOpenDiffs": "open .tmp/diffs",
@@ -21,10 +21,10 @@
     "deleteDiffs": "find theSrc/test/snapshots -iname '__diff_output__' | xargs rm -rf"
   },
   "devDependencies": {
-    "gulp": "^4.0.2",
     "husky": "^0.13.3",
     "jest-environment-jsdom": "^29.7.0",
-    "rhtmlBuildUtils": "github:Displayr/rhtmlBuildUtils#9.0.0"
+    "rhtmlBuildUtils": "github:Displayr/rhtmlBuildUtils#9.0.0",
+    "yargs": "^15.4.1"
   },
   "dependencies": {
     "blueimp-md5": "^2.19.0",

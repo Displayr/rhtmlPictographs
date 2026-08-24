@@ -337,7 +337,7 @@ class GraphicCell extends BaseCell {
       const cellWidthInImageWidthUnits = numCols + (numCols - 1) * columnGutterToImageRatio
 
       // If the config specified one or more fixed dimensions, then honor those dimensions, otherwise just return the desired aspect ratio
-      let graphicCellConstraint = null
+      let graphicCellConstraint
       if (this.config.imageHeight || this.config.imageWidth) {
         let cellDimensions = { width: null, height: null }
         if (this.config.imageHeight) {
@@ -392,7 +392,7 @@ class GraphicCell extends BaseCell {
 
   _throwErrorIfProportionSetAndNoScalingStrategyProvided () {
     if (this.config.proportion >= 1) { return }
-    let matchingScalingStrategies = null
+    let matchingScalingStrategies
     if (_.isString(this.config.variableImage)) {
       matchingScalingStrategies = _.find(ImageFactory.validScalingStrategyStrings, (validStrategyString) => {
         return this.config.variableImage.indexOf(validStrategyString) !== -1
