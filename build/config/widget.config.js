@@ -15,7 +15,22 @@ const config = {
     puppeteer: {
       // headless: false, // if set to false, show the browser while testing
       // slowMo: 500, // delay each step in the browser interaction by X milliseconds
+
+      // Ubuntu 24.04 restricts unprivileged user namespaces via AppArmor, which
+      // breaks Chrome's sandbox on CI runners. --disable-dev-shm-usage avoids
+      // crashes from the small default /dev/shm in containers.
+      // These must live here rather than being passed on the command line:
+      // testVisual only forwards branch/env/snapshotDirectory/headless/slowMo
+      // to the jest child process via .tmp/snapshot_dynamic_config.json.
+      args: ['--no-sandbox', '--disable-dev-shm-usage'],
     },
+
+    // Selects theSrc/test/snapshots/ci/<branch>/. Set here rather than passed
+    // as --env=ci, because rhtmlBuildUtils constrains that option to
+    // choices: ['local', 'travis'] and yargs would reject 'ci'. Command-line
+    // --env still wins, so `npm run localTest` keeps using 'local'.
+    env: 'ci',
+
     snapshotDelay: 500,
     consoleLogHandler,
     // pixelmatch: {

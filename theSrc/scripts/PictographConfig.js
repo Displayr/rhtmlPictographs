@@ -608,7 +608,7 @@ class PictographConfig {
   }
 
   createCellInstance (cellDefinition, rowIndex, columnIndex) {
-    let cellInstance = null
+    let cellInstance
     if (cellDefinition.type === 'graphic') {
       cellInstance = new GraphicCell()
     } else if (cellDefinition.type === 'label') {

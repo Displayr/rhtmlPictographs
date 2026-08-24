@@ -1,0 +1,37 @@
+{
+  "table": {
+    "rowHeights": [
+      "fixedsize:graphic"
+    ],
+    "colWidths": [
+      "fixedsize:graphic"
+    ],
+    "rows": [
+      [
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 1,
+            "numImages": 4,
+            "imageWidth": 48,
+            "numRows": 2,
+            "rowGutter": 0,
+            "columnGutter": 0,
+            "variableImage": "circle:fromleft:black:",
+            "baseImage": "circle:"
+          }
+        }
+      ]
+    ]
+  },
+  "table-header": {
+    "padding": "10 1 1 1",
+    "text": "4",
+    "font-size": "12.000000px",
+    "font-weight": "normal",
+    "font-family": "arial",
+    "font-color": "#2C2C2C",
+    "horizontal-align": "center"
+  },
+  "background-color": "red"
+}

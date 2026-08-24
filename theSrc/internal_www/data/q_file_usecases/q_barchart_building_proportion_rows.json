@@ -1,0 +1,232 @@
+{
+  "background-color": "transparent",
+  "table": {
+    "rowHeights": [
+      "proportion:0.142",
+      "proportion:0.142",
+      "proportion:0.142",
+      "proportion:0.142",
+      "proportion:0.142",
+      "proportion:0.142",
+      "proportion:0.142"
+    ],
+    "rowGutterLength": 2,
+    "columnGutterLength": 2,
+    "colWidths": [
+      "flexible:label",
+      "flexible:graphic"
+    ],
+    "rows": [
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 0,
+            "padding-top": 1,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "With parents/guardian",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.165079,
+            "numImages": 5,
+            "variableImage": "url:#E41A1C:fromleft:/images/building_grey.svg",
+            "baseImage": "url:/images/building_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "1.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 0,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "Alone",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.419048,
+            "numImages": 5,
+            "variableImage": "url:#377EB8:fromleft:/images/building_grey.svg",
+            "baseImage": "url:/images/building_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 0,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "With partner only",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.812698,
+            "numImages": 5,
+            "variableImage": "url:#4DAF4A:fromleft:/images/building_grey.svg",
+            "baseImage": "url:/images/building_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 0,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "With children only",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.038095,
+            "numImages": 5,
+            "variableImage": "url:#984EA3:fromleft:/images/building_grey.svg",
+            "baseImage": "url:/images/building_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 0,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "With partner & children",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.419048,
+            "numImages": 5,
+            "variableImage": "url:#FF7F00:fromleft:/images/building_grey.svg",
+            "baseImage": "url:/images/building_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 0,
+            "padding-top": 0,
+            "padding-bottom": 0,
+            "vertical-align": "center",
+            "text": "In shared accom...",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.095238,
+            "numImages": 5,
+            "variableImage": "url:#FFFF33:fromleft:/images/building_grey.svg",
+            "baseImage": "url:/images/building_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 0.000000 0.000000"
+          }
+        }
+      ],
+      [
+        {
+          "type": "label",
+          "value": {
+            "padding-right": 0,
+            "padding-top": 0,
+            "padding-bottom": 1,
+            "vertical-align": "center",
+            "text": "Other (please specify)",
+            "font-size": "12.000000px",
+            "font-weight": "normal",
+            "horizontal-align": "right",
+            "font-family": "arial",
+            "font-color": "#2C2C2C"
+          }
+        },
+        {
+          "type": "graphic",
+          "value": {
+            "proportion": 0.050794,
+            "numImages": 5,
+            "variableImage": "url:#A65628:fromleft:/images/building_grey.svg",
+            "baseImage": "url:/images/building_grey.svg",
+            "numRows": 1,
+            "columnGutter": 0,
+            "rowGutter": 0,
+            "padding": "0.000000 0.000000 1.000000 0.000000"
+          }
+        }
+      ]
+    ]
+  }
+}

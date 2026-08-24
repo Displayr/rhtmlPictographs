@@ -1,0 +1,25 @@
+type: multi_widget_multi_page
+groupname: q_file_usecases
+general_comments:
+  - Configs extracted verbatim from the Q project 'RT Pictographs.Q' (RS-21754), with the
+    displayrcors image URLs rewritten to the locally served equivalents.
+  - '<b>q_barchart_building_proportion_rows</b>: flipPictographs::PictographChart(mode="bar",
+    image="Building") with no graphic.width.inch / graphic.height.inch. Covers proportion row
+    heights, flexible label/graphic column widths, base+variable image pairs, and
+    outer-edge-only padding.'
+  - '<b>q_barchart_floating_labels_no_baseimage</b>: raw rhtmlPictographs::graphic JSON. Covers
+    floatingLabels positioned at "0.50:&lt;value&gt;" with a 4em left padding, and a
+    variableImage with no baseImage.'
+  - '<b>q_singlepicto_fixedsize_header</b>: flipPictographs::SinglePicto(4, icon.width=48,
+    graphic.width.inch=3). Covers fixedsize:graphic row height and column width, imageWidth,
+    numRows wrapping, and a table-header. Rendered at 288x288 = 3 inches at 96 dpi.'
+configs:
+  - config: data.q_file_usecases.q_barchart_building_proportion_rows
+    width: 500
+    height: 400
+  - config: data.q_file_usecases.q_barchart_floating_labels_no_baseimage
+    width: 712
+    height: 483
+  - config: data.q_file_usecases.q_singlepicto_fixedsize_header
+    width: 288
+    height: 288

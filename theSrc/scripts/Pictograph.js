@@ -25,6 +25,19 @@ class Pictograph {
     this.config.processUserConfig(userConfig)
   }
 
+  // NB the container is too small to lay this pictograph out, so there is no content to draw -- but
+  // the outer svg must still be created. It is the widget's snapshot selector, and a root element
+  // holding nothing at all makes the visual harness fail the test with "the page rendered nothing to
+  // snapshot" rather than compare an (intentionally) empty rendering. This is also the state the
+  // draw()-time and resize()-time InsufficientContainerSizeError paths leave behind, since both add
+  // the svg before the cell size computation that throws -- only an error raised earlier, out of
+  // setConfig, reaches here.
+  drawEmpty () {
+    this._removeAllContentFromRootElement()
+    this._manipulateRootElementSize()
+    this._addSvgToRootElement()
+  }
+
   draw () {
     this.config.cssCollector.draw()
     this._removeAllContentFromRootElement()

@@ -144,7 +144,7 @@ class BaseCell {
       })
     }
 
-    let cssLocationKeyArray = null
+    let cssLocationKeyArray
     if (cssLocation === '') {
       cssLocationKeyArray = this.myCssSelectorArray
     } else if (_.isString(cssLocation)) {

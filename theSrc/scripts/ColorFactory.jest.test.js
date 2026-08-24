@@ -1,4 +1,3 @@
-
 const ColorFactory = require('./ColorFactory')
 
 // TODO get rid of this ranOnce
