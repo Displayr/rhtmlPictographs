@@ -24,6 +24,9 @@ module.exports = function (element, width, height, stateChangedCallback) {
       } catch (err) {
         if (err.type === InsufficientContainerSizeError.type) {
           console.log(err.message)
+          // NB setConfig throws before draw() has added the outer svg, so unlike the draw()-time
+          // version of this error there is nothing in the root element at all. See drawEmpty().
+          instance.drawEmpty()
           d3.select(instance.rootElement).attr(`rhtmlwidget-status`, 'ready')
         } else {
           _showError(err, element)

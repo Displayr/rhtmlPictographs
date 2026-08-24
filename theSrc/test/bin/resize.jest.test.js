@@ -5,6 +5,9 @@ const loadWidget = require('../lib/loadWidget.helper')
 const {
   configureImageSnapshotMatcher,
   puppeteerSettings,
+  // NB puppeteer removed page.waitFor(milliseconds) in v14 and its replacement page.waitForTimeout
+  // in v22, so the delay after resizeHook comes from the build utils' own sleep helper.
+  sleep,
   testSnapshots,
   jestTimeout,
 } = renderExamplePageTestHelper
@@ -43,7 +46,7 @@ describe('resize', () => {
         window.resizeHook(width, height)
       }, width, height)
 
-      await page.waitFor(1000)
+      await sleep(1000)
 
       await testSnapshots({ page, testName: `1B_basic_after_resize_${width}x${height}` })
     }
@@ -74,7 +77,7 @@ describe('resize', () => {
         window.resizeHook(width, height)
       }, width, height)
 
-      await page.waitFor(1000)
+      await sleep(1000)
 
       await testSnapshots({ page, testName: `2B_with_title_after_resize_${width}x${height}` })
     }
@@ -105,7 +108,7 @@ describe('resize', () => {
         window.resizeHook(width, height)
       }, width, height)
 
-      await page.waitFor(1000)
+      await sleep(1000)
 
       await testSnapshots({ page, testName: `3B_with_title_after_resize_${width}x${height}` })
     }
@@ -136,7 +139,7 @@ describe('resize', () => {
         window.resizeHook(width, height)
       }, width, height)
 
-      await page.waitFor(1000)
+      await sleep(1000)
 
       await testSnapshots({ page, testName: `4B_with_title_after_resize_${width}x${height}` })
     }
