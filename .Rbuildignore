@@ -8,3 +8,5 @@ package-lock.json
 package.json
 theSrc
 eslint.config.js
+^AGENTS\.md$
+^CLAUDE\.md$
